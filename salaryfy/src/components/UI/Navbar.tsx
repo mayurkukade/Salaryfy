@@ -3,7 +3,7 @@ import React from 'react'
 const Navbar = () => {
   return (
     <>
-    <h3 className='text-green-700'>
+    <h3 className='text-darkGreen'>
         Navbar
     </h3>
       
