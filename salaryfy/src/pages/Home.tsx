@@ -1,12 +1,11 @@
-import Navbar from "../components/UI/Navbar"
+import HeroSection from "../components/HeroSection"
+import Navbar from "../components/Navbar"
 
 const Home = () => {
   return (
     <>
     <Navbar />
-    <h1 className="text-pink-700 ">
-        Home
-    </h1>
+   <HeroSection/>
       
     </>
   )
