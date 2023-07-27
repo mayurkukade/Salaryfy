@@ -1,6 +1,7 @@
 import './questionnaire.css'
 import image from '../../assets/images/job-details-bg.png'
 export default function QuestionnaireModule0() {
+
   return (
     <div className='w-100 flex flex-col items-center'>
       <div className='flex-grow max-w-[100em] w-[100%] flex mb-[2em]'>
@@ -10,10 +11,74 @@ export default function QuestionnaireModule0() {
       </div>
       <div className='max-w-[100em] w-[100%] mb-[2em] flex flex-col'>
         <div className='text-[1.4em]'>Job Details</div>
-        <div>
-          <img src={image} />
+        <div className='bg-cover-container'>
+          <img src={image} style={{ width: '100%' }} />
+        </div>
+        <div className='flex' style={{ background: 'linear-gradient(rgba(254, 205, 8, 0.07), rgb(14, 95, 89, 0.09))' }}>
+
+          {/* First */}
+          <div className='text-[1.8em] font-semibold text-[#0E5F59] px-[2em] flex items-center'>
+            <div className='relative min-w-[5em]'>
+              <div className='absolute h-[5em] w-[5em] p-[0.5em] flex items-center justify-center rounded-md bg-[#D7E8F0] -translate-y-full overflow-hidden'>
+                <img src='src/assets/images/lenskart-icon.png'></img>
+              </div>
+              <div className='relative text-center'>Lenskart</div>
+            </div>
+          </div>
+
+          {/* Second */}
+          <div className='px-[1em] py-[1em]'>
+            <div className='text-[2em] font-bold mb-[0.5em]'>Sales Associate (Frontend Sales)</div>
+            <div className='flex text-[1.4em] font-medium'>
+              <div><span>Location:&nbsp;</span><span className='text-[#0E5F59]'>Banglore</span></div>
+              <div className='mx-2 w-[1px] h-[1.4em] bg-[#0E5F59]'></div>
+              <div><span>Starting Salary:&nbsp;</span><span className='text-[#0E5F59]'>Upto 4 LPA</span></div>
+            </div>
+          </div>
+
+          {/* THIRD */}
+          <div className='flex-grow flex justify-end px-[2em] items-center'>
+            <div className='w-[fit-content] h-[fit-content] bg-white flex items-center border border-[#0E5F59] border-solid py-[0.5em] px-[1em] rounded-[2em]'>
+              <CalendarVector />
+              <div className='ml-[0.5em] text-[1.3em] text-[#0E5F59] font-medium'>Interview on: 05th May 2023</div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* STEPS */}
+        <div className='py-[2em] px-[3em]'>
+
+          <div style={{ background: 'linear-gradient(45deg, #FFCE09 50%, transparent)' }} className='mb-[1em] text-[#0E5F59] text-[1.5em] px-[1em] rounded-[1em] py-[0.25em]'><span>3 steps selection process for&nbsp;</span><span className='font-bold'>Lenskart</span></div>
+
+          <div className='flex'>
+            <div className='flex bg-[#0E5F59] py-[1em] px-[2em] rounded-[1.5em] items-center'>
+              <div className='h-[2em] w-[2em] mr-[1em] rounded-[1em] flex items-center justify-center bg-[white] text-[#0E5F59] text-[2em]'>1</div>
+              <div className=''>
+                <div className='font-medium text-[white] text-[1.3em]'>Step-1</div>
+                <div className='text-[1.8em] font-medium text-[#FECD08]'>Upload your Resume</div>
+              </div>
+            </div>
+
+            <div className='mx-[3em] flex items-center'>
+              <svg width="11" height="26" viewBox="0 0 11 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 13L0.499999 25.1244L0.5 0.875644L11 13Z" fill="#0E5F59" />
+              </svg>
+            </div>
+          </div>
+
         </div>
       </div>
+    </div>
+  );
+}
+
+function CalendarVector() {
+  return (
+    <div className='bg-[#FECD08] h-[16px] w-[14px]'>
+      <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.11411 15H11.883C12.9071 15 13.7393 14.1678 13.7393 13.1437V3.89332C13.7393 2.86925 12.9071 2.03702 11.883 2.03702H11.1467V1.51851C11.1467 1.23332 10.9134 1 10.6282 1C10.343 1 10.1097 1.23332 10.1097 1.51851V2.03702H3.88746V1.51851C3.88746 1.23332 3.6541 1 3.36891 1C3.08372 1 2.8504 1.23332 2.8504 1.51851V2.03702H2.11411C1.09004 2.03702 0.257812 2.86925 0.257812 3.89332V13.1437C0.257812 14.1678 1.09004 15 2.11411 15ZM1.29487 3.89332C1.29487 3.44222 1.66302 3.07408 2.11411 3.07408H2.8504V3.59259C2.8504 3.87778 3.08372 4.1111 3.36891 4.1111C3.6541 4.1111 3.88742 3.87778 3.88742 3.59259V3.07408H10.1097V3.59259C10.1097 3.87778 10.343 4.1111 10.6282 4.1111C10.9134 4.1111 11.1467 3.87778 11.1467 3.59259V3.07408H11.883C12.3341 3.07408 12.7022 3.44222 12.7022 3.89332V5.40741H1.29487V3.89332ZM1.29487 6.44443H12.7023V13.1437C12.7023 13.5948 12.3341 13.9629 11.883 13.9629H2.11411C1.66302 13.9629 1.29487 13.5948 1.29487 13.1437V6.44443Z" fill="#0E5F59" stroke="#0E5F59" strokeWidth="0.3" />
+      </svg>
     </div>
   );
 }
@@ -24,7 +89,7 @@ function Step({ className, title, no, active, progress }: { className?: string, 
     <div className={'flex flex-grow ' + className}>
       <div className='flex flex-col items-center mr-[1.5em]' >
         <div className='text-[1.5em] text-[#005F59] mb-[0.5em]'>STEP</div>
-        <div className={`w-[6.5em] h-[6.5em] rounded-[50%] ${active ? 'bg-[#FECD08]' : 'bg-[#005F59]'} ${ active ? 'text-[#005F59]' : 'text-[#fff]' } flex justify-center items-center`}>
+        <div className={`w-[6.5em] h-[6.5em] rounded-[50%] ${active ? 'bg-[#FECD08]' : 'bg-[#005F59]'} ${active ? 'text-[#005F59]' : 'text-[#fff]'} flex justify-center items-center`}>
           <span className='text-[2em]'>{no}</span>
         </div>
       </div>
