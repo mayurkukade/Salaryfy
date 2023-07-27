@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
 const Navbar = () => {
@@ -9,9 +9,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between  items-center h-24  w-full container  ">
+    <nav className="flex justify-between  items-center h-24  w-full p-10 ">
       <div className="w-[329px] h-[63.126px] shrink-0 flex">
-        <div className="w-[63.475px] h-[55.154px] shrink-0 ml-8">
+        <div className="w-[63.475px] h-[55.154px] shrink-0 ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="64"

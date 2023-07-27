@@ -1,8 +1,12 @@
-import herosection from "../img/bg/herosection.png";
-const HeroSection = () => {
+import herowave from "../../src/img/svg/Vector 30.jpg";
+import herosection from ".././img/bg/herosection.png";
+const HeroSection2 = () => {
   return (
-    <>
-      <div className="bg-[url('./src/img/bg/svgviewer-output.svg')] w-100 "> 
+    <div className="container" style={{ width: "100%", minHeight: "40vh",zIndex:"-1" }}>
+      <div className="absolute" style={{ width: "100%" }}>
+        <img alt="img wave" src={herowave} style={{ width: "100%" }} />
+      </div>
+      <div className="relative">
         <div className="flex w-full">
           <div className="container w-full">
             <div className="w-[703px] h-[263px] shrink-0 ml-[106px] leading-[68px] font-semibold tracking-[-2.72px] absolute mt-20">
@@ -76,12 +80,16 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="container">
-            <img alt="hero" className="mt-[101px] ml-16 " src={herosection} />
+            <img
+              alt="hero"
+              className="mt-[101px] ml-[10rem] "
+              src={herosection}
+            />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default HeroSection;
+export default HeroSection2;

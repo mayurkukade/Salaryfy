@@ -5,7 +5,7 @@ function App() {
     <>
       {" "}
       <Home />
-    <p>asdf</p>
+   <p>App</p>
     </>
   );
 }

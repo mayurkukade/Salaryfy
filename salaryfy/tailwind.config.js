@@ -5,6 +5,9 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    // container: {
+    //   center: true,
+    // },
     extend: {
       colors:{
         darkGreen:'#0E5F59',
