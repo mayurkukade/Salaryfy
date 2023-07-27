@@ -9,7 +9,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between items-center h-24 w-auto mx-auto  ">
+    <nav className="flex justify-between  items-center h-24  w-full container  ">
       <div className="w-[329px] h-[63.126px] shrink-0 flex">
         <div className="w-[63.475px] h-[55.154px] shrink-0 ml-8">
           <svg
