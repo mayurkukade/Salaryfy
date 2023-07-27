@@ -1,15 +1,22 @@
 import './questionnaire.css'
 import image from '../../assets/images/job-details-bg.png'
+
+enum SUB_STEP_STATUS {
+  COMPLETED = 'completed',
+  PENDING = 'pending',
+  REMAINING = 'remaining',
+}
+
 export default function QuestionnaireModule0() {
 
   return (
     <div className='w-100 flex flex-col items-center'>
-      <div className='flex-grow max-w-[100em] w-[100%] flex mb-[2em]'>
+      <div className='flex-grow max-w-[120em] w-[100%] flex mb-[2em]'>
         <Step progress={100} active={false} no={1} title='Select the job' className='' />
         <Step progress={5} active={true} no={2} title='Upload your Resume' className='mx-[2em]' />
         <Step progress={0} active={false} no={3} title='Get hired!' className='' />
       </div>
-      <div className='max-w-[100em] w-[100%] mb-[2em] flex flex-col'>
+      <div className='max-w-[120em] w-[100%] mb-[2em] flex flex-col'>
         <div className='text-[1.4em]'>Job Details</div>
         <div className='bg-cover-container'>
           <img src={image} style={{ width: '100%' }} />
@@ -51,22 +58,56 @@ export default function QuestionnaireModule0() {
 
           <div style={{ background: 'linear-gradient(45deg, #FFCE09 50%, transparent)' }} className='mb-[1em] text-[#0E5F59] text-[1.5em] px-[1em] rounded-[1em] py-[0.25em]'><span>3 steps selection process for&nbsp;</span><span className='font-bold'>Lenskart</span></div>
 
-          <div className='flex'>
-            <div className='flex bg-[#0E5F59] py-[1em] px-[2em] rounded-[1.5em] items-center'>
-              <div className='h-[2em] w-[2em] mr-[1em] rounded-[1em] flex items-center justify-center bg-[white] text-[#0E5F59] text-[2em]'>1</div>
-              <div className=''>
-                <div className='font-medium text-[white] text-[1.3em]'>Step-1</div>
-                <div className='text-[1.8em] font-medium text-[#FECD08]'>Upload your Resume</div>
-              </div>
-            </div>
+          <div className='flex justify-between mb-[2em]'>
+            <SubStep status={SUB_STEP_STATUS.PENDING} no={1} title='Upload your Resume' />
 
-            <div className='mx-[3em] flex items-center'>
-              <svg width="11" height="26" viewBox="0 0 11 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 13L0.499999 25.1244L0.5 0.875644L11 13Z" fill="#0E5F59" />
-              </svg>
-            </div>
+            <SubStepArrow />
+
+            <SubStep status={SUB_STEP_STATUS.REMAINING} no={2} title='Screening Quesions' />
+
+            <SubStepArrow />
+
+            <SubStep status={SUB_STEP_STATUS.REMAINING} no={3} title='Confirming Interview Slot' />
           </div>
 
+          <div className='font-semibold text-[1.8em] text-[#5B5B5B]'>Fill the details below</div>
+
+          <div className='py-[3em] px-[10em]'>
+            <div className='bg-[#F3FAF9] rounded-md py-[3em] px-[7em]'>
+              <div className='flex mb-[4em]'>
+                <div className='flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] pr-[1em]'>
+                  <div>Name</div>
+                  <div><input type="text" placeholder='Rahul' className='w-[100%] px-[0.5em] border border-[#005F59] border-solid rounded-md outline-none' /></div>
+                </div>
+                <div className='flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] pl-[1em]'>
+                  <div>Name</div>
+                  <div><input type="text" placeholder='Rahul' className='w-[100%] px-[0.5em] border border-[#005F59] border-solid rounded-md outline-none' /></div>
+                </div>
+              </div>
+              <div className='flex'>
+                <div className='flex flex-col max-w-[50%] flex-grow text-[#005F59] font-semibold text-[1.8em] pr-[1em]'>
+                  <div>Phone number</div>
+                  <div className='flex'>
+                    <input type="text" placeholder='Rahul' className='mr-[1em] w-[100%] border border-[#005F59] border-solid rounded-md outline-none' />
+                    <div className='bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]'>Verify</div>
+                  </div>
+                </div>
+                <div className='flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em] pl-[1em]'>
+                  <div className='flex flex-row items-center flex-grow h-[100%] px-[2em] py-[0.5em] justify-center rounded-[1em]' style={{ boxShadow: '0 0 5px rgb(0, 0, 0, 0.2)', backgroundColor: 'white' }}>
+                    <div className='mr-[0.5em]'>
+                      <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125" stroke="#005F59" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75" stroke="#005F59" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z" stroke="#005F59" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </div>
+                    <div>Upload Resume</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -78,6 +119,47 @@ function CalendarVector() {
     <div className='bg-[#FECD08] h-[16px] w-[14px]'>
       <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M2.11411 15H11.883C12.9071 15 13.7393 14.1678 13.7393 13.1437V3.89332C13.7393 2.86925 12.9071 2.03702 11.883 2.03702H11.1467V1.51851C11.1467 1.23332 10.9134 1 10.6282 1C10.343 1 10.1097 1.23332 10.1097 1.51851V2.03702H3.88746V1.51851C3.88746 1.23332 3.6541 1 3.36891 1C3.08372 1 2.8504 1.23332 2.8504 1.51851V2.03702H2.11411C1.09004 2.03702 0.257812 2.86925 0.257812 3.89332V13.1437C0.257812 14.1678 1.09004 15 2.11411 15ZM1.29487 3.89332C1.29487 3.44222 1.66302 3.07408 2.11411 3.07408H2.8504V3.59259C2.8504 3.87778 3.08372 4.1111 3.36891 4.1111C3.6541 4.1111 3.88742 3.87778 3.88742 3.59259V3.07408H10.1097V3.59259C10.1097 3.87778 10.343 4.1111 10.6282 4.1111C10.9134 4.1111 11.1467 3.87778 11.1467 3.59259V3.07408H11.883C12.3341 3.07408 12.7022 3.44222 12.7022 3.89332V5.40741H1.29487V3.89332ZM1.29487 6.44443H12.7023V13.1437C12.7023 13.5948 12.3341 13.9629 11.883 13.9629H2.11411C1.66302 13.9629 1.29487 13.5948 1.29487 13.1437V6.44443Z" fill="#0E5F59" stroke="#0E5F59" strokeWidth="0.3" />
+      </svg>
+    </div>
+  );
+}
+
+function SubStep({ status, no, title }: { status: string, no: number, title: string }) {
+
+  const stepCircleColor: string =
+    status === SUB_STEP_STATUS.PENDING ? 'border-[white]'
+      : status === SUB_STEP_STATUS.COMPLETED ? 'border-[#FECD08]'
+        : status === SUB_STEP_STATUS.REMAINING ? 'border-[#0E5F59]'
+          : 'border-red[#0E5F59]';
+
+  const stepBgColor: string =
+    status === SUB_STEP_STATUS.PENDING ? 'bg-[#0E5F59]'
+      : status === SUB_STEP_STATUS.COMPLETED ? 'bg-[#0E5F59]'
+        : status === SUB_STEP_STATUS.REMAINING ? 'bg-[white]'
+          : 'bg-[white]';
+
+  const titleColor: string =
+    status === SUB_STEP_STATUS.PENDING ? 'text-[#FECD08]'
+      : status === SUB_STEP_STATUS.COMPLETED ? 'text-[#FECD08]'
+        : status === SUB_STEP_STATUS.REMAINING ? 'text-[#0E5F59]'
+          : 'text-[white]';
+
+  return (
+    <div className={`flex ${stepBgColor} px-[2em] rounded-[1.5em] items-center h-[6.5em]`} style={{ boxShadow: '0 0 5px rgb(100, 100, 100, 0.25)' }}>
+      <div className={`border ${stepCircleColor} border-solid h-[2em] w-[2em] mr-[1em] rounded-[1em] flex items-center justify-center bg-[white] text-[#0E5F59] text-[2em]`}>{no}</div>
+      <div className=''>
+        {(status !== SUB_STEP_STATUS.REMAINING) && <div className='font-medium text-[white] text-[1.3em]'>Step-{no}</div>}
+        <div className={`text-[1.8em] font-medium ${titleColor}`}>{title}</div>
+      </div>
+    </div>
+  );
+}
+
+function SubStepArrow() {
+  return (
+    <div className='mx-[3em] flex items-center'>
+      <svg width="11" height="26" viewBox="0 0 11 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 13L0.499999 25.1244L0.5 0.875644L11 13Z" fill="#0E5F59" />
       </svg>
     </div>
   );
