@@ -1,7 +1,7 @@
-import HeroSection2 from "../components/HeroSection";
-import Navbar from "../components/Navbar";
-import OurStats from "../components/OurStats";
-import YellowWidth from "../components/YellowWidth";
+import HeroSection2 from "../components/HomeComponent/HeroSection";
+import Navbar from "../components/NavComponent/Navbar";
+import OurStats from "../components/HomeComponent/OurStats";
+import YellowWidth from "../components/HomeComponent/YellowWidth";
 
 const Home = () => {
   return (
