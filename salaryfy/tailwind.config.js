@@ -5,7 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    // container: {
+    //   center: true,
+    // },
     extend: {
+
+    
+  
       colors: {
         primaryDarkGreen: "#005F59",
         secondaryYellow1: "#FECD08",
@@ -27,7 +33,7 @@ export default {
         md: "1060px",
         lg: "1200px",
         xl: "1700px",
-      },
+      
     },
   
   },
