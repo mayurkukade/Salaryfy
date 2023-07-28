@@ -1,5 +1,8 @@
 import './questionnaire.css'
 import image from '../../assets/images/job-details-bg.png'
+import { ReactNode, useState } from 'react';
+import { Button, Menu, MenuItem } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 enum SUB_STEP_STATUS {
   COMPLETED = 'completed',
@@ -70,7 +73,8 @@ export default function QuestionnaireModule0() {
             <SubStep status={SUB_STEP_STATUS.REMAINING} no={3} title='Confirming Interview Slot' />
           </div>
           {/* <PersonalDetails/> */}
-          <ScreeningQuestions />
+          {/* <ScreeningQuestions /> */}
+          <ScheduleInterview />
 
           <div className='flex justify-center'>
             <div className='flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]'>
@@ -94,6 +98,54 @@ export default function QuestionnaireModule0() {
       </div>
     </div>
   );
+}
+
+function DropdownMenu({ className, label, endIcon }: { className: string, label: string, endIcon?: ReactNode }) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  return (
+    <div className={'flex ' + className}>
+      <Button sx={{ display: 'flex', flexGrow: '1', justifyContent: 'space-between' }} onClick={handleClick} variant='outlined' endIcon={endIcon || <></>}>{label}</Button>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
+    </div>
+  );
+}
+
+function ScheduleInterview() {
+  return (
+    <div>
+      <div className='font-semibold text-[1.8em] text-[#000] mb-[1em]'>You can select multiple locations with date and time</div>
+
+      <div className='bg-[#0E5F5910] p-[1.5em] rounded-[1.5em] flex mb-[2em]'>
+        <div className='flex flex-col mr-[2em]'>
+          <div className='text-[1.6em] text-[#5B5B5B] mb-[1em]'>Please confirm your location for interview</div>
+          <DropdownMenu className='flex-grow' label='Select Location' endIcon={<KeyboardArrowDownIcon />} />
+        </div>
+        <div className='flex flex-col flex-grow'>
+          <div className='text-[1.6em] text-[#5B5B5B] mb-[1em]'>Please confirm your location for interview</div>
+          <div className='flex'>
+            <DropdownMenu className='flex-grow mr-[1em]' label='Select Date' endIcon={<KeyboardArrowDownIcon />} />
+            <DropdownMenu className='flex-grow max-w-[8em]' label='10' endIcon={<KeyboardArrowDownIcon />} />
+            <div className='mx-[1em] text-[1.5em] flex items-center'>:</div>
+            <DropdownMenu className='flex-grow max-w-[8em] mr-[1em]' label='30' endIcon={<KeyboardArrowDownIcon />} />
+            <DropdownMenu className='flex-grow max-w-[8em] mr-[1em]' label='AM' endIcon={<KeyboardArrowDownIcon />} />
+            <Button sx={{ backgroundColor: '#FECD08', color: '#0E5F59' }} variant='contained'><span className='font-bold'>Add</span></Button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  )
 }
 
 function CalendarVector() {
@@ -237,7 +289,7 @@ function ScreeningQuestions() {
   return (
     <>
       <div className='font-semibold text-[1.8em] text-[#5B5B5B] mb-[1em]'>Fill the details below</div>
-      
+
       <Question question='Do you currently live in the city for which you want to apply the job for?' />
       <YesNoResponse className='text-[1.5em] ml-[1.5em] mb-[1em]' />
       <QuestionSeparator className='mb-[2em]' />
@@ -325,11 +377,11 @@ function RatingResponse({ className }: { className?: string }) {
   }
   return (
     <div className={'flex ' + className}>
-        <Star className='mr-[1em]' active={true} />
-        <Star className='mr-[1em]' active={true} />
-        <Star className='mr-[1em]' active={true} />
-        <Star className='mr-[1em]' active={true} />
-        <Star className='' active={false} />
+      <Star className='mr-[1em]' active={true} />
+      <Star className='mr-[1em]' active={true} />
+      <Star className='mr-[1em]' active={true} />
+      <Star className='mr-[1em]' active={true} />
+      <Star className='' active={false} />
     </div>
   );
 }
