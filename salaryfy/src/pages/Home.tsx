@@ -1,15 +1,19 @@
-import Navbar from "../components/UI/Navbar"
+import HeroSection2 from "../components/HeroSection";
+import Navbar from "../components/Navbar";
+import OurStats from "../components/OurStats";
+import YellowWidth from "../components/YellowWidth";
 
 const Home = () => {
   return (
     <>
-    <Navbar />
-    <h1 className="text-pink-700 ">
-        Home
-    </h1>
-      
+      <div className="w-full block">
+        <Navbar />
+        <HeroSection2 />
+        <YellowWidth/>
+        <OurStats/>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
