@@ -13,7 +13,8 @@ export default {
         darkGreen:'#0E5F59',
         white:"#FFFFFF",
         yellow:"#FECD08",
-        greyBlue:"7B9E9C"
+        greyBlue:"7B9E9C",
+        lightBlue:"#E9FEFF"
       },
     
   
