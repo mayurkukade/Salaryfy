@@ -11,11 +11,11 @@ export default {
     
   
       colors: {
-        primaryDarkGreen: "#005F59",
-        secondaryYellow1: "#FECD08",
+        darkGreen: "#005F59",
+        yellow: "#FECD08",
         secondaryYellow2: "FFCD05",
         white: "#FFFFFF",
-        lightblue: " #E9FEFF",
+        lightBlue: " #E9FEFF",
         grey: "#5B5B5B",
         black: "#000000",
        darkgrey:" #B3B3B3",
@@ -38,3 +38,4 @@ export default {
   plugins: [],
 }
 
+}
