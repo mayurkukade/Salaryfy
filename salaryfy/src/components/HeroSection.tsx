@@ -60,7 +60,7 @@ const HeroSection2 = () => {
                   <option>Select</option>
                   <option>Select</option>
                 </select>
-                <div className="flex bg-yellow text-darkGreen ml-3 w-[123px] h-[43px] rounded-md  justify-center items-center ">
+                <div className="flex bg-yellow text-darkGreen ml-3 w-[123px] h-[43px] rounded-md  justify-center items-center relative ">
                   <button className="  text-[20.247px] font-medium ">Go</button>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
