@@ -11,7 +11,7 @@ export default {
     
   
       colors: {
-        darkGreen: "#005F59",
+        darkGreen:"#005F59",
         yellow: "#FECD08",
         secondaryYellow2: "FFCD05",
         white: "#FFFFFF",

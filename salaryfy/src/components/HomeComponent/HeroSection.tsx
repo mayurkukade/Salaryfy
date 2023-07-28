@@ -1,5 +1,5 @@
-import herowave from "../../src/img/svg/Vector 30.jpg";
-import herosection from ".././img/bg/herosection.png";
+import herowave from "../../../assets/Homepage/Vector 30.jpg";
+import herosection from "../../../assets/Homepage/herosection.png";
 const HeroSection2 = () => {
   return (
     <div className="container" style={{ width: "100%", minHeight: "40vh",zIndex:"-1" }}>
