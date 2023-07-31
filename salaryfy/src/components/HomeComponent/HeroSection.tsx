@@ -1,5 +1,7 @@
 import herowave from "../../../assets/Homepage/Vector 30.jpg";
 import herosection from "../../../assets/Homepage/herosection.png";
+// import React from 'react';
+
 const HeroSection2 = () => {
   return (
     <div className="container" style={{ width: "100%", minHeight: "40vh",zIndex:"-1" }}>
