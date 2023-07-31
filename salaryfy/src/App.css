@@ -10,3 +10,16 @@ html, body, #root {
   font-size: 10px;
   font-family: "Lexend", Helvetica;
 }
+
+.app-scrollbar {
+  overflow-y: scroll;
+}
+
+.app-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  background-color: #5b5b5b4c;
+}
+
+.app-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #0e5f59;
+}
