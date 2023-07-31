@@ -75,7 +75,8 @@ export default function QuestionnaireModule0() {
           </div>
           {/* <PersonalDetails/> */}
           {/* <ScreeningQuestions /> */}
-          <ScheduleInterview />
+          {/* <ScheduleInterview /> */}
+          <FresherDashboard />
 
           <div className='flex justify-center'>
             <div className='flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]'>
@@ -101,7 +102,60 @@ export default function QuestionnaireModule0() {
   );
 }
 
-function DropdownMenu({ className, label, endIcon }: { className: string, label: string, endIcon?: ReactNode }) {
+function FresherDashboard() {
+  return (
+    <>
+      <div className='text-[4em] text-[#005F59] font-bold mb-[1em]'>
+        Hi Rahul,
+      </div>
+      <div className='mb-[2em]'><span className='text-[2.2em] text-[#5B5B5B]'>Our placement manager will get in touch with you within 24 hours, meanwhile please check and complete your profile.</span></div>
+
+      <div className='flex flex-col'>
+        <div style={{ boxShadow: '0 0 10px rgb(0, 0, 0, 0.2)' }} className='mb-[2em] text-[1.8em] rounded-xl overflow-hidden grid grid-cols-[max-content,auto] grid-cols-auto [&>*]:whitespace-nowrap [&>*]:px-[1.5em] [&>*]:py-[0.5em] [&>*]:border-b [&>*]:border-solid [&>*]:border-b-[#0E5F591A] [&>*:nth-child(odd)]:bg-[#0E5F5919] [&>*:nth-child(odd)]:text-[#5b5b5b] [&>*:nth-child(odd)]:w-[10em] [&>*:nth-child(even)]:w-[100%]'>
+          <div>Full Name</div>
+          <div>Rahul Roy</div>
+          <div>Phone</div>
+          <div>+91-9999999999</div>
+          <div>Email</div>
+          <div>rahul.roy@mail.com</div>
+          <div>Status</div>
+          <div><span className='bg-[#0CBC8B] rounded-[1em] text-[white] px-[0.5em] py-[0.25em]'>Selected</span></div>
+          <div>Plan Opted</div>
+          <div>Rapid Placement</div>
+          <div>Sign Up Date</div>
+          <div>30th MAy 2023</div>
+          <div>Payment Method</div>
+          <div>Card</div>
+        </div>
+        <div style={{ boxShadow: '0 0 10px rgb(0, 0, 0, 0.2)' }} className='rounded-xl'>
+          <div className='grid grid-cols-[1fr,1fr] [&>*]:mx-[2em] [&>*]:my-[1em] p-[1.5em]'>
+            <div>
+              <div className='mb-[0.5em] text-[2em] text-[#005F59] font-semibold'>Highest Level of Education</div>
+              <DropdownMenu label='AM' endIcon={<KeyboardArrowDownIcon />} />
+            </div>
+            <div>
+              <div className='mb-[0.5em] text-[2em] text-[#005F59] font-semibold'>Board/University</div>
+              <DropdownMenu label='AM' endIcon={<KeyboardArrowDownIcon />} />
+            </div>
+            <div>
+              <div className='mb-[0.5em] text-[2em] text-[#005F59] font-semibold'>Stream</div>
+              <DropdownMenu label='AM' endIcon={<KeyboardArrowDownIcon />} />
+            </div>
+            <div>
+              <div className='mb-[0.5em] text-[2em] text-[#005F59] font-semibold'>Percentage secured</div>
+              <DropdownMenu label='AM' endIcon={<KeyboardArrowDownIcon />} />
+            </div>
+          </div>
+          <div className='ms-[3.5em] mb-[3em]'>
+            <Button variant='contained' sx={{ padding: '0.5em 2em' }}>Update</Button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function DropdownMenu({ className, label, endIcon }: { className?: string, label: string, endIcon?: ReactNode }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
