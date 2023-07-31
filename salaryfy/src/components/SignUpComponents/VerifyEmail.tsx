@@ -18,10 +18,10 @@ const VerifyEmail = () => {
           {/* otp code */}
           <div className='flex justify-between '>
                 <div className='flex'>
-                  <input type="text" className='w-[3.3rem] h-[3.3rem] mr-[1em] border border-[#005F59] border-solid rounded-md outline-none '  />
-                  <input type="text" className='w-[3.3rem] mr-[1em] border border-[#005F59] border-solid rounded-md outline-none' />
-                  <input type="text" className='w-[3.3rem] mr-[1em] border border-[#005F59] border-solid rounded-md outline-none' />
-                  <input type="text" className='w-[3.3rem] border border-[#005F59] border-solid rounded-md outline-none' />
+                <input type="text" className='bg-[#F4F4F4] w-[3.3rem] h-[3.3rem] mr-[1em] border border-[#005F59] border-solid rounded-md outline-none '  />
+                <input type="text" className='bg-[#F4F4F4] w-[3.3rem] mr-[1em] border border-[#005F59] border-solid rounded-md outline-none' />
+                <input type="text" className='bg-[#F4F4F4] w-[3.3rem] mr-[1em] border border-[#005F59] border-solid rounded-md outline-none' />
+                <input type="text" className='bg-[#F4F4F4] w-[3.3rem] border border-[#005F59] border-solid rounded-md outline-none' />
                 </div>
                 <div className='flex items-center'>
                   <div className='mr-[0.25em]'>
