@@ -5,11 +5,7 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-  
     extend: {
-
-    
-  
       colors: {
         darkGreen:"#005F59",
         yellow: "#FECD08",
@@ -22,9 +18,9 @@ export default {
        red:"#660000"
       },
       fontFamily: {
-        Lexend: [" Lexend,", "Gilroy-HeavyItalic;"],
+       "Lexend": ["Lexend,", "sans-serif"],
+       "Inter": ["Inter,", "sans-serif"],
       },
-
       screens: {
         xs: "480px",
         ss: "620px",
@@ -32,9 +28,7 @@ export default {
         md: "1060px",
         lg: "1200px",
         xl: "1700px",
-      
     },
-  
   },
   plugins: [],
 }
