@@ -15,6 +15,7 @@ export default {
         grey: "#5B5B5B",
         black: "#000000",
        darkgrey:" #B3B3B3",
+       red:"#660000"
       },
       fontFamily: {
        "Lexend": ["Lexend,", "sans-serif"],
