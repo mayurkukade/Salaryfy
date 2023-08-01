@@ -24,4 +24,8 @@ html, body, #root {
   background-color: #0e5f59;
 }
 
+.app-box-shadow {
+  box-shadow: 0 0 10px rgb(210, 210, 210, 0.7);
+}
+
 

@@ -5,6 +5,8 @@ import { Button, Menu, MenuItem, TextField } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Checkbox from '@mui/material/Checkbox';
+import DropdownMenu from '../../components/DropdownMenu';
+import Chip from './components/chip.component';
 enum SUB_STEP_STATUS {
   COMPLETED = 'completed',
   PENDING = 'pending',
@@ -250,22 +252,6 @@ function DocUploader({ className, label, uploading, progress }: { className?: st
 
 }
 
-function Chip({ className, label }: { className?: string, label: string }) {
-  return (
-    <>
-      <div className={'flex w-[max-content] items-center px-[1em] py-[0.25em] rounded-[1em] bg-[#005F59] text-[2em] ' + (className || '')}>
-        <div className='mr-[0.5em] text-white'>{label}</div>
-        <div>
-          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.71826 1.71924L15.1567 15.1577L1.71826 1.71924ZM1.71826 15.1577L15.1567 1.71924L1.71826 15.1577Z" fill="#F2F2F2" />
-            <path d="M1.71826 1.71924L15.1567 15.1577M1.71826 15.1577L15.1567 1.71924" stroke="white" stroke-width="2" stroke-linecap="round" />
-          </svg>
-        </div>
-      </div>
-    </>
-  );
-}
-
 function FresherDashboard() {
   return (
     <div className='flex'>
@@ -312,7 +298,7 @@ function FresherDashboard() {
           </div>
         </div>
         <div className='text-[2.6em] font-semibold my-[1em]'>Recommended jobs</div>
-        <div className='rounded-[2em] px-[2.5em] py-[2em]' style={{ boxShadow: '0 0 10px rgb(210, 210, 210, 0.7)' }}>
+        <div className='rounded-[2em] px-[2.5em] py-[2em] app-box-shadow'>
           <div className='flex mb-[1em]'>
             <div className='rounded-md border border-solid border-[#D7E8F0] p-[1em] h-[7.7em] w-[7.7em] flex items-center justify-center' style={{ background: 'linear-gradient(to right, #D7E8F0, #F1FAFB)' }}>
               <img src='src/assets/images/lenskart-icon.png' />
@@ -451,26 +437,7 @@ function UpcomingInterviewCard({ className }: { className?: string }) {
   );
 }
 
-function DropdownMenu({ className, label, endIcon }: { className?: string, label: string, endIcon?: ReactNode }) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  return (
-    <div className={'flex ' + className}>
-      <Button sx={{ display: 'flex', flexGrow: '1', justifyContent: 'space-between', bgcolor: 'white' }} onClick={handleClick} variant='outlined' endIcon={endIcon || <></>}>{label}</Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
-    </div>
-  );
-}
+
 
 function ScheduleInterview() {
 
