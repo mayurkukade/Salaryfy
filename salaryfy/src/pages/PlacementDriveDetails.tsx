@@ -1,12 +1,13 @@
+import PlacementCarousel from "../components/PlacementDriveDetailsComponents/PlacementCarousel";
 
 
 const PlacementDriveDetails = () => {
   return (
     <div className="container mx-auto grid grid-cols-6 gap-10">
       <div className="col-span-2 container mx-auto  ">
-        <p className="text-darkGreen">Our candidates placements</p>
+        <p className="text-darkGreen font-Lexend text-[1.75rem] font-semibold mb-5">Our candidates placements</p>
         <div>
-          <p>Carousel</p>
+          <PlacementCarousel/>
         </div>
       </div>
       <div className="col-span-4 container mx-auto p-5 ">
