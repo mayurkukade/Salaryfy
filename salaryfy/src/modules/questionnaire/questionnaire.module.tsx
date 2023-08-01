@@ -178,13 +178,22 @@ function FresherProfileUpload() {
               </div>
 
               <div className='text-[#5B5B5B] text-[2.4em] font-bold my-[2em]'>Education*</div>
-              <div className='grid grid-cols-[1fr,1fr] gap-[2em]'>
+              <div className='grid grid-cols-[1fr,1fr] gap-[2em] mb-[2em]'>
                 <DocUploader label='12th_standard.png' uploading={true} progress={100} />
-                <DocUploader label='Upload PAN' uploading={false} />
-                <DocUploader label='Cancelled Cheque' uploading={false} />
-                <DocUploader label='Front page of bank Passbook' uploading={false} />
+                <DocUploader label='graduate.png' uploading={true} progress={10} />
               </div>
+              <div><Button variant='contained'>Add</Button></div>
 
+              <div className='text-[#5B5B5B] text-[2.4em] font-bold my-[2em]'>Skills/Certification*</div>
+              <div className='grid grid-cols-[1fr,1fr] gap-[2em] mb-[2em]'>
+                <DocUploader label='MERN stack course.p...' uploading={true} progress={100} />
+              </div>
+              <div><Button variant='contained'>Add</Button></div>
+            </div>
+
+            <div className='flex gap-[2em] my-[2em] mt-[5em]'>
+              <Button style={{ minWidth: '10em' }} size='large' variant='outlined'>Cancel</Button>
+              <Button style={{ minWidth: '10em' }} size='large' variant='contained'>Save</Button>
             </div>
 
           </div>
@@ -209,10 +218,10 @@ function DocUploader({ className, label, uploading, progress }: { className?: st
               <path d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z" stroke="#005F59" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
-          <div className='flex flex-col gap-[0.25em] text-[#005F59] text-[2em] font-semibold flex-grow'>
+          <div className='flex flex-col gap-[0.25em] text-[#005F59] text-[2em] font-semibold flex-grow pr-[1em]'>
             <div>{label}</div>
             { (progress !== 100) && <div className='h-[4px] w-[100%] bg-[#D9D9D9] relative'>
-               <div className={ 'absolute w-[' + (progress || 0) + '%] h-[4px] bg-[#0E5F59]' }></div>
+               <div className='absolute h-[4px] bg-[#0E5F59]' style={{ width: (progress?.toString() || 0) + '%' }}></div>
             </div> }
           </div>
         </div>
