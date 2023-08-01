@@ -1,15 +1,21 @@
-import Navbar from "../components/UI/Navbar"
+import HeroSection2 from "../components/HomeComponent/HeroSection";
+import Navbar from "../components/NavComponent/Navbar";
+import OurStats from "../components/HomeComponent/OurStats";
+import YellowWidth from "../components/HomeComponent/YellowWidth";
+import PlacementsPartners from "../components/HomeComponent/PlacementsPartners";
 
 const Home = () => {
   return (
     <>
-    <Navbar />
-    <h1 className="text-pink-700 ">
-        Home
-    </h1>
-      
+      <div className="w-full block">
+        <Navbar />
+        <HeroSection2 />
+        <YellowWidth/>
+        <OurStats/>
+        <PlacementsPartners/>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

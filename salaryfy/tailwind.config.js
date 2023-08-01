@@ -6,15 +6,30 @@ export default {
   ],
   theme: {
     extend: {
-      colors:{
-        darkGreen : '#0E5F59',
-        white:"#FFFFFF",
-        yellow:"#FECD08",
-        greyBlue:"7B9E9C"
-      }
+      colors: {
+        darkGreen:"#005F59",
+        yellow: "#FECD08",
+        secondaryYellow2: "FFCD05",
+        white: "#FFFFFF",
+        lightBlue: " #E9FEFF",
+        grey: "#5B5B5B",
+        black: "#000000",
+       darkgrey:" #B3B3B3",
+      },
+      fontFamily: {
+       "Lexend": ["Lexend,", "sans-serif"],
+       "Inter": ["Inter,", "sans-serif"],
+      },
+      screens: {
+        xs: "480px",
+        ss: "620px",
+        sm: "768px",
+        md: "1060px",
+        lg: "1200px",
+        xl: "1700px",
     },
-  
   },
   plugins: [],
 }
 
+}
