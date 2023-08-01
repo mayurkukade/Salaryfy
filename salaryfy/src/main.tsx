@@ -5,17 +5,29 @@ import './index.css'
 import { ThemeProvider, createTheme } from '@mui/material';
 
 const theme = createTheme({
-  // Customize your theme here
   palette: {
     primary: {
-      main: '#005F59', // Change this to your primary color
+      main: '#005F59',
     },
     secondary: {
-      main: '#ff00ff', // Change this to your secondary color
+      main: '#ff00ff',
     },
   },
   typography: {
     button: { textTransform: 'none' }
+  },
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: '#005F5980',
+            },
+          },
+        }
+      }
+    }
   }
 });
 
