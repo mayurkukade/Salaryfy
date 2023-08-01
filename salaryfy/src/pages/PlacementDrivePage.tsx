@@ -1,4 +1,4 @@
-import Select from "react-select";
+
 import PlacementPageComponent from "../components/PlacementPageComponent/PlacementPage";
 import JobCard from "../components/PlacementPageComponent/JobCard";
 

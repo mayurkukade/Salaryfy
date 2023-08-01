@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable react-refresh/only-export-components */
+
 import chroma from "chroma-js";
 
 import { ColourOption, colourOptions } from "../../utils/Data/data";

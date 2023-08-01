@@ -1,10 +1,13 @@
-import { ClassNames } from "@emotion/react";
+
 
 const PlacementDriveDetails = () => {
   return (
     <div className="container mx-auto grid grid-cols-6 gap-10">
       <div className="col-span-2 container mx-auto  ">
         <p className="text-darkGreen">Our candidates placements</p>
+        <div>
+          <p>Carousel</p>
+        </div>
       </div>
       <div className="col-span-4 container mx-auto p-5 ">
         <p className="text-end">Back</p>
