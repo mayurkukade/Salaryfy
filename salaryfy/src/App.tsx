@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/NavComponent/Navbar";
 import Home from "./pages/Home";
@@ -35,7 +35,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful />} />
-          <Route path="questionnaire" element={<QuestionnaireModule />} />
+
+          <Route path='/questionnaire' element={<><Outlet/></>}  >
+            <QuestionnaireModule/>
+            
+          </Route>
+
           <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful />} />
         </Routes>
         <Footer />
