@@ -1,7 +1,18 @@
 // import React, { useState } from 'react';
 // import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 // import Typography from '@mui/material/Typography';
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+// import required modules
+import { FreeMode, Pagination } from "swiper/modules";
 import AccordionCustom from "./Accordion";
+import LandingPageTestimonials from "./LandingPageTestimonials";
 
 const LandingPage = () => {
   return (
@@ -115,66 +126,55 @@ const LandingPage = () => {
         </div>
 
         {/* Card Testimonials*/}
-        <div className="overflow-x-auto flex gap-[50px]  h-[35rem] items-center px-[80px]">
-          <div
-            className="bg-[#FFF] rounded-[1.875rem]  w-[40%] h-[35vh] "
-            style={{ boxShadow: "7px 16px 56px 1px rgba(0, 0, 0, 0.10)" }}
+        <div className="container mx-auto  h-[35rem]  ">
+          <Swiper
+            slidesPerView={2}
+            spaceBetween={"0px"}
+            freeMode={true}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[FreeMode, Pagination]}
+            className="mySwiper h-[28rem]"
           >
-            <div className="p-4 w-[27.09231rem] h-[15.291rem] ml-[90px] mt-9">
-              <h2 className="text-lg font-semibold text-center">Card Title</h2>
-              <p className="text-gray-600">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam
-                fugit ab, repellendus quod nemo aut ipsam amet. Quos corporis
-                veritatis eos? Repellendus, id. Ratione dolor dolorum sapiente
-                ex voluptas officiis.
-              </p>
-            </div>
-          </div>
+            <SwiperSlide>
+              <LandingPageTestimonials
+                content={
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ab nobis dolore culpa veritatis sequi eveniet inventore dolores aliquid fugit!"
+                }
+                imgSrc={"../../assets/Logos/Bloomberg-logo.png"}
+              />
+            </SwiperSlide>
 
-          <div
-            className="bg-[#FFF] rounded-[1.875rem]  w-[40%] h-[35vh]"
-            style={{ boxShadow: "7px 16px 56px 1px rgba(0, 0, 0, 0.10)" }}
-          >
-            <div className="p-4 w-[27.09231rem] h-[15.291rem] ml-[90px] mt-9">
-              <h2 className="text-lg font-semibold text-center">Card Title</h2>
-              <p className="text-gray-600">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam
-                fugit ab, repellendus quod nemo aut ipsam amet. Quos corporis
-                veritatis eos? Repellendus, id. Ratione dolor dolorum sapiente
-                ex voluptas officiis.
-              </p>
-            </div>
-          </div>
+            <SwiperSlide>
+            <LandingPageTestimonials
+                content={
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ab nobis dolore culpa veritatis sequi eveniet inventore dolores aliquid fugit!"
+                }
+                imgSrc={"../../assets/Logos/The_Economic_Times_logo.png"}
+              />
+            </SwiperSlide>
+            
+            <SwiperSlide>
+              <LandingPageTestimonials
+                content={
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ab nobis dolore culpa veritatis sequi eveniet inventore dolores aliquid fugit!"
+                }
+              
+                imgSrc={"../../assets/Logos/Bloomberg-logo.png "}
+              />
+            </SwiperSlide>
 
-          <div
-            className="bg-[#FFF] rounded-[1.875rem]  w-[40%] h-[35vh]"
-            style={{ boxShadow: "7px 16px 56px 1px rgba(0, 0, 0, 0.10)" }}
-          >
-            <div className="p-4 w-[27.09231rem] h-[15.291rem] ml-[90px] mt-9">
-              <h2 className="text-lg font-semibold text-center">Card Title</h2>
-              <p className="text-gray-600">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam
-                fugit ab, repellendus quod nemo aut ipsam amet. Quos corporis
-                veritatis eos? Repellendus, id. Ratione dolor dolorum sapiente
-                ex voluptas officiis.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="bg-[#FFF] rounded-[1.875rem]  w-[40%] h-[35vh]"
-            style={{ boxShadow: "7px 16px 56px 1px rgba(0, 0, 0, 0.10)" }}
-          >
-            <div className="p-4 w-[27.09231rem] h-[15.291rem] ml-[90px] mt-9">
-              <h2 className="text-lg font-semibold text-center">Card Title</h2>
-              <p className="text-gray-600">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam
-                fugit ab, repellendus quod nemo aut ipsam amet. Quos corporis
-                veritatis eos? Repellendus, id. Ratione dolor dolorum sapiente
-                ex voluptas officiis.
-              </p>
-            </div>
-          </div>
+            <SwiperSlide>
+            <LandingPageTestimonials
+                content={
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ab nobis dolore culpa veritatis sequi eveniet inventore dolores aliquid fugit!"
+                }
+                imgSrc={"../../assets/Logos/The_Economic_Times_logo.png"}
+              />
+            </SwiperSlide>
+            
+          </Swiper>
         </div>
 
         {/* FAQS Section */}
