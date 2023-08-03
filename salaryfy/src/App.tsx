@@ -9,6 +9,9 @@ import ForgorPasswordEmail from "./pages/ForgorPasswordEmail";
 import { Login } from "./pages/Login";
 import ResetPassword from "./pages/ResetPassword";
 import { PasswordResetSuccessful } from "./pages/PasswordResetSuccessful";
+import PlanNotAvailable from "./pages/PlanNotAvailable";
+import FillDetails from "./pages/FillDetails";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
    <Route path="/login"element={<Login/>}/>
    <Route path="/resetpassword"element={<ResetPassword/>}/>
    <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful/>}/>
+   <Route path="/plannotavailable" element={<PlanNotAvailable/>}/>
+   <Route path="/filldetails"element={<FillDetails/>}/>
+  <Route path="/landingpage"element={<LandingPage/>}/>
 
    
 
