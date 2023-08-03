@@ -22,27 +22,14 @@ import LandingPage from "./pages/LandingPage";
 function App() {
   return (
     <>
-    <Navbar />
+      <Navbar />
       <Routes>
+        ?
         <Route path="/" element={<Home />} />
         <Route path="/placementdrive" element={<PlacementDrivePage />} />
         <Route path="/placementdetails" element={<PlacementDriveDetails />} />
-    <BrowserRouter>
-    
-    <Routes>
-   <Route path="/" element={<Home/>}/>
-   <Route path="/signup" element={<SignUp/>}/>
-   <Route path="/verifyemail" element={<VerifyEmail/>}/>
-   <Route path="/paymentcompleted"element={<Paymentcompleted/>}/>
-   <Route path="/forgotpasswordotp"element={<ForgotPasswordOtp/>}/>
-   <Route path="/forgotpasswordemail"element={<ForgorPasswordEmail/>}/>
-   <Route path="/login"element={<Login/>}/>
-   <Route path="/resetpassword"element={<ResetPassword/>}/>
-   <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful/>}/>
-   <Route path="/plannotavailable" element={<PlanNotAvailable/>}/>
-   <Route path="/filldetails"element={<FillDetails/>}/>
-  <Route path="/landingpage"element={<LandingPage/>}/>
-
+        {/* <Routes> */}
+        <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/verifyemail" element={<VerifyEmail />} />
         <Route path="/paymentcompleted" element={<Paymentcompleted />} />
@@ -54,8 +41,9 @@ function App() {
           path="/passwordresetsuccessfully"
           element={<PasswordResetSuccessful />}
         />
-
-        
+        <Route path="/plannotavailable" element={<PlanNotAvailable />} />
+        <Route path="/filldetails" element={<FillDetails />} />
+        <Route path="/landingpage" element={<LandingPage />} />
       </Routes>
       <Footer />
     </>
