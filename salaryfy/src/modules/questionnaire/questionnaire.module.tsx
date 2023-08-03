@@ -10,11 +10,12 @@ export default function QuestionnaireModule() {
 
   return (
     <>
-      <Route path="personal-details" element={<QuestionnairePersonalDetails />} />
+      {/* <Route path="personal-details" element={<QuestionnairePersonalDetails />} />
       <Route path="screening-questions" element={<ScreeningQuestions />} />
       <Route path="schedule-interview" element={<ScheduleInterviewPage />} />
       <Route path="fresher-dashboard" element={<FresherDashboardPage />} />
-      <Route path="fresher-profile-upload" element={<FresherProfileUploadPage />} />
+      <Route path="fresher-profile-upload" element={<FresherProfileUploadPage />} /> */}
+      Hello
     </>
   );
 }
