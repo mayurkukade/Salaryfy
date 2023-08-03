@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/NavComponent/Navbar";
 import Home from "./pages/Home";
@@ -15,11 +15,7 @@ import "./App.css";
 import Footer from "./components/FooteComponent/Footer";
 import PlacementDrivePage from "./modules/questionnaire/PlacementDrivePage";
 import PlacementDriveDetails from "./pages/PlacementDriveDetails";
-import FresherDashboardPage from "./modules/questionnaire/pages/fresher-dashboard.page";
-import FresherProfileUploadPage from "./modules/questionnaire/pages/fresher-profile-upload.page";
-import QuestionnairePersonalDetails from "./modules/questionnaire/pages/personal-details.page";
-import ScheduleInterviewPage from "./modules/questionnaire/pages/schedule-interview.page";
-import ScreeningQuestions from "./modules/questionnaire/pages/screening-questions";
+import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
 
 function App() {
   return (
@@ -40,14 +36,14 @@ function App() {
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful />} />
 
-          <Route path='/questionnaire'>
-            <Route path="" element={<Navigate to="personal-details" />} />
+          <Route path='/questionnaire/*' element={<QuestionnaireModule/>} />
+            {/* <Route path="" element={<Navigate to="personal-details" />} />
             <Route path="personal-details" element={<QuestionnairePersonalDetails />} />
             <Route path="screening-questions" element={<ScreeningQuestions />} />
             <Route path="schedule-interview" element={<ScheduleInterviewPage />} />
             <Route path="fresher-dashboard" element={<FresherDashboardPage />} />
             <Route path="fresher-profile-upload" element={<FresherProfileUploadPage />} />
-          </Route>
+          </Route> */}
 
           <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful />} />
         </Routes>
