@@ -17,7 +17,6 @@ export default function HomeCarousole2() {
   return (
     <div className='container mx-auto '>
       <Swiper
-        
         slidesPerView={3}
         spaceBetween={30}
         freeMode={true}
