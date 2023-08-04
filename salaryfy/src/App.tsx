@@ -37,13 +37,6 @@ function App() {
           <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful />} />
 
           <Route path='/questionnaire/*' element={<QuestionnaireModule/>} />
-            {/* <Route path="" element={<Navigate to="personal-details" />} />
-            <Route path="personal-details" element={<QuestionnairePersonalDetails />} />
-            <Route path="screening-questions" element={<ScreeningQuestions />} />
-            <Route path="schedule-interview" element={<ScheduleInterviewPage />} />
-            <Route path="fresher-dashboard" element={<FresherDashboardPage />} />
-            <Route path="fresher-profile-upload" element={<FresherProfileUploadPage />} />
-          </Route> */}
 
           <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful />} />
         </Routes>
