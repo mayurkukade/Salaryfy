@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import lenscartlogo from "../../../assets/Logos/lenskartlogo.png";
 const JobCard = () => {
   return (
-    <div className="p-[2em] app-box-shadow container mx-auto mt-8 w-full rounded-[2em]" style={{ background: "linear-gradient(96deg, rgba(254, 205, 8, 0.01) 0%, rgba(0, 95, 89, 0.04) 100%)" }}>
+    <div className="p-[2em] app-box-shadow mx-auto mt-8 w-full rounded-[2em]" style={{ background: "linear-gradient(96deg, rgba(254, 205, 8, 0.01) 0%, rgba(0, 95, 89, 0.04) 100%)" }}>
       <div className="flex gap-[2em] mb-[1em]">
         <div className="rounded-[1em] p-[1em] flex items-center justify-center h-[7em] w-[7em] bg-gradient-to-br from-[#F1FAFB] to-[#D7E8F0]"><img src={lenscartlogo} /></div>
         <div className="flex-grow flex-row">

@@ -19,36 +19,3 @@ export default function QuestionnaireModule() {
     </Routes>
   );
 }
-
-// export default function QuestionnaireModule() {
-//   const { pathname: currentPath } = useLocation();
-//   // const currentPath = location.pathname;
-
-//   // debugger
-//   const getCurrentElement = () => {
-//     switch (currentPath) {
-//       case '/questionnaire':
-//         return <QuestionnairePersonalDetails />;
-//       case '/questionnaire/personal-details':
-//         return <QuestionnairePersonalDetails />;
-//       case '/questionnaire/screening-questions':
-//         return <ScreeningQuestions />;
-//       case '/questionnaire/schedule-interview':
-//         return <ScheduleInterviewPage />;
-//       case '/questionnaire/fresher-dashboard':
-//         return <FresherDashboardPage />;
-//       case '/questionnaire/fresher-profile-upload':
-//         return <FresherProfileUploadPage />;
-//       default:
-//         return null;
-//     }
-//   };
-
-//   return (
-//     <>
-//       {/* Your common module components or layout here */}
-//       {/* <h2>Questionnaire Module</h2> */}
-//       {getCurrentElement()}
-//     </>
-//   );
-// }

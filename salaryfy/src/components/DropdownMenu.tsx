@@ -12,7 +12,7 @@ export default function DropdownMenu({ className, label, endIcon, variant = 'out
   };
 
   return (
-    <div className={'flex ' + className}>
+    <div className={'flex ' + (className || '')}>
       <Button variant={ variant === 'text' ? 'outlined' : variant } sx={{ display: 'flex', flexGrow: '1', justifyContent: 'space-between' }} onClick={handleClick} endIcon={endIcon || <></>}>{label}</Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={handleClose}>Profile</MenuItem>
