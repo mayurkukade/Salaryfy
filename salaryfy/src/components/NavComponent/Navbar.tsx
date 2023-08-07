@@ -253,7 +253,7 @@ const Navbar = () => {
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">Contact</li>
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">About us</li>
         <li className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5">
-          <div className="text-center text-white cursor-pointer ">Sign In</div>
+          <div className="text-center text-white cursor-pointer text-[1.6em]">Sign In</div>
         </li>
       </ul>
       <div onClick={handleNav} className="block md:hidden">
