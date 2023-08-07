@@ -22,7 +22,7 @@ import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Navbar />
       <Routes>
         ?
@@ -49,7 +49,7 @@ function App() {
         <Route path='/questionnaire/*' element={<QuestionnaireModule/>} />
       </Routes>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 
