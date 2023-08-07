@@ -23,7 +23,7 @@ import EligibilityForm from "./pages/EligibilityForm";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Navbar />
       <Routes>
         ?
@@ -51,7 +51,7 @@ function App() {
         <Route path="/eligibilityform" element={<EligibilityForm/>}/>
       </Routes>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 
