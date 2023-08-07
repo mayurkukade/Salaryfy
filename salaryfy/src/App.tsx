@@ -19,6 +19,7 @@ import PlanNotAvailable from "./pages/PlanNotAvailable";
 import FillDetails from "./pages/FillDetails";
 import LandingPage from "./pages/LandingPage";
 import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
+import EligibilityForm from "./pages/EligibilityForm";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
         <Route path="/landingpage" element={<LandingPage />} />
 
         <Route path='/questionnaire/*' element={<QuestionnaireModule/>} />
+        <Route path="/eligibilityform" element={<EligibilityForm/>}/>
       </Routes>
       <Footer />
     </>
