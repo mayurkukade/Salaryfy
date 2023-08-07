@@ -93,7 +93,7 @@ const HeroSection2 = () => {
     // </div>
 
     <>
-      <div className="absolute z-[-1]" style={{ width: "100%" }}>
+      <div className="absolute z-[-1] " style={{ width: "100%" }}>
         <img alt="img wave" src={herowave} style={{ width: "100%" }} />
       </div>
       <div
@@ -105,7 +105,7 @@ const HeroSection2 = () => {
         // }}
       >
         <div
-          className="text-center leading-none text-[3rem] mt-[5rem] font-semibold md:p-5  md:w-[60%] md:text-left md:text-[5rem]"
+          className="text-center leading-none text-[3rem] mt-[2.5rem] font-semibold md:p-5  md:w-[60%] md:text-left md:text-[5rem] md:mt-[5rem]"
           // style={{ border: "2px solid black" }}
         >
           <p className="text-darkGreen font-Lexend  ">End to end</p>
@@ -174,7 +174,7 @@ const HeroSection2 = () => {
             </div>
           </p>
         </div>
-        <div className="mt-[5rem]">
+        <div className="mt-[1.5rem] md:mt-[5rem] ">
           <img alt="hero" className=" w-full" src={herosection} />
         </div>
       </div>
