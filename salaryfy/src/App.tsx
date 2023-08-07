@@ -18,6 +18,7 @@ import PlacementDriveDetails from "./pages/PlacementDriveDetails";
 import PlanNotAvailable from "./pages/PlanNotAvailable";
 import FillDetails from "./pages/FillDetails";
 import LandingPage from "./pages/LandingPage";
+import EligibilityForm from "./pages/EligibilityForm";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="/plannotavailable" element={<PlanNotAvailable />} />
         <Route path="/filldetails" element={<FillDetails />} />
         <Route path="/landingpage" element={<LandingPage />} />
+        <Route path="/eligibilityform" element={<EligibilityForm/>}/>
       </Routes>
       <Footer />
     </>
