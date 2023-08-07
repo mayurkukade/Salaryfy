@@ -6,12 +6,12 @@ import universityllogo from '../../../assets/Logos/texasuniversity.png'
 
 const Universities = () => {
   return (
-    <div className="container mx-auto font-Lexend mt-[8rem] mb-[8rem]">
+    <div className="container mx-auto font-Lexend mt-[8rem] mb-[8rem] ">
       <p className="text-center text-darkGreen text-[3.9375rem] font-semibold ">
         Students from <span className="text-yellow">Universities</span>
       </p>
 
-      <div className="grid grid-cols-4 grid-rows-3 text-darkGreen font-semibold gap-4 justify-center text-center mt-[5.06rem]">
+      <div className="grid grid-cols-4 grid-rows-3 text-darkGreen font-semibold gap-4 justify-center text-center mt-[5.06rem] ">
         <div
           style={{
             borderRadius: "0.8125rem",

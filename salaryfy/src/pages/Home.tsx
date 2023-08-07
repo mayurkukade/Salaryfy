@@ -12,11 +12,11 @@ const Home = () => {
       <div className="w-full block">
        
         <HeroSection2 />
-        <YellowWidth/>
+        {/* <YellowWidth/>
         <OurStats/>
         <PlacementsPartners/>
         <Testimonals/>
-        <Universities/>
+        <Universities/> */}
         
       </div>
     </>
