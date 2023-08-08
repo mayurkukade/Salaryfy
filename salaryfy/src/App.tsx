@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/NavComponent/Navbar";
 import Home from "./pages/Home";
@@ -19,13 +19,13 @@ import PlanNotAvailable from "./pages/PlanNotAvailable";
 import FillDetails from "./pages/FillDetails";
 import LandingPage from "./pages/LandingPage";
 import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
+import EligibilityForm from "./pages/EligibilityForm";
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Navbar />
       <Routes>
-        ?
         <Route path="/" element={<Home />} />
         <Route path="/placementdrive" element={<PlacementDrivePage />} />
         <Route path="/placementdetails" element={<PlacementDriveDetails />} />
@@ -46,10 +46,11 @@ function App() {
         <Route path="/filldetails" element={<FillDetails />} />
         <Route path="/landingpage" element={<LandingPage />} />
 
-        <Route path='/questionnaire/*' element={<QuestionnaireModule/>} />
+        <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
+        <Route path="/eligibilityform" element={<EligibilityForm />} />
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </>
   );
 }
 

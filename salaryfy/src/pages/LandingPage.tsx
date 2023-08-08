@@ -16,8 +16,8 @@ import LandingPageTestimonials from "./LandingPageTestimonials";
 
 const LandingPage = () => {
   return (
-    <section className=" border-2 border-black">
-      <div className="container mx-auto my-[100px] ">
+    <section className=" ">
+      <div className="container mx-auto my-[100px]">
         {/* First Banner Section */}
         <div className="flex ">
           <img

@@ -1,27 +1,28 @@
-
 import avtarlogo from "../../../assets/Homepage/feedbackimg.png";
 import Google from "../../../assets/Homepage/Google.png";
 import "./testimonals.css";
 const TestimonalsCards = () => {
   return (
     <div className="container mx-auto mb-9">
-      <p className="bubble speech w-auto ">
+      <div className="bubble speech w-auto ">
         One of the best decission of my life, I worked hard and it was so
         important for me to be seen as a man, by working physically, and working
         long, excessive hours.
         <hr />
         <div className="flex justify-around">
           <div className="text-[0.5rem]">
-            <span  >Placed by Data Folkz at</span>
+            <span>Placed by Data Folkz at</span>
             <img src={Google} alt="google logo" className="h-[1rem]" />
           </div>
 
           <div className="text-[0.5rem] leading-5 mt-1">
-            <span className="block" >Placed in</span>
-            <span className="border rounded-xl  bg-yellow text-darkGreen ">5 Days</span>
+            <span className="block">Placed in</span>
+            <span className="border rounded-xl  bg-yellow text-darkGreen ">
+              5 Days
+            </span>
           </div>
         </div>
-      </p>
+      </div>
 
       <div className="flex content-center  ">
         <div className="mt-5">
@@ -32,7 +33,9 @@ const TestimonalsCards = () => {
 
         <div className="flex-col  self-center p-5 leading-8 ">
           <p className="text-white font-Lexend text-[24px]">Ashish Mehta</p>
-          <span className="text-slate-400 ">Data Analytics & Big Data Engineer </span>
+          <span className="text-slate-400 ">
+            Data Analytics & Big Data Engineer{" "}
+          </span>
           <div className="flex bg-yellow text-darkGreen  w-[12rem] h-auto rounded-xl  justify-center items-center relative">
             <button className="  text-[20.247px] font-medium ">Linkedin</button>
             <svg
