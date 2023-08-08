@@ -20,6 +20,7 @@ import FillDetails from "./pages/FillDetails";
 import LandingPage from "./pages/LandingPage";
 import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
 import EligibilityForm from "./pages/EligibilityForm";
+import Roadmap from "./pages/Roadmap"
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
 
         <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
         <Route path="/eligibilityform" element={<EligibilityForm />} />
+        <Route path="/roadmap" element={<Roadmap/>}/>
       </Routes>
       <Footer />
     </>
