@@ -54,11 +54,12 @@ export default function PlacementJobDetails() {
         </div>
       </Box>
       <Box sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
-        <div className='bg-cover-container min-h-[15em] flex flex-col'>
+        <div className='bg-cover-container min-h-[15em] flex flex-col rounded-[2em,0em] overflow-hidden'>
           <div className='w-[100%] h-[100%] absolute flex z-[1] py-[1em] px-[2em]'></div>
-          <div className='flex-grow bg-[red] flex'>
-            <img src={image} className='h-[100%] w-full'
-              style={{ objectFit: 'contain' }} />
+          <div className='flex-grow h-[100%] w-[100%] relative flex justify-center overflow-hidden'>
+            <div className='h-[100%] w-[max-content] absolute flex justify-center'>
+              <img src={image} className='h-full' />
+            </div>
           </div>
         </div>
 

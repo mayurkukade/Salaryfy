@@ -17,7 +17,7 @@ export default {
        darkgrey:" #B3B3B3",
        red:"#660000",
        gradientblue:" #0E5F59",
-       darkgrey:"#D9D9D9"
+       darkGrey:"#D9D9D9"
       },
       fontFamily: {
        "Lexend": ["Lexend,", "sans-serif"],
