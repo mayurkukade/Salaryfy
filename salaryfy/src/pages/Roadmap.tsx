@@ -13,7 +13,7 @@ const Roadmap = () => {
           <h2 className="list-item ">
             <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
             Create Your Profile <br />
-            <p className="px-2 text-[0.6rem] md:text-[0.9rem] ">
+            <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
               Build a strong and complete profile with accurate details to get
               noticed by top companies.
             </p>
@@ -21,7 +21,7 @@ const Roadmap = () => {
           <h2 className="list-item ">
             <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
             Connect with the Placement Manager <br />
-            <p className="px-2 text-[0.6rem] md:text-[0.9rem] ">
+            <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
               Build a strong and complete profile with accurate details to get
               noticed by top companies.
             </p>
@@ -30,7 +30,7 @@ const Roadmap = () => {
             <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
             Upload Essential documents
             <br />
-            <p className="px-2 text-[0.6rem] md:text-[0.9rem] ">
+            <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
               Build a strong and complete profile with accurate details to get
               noticed by top companies.
             </p>
@@ -38,7 +38,7 @@ const Roadmap = () => {
           <h2 className="list-item ">
             <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
             Aligned the profile with the Company <br />
-            <p className="px-2 text-[0.6rem] md:text-[0.9rem] ">
+            <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
               Build a strong and complete profile with accurate details to get
               noticed by top companies.
             </p>
@@ -46,7 +46,7 @@ const Roadmap = () => {
           <h2 className="list-item ">
             <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
             Recruitment in Progress <br />
-            <p className="px-2 text-[0.6rem] md:text-[0.9rem] ">
+            <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
               Build a strong and complete profile with accurate details to get
               noticed by top companies.
             </p>
@@ -55,7 +55,7 @@ const Roadmap = () => {
             <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
             Final Selection
             <br />
-            <p className="px-2 text-[0.6rem] md:text-[0.9rem] ">
+            <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
               Build a strong and complete profile with accurate details to get
               noticed by top companies.
             </p>
@@ -63,7 +63,7 @@ const Roadmap = () => {
           <h2 className="list-item ">
             <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
             Offer Letter Released <br />
-            <p className="px-2 text-[0.6rem] md:text-[0.9rem] ">
+            <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
               Build a strong and complete profile with accurate details to get
               noticed by top companies.
             </p>
@@ -72,7 +72,7 @@ const Roadmap = () => {
             <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
             Offer Letter Accepted
             <br />
-            <p className="px-2 text-[0.6rem] md:text-[0.9rem] ">
+            <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
               Build a strong and complete profile with accurate details to get
               noticed by top companies.
             </p>
@@ -81,7 +81,7 @@ const Roadmap = () => {
             <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
             Pay 1% of CTC
             <br />
-            <p className="px-2 text-[0.6rem] md:text-[0.9rem] ">
+            <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
               Build a strong and complete profile with accurate details to get
               noticed by top companies.
             </p>
@@ -89,8 +89,9 @@ const Roadmap = () => {
         </div>
 
         {/* Having Doubts  */}
-        <div className=" w-[90%] mx-auto  md:h-[23.75rem] md:mt-[70px] sm:w-[50%] md:w-[30%] "
-        // style={{border:"2px solid black"}}
+        <div
+          className=" w-[90%] mx-auto  md:h-[23.75rem] md:mt-[70px] sm:w-[50%] md:w-[30%] "
+          // style={{border:"2px solid black"}}
         >
           <h3 className="text-[1.5rem] font-bold text-center md:text-[2rem]">
             Having doubts?

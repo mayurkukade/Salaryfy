@@ -17,6 +17,7 @@ export default {
         gradientblue: " #0E5F59",
         darkgrey: "#D9D9D9",
         aqua: "#F3F7F7",
+        lightgrey:"B6B6B6",
       },
       fontFamily: {
         Lexend: ["Lexend,", "sans-serif"],
