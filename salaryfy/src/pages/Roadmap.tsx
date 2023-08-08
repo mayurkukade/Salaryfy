@@ -5,8 +5,8 @@ const Roadmap = () => {
     <div className="bg-offwhite">
       <div className="container mx-auto p-2 text-darkGreen flex flex-col  md:flex-row">
         {/*Main Roadmap Div  */}
-        <div className="py-5 md:px-[80px] w-[70%]  ml-[45px] text-[1.2rem] flex flex-col gap-[2rem] md:text-[1.5rem]">
-          <h1 className="text-[1.5rem] font-bold md:text-[2rem]">
+        <div className="py-5 md:px-[80px] w-[70%]  ml-[45px] text-[1.2rem] flex flex-col gap-[2rem] md:text-[1.5rem] ">
+          <h1 className="text-[1.5rem] font-bold md:text-[2.3rem]">
             Your Roadmap
           </h1>
 
@@ -14,7 +14,7 @@ const Roadmap = () => {
             <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
             Create Your Profile <br />
             <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-              Build a strong and complete profile with accurate details to get
+              Build a strong and complete profile with accurate <br /> details to get
               noticed by top companies.
             </p>
           </h2>
@@ -22,8 +22,7 @@ const Roadmap = () => {
             <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
             Connect with the Placement Manager <br />
             <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-              Build a strong and complete profile with accurate details to get
-              noticed by top companies.
+            Reach out to the placement manager for guidance and <br /> assistance throughout the placement process.
             </p>
           </h2>
           <h2 className="list-item ">
@@ -31,24 +30,21 @@ const Roadmap = () => {
             Upload Essential documents
             <br />
             <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-              Build a strong and complete profile with accurate details to get
-              noticed by top companies.
+            Upload all necessary documents such as your resume,<br /> certificates, and identity proof for verification.
             </p>
           </h2>
           <h2 className="list-item ">
             <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
             Aligned the profile with the Company <br />
             <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-              Build a strong and complete profile with accurate details to get
-              noticed by top companies.
+            Tailor your profile according to the company's requirements <br /> to increase the chances of getting shortlisted.
             </p>
           </h2>
           <h2 className="list-item ">
             <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
             Recruitment in Progress <br />
             <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-              Build a strong and complete profile with accurate details to get
-              noticed by top companies.
+            Stay updated on the recruitment status to be prepared <br /> for the next step.
             </p>
           </h2>
           <h2 className="list-item ">
@@ -56,16 +52,14 @@ const Roadmap = () => {
             Final Selection
             <br />
             <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-              Build a strong and complete profile with accurate details to get
-              noticed by top companies.
+            Impress the recruiters with your skills and secure the <br /> position.
             </p>
           </h2>
           <h2 className="list-item ">
             <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
             Offer Letter Released <br />
             <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-              Build a strong and complete profile with accurate details to get
-              noticed by top companies.
+            Receive the official offer letter and review the terms <br /> and conditions.
             </p>
           </h2>
           <h2 className="list-item ">
@@ -73,8 +67,7 @@ const Roadmap = () => {
             Offer Letter Accepted
             <br />
             <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-              Build a strong and complete profile with accurate details to get
-              noticed by top companies.
+            Confirm your acceptance of the offer letter to secure <br /> your position.
             </p>
           </h2>
           <h2 className="list-item ">
@@ -82,15 +75,14 @@ const Roadmap = () => {
             Pay 1% of CTC
             <br />
             <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-              Build a strong and complete profile with accurate details to get
-              noticed by top companies.
+            Pay the agreed 1% of the CTC as service fee <br />for Salaryfy.
             </p>
           </h2>
         </div>
 
         {/* Having Doubts  */}
         <div
-          className=" w-[90%] mx-auto  md:h-[23.75rem] md:mt-[70px] sm:w-[50%] md:w-[30%] "
+          className=" w-[90%] mx-auto  md:h-[23.75rem] md:mt-[70px] sm:w-[60%] md:w-[30%] "
           // style={{border:"2px solid black"}}
         >
           <h3 className="text-[1.5rem] font-bold text-center md:text-[2rem]">
@@ -200,7 +192,7 @@ const Roadmap = () => {
                       </filter>
                     </defs>
                   </svg>
-                  <button className="w-[17rem] ml-5 h-[2.5rem] bg-darkGreen rounded-full text-white text-[1rem]">
+                  <button className="w-[15rem] ml-5 h-[2.5rem] bg-darkGreen rounded-full text-white text-[1rem] md:w-[20rem]">
                     contact@salaryfy.com
                   </button>
                 </div>
@@ -316,7 +308,7 @@ const Roadmap = () => {
                       </filter>
                     </defs>
                   </svg>
-                  <button className="w-[17rem] ml-5 h-[2.5rem] bg-darkGreen rounded-full text-white text-[1rem]">
+                  <button className="w-[15rem] ml-5 h-[2.5rem] bg-darkGreen rounded-full text-white text-[1rem] md:w-[20rem] font-bold">
                     Book a slot now
                   </button>
                 </div>
