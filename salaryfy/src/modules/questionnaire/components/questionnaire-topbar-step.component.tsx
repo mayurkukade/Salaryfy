@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
+import { ReactNode } from "react";
 
 export default function QuestionnaireTopBarStep() {
   return (
     <>
 
-      <Box className="flex-grow justify-center" sx={{ display: { xs: 'none', md: 'none', lg: 'flex' } }}>
+      <Box className="flex-grow justify-center w-[100%]" sx={{ display: { xs: 'none', md: 'none', lg: 'flex' } }}>
         <div className='flex-grow max-w-[120em] w-[100%] flex mb-[2em] gap-[2em]'>
           <StepDesktop progress={100} active={true} no={1} title='Select the job' />
           <StepDesktop progress={5} active={true} no={2} title='Upload your Resume' />
@@ -61,7 +62,7 @@ function StepDesktop({ className, title, no, active, progress }: { className?: s
   );
 }
 
-const CircularProgressBarSVG = ({ value, bgColor, color, children }) => {
+const CircularProgressBarSVG = ({ value, bgColor, color, children }: { value: number, bgColor: string, color: string, children: ReactNode }) => {
   const radius = 40; // Radius of the circle
   const circumference = 2 * Math.PI * radius;
   const progress = (100 - value) * circumference / 100;
