@@ -128,22 +128,22 @@ const Roadmap = () => {
                         cy="36.4895"
                         r="31.9093"
                         stroke="#005F59"
-                        stroke-width="1.16034"
+                        strokeWidth="1.16034"
                       />
                     </g>
                     <path
                       d="M16.75 21H46.75C48.8125 21 50.5 22.6875 50.5 24.75V47.25C50.5 49.3125 48.8125 51 46.75 51H16.75C14.6875 51 13 49.3125 13 47.25V24.75C13 22.6875 14.6875 21 16.75 21Z"
                       stroke="#005F59"
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M50.5 24.75L31.75 37.875L13 24.75"
                       stroke="#005F59"
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <defs>
                       <filter
@@ -230,36 +230,36 @@ const Roadmap = () => {
                         cy="36.4895"
                         r="31.9093"
                         stroke="#005F59"
-                        stroke-width="1.16034"
+                        strokeWidth="1.16034"
                       />
                     </g>
                     <path
                       d="M44.8704 22.4844H20.4838C18.5597 22.4844 17 24.0441 17 25.9682V50.3548C17 52.2788 18.5597 53.8386 20.4838 53.8386H44.8704C46.7944 53.8386 48.3542 52.2788 48.3542 50.3548V25.9682C48.3542 24.0441 46.7944 22.4844 44.8704 22.4844Z"
                       stroke="#005F59"
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M39.6484 19V25.9676"
                       stroke="#005F59"
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M25.7109 19V25.9676"
                       stroke="#005F59"
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M17 32.9355H48.3542"
                       stroke="#005F59"
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <defs>
                       <filter
