@@ -67,21 +67,21 @@ export function ScheduleInterview() {
       <div className='h-[100%] mb-[2em]'>
 
         <div className='flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]'>
-          <div>Slot-1</div>
+          <div style={{ whiteSpace: 'nowrap' }}>Slot-1</div>
           <div className='mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]'></div>
           <div className='mr-[0.5em]'>Deverabisanahalli, On Tueday, 06 June 2023, 4:00 PM</div>
           <div><CancelIcon sx={{ color: 'red' }} /></div>
         </div>
 
         <div className='flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]'>
-          <div>Slot-2</div>
+          <div style={{ whiteSpace: 'nowrap' }}>Slot-2</div>
           <div className='mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]'></div>
           <div className='mr-[0.5em]'>Kalubisanahalli, On Thursday, 08 June 2023, 10:00 PM</div>
           <div><CancelIcon sx={{ color: 'red' }} /></div>
         </div>
 
         <div className='flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]'>
-          <div>Slot-3</div>
+          <div style={{ whiteSpace: 'nowrap' }}>Slot-3</div>
           <div className='mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]'></div>
           <div className='mr-[0.5em]'>Koremanagalam, On Satureday, 10 June 2023, 11:30 PM</div>
           <div><CancelIcon sx={{ color: 'red' }} /></div>

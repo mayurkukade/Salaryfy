@@ -1,8 +1,7 @@
 import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
-import SubStep from "../components/sub-step.component";
 import UserJobDetails from "../components/job-details.component";
-import { SUB_STEP_STATUS } from "../constants/sub-step.enum";
 import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
+import SubSteps from "../components/sub-steps.component";
 
 export default function QuestionnairePersonalDetails() {
 
@@ -15,20 +14,8 @@ export default function QuestionnairePersonalDetails() {
         {/* STEPS */}
         <div className='py-[2em] px-[3em] h-[100%]'>
 
-          <div style={{ background: 'linear-gradient(45deg, #FFCE09 50%, transparent)' }} className='mb-[1em] text-[#0E5F59] text-[1.5em] px-[1em] rounded-[1em] py-[0.25em]'><span>3 steps selection process for&nbsp;</span><span className='font-bold'>Lenskart</span></div>
-
-          <div className='flex justify-between mb-[2em]'>
-            <SubStep status={SUB_STEP_STATUS.PENDING} no={1} title='Upload your Resume' />
-
-            <SubStepArrow />
-
-            <SubStep status={SUB_STEP_STATUS.REMAINING} no={2} title='Screening Quesions' />
-
-            <SubStepArrow />
-
-            <SubStep status={SUB_STEP_STATUS.REMAINING} no={3} title='Confirming Interview Slot' />
-          </div>
-          <PersonalDetails/>
+          <SubSteps />
+          <PersonalDetails />
 
           <BottomPageNavigationBar />
         </div>
@@ -37,44 +24,72 @@ export default function QuestionnairePersonalDetails() {
   );
 }
 
-export function PersonalDetails() {
+function NameComponent() {
   return (
     <>
+      <div className='flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]'>
+        <div>Name</div>
+        <div><input type="text" placeholder='Your Name' className='w-[100%] px-[0.5em] border border-[#005F59] border-solid rounded-md outline-none' /></div>
+      </div>
+    </>
+  );
+}
+
+function PhoneNumberComponent() {
+  return (
+    <>
+      <div className='flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]'>
+        <div>Phone number</div>
+        <div><input type="text" placeholder='+91' className='w-[100%] px-[0.5em] border border-[#005F59] border-solid rounded-md outline-none' /></div>
+      </div>
+    </>
+  );
+}
+
+function EmailComponent() {
+  return (
+    <div className='flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[50%]'>
+      <div>Email</div>
+      <div className='flex gap-[1em]'>
+        <input type="text" placeholder='Email' className='flex-grow border border-[#005F59] border-solid rounded-md outline-none' />
+        <div className='bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]'>Verify</div>
+      </div>
+    </div>
+  );
+}
+
+function UploadResumeComponent() {
+  return (
+    <div className='flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em]'>
+      <div className='flex flex-row items-center flex-grow h-[100%] px-[2em] py-[0.5em] justify-center rounded-[1em]' style={{ boxShadow: '0 0 5px rgb(0, 0, 0, 0.2)', backgroundColor: 'white' }}>
+        <div className='mr-[0.5em]'>
+          <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <div>Upload Resume</div>
+      </div>
+    </div>
+  );
+}
+
+export function PersonalDetails() {
+  return (
+    <div className="flex flex-col gap-[2em] md:px-[10em]">
       <div className='font-semibold text-[1.8em] text-[#5B5B5B]'>Fill the details below</div>
-      <div className='py-[3em] px-[10em]'>
-        <div className='bg-[#F3FAF9] rounded-md py-[3em] px-[7em]'>
-          <div className='flex mb-[4em]'>
-            <div className='flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] pr-[1em]'>
-              <div>Name</div>
-              <div><input type="text" placeholder='Your Name' className='w-[100%] px-[0.5em] border border-[#005F59] border-solid rounded-md outline-none' /></div>
-            </div>
-            <div className='flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] pl-[1em]'>
-              <div>Phone number</div>
-              <div><input type="text" placeholder='+91' className='w-[100%] px-[0.5em] border border-[#005F59] border-solid rounded-md outline-none' /></div>
-            </div>
+      <div className=''>
+        <div className='bg-[#F3FAF9] rounded-md py-[3em] px-[2em] md:px-[7em] gap-[2em] flex flex-col'>
+          <div className='flex flex-col md:flex-row gap-[2em]'>
+            <NameComponent />
+            <PhoneNumberComponent />
           </div>
-          <div className='flex mb-[4em]'>
-            <div className='flex flex-col max-w-[50%] flex-grow text-[#005F59] font-semibold text-[1.8em] pr-[1em]'>
-              <div>Email</div>
-              <div className='flex'>
-                <input type="text" placeholder='Email' className='mr-[1em] w-[100%] border border-[#005F59] border-solid rounded-md outline-none' />
-                <div className='bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]'>Verify</div>
-              </div>
-            </div>
-            <div className='flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em] pl-[1em]'>
-              <div className='flex flex-row items-center flex-grow h-[100%] px-[2em] py-[0.5em] justify-center rounded-[1em]' style={{ boxShadow: '0 0 5px rgb(0, 0, 0, 0.2)', backgroundColor: 'white' }}>
-                <div className='mr-[0.5em]'>
-                  <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-                <div>Upload Resume</div>
-              </div>
-            </div>
+          <div className='flex flex-col md:flex-row gap-[2em]'>
+            <EmailComponent />
+            <UploadResumeComponent />
           </div>
-          <div className='flex mb-[2em]'>
+          <div className='flex mb-[2em] justify-center md:justify-start'>
             <div className='flex pb-[1em] flex-col max-w-[50%] flex-grow text-[#005F59] font-semibold text-[1.8em] pr-[1em]'>
               <div className='mb-[0.25em]'>OTP</div>
               <div className='flex justify-between'>
@@ -97,7 +112,7 @@ export function PersonalDetails() {
           </div>
         </div>
       </div>
-    </>);
+    </div>);
 }
 
 export function SubStepArrow() {
