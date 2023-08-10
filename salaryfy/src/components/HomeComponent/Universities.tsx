@@ -280,7 +280,8 @@ const Universities = () => {
           Students from <span className="text-yellow" >Universities</span>
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 gap-4 justify-center text-center mt-5.06rem max-h-[calc(100vh - 12rem)] sm:overflow-y-scroll overflow-y-hidden">
+        <div className='p-[1em] app-scrollbar h-[50em]'>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 gap-4 justify-center text-center mt-5.06rem max-h-[calc(100vh - 12rem)] ">
           <div
             className="w-17.6875rem h-[5rem]"
             style={{
@@ -559,6 +560,7 @@ const Universities = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

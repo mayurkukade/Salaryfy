@@ -11,6 +11,21 @@ html, body, #root {
   font-family: "Lexend", Helvetica;
 }
 
+
+/* Hide scrollbar for desktop */
+@media (min-width: 768px) {
+  .app-scrollbar {
+    overflow: hidden;
+  }
+}
+
+/* Show scrollbar for mobile */
+@media (max-width: 767px) {
+  .app-scrollbar {
+    overflow: auto;
+  }
+}
+
 .app-scrollbar {
   overflow-y: scroll;
 }

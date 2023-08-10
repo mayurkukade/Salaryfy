@@ -113,17 +113,7 @@ const TestimonalsCards = () => {
 
     
 
-    //  <div className="container mx-auto mb-9">
-    //   {/* ... your existing content ... */}
-    //   {/* ... (content in between) ... */}
-    //   <div className="flex flex-col md:flex-row content-center mt-5">
-    //     {/* ... your existing avtarlogo code ... */}
-    //     <div className="flex-col md:self-center p-5 md:leading-8 md:ml-5">
-    //       {/* ... your existing name and title code ... */}
-    //       {/* ... your existing Linkedin button and SVG code ... */}
-    //     </div>
-    //   </div>
-    // </div>
+    
 
     
   );
