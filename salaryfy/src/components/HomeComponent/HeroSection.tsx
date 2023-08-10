@@ -92,7 +92,7 @@ const HeroSection2 = () => {
     //   </div>
     // </div>
 
-    <>
+    <div>
       <div className="absolute z-[-1] " style={{ width: "100%" }}>
         <img alt="img wave" src={herowave} style={{ width: "100%" }} />
       </div>
@@ -178,7 +178,7 @@ const HeroSection2 = () => {
           <img alt="hero" className=" w-full" src={herosection} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

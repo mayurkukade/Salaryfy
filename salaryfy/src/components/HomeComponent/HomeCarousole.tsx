@@ -27,6 +27,7 @@ export default function HomeCarousole2() {
         className="mySwiper"
       >
         <SwiperSlide>
+          
             <TestimonalsCards />
         </SwiperSlide>
         <SwiperSlide>

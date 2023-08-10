@@ -13,9 +13,9 @@ const Home = () => {
         <HeroSection2 />
         <YellowWidth />
         <OurStats />
-        {/*<PlacementsPartners/>
-        <Testimonals/>
-        <Universities/> */}
+         <PlacementsPartners/>
+       <Testimonals/>
+        <Universities/> 
       </div>
     </>
   );

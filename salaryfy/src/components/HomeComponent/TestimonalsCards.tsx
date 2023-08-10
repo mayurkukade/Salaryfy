@@ -3,6 +3,60 @@ import Google from "../../../assets/Homepage/Google.png";
 import "./testimonals.css";
 const TestimonalsCards = () => {
   return (
+    // <div className="container mx-auto mb-9">
+    //   <div className="bubble speech w-auto ">
+    //     One of the best decission of my life, I worked hard and it was so
+    //     important for me to be seen as a man, by working physically, and working
+    //     long, excessive hours.
+    //     <hr />
+    //     <div className="flex justify-around">
+    //       <div className="text-[0.5rem]">
+    //         <span>Placed by Data Folkz at</span>
+    //         <img src={Google} alt="google logo" className="h-[1rem]" />
+    //       </div>
+
+    //       <div className="text-[0.5rem] leading-5 mt-1">
+    //         <span className="block">Placed in</span>
+    //         <span className="border rounded-xl  bg-yellow text-darkGreen ">
+    //           5 Days
+    //         </span>
+    //       </div>
+    //     </div>
+    //   </div>
+
+    //   <div className="flex content-center  ">
+    //     <div className="mt-5 ">
+    //       <div className="border-4 border-yellow rounded-full w-fit content-center ">
+    //         <img src={avtarlogo} className="border rounded-full" />
+    //       </div>
+    //     </div>
+
+    //     <div className="flex-col  self-center p-5 leading-8 ">
+    //       <p className="text-white font-Lexend text-[24px]">Ashish Mehta</p>
+    //       <span className="text-slate-400 ">
+    //         Data Analytics & Big Data Engineer{" "}
+    //       </span>
+    //       <div className="flex bg-yellow text-darkGreen  w-[12rem] h-auto rounded-xl  justify-center items-center relative">
+    //         <button className="  text-[20.247px] font-medium ">Linkedin</button>
+    //         <svg
+    //           xmlns="http://www.w3.org/2000/svg"
+    //           fill="none"
+    //           viewBox="0 0 24 24"
+    //           strokeWidth="1.5"
+    //           stroke="currentColor"
+    //           className="w-6 h-6"
+    //         >
+    //           <path
+    //             strokeLinecap="round"
+    //             strokeLinejoin="round"
+    //             d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+    //           />
+    //         </svg>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+
     <div className="container mx-auto mb-9">
       <div className="bubble speech w-auto ">
         One of the best decission of my life, I worked hard and it was so
@@ -25,7 +79,7 @@ const TestimonalsCards = () => {
       </div>
 
       <div className="flex content-center  ">
-        <div className="mt-5">
+        <div className="mt-5 ">
           <div className="border-4 border-yellow rounded-full w-fit content-center ">
             <img src={avtarlogo} className="border rounded-full" />
           </div>
@@ -56,6 +110,22 @@ const TestimonalsCards = () => {
         </div>
       </div>
     </div>
+
+    
+
+    //  <div className="container mx-auto mb-9">
+    //   {/* ... your existing content ... */}
+    //   {/* ... (content in between) ... */}
+    //   <div className="flex flex-col md:flex-row content-center mt-5">
+    //     {/* ... your existing avtarlogo code ... */}
+    //     <div className="flex-col md:self-center p-5 md:leading-8 md:ml-5">
+    //       {/* ... your existing name and title code ... */}
+    //       {/* ... your existing Linkedin button and SVG code ... */}
+    //     </div>
+    //   </div>
+    // </div>
+
+    
   );
 };
 
