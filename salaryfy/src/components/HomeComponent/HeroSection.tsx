@@ -113,10 +113,10 @@ const HeroSection2 = () => {
             <span className="text-yellow">Job Change</span> <br />
             <span className="text-darkGreen">solution for You</span>
             <p className="font-Lexend text-[20px] mt-[2rem]  ">
-              6874+ people have got their dream job through Salaryfy. When
+              6874+ people have got their dream job through Salaryfy. When 
             </p>
             <p className="font-Lexend text-[20px] ">are you getting yours?</p>
-            <div className="mt-[56px] h-[50px] flex relative justify-center md:justify-start">
+            <div className=" mt-[56px] h-[50px] flex relative justify-center md:justify-start">
               <p className="font-Lexend text-[20px] text-darkGreen font-semibold flex relative align-text-top">
                 Select your City
               </p>
@@ -147,7 +147,7 @@ const HeroSection2 = () => {
               </svg>
             </div>
             <div
-              className="flex justify-center md:justify-start"
+              className="px-5 md:px-0 flex justify-center md:justify-start"
               // style={{border:"2px solid black"}}
             >
               <select className="border-2 border-darkGreen-600 h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base ">

@@ -7,7 +7,6 @@ import FresherDashboardPage from './pages/fresher-dashboard.page';
 import FresherProfileUploadPage from './pages/fresher-profile-upload.page';
 
 export default function QuestionnaireModule() {
-
   return (
     <Routes>
       <Route path="" element={<Navigate to='personal-details' />} />
