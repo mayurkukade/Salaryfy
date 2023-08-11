@@ -6,13 +6,14 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { HavingDoubts } from "../components/having-doubts.component";
 import LenskartImage from "../../../assets/images/lenskart-icon.png";
 
+// Main Page of fresher Dashboard Page
 export default function FresherDashboardPage() {
   return (
-    <div className="w-100 flex flex-col items-center h-[100%]">
+    <div className="p-4 flex flex-col items-center " >
       <QuestionnaireTopBarStep />
       <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
         {/* STEPS */}
-        <div className="py-[2em] px-[3em] h-[100%]">
+        <div className=" md:py-[2em] md:px-[3em] md:h-[100%]">
           <FresherDashboard />
           <BottomPageNavigationBar />
         </div>
@@ -21,9 +22,13 @@ export default function FresherDashboardPage() {
   );
 }
 
+{
+  /* Freshser Dashboard Section*/
+}
 export function FresherDashboard() {
   return (
-    <div className="flex">
+    <div className="flex flex-col gap-5 md:flex-row">
+      {/* Left Card Section */}
       <div className="flex flex-col">
         <div className="text-[1.5rem] text-[#005F59] font-bold mb-[1em] md:text-[4em]">
           Hi Rahul,
@@ -34,6 +39,8 @@ export function FresherDashboard() {
             meanwhile please check and complete your profile.
           </span>
         </div>
+
+        {/* Candidate Table */}
         <div
           style={{ boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)" }}
           className="mb-[2em] text-[1.8em] rounded-xl overflow-hidden grid grid-cols-[max-content,auto] grid-cols-auto [&>*]:whitespace-nowrap [&>*]:px-[1.5em] [&>*]:py-[0.5em] [&>*]:border-b [&>*]:border-solid [&>*]:border-b-[#0E5F591A] [&>*:nth-child(odd)]:bg-[#] [&>*:nth-child(odd)]:text-[#5b5b5b] [&>*:nth-child(odd)]:w-[10em] [&>*:nth-child(even)]:w-[100%]"
@@ -57,11 +64,13 @@ export function FresherDashboard() {
           <div>Payment Method</div>
           <div>Card</div>
         </div>
+
+        {/* Education Details Section*/}
         <div
           style={{ boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)" }}
           className="rounded-xl mb-[2em]"
         >
-          <div className="grid grid-cols-[1fr,1fr] [&>*]:mx-[2em] [&>*]:my-[1em] p-[1.5em]">
+          <div className="p-2 md:grid md:grid-cols-[1fr,1fr] md:[&>*]:mx-[2em] md:[&>*]:my-[1em] md:p-[1.5em]">
             <div>
               <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">
                 Highest Level of Education
@@ -93,9 +102,13 @@ export function FresherDashboard() {
             </Button>
           </div>
         </div>
+
+        {/* Recommended Jobs Section Heading*/}
         <div className="text-[2.6em] font-semibold my-[1em]">
           Recommended jobs
         </div>
+
+        {/* Recommended Jobs Card section*/}
         <div className="rounded-[2em] px-[2.5em] py-[2em] app-box-shadow">
           <div className="flex mb-[1em]">
             <div
@@ -134,6 +147,8 @@ export function FresherDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Right Section of Card*/}
       <div className="flex flex-col pr-[1em] pl-[5em]">
         <div className="flex flex-col mb-[1em]">
           <Button variant="contained">
@@ -155,6 +170,8 @@ export function FresherDashboard() {
             </span>
           </Button>
         </div>
+
+        {/* Upcoming interviews section */}
         <div className="mx-[1em] whitespace-nowrap my-[1em] font-medium text-[2.6em] text-[#0E5F59]">
           Upcoming Interviews
         </div>
@@ -166,12 +183,14 @@ export function FresherDashboard() {
           <UpcomingInterviewCard />
         </div>
 
+        {/* Having Doubts section */}
         <HavingDoubts />
       </div>
     </div>
   );
 }
 
+// Upcoming Card Interview Section
 function UpcomingInterviewCard({ className }: { className?: string }) {
   return (
     <div
