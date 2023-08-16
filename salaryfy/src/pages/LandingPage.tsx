@@ -18,19 +18,24 @@ const LandingPage = () => {
   return (
     <section className=" ">
       <div className="container mx-auto my-[100px]">
+        {/* Hero section */}
+        <section style={{ border: "2px solid black" }}>
+          <div></div>
+        </section>
+
         {/* First Banner Section */}
-        <div className="flex ">
+        {/* <div className="flex ">
           <img
-            className="w-[60.3125rem] h-[5.8125rem]"
+            className=" h-[5.8125rem]"
             src="../../assets/Homepage/LandingPageBanner1.png"
             alt="LandingPageBannerSS"
           />
           <img
-            className="w-[45.75rem] h-[5.8125rem]"
+            className=" h-[5.8125rem]"
             src="../../assets/Homepage/LandingPageBanner1.1.png"
             alt="LandingPageBanner1.1.png"
           />
-        </div>
+        </div> */}
 
         {/* companies gateways center  */}
         <div className="text-darkGreen  my-[80px] text-center ">
@@ -45,7 +50,7 @@ const LandingPage = () => {
         </div>
 
         {/* Second Banner Section */}
-        <div className="flex">
+        {/* <div className="flex">
           <img
             className="w-[60.3125rem] h-[5.8125rem]"
             src="../../assets/Homepage/LandingPageBanner2.png"
@@ -56,14 +61,14 @@ const LandingPage = () => {
             src="../../assets/Homepage/LandingPageBanner2.1.png"
             alt="LandingPageBanner2.1"
           />
-        </div>
+        </div> */}
 
         {/* How its works Section  */}
         <div className="mt-[100px] ">
           <h2 className="text-darkGreen text-center font-semibold	text-[5rem]">
             How it Works?
           </h2>
-          <div className="flex justify-center  items-center mx-auto w-[100.3125rem] h-[48.125rem] bg-darkgrey rounded-[1.3125rem] mt-[80px] "></div>
+          <div className="flex justify-center  items-center mx-auto w-[70%] h-[30.125rem] bg-darkgrey rounded-[1.3125rem] mt-[80px] "></div>
         </div>
 
         {/* job-ready career section */}
@@ -147,33 +152,31 @@ const LandingPage = () => {
             </SwiperSlide>
 
             <SwiperSlide>
-            <LandingPageTestimonials
+              <LandingPageTestimonials
                 content={
                   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ab nobis dolore culpa veritatis sequi eveniet inventore dolores aliquid fugit!"
                 }
                 imgSrc={"../../assets/Logos/The_Economic_Times_logo.png"}
               />
             </SwiperSlide>
-            
+
             <SwiperSlide>
               <LandingPageTestimonials
                 content={
                   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ab nobis dolore culpa veritatis sequi eveniet inventore dolores aliquid fugit!"
                 }
-              
                 imgSrc={"../../assets/Logos/Bloomberg-logo.png "}
               />
             </SwiperSlide>
 
             <SwiperSlide>
-            <LandingPageTestimonials
+              <LandingPageTestimonials
                 content={
                   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ab nobis dolore culpa veritatis sequi eveniet inventore dolores aliquid fugit!"
                 }
                 imgSrc={"../../assets/Logos/The_Economic_Times_logo.png"}
               />
             </SwiperSlide>
-            
           </Swiper>
         </div>
 
