@@ -21,8 +21,20 @@ import LandingPage from "./pages/LandingPage";
 import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
 import EligibilityForm from "./pages/EligibilityForm";
 import Roadmap from "./pages/Roadmap"
+import { useLazyFetchItemsQuery } from "./features/api-integration/api-integration.slice";
+import { useEffect } from "react";
 
 function App() {
+
+  const [lazyFetchItems, { data: items, error, isLoading }] = useLazyFetchItemsQuery();
+
+  async function init() {
+    await lazyFetchItems();
+  }
+  useEffect(() => {
+    init();
+  }, []);
+  
   return (
     <>
       <Navbar />
