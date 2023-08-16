@@ -11,11 +11,11 @@ export default function ScreeningQuestions() {
       <QuestionnaireTopBarStep />
       <div className='max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]'>
         <div className='text-[1.4em]'>Job Details</div>
-        <UserJobDetails />
+        {/* <UserJobDetails /> */}
 
         {/* STEPS */}
         <div className='py-[2em] px-[3em] h-[100%]'>
-          <SubSteps />
+          {/* <SubSteps /> */}
           <Questions />
           <BottomPageNavigationBar/>
         </div>

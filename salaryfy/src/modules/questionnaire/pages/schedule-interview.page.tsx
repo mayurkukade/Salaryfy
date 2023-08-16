@@ -20,12 +20,7 @@ export default function ScheduleInterviewPage() {
         <div className='py-[2em] px-[3em] h-[100%]'>
 
           <SubSteps />
-          {/* <PersonalDetails/> */}
-          {/* <ScreeningQuestions /> */}
           <ScheduleInterview />
-          {/* <FresherDashboard /> */}
-          {/* <FresherProfileUpload /> */}
-
           <BottomPageNavigationBar />
         </div>
       </div>
@@ -45,20 +40,26 @@ export function ScheduleInterview() {
     <div className='h-[100%]'>
       <div className='font-semibold text-[1.8em] text-[#000] mb-[1em]'>You can select multiple locations with date and time</div>
 
-      <div className='bg-[#0E5F5910] p-[1.5em] rounded-[1.5em] flex mb-[2em]'>
+      <div className='bg-[#0E5F5910] p-[1.5em] rounded-[1.5em] flex mb-[2em] flex-col md:flex-row'>
         <div className='flex flex-col mr-[2em]'>
           <div className='text-[1.6em] text-[#5B5B5B] mb-[1em]'>Please confirm your location for interview</div>
           <DropdownMenu className='flex-grow' label='Select Location' endIcon={<KeyboardArrowDownIcon />} />
         </div>
         <div className='flex flex-col flex-grow'>
           <div className='text-[1.6em] text-[#5B5B5B] mb-[1em]'>Please confirm your location for interview</div>
-          <div className='flex'>
+          <div className='flex flex-col sm:flex-row gap-[2em]'>
             <DropdownMenu className='flex-grow mr-[1em]' label='Select Date' endIcon={<KeyboardArrowDownIcon />} />
-            <DropdownMenu className='flex-grow max-w-[8em]' label='10' endIcon={<KeyboardArrowDownIcon />} />
-            <div className='mx-[1em] text-[1.5em] flex items-center'>:</div>
-            <DropdownMenu className='flex-grow max-w-[8em] mr-[1em]' label='30' endIcon={<KeyboardArrowDownIcon />} />
-            <DropdownMenu className='flex-grow max-w-[8em] mr-[1em]' label='AM' endIcon={<KeyboardArrowDownIcon />} />
-            <Button sx={{ backgroundColor: '#FECD08', color: '#0E5F59' }} variant='contained'><span className='font-bold'>Add</span></Button>
+            <div className="flex flex-col sm:flex-row gap-[2em]">
+              <div className="flex">
+                <DropdownMenu className='flex-grow md:max-w-[8em]' label='10' endIcon={<KeyboardArrowDownIcon />} />
+                <div className='mx-[1em] text-[1.5em] flex items-center'>:</div>
+                <DropdownMenu className='flex-grow md:max-w-[8em] mr-[1em]' label='30' endIcon={<KeyboardArrowDownIcon />} />
+                <DropdownMenu className='flex-grow md:max-w-[8em] mr-[1em]' label='AM' endIcon={<KeyboardArrowDownIcon />} />
+              </div>
+              <div className="flex justify-center">
+                <Button sx={{ backgroundColor: '#FECD08', color: '#0E5F59' }} variant='contained'><span className='font-bold'>Add</span></Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -66,21 +67,21 @@ export function ScheduleInterview() {
       <div className='h-[100%] mb-[2em]'>
 
         <div className='flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]'>
-          <div>Slot-1</div>
+          <div style={{ whiteSpace: 'nowrap' }}>Slot-1</div>
           <div className='mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]'></div>
           <div className='mr-[0.5em]'>Deverabisanahalli, On Tueday, 06 June 2023, 4:00 PM</div>
           <div><CancelIcon sx={{ color: 'red' }} /></div>
         </div>
 
         <div className='flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]'>
-          <div>Slot-2</div>
+          <div style={{ whiteSpace: 'nowrap' }}>Slot-2</div>
           <div className='mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]'></div>
           <div className='mr-[0.5em]'>Kalubisanahalli, On Thursday, 08 June 2023, 10:00 PM</div>
           <div><CancelIcon sx={{ color: 'red' }} /></div>
         </div>
 
         <div className='flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]'>
-          <div>Slot-3</div>
+          <div style={{ whiteSpace: 'nowrap' }}>Slot-3</div>
           <div className='mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]'></div>
           <div className='mr-[0.5em]'>Koremanagalam, On Satureday, 10 June 2023, 11:30 PM</div>
           <div><CancelIcon sx={{ color: 'red' }} /></div>

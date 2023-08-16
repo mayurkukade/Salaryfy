@@ -2,42 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { ThemeProvider, createTheme } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#005F59",
-    },
-    secondary: {
-      main: "#FECD08",
-      dark: "#FDCC07",
-    },
-  },
-  typography: {
-    button: { textTransform: "none" },
-  },
-  components: {
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              borderColor: "#005F5980",
-            },
-          },
-        },
-      },
-    },
-  },
-});
+import { Provider } from "react-redux";
+import { appTheme } from "./theme/app.theme.ts";
+import appStore from "./store/app.store.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
+    <Provider store={appStore}>
+      <BrowserRouter>
+        <ThemeProvider theme={appTheme}>
+          <App />
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );

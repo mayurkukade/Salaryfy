@@ -1,6 +1,6 @@
 export default function BottomPageNavigationBar() {
   return (
-    <div className='flex justify-center'>
+    <div className='flex justify-center mt-6'>
       <div className='flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]'>
         <span className='mr-[1em]'>
           <svg width="35" height="25" fill="none" xmlns="http://www.w3.org/2000/svg">
