@@ -124,32 +124,34 @@ const Paymentcompleted = () => {
           <h2 className="">has been successfully scheduled on following </h2>
         </div>
 
-        <div className="flex flex-col justify-center items-center mt-5">
-          <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-darkGreen rounded-md text-[1.5em] w-[fit-content] h-[3.1875rem] mb-[1.5em] ">
-            <div>Slot-1</div>
-            <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-            <div className="mr-[0.5em]">
-              Deverabisanahalli, On Tueday, 06 June 2023, 4:00 PM
+        <div className="flex justify-center pt-5">
+          <div className="flex flex-col justify-center items-center w-[max-content]">
+            <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-darkGreen rounded-md text-[1.5em] w-[100%] h-[3.1875rem] mb-[1.5em] ">
+              <div className="whitespace-nowrap">Slot-1</div>
+              <div className="mx-[1em] flex-grow max-w-[1px] bg-[#0E5F594E]"></div>
+              <div className="mr-[0.5em]">
+                Deverabisanahalli, On Tueday, 06 June 2023, 4:00 PM
+              </div>
+              {/* <div><CancelIcon sx={{ color: 'red' }} /></div> */}
             </div>
-            {/* <div><CancelIcon sx={{ color: 'red' }} /></div> */}
-          </div>
 
-          <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-darkGreen rounded-md text-[1.5em] w-[fit-content] h-[3.1875rem] mb-[1.5em]">
-            <div>Slot-2</div>
-            <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-            <div className="mr-[0.5em]">
-              Kalubisanahalli, On Thursday, 08 June 2023, 10:00 PM
+            <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-darkGreen rounded-md text-[1.5em] w-[100%] h-[3.1875rem] mb-[1.5em]">
+              <div className="whitespace-nowrap">Slot-2</div>
+              <div className="mx-[1em] flex-grow max-w-[1px] bg-[#0E5F594E]"></div>
+              <div className="mr-[0.5em]">
+                Kalubisanahalli, On Thursday, 08 June 2023, 10:00 PM
+              </div>
+              {/* <div><CancelIcon sx={{ color: 'red' }} /></div> */}
             </div>
-            {/* <div><CancelIcon sx={{ color: 'red' }} /></div> */}
-          </div>
 
-          <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-darkGreen rounded-md text-[1.5em] w-[fit-content] h-[3.1875rem] mb-[1.5em] ">
-            <div>Slot-3</div>
-            <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-            <div className="mr-[0.5em]">
-              Koremanagalam, On Satureday, 10 June 2023, 11:30 PM
+            <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-darkGreen rounded-md text-[1.5em] w-[100%] h-[3.1875rem] mb-[1.5em] ">
+              <div className="whitespace-nowrap">Slot-3</div>
+              <div className="mx-[1em] flex-grow max-w-[1px] bg-[#0E5F594E]"></div>
+              <div className="mr-[0.5em]">
+                Koremanagalam, On Satureday, 10 June 2023, 11:30 PM
+              </div>
+              {/* <div><CancelIcon sx={{ color: 'red' }} /></div> */}
             </div>
-            {/* <div><CancelIcon sx={{ color: 'red' }} /></div> */}
           </div>
         </div>
         <div className="flex justify-center">

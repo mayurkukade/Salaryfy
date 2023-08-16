@@ -61,8 +61,8 @@ function App() {
         <Route path="/landingpage" element={<LandingPage />} />
 
         <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
-        <Route path="/eligibilityform" element={<EligibilityForm />} />
-        <Route path="/jobdescription" element={<JobDescription />} />
+        <Route path="/eligibility-form" element={<EligibilityForm />} />
+        <Route path="/job-description" element={<JobDescription />} />
        
         <Route path="/roadmap" element={<Roadmap/>}/>
       </Routes>
