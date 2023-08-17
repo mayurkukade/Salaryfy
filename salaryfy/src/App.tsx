@@ -16,11 +16,18 @@ import Footer from "./components/FooteComponent/Footer";
 import PlacementDrivePage from "./modules/questionnaire/PlacementDrivePage";
 import PlacementDriveDetails from "./pages/PlacementDriveDetails";
 
-import { useFetchItemsQuery } from "./features/api-integration/api-integration.slice";
+
+import PlanNotAvailable from "./pages/PlanNotAvailable";
+import FillDetails from "./pages/FillDetails";
+import LandingPage from "./pages/LandingPage";
+import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
+import EligibilityForm from "./pages/EligibilityForm";
+import JobDescription from "./pages/JobDescription";
+import Roadmap from "./pages/Roadmap"
+
 
 function App() {
-const {data,isLoading,isError} = useFetchItemsQuery()
-console.log(data)
+
 
  
 

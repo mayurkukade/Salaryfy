@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -10,8 +11,10 @@ const Navbar = () => {
 
   return (
     <nav className="flex justify-between  items-center h-24  w-full p-10 ">
+      <Link to='/'>
       <div className="w-[329px] h-[63.126px] shrink-0 flex">
         <div className="w-[63.475px] h-[55.154px] shrink-0 ">
+          
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="64"
@@ -247,13 +250,15 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      </Link>
+      
 
       <ul className="hidden md:flex  ">
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">Dashboard</li>
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">Contact</li>
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">About us</li>
         <li className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5">
-          <div className="text-center text-white cursor-pointer text-[1.6em]">Sign In</div>
+         <Link to={'/login'}><div className="text-center text-white cursor-pointer text-[1.6em]">Sign In</div></Link> 
         </li>
       </ul>
       <div onClick={handleNav} className="block md:hidden">

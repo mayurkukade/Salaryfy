@@ -109,7 +109,7 @@ const HeroSection2 = () => {
           // style={{ border: "2px solid black" }}
         >
           <p className="text-darkGreen font-Lexend  ">End to end</p>
-          <p className=" font-Lexend text-darkGreen  ">
+          <div className=" font-Lexend text-darkGreen  ">
             <span className="text-yellow">Job Change</span> <br />
             <span className="text-darkGreen">solution for You</span>
             <p className="font-Lexend text-[20px] mt-[2rem]  ">
@@ -172,7 +172,7 @@ const HeroSection2 = () => {
                 </svg>
               </div>
             </div>
-          </p>
+          </div>
         </div>
         <div className="mt-[1.5rem] md:mt-[5rem] ">
           <img alt="hero" className=" w-full" src={herosection} />

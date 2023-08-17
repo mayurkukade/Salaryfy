@@ -7,15 +7,18 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { appTheme } from "./theme/app.theme.ts";
 import appStore from "./store/app.store.ts";
-
+import {ToastContainer} from 'react-toastify'
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={appStore}>
+   
       <BrowserRouter>
         <ThemeProvider theme={appTheme}>
+        <Provider store={appStore}>
           <App />
+          <ToastContainer/>
+          </Provider>
         </ThemeProvider>
       </BrowserRouter>
-    </Provider>
+
   </React.StrictMode>
 );
