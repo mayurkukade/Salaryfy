@@ -16,10 +16,11 @@ import Footer from "./components/FooteComponent/Footer";
 import PlacementDrivePage from "./pages/PlacementDrivePage";
 import PlacementDriveDetails from "./pages/PlacementDriveDetails";
 
-
+import { useFetchItemsQuery } from "./features/api-integration/api-integration.slice";
 
 function App() {
-
+const {data,isLoading,isError} = useFetchItemsQuery()
+console.log(data)
 
  
 

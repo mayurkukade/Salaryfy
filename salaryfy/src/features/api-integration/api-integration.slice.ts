@@ -5,7 +5,7 @@ const apiIntegrationSlice = apiSlice.injectEndpoints({
  
   endpoints: (builder) => ({
     fetchItems: builder.query({
-      query: () => '/getAllUsers?pageNo=0', // Remove any query parameters here
+      query: () => 'user/getAllUsers?pageNo=0', // Remove any query parameters here
     }),
   }),
 });
