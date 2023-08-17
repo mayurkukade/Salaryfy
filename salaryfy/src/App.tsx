@@ -15,21 +15,15 @@ import { PasswordResetSuccessful } from "./pages/PasswordResetSuccessful";
 import Footer from "./components/FooteComponent/Footer";
 import PlacementDrivePage from "./pages/PlacementDrivePage";
 import PlacementDriveDetails from "./pages/PlacementDriveDetails";
-import PlanNotAvailable from "./pages/PlanNotAvailable";
-import FillDetails from "./pages/FillDetails";
-import LandingPage from "./pages/LandingPage";
-import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
-import EligibilityForm from "./pages/EligibilityForm";
-import Roadmap from "./pages/Roadmap"
-import { useFetchItemsQuery } from "./features/api-integration/api-integration.slice";
+
+
 
 function App() {
 
-  const  { data,error, isLoading } = useFetchItemsQuery();
 
  
 
-  console.log(data)
+
   
   return (
     <>
