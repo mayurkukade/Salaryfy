@@ -12,26 +12,13 @@ html, body, #root {
 }
 
 
-/* Hide scrollbar for desktop */
-@media (min-width: 768px) {
-  .app-scrollbar {
-    overflow: hidden;
-  }
-}
-
-/* Show scrollbar for mobile */
-@media (max-width: 767px) {
-  .app-scrollbar {
-    overflow: auto;
-  }
-}
-
 .app-scrollbar {
   overflow-y: scroll;
 }
 
 .app-scrollbar::-webkit-scrollbar {
   width: 4px;
+  height: 4px;
   background-color: #5b5b5b4c;
 }
 

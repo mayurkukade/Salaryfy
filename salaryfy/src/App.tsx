@@ -24,6 +24,7 @@ import JobDescription from "./pages/JobDescription";
 import Roadmap from "./pages/Roadmap"
 import { useLazyFetchItemsQuery } from "./features/api-integration/api-integration.slice";
 import { useEffect } from "react";
+import FresherSkillPlacementModule from "./modules/freshers-skill-placement/freshers-skill-placement.module";
 
 function App() {
 
@@ -61,6 +62,9 @@ function App() {
         <Route path="/landingpage" element={<LandingPage />} />
 
         <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
+        <Route path="/fresher-skill-placement/*" element={<FresherSkillPlacementModule />} />
+
+
         <Route path="/eligibilityform" element={<EligibilityForm />} />
         <Route path="/jobdescription" element={<JobDescription />} />
        
