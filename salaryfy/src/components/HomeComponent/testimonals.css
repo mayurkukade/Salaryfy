@@ -1,5 +1,5 @@
 
-p.bubble {
+div.bubble {
 	position: relative;
 	width: 300px;
 	text-align: center;
@@ -13,21 +13,21 @@ p.bubble {
 	font-size: large;
 }
 
-p.thought {
+div.thought {
 	width: 300px;
 	border-radius: 200px;
 	padding: 30px;	
 }
 
-p.bubble:before,
-p.bubble:after {
+div.bubble:before,
+div.bubble:after {
 	content: ' ';
 	position: absolute;
 	width: 0;
 	height: 0;
 }
 
-p.speech:before {
+div.speech:before {
 	left: 30px;
 	bottom: -50px;
 	border: 25px solid;

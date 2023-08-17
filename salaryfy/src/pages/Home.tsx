@@ -10,14 +10,12 @@ const Home = () => {
   return (
     <>
       <div className="w-full block">
-       
         <HeroSection2 />
-        <YellowWidth/>
-        <OurStats/>
-        <PlacementsPartners/>
-        <Testimonals/>
-        <Universities/>
-        
+        <YellowWidth />
+        <OurStats />
+         <PlacementsPartners/>
+       <Testimonals/>
+        <Universities/> 
       </div>
     </>
   );

@@ -1,49 +1,68 @@
-
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-
-
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
 
 // import required modules
-import { FreeMode, Pagination } from 'swiper/modules';
-import TestimonalsCards from './TestimonalsCards';
+import { FreeMode, Pagination } from "swiper/modules";
+import TestimonalsCards from "./TestimonalsCards";
 
 export default function HomeCarousole2() {
   return (
-    <div className='container mx-auto '>
+    <div className="container mx-auto ">
       <Swiper
-        
-        slidesPerView={3}
+        slidesPerView={1}
         spaceBetween={30}
         freeMode={true}
         pagination={{
           clickable: true,
         }}
         modules={[FreeMode, Pagination]}
-        className="mySwiper"
+        className="mySwiper "
+        // Responsive settings
+        breakpoints={{
+          // When the screen width is 640px or larger
+          // 340: {
+          //   slidesPerView: 1, // Show 2 slides per view
+          // },
+          640: {
+            slidesPerView: 2, // Show 2 slides per view
+          },
+          // When the screen width is 768px or larger
+          768: {
+            slidesPerView: 2, // Show 3 slides per view
+          },
+          // When the screen width is 1024px or larger
+          1024: {
+            slidesPerView: 3, // Show 4 slides per view
+          },
+        }}
       >
         <SwiperSlide>
-            <TestimonalsCards />
+          <TestimonalsCards />
         </SwiperSlide>
         <SwiperSlide>
-        <TestimonalsCards />
+          <TestimonalsCards />
         </SwiperSlide>
         <SwiperSlide>
-        <TestimonalsCards />
+          <TestimonalsCards />
         </SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
+        <SwiperSlide>
+          <TestimonalsCards />
+        </SwiperSlide>
+        <SwiperSlide>
+          <TestimonalsCards />
+        </SwiperSlide>
+        <SwiperSlide>
+          <TestimonalsCards />
+        </SwiperSlide>
+        <SwiperSlide>
+          <TestimonalsCards />
+        </SwiperSlide>
       </Swiper>
     </div>
   );
 }
-
