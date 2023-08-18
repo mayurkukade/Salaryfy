@@ -5,6 +5,7 @@ import SubSteps from "../components/sub-steps.component";
 import { useRef, useState,useEffect } from "react";
 const USER_REGEX: RegExp =  /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
+const EMAIL_REGEX:RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 export default function QuestionnairePersonalDetails() {
   return (
@@ -105,17 +106,37 @@ console.log(props.phoneFocus)
   );
 }
 
-function EmailComponent() {
+const EmailComponent:React.FC<EmailComponent>=(props) =>{
+
+const content = !props.validEmail && props.emailFocus  && props.formEmail ?   <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+</svg> :    
+
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+</svg> 
+
+
   return (
     <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[50%]">
+      
+      <div className="flex">
       <div>Email</div>
+      <div>{content}</div>
+   
+      </div>
+      
       <div className="flex gap-[1em]">
         <input
-          type="text"
+          type="email"
           placeholder="Email"
+          value={props.formEmail}
+          onChange={(e)=>props.setFormEmail(e.target.value)}
+          onFocus={() => props.setEmailFocus(true)}
+            onBlur={() => props.setEmailFocus(false)}
           className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
         />
-        <div className="bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]">
+        <div className="bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]" onClick={()=>props.setShowVerifyedOTP(true)}>
           Verify
         </div>
       </div>
@@ -263,14 +284,24 @@ export function PersonalDetails() {
   const [validMobile,setValidMobile] = useState<boolean>(false)
   const [phoneFocus,setPhoneFocus] = useState(false)
 
+  const [formEmail,setFormEmail] = useState<string>('')
+  const [validEmail,setValidEmail] = useState(false)
+  const [emailFocus,setEmailFocus] = useState(false)
+
+  const [showVerifyedOTP,setShowVerifyedOTP] = useState(false)
+
   useEffect(()=>{
      setValidName(USER_REGEX.test(nameForm)) 
   },[nameForm])
-console.log(phoneNumber)
+
 useEffect(()=>{
   setValidMobile(INDIAN_MOBILE_REGEX.test( phoneNumber))
   
 },[phoneNumber])
+
+useEffect(()=>{
+  setValidEmail(EMAIL_REGEX.test(formEmail))
+},[formEmail])
 
 
   return (
@@ -299,8 +330,19 @@ useEffect(()=>{
             />
           </div>
           <div className="flex flex-col md:flex-row gap-[2em]">
-            <EmailComponent />
-            <Verified />
+            <EmailComponent 
+            formEmail = {formEmail}
+            setFormEmail = {setFormEmail}
+            validEmail = {validEmail}
+            setValidEmail = {setValidEmail}
+            emailFocus = {emailFocus}
+            setEmailFocus = {setEmailFocus}
+            setShowVerifyedOTP = {setShowVerifyedOTP}
+            />
+            {
+              showVerifyedOTP ? <Verified />:''
+            }
+           
           </div>
           <div className="flex flex-col md:flex-row gap-[2em]">
             <PasswordComponent />
