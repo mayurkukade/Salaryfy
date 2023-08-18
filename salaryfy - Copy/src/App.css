@@ -1,0 +1,46 @@
+*{
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
+  font-size: 10px;
+  font-family: "Lexend", Helvetica;
+}
+
+
+/* Hide scrollbar for desktop */
+@media (min-width: 768px) {
+  .app-scrollbar {
+    overflow: hidden;
+  }
+}
+
+/* Show scrollbar for mobile */
+@media (max-width: 767px) {
+  .app-scrollbar {
+    overflow: auto;
+  }
+}
+
+.app-scrollbar {
+  overflow-y: scroll;
+}
+
+.app-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  background-color: #5b5b5b4c;
+}
+
+.app-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #0e5f59;
+}
+
+.app-box-shadow {
+  box-shadow: 0 0 10px rgb(210, 210, 210, 0.7);
+}
+
+
