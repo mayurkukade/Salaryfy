@@ -52,17 +52,13 @@ function App() {
         <Route path="/forgotpasswordemail" element={<ForgorPasswordEmail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route
-          path="/passwordresetsuccessfully"
-          element={<PasswordResetSuccessful />}
-        />
+        <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful />}/>
         <Route path="/plannotavailable" element={<PlanNotAvailable />} />
         <Route path="/filldetails" element={<FillDetails />} />
         <Route path="/landingpage" element={<LandingPage />} />
 
         <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
         <Route path="/fresher-skill-placement/*" element={<FresherSkillPlacementModule />} />
-
 
         <Route path="/eligibilityform" element={<EligibilityForm />} />
         <Route path="/jobdescription" element={<JobDescription />} />

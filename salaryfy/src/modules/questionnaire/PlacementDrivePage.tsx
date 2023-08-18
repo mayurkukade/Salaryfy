@@ -1,42 +1,15 @@
-
 import JobCard from "../../components/PlacementPageComponent/JobCard";
 import DropdownMenu from "../../components/DropdownMenu";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Chip from "./components/chip.component";
 import { Box, Button, TextField } from "@mui/material";
 import QuestionnaireTopBarStep from "./components/questionnaire-topbar-step.component";
-import { useRef } from "react";
-
-function FilterComponent({ className }: { className?: string }) {
-  return (
-    <div className={"flex flex-col gap-[2em] px-[4em] py-[2em] pb-[3em] rounded-[2em]  app-box-shadow " + (className || '')}>
-      <div className="flex flex-col gap-[1em]">
-        <div className="text-[1.5em] font-semibold">Location</div>
-        <DropdownMenu label='Select' endIcon={<KeyboardArrowDownIcon />} />
-        <div className="flex flex-wrap gap-[0.5em]">
-          <Chip className="text-[1.5em]" label='Delhi' />
-          <Chip className="text-[1.5em]" label='Lahore' />
-        </div>
-      </div>
-      <div className="flex flex-col gap-[1em]">
-        <div className="text-[1.5em] font-semibold">Job Type</div>
-        <DropdownMenu label='Select' endIcon={<KeyboardArrowDownIcon />} />
-        <div className="flex flex-wrap gap-[0.5em]">
-          <Chip className="text-[1.5em]" label='on-site' />
-        </div>
-      </div>
-      <div className="flex flex-col gap-[1em] mb-[0.5em]">
-        <div className="text-[1.5em] font-semibold">Company</div>
-        <DropdownMenu label='Select' endIcon={<KeyboardArrowDownIcon />} />
-        <div className="flex flex-wrap gap-[0.5em]">
-          <Chip className="text-[1.5em]" label='Tesla' />
-        </div>
-      </div>
-
-    </div>
-  );
-}
-
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLazyGetJobsQuery } from "../../features/api-integration/jobs-search-slice/jobs-search.slice";
+import { CommonUtilities } from "../../utils/common.utilities";
+import { JobsFilterType, OptionSelected } from "../../features/reducers/job-filter/jobs-filter.interface";
+import { useSelector } from "react-redux";
+import SLICE_NAMES from '../../features/slice-names.enum'
 function FilterSVGIcon() {
   return (
     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,13 +37,36 @@ function SortSVGIcon() {
 
 export default function PlacementDrivePage() {
   const expandableRef = useRef<HTMLDivElement | null>(null);
+
+  const [lazyGetJobs] = useLazyGetJobsQuery();
+  const [jobs, setJobs] = useState<Array<Record<string, any>>>([]);
+
+  const locations = Array.from(new Set(jobs.map((job: any) => job.location)))
+  const jobTypes = Array.from(new Set(jobs.map((job: any) => job.jobType)))
+  const companyNames = Array.from(new Set(jobs.map((job: any) => job.companyName)))
+
+  const initVal = useSelector((state: any) => state.root[SLICE_NAMES.JOBS_FILTER])
+  
+  async function getJobs() {
+    const { data: { list: jobs } } = await lazyGetJobs({});
+    console.log(jobs);
+    setJobs(() => jobs);
+
+    console.log(companyNames)
+  }
+  useEffect(() => {
+    getJobs();
+    console.log(initVal);
+    
+  }, []);
+
   function toggleFilter() {
     const element = expandableRef.current;
-    if (element && element?.style.height === '0px'){
+    if (element && element?.style.height === '0px') {
       element.style.height = element.scrollHeight + 'px';
       return;
-    } 
-    
+    }
+
     if (element && element?.style.height !== '0px') {
       element.style.height = '0px';
       return
@@ -78,12 +74,83 @@ export default function PlacementDrivePage() {
 
   }
 
+  function FilterComponent({ className, locations, jobTypes, companyNames }: { className?: string, locations: Array<string>, jobTypes: Array<string>, companyNames: Array<string> }) {
+
+    const [locationsSelected, setLocationsSelected] = useState<Array<OptionSelected>>([]);
+    const [jobTypesSelected, setJobTypesSelected] = useState<Array<OptionSelected>>([]);
+    const [companyNamesSelected, setCompanyNamesSelected] = useState<Array<OptionSelected>>([]);
+    let once = false;
+    useEffect(() => {
+      if (once) return;
+      once = true;
+
+      locations.map((location: string) => setLocationsSelected((locations) => {
+        return  [...locations, { option: location, selected: false }]
+      }));
+      jobTypes.map((jobType: string) => setJobTypesSelected((jobTypes) => [...jobTypes, { option: jobType, selected: false }]));
+      companyNames.map((companyName: string) => setCompanyNamesSelected((companyNames) => [...companyNames, { option: companyName, selected: false }]));
+    }, []);
+
+    function onLocationOptionSelect(type: 'add' | 'remove', locationOption: string) {
+      console.log({ type, location: locationOption });
+
+      if (type === 'add') {
+        const updatedOptions = locationsSelected.map(value => {
+          if (value.option === locationOption) return { ...value, selected: (value.option === locationOption) }
+          return { ...value };
+        });
+        setLocationsSelected(updatedOptions);
+      }
+
+      else if (type === 'remove') {
+        const updatedOptions = locationsSelected.map(value => {
+          if (value.option === locationOption) return { ...value, selected: !(value.option === locationOption) }
+          return { ...value };
+        });
+        setLocationsSelected(updatedOptions);
+      }
+    }
+
+    return (
+      <div className={"flex flex-col gap-[2em] px-[4em] py-[2em] pb-[3em] rounded-[2em]  app-box-shadow " + (className || '')}>
+        <div className="flex flex-col gap-[1em]">
+          <div className="text-[1.5em] font-semibold">Location</div>
+          <DropdownMenu onOptionClick={(option: string) => onLocationOptionSelect('add', option)} options={locationsSelected.filter((value: OptionSelected) => !value.selected).map((value: OptionSelected) => value.option)} label='Select' endIcon={<KeyboardArrowDownIcon />} />
+          <div className="flex flex-wrap gap-[0.5em]">
+            {
+              locationsSelected
+                .filter((value: OptionSelected) => value.selected)
+                .map((value: OptionSelected) =>
+                  <Chip onClick={() => onLocationOptionSelect('remove', value.option)} label={value.option} className="text-[1.5em]" key={CommonUtilities.generateRandomString(15)} />
+                )
+            }
+          </div>
+        </div>
+        <div className="flex flex-col gap-[1em]">
+          <div className="text-[1.5em] font-semibold">Job Type</div>
+          <DropdownMenu label='Select' endIcon={<KeyboardArrowDownIcon />} />
+          <div className="flex flex-wrap gap-[0.5em]">
+            <Chip className="text-[1.5em]" label='on-site' />
+          </div>
+        </div>
+        <div className="flex flex-col gap-[1em] mb-[0.5em]">
+          <div className="text-[1.5em] font-semibold">Company</div>
+          <DropdownMenu label='Select' endIcon={<KeyboardArrowDownIcon />} />
+          <div className="flex flex-wrap gap-[0.5em]">
+            <Chip className="text-[1.5em]" label='Tesla' />
+          </div>
+        </div>
+
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col p-[2em]">
       <QuestionnaireTopBarStep />
       <div className="flex gap-[2em]">
         <Box className="text-[#0E5F59]" sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
-          <FilterComponent className="w-[30em]" />
+          <FilterComponent locations={locations} jobTypes={jobTypes} companyNames={companyNames} className="w-[30em]" />
         </Box>
         <div className="flex-grow p-3">
           <p className="text-[1.2rem] font-semibold text-darkGreen mb-2">Search</p>
@@ -100,14 +167,14 @@ export default function PlacementDrivePage() {
 
           <Box ref={expandableRef} id='expandable-element' className='w-[100%] my-[4em] relative' style={{ height: '0px', transition: '1000ms ease' }} sx={{ overflow: 'hidden', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
             <div className="aboslute">
-              <FilterComponent className="w-[100%]" />
+              <FilterComponent locations={locations} jobTypes={jobTypes} companyNames={companyNames} className="w-[100%]" />
             </div>
           </Box>
 
 
-          <JobCard />
-          <JobCard />
-          <JobCard />
+          {
+            jobs.map((details: Record<string, unknown>) => <JobCard details={details} key={CommonUtilities.generateRandomString(10)} />)
+          }
         </div>
       </div>
     </div>
