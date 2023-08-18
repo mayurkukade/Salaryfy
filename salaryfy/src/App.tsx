@@ -15,6 +15,8 @@ import "./App.css";
 import Footer from "./components/FooteComponent/Footer";
 import PlacementDrivePage from "./modules/questionnaire/PlacementDrivePage";
 import PlacementDriveDetails from "./pages/PlacementDriveDetails";
+
+
 import PlanNotAvailable from "./pages/PlanNotAvailable";
 import FillDetails from "./pages/FillDetails";
 import LandingPage from "./pages/LandingPage";
@@ -26,16 +28,13 @@ import { useLazyFetchItemsQuery } from "./features/api-integration/api-integrati
 import { useEffect } from "react";
 import FresherSkillPlacementModule from "./modules/freshers-skill-placement/freshers-skill-placement.module";
 
+
 function App() {
 
-  const [lazyFetchItems, { data: items, error, isLoading }] = useLazyFetchItemsQuery();
 
-  async function init() {
-    await lazyFetchItems();
-  }
-  useEffect(() => {
-    init();
-  }, []);
+ 
+
+
   
   return (
     <>
