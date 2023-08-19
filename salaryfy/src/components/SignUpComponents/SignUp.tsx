@@ -8,13 +8,13 @@ type EmailType = {
 import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-import { useRegisterMutation } from "../../features/api-integration/apiUserSlice/api-integration-user.slice";
+// import { useRegisterMutation } from "../../features/api-integration/apiUserSlice/api-integration-user.slice";
 const SignUp = () => {
   const [formData, setFormData] = useState<EmailType>({
     addEmail: "",
   });
   const [validEmail, setValidEmail] = useState(false);
-  const [register] = useRegisterMutation();
+  // const [register] = useRegisterMutation();
 
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      await register(formData);
+      // await register(formData);
       toast.success("otp is send to your email address", {
         position: "top-center",
         autoClose: 2000,
