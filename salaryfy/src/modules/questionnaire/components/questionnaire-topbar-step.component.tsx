@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 export default function QuestionnaireTopBarStep() {
   return (
-    <>
+    <div className="flex">
       {/* Code for Desktop view  */}
       <Box
         className="flex-grow justify-center w-[80%] "
@@ -50,7 +50,7 @@ export default function QuestionnaireTopBarStep() {
           <StepMobile className="text-[0.5rem]" progress={0} active={false} no={3} title="Get hired!" />
         </div>
       </Box>
-    </>
+    </div>
   );
 }
 

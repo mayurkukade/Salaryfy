@@ -24,9 +24,8 @@ import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
 import EligibilityForm from "./pages/EligibilityForm";
 import JobDescription from "./pages/JobDescription";
 import Roadmap from "./pages/Roadmap"
-import { useLazyFetchItemsQuery } from "./features/api-integration/api-integration.slice";
-import { useEffect } from "react";
 import FresherSkillPlacementModule from "./modules/freshers-skill-placement/freshers-skill-placement.module";
+import TestComponent from "./pages/test.component";
 
 
 function App() {
@@ -64,6 +63,8 @@ function App() {
         <Route path="/jobdescription" element={<JobDescription />} />
        
         <Route path="/roadmap" element={<Roadmap/>}/>
+
+        <Route path='/test' element={<TestComponent />} />
       </Routes>
       <Footer />
     </>

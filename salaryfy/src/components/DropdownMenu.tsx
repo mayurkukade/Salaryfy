@@ -1,5 +1,5 @@
 import { Button, Menu, MenuItem, ButtonProps  } from "@mui/material";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { CommonUtilities } from "../utils/common.utilities";
 
 export default function DropdownMenu({ onOptionClick, options, className, label, endIcon, variant = 'outlined' }: { onOptionClick?: (value: string) => void, options?: Array<string>, className?: string, label: string, endIcon?: ReactNode, variant?: ButtonProps['variant'] }) {

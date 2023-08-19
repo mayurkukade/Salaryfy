@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import SLICE_NAMES from '../../slice-names.enum';
 import setJobFilterReducer from './jobs-filter.reducer';
 import { JobsFilterType } from './jobs-filter.interface';
+import { SLICE_NAMES } from '../../slice-names.enum';
 
 /**
  * Initial state for the steps counter.
  */
 const initialState: JobsFilterType = {
-  locations: [{ option: 'hello', selected: false }],
+  locations: [],
   jobTypes: [],
   companyNames: []
 };

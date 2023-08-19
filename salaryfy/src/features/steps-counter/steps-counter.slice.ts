@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import StepsCounterState from './steps-counter-state.interface';
 import setProgressReducer from './set-progress.reducer';
-import SLICE_NAMES from '../slice-names.enum';
+import { SLICE_NAMES } from '../slice-names.enum';
 
 /**
  * Initial state for the steps counter.
