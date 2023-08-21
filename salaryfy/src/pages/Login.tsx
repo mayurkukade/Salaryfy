@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import eyelogo from "../../assets/Logos/eyelogo.png";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../features/api-integration/apiUserSlice/api-integration-user.slice";
 const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+import {toast} from 'react-toastify'
 export const Login = () => {
   const [userName, setUserName] = useState<string>("");
+  const navigate = useNavigate()
   const [validUserName, setValidUserName] = useState<boolean>(false);
 
   const [login,{isLoading,isSuccess,isError}] = useLoginMutation()
@@ -14,8 +17,27 @@ export const Login = () => {
 
   const LoginSubmitHandler = async(e:React.MouseEvent<HTMLButtonElement>)=>{
     e.preventDefault()
-  const res =   await login({userName,password})
-  console.log(res)
+
+    try {
+      const res =   await login({username:userName,password})
+      console.log(res)
+      if(res?.data){
+        toast.success("successfully login", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+  
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        navigate('/questionnaire/screening-questions')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  
   }
 
   useEffect(() => {

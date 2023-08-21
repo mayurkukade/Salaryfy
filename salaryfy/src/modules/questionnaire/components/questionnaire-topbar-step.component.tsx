@@ -17,7 +17,7 @@ export default function QuestionnaireTopBarStep() {
             title="Select the job"
           />
           <StepDesktop
-            progress={5}
+            progress={0}
             active={true}
             no={2}
             title="Upload your Resume"

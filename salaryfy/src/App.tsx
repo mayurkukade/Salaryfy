@@ -30,10 +30,16 @@ function App() {
   return (
     <>
       <Routes>
+        {/* <Route element={<AppLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
+        </Route> */}
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
         </Route>
+    
+    
         
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
         <Route path="/placementdrive" element={<PlacementDrivePage />} />

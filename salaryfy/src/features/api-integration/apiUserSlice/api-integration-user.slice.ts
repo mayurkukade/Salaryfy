@@ -45,15 +45,15 @@ const apiIntegrationSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["User"],
     }),
    login:builder.mutation<{},userLogin>({
-    query:({userName,password})=>({
-      transformResponse: console.log(userName,password),
+    query:({username,password})=>({
+      transformResponse: console.log(username,password),
       url: '/jwt/login',
       headers: {
         "Content-Type": "application/json",
       },
       method:"POST",
       body: {
-        userName:userName,
+        username:username,
         password:password
       },
     }),
