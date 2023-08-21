@@ -1,8 +1,13 @@
 import herowave from "../../../assets/Homepage/Vector 30.jpg";
 import herosection from "../../../assets/Homepage/herosection.png";
+import { useNavigate } from "react-router-dom";
 // import React from 'react';
-
+import { Link } from "react-router-dom";
 const HeroSection2 = () => {
+  const navigate = useNavigate()
+  const goHandler = ()=>{
+    navigate('/questionnaire')
+  }
   return (
     // <div className="container" style={{ width: "100%", minHeight: "40vh",zIndex:"-1" }}>
     //   <div className="absolute" style={{ width: "100%" }}>
@@ -151,12 +156,12 @@ const HeroSection2 = () => {
               // style={{border:"2px solid black"}}
             >
               <select className="border-2 border-darkGreen-600 h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base ">
-                <option>Select</option>
-                <option>Select</option>
-                <option>Select</option>
+                <option>Delhi</option>
+                <option>Mumbai</option>
+                <option>Pune</option>
               </select>
               <div className="flex bg-yellow text-darkGreen ml-3 w-[123px] h-[43px] rounded-md  justify-center items-center relative ">
-                <button className="  text-[20.247px] font-medium ">Go</button>
+           <button className="  text-[20.247px] font-medium " onClick={goHandler}>Go</button>   
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="33"

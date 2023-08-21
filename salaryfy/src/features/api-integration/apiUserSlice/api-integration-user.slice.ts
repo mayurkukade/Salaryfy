@@ -2,6 +2,7 @@
 import { apiSlice } from "../../apiSlice";
 import { email } from "../interface/user.model.interface";
 import { FormData } from "../interface/user.model.interface";
+import { userLogin } from "../interface/user.model.interface";
 const apiIntegrationSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     fetchItems: builder.query({
@@ -43,6 +44,22 @@ const apiIntegrationSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+   login:builder.mutation<{},userLogin>({
+    query:({userName,password})=>({
+      transformResponse: console.log(userName,password),
+      url: '/jwt/login',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method:"POST",
+      body: {
+        userName:userName,
+        password:password
+      },
+    }),
+    
+      invalidatesTags: ["User"],
+   })
   }),
 });
 
@@ -51,6 +68,7 @@ export const {
   useRegisterMutation,
   useSendEmailMutation,
   useVerifyOTPMutation,
+  useLoginMutation
 } = apiIntegrationSlice;
 
 export default apiIntegrationSlice;

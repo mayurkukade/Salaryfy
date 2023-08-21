@@ -41,8 +41,8 @@ export default function QuestionnairePersonalDetails() {
   console.log(submitRegister);
 
   return (
-    <div className="w-100 flex flex-col items-center h-[100%]">
-      <QuestionnaireTopBarStep />
+    
+ 
       <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
         <div className="text-[1.4em]">Job Details</div>
         <UserJobDetails />
@@ -54,11 +54,11 @@ export default function QuestionnairePersonalDetails() {
           <BottomPageNavigationBar />
         </div>
       </div>
-    </div>
+    
   );
 }
 
-const NameComponent: React.FC<typeof PersonDetails> = (props) => {
+const NameComponent: React.FC<PersonDetails> = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
@@ -99,7 +99,7 @@ const NameComponent: React.FC<typeof PersonDetails> = (props) => {
   );
 };
 
-const PhoneComponent: React.FC<typeof PersonDetails> = (props) => {
+const PhoneComponent: React.FC<PersonDetails> = (props) => {
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]">
@@ -292,7 +292,7 @@ const PasswordComponent: React.FC<PasswordComponent> = (props) => {
       </div>
       <div>
         {props.password && props.passwordFocus && !props.validpassword ? (
-          <p>
+          <p className="text-[#fe4a08]">
             8 to 24 characters.
             <br />
             Must include uppercase and lowercase letters, a number and a special
@@ -415,7 +415,9 @@ function UploadResumeComponent() {
   );
 }
 
-const Verified: React.FC<typeof PersonalDetails> = (props) => {
+type PropT = { email: string }
+
+const Verified= (props: PropT):JSX.Element => {
   const [otp, setOtp] = useState<string>("");
   
   const [verifyOTP] = useVerifyOTPMutation();
@@ -509,8 +511,8 @@ console.log(response)
   );
 };
 
-const PersonalDetails: React.FC<QuestionnairePersonalDetails> = () => {
-  const [register, { isError, isSuccess }] = useRegisterMutation();
+const PersonalDetails = (): JSX.Element => {
+  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 
@@ -527,8 +529,8 @@ const PersonalDetails: React.FC<QuestionnairePersonalDetails> = () => {
   const [emailFocus, setEmailFocus] = useState(false);
 
   const [password, setpassword] = useState<string>("");
-  const [validpassword, setValidpassword] = useState<string>("");
-  const [passwordFocus, setpasswordFocus] = useState(false);
+  const [validpassword, setValidpassword] = useState<boolean>(false);
+  const [passwordFocus, setpasswordFocus] = useState<boolean>(false);
 
   const [confirmpassword, setConfirmpassword] = useState<string>("");
   const [matchpassword, setMatchpassword] = useState<boolean>(false);
@@ -568,7 +570,7 @@ const PersonalDetails: React.FC<QuestionnairePersonalDetails> = () => {
       console.log(res);
 
       if (res?.data) {
-        return toast.success("otp is send to your email address", {
+        return toast.success("register success", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -579,7 +581,7 @@ const PersonalDetails: React.FC<QuestionnairePersonalDetails> = () => {
           theme: "light",
         });
       } else {
-        return toast.error("otp is send to your email address", {
+        return toast.error("error", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,

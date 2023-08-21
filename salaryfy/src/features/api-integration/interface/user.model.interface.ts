@@ -17,3 +17,7 @@ export interface FormData {
     date:string
   }
   
+  export interface userLogin{
+    "userName":string,
+    "password":string
+  }
