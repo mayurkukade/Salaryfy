@@ -3,7 +3,7 @@ import { AppStoreStateType } from "../../../store/app.store";
 import { useEffect } from "react";
 import { setJobFilter } from "../../../features/reducers/job-filter/jobs-filter.slice";
 import DropdownMenu from "../../../components/DropdownMenu";
-import { JobsFilterType, OptionSelected } from "../../../features/reducers/job-filter/jobs-filter.interface";
+import { OptionSelected } from "../../../features/reducers/job-filter/jobs-filter.interface";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Chip from "./chip.component";
 import { CommonUtilities } from "../../../utils/common.utilities";
@@ -11,7 +11,7 @@ import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import { JobType } from "../../../features/reducers/jobs/jobs.interface";
 import { Button } from "@mui/material";
 
-export default function FilterComponent({ className }: { className?: string }) {
+export default function FilterComponent({ className, onSearchButtonClick }: { className?: string, onSearchButtonClick: () => void }) {
 
   const dispatch = useDispatch();
   const jobFilterValues = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS_FILTER]);
@@ -28,9 +28,9 @@ export default function FilterComponent({ className }: { className?: string }) {
   }, []);
 
   useEffect(() => {
-    Object.values(jobFilterValues).some((filterTypes: Array<OptionSelected>) => filterTypes.map((filterType: OptionSelected) => {
-      if (filterType.selected) console.log('selected option: ', filterType.option);
-    }));
+    // Object.values(jobFilterValues).some((filterTypes: Array<OptionSelected>) => filterTypes.map((filterType: OptionSelected) => {
+    //   if (filterType.selected) console.log('selected option: ', filterType.option);
+    // }));
 
    
 
@@ -86,7 +86,7 @@ export default function FilterComponent({ className }: { className?: string }) {
           }
         </div>
         <div>
-          <Button variant='contained'>Search</Button>
+          <Button variant='contained' onClick={onSearchButtonClick} >Filter Results</Button>
         </div>
       </div>
 

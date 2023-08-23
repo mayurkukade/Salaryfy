@@ -4,7 +4,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Box, Button, TextField } from "@mui/material";
 import QuestionnaireTopBarStep from "./components/questionnaire-topbar-step.component";
 import { useEffect, useRef, useState } from "react";
-import { useLazyGetJobsQuery } from "../../features/api-integration/jobs-search-slice/jobs-search.slice";
+import { useLazyGetJobsFilterQuery, useLazyGetJobsSearchQuery } from "../../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { CommonUtilities } from "../../utils/common.utilities";
 import FilterComponent from "./components/job-filter.component";
 import { AppStoreStateType } from "../../store/app.store";
@@ -12,6 +12,7 @@ import { SLICE_NAMES } from "../../features/slice-names.enum";
 import { useDispatch, useSelector } from "react-redux";
 import { setJobs } from "../../features/reducers/jobs/jobs.slice";
 import { JobType } from "../../features/reducers/jobs/jobs.interface";
+import { OptionSelected } from "../../features/reducers/job-filter/jobs-filter.interface";
 function FilterSVGIcon() {
   return (
     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,15 +41,39 @@ function SortSVGIcon() {
 export default function PlacementDrivePage() {
   const expandableRef = useRef<HTMLDivElement | null>(null);
 
-  const [lazyGetJobs] = useLazyGetJobsQuery();
+  const [lazyGetSearchJobs] = useLazyGetJobsSearchQuery();
+  const [lazyGetFilterJobs] = useLazyGetJobsFilterQuery();
+  const jobFilterValues = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS_FILTER]);
   const jobs = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]);
   const [filterKey, setFilterKey] = useState<string>(CommonUtilities.generateRandomString(10));
   const dispatch = useDispatch();
+  const searchFieldRef = useRef<HTMLInputElement | null>(null);
 
   let once = false;
 
-  async function getJobs() {
-    const { data: { list: fetchedJobs } } = await lazyGetJobs({});
+  async function searchByFilterComponent() {
+    const filterProperties = {
+      companyName: jobFilterValues.companyNames.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(','),
+      jobType: jobFilterValues.jobTypes.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(','),
+      location: jobFilterValues.locations.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(',')
+    }
+
+    const filterPropertiesUriEncoded = Object.entries(filterProperties).map(([key, value]: [string, string]) => [key, encodeURIComponent(value)].join('=') ).join('&');
+    const { data: { list: jobsData } } = await lazyGetFilterJobs(filterPropertiesUriEncoded);
+
+    dispatch(setJobs(jobsData));
+  }
+
+  async function searchByKeyword() {
+    const searchElement = searchFieldRef.current;
+    if (searchElement){
+      setAllJobs(searchElement.value)
+    }
+
+  }
+
+  async function setAllJobs(searchKeywords: string) {
+    const { data: { list: fetchedJobs } } = await lazyGetSearchJobs(searchKeywords);
 
     console.log(fetchedJobs);
 
@@ -58,13 +83,14 @@ export default function PlacementDrivePage() {
   useEffect(() => {
     if (once) { return; }
     once = true;
-    getJobs();
+    setAllJobs('');
   }, []);
 
   function toggleFilter() {
     const element = expandableRef.current;
     if (element && element?.style.height === '0px') {
-      element.style.height = element.scrollHeight + 'px';
+      // element.style.height = element.scrollHeight + 'px';
+      element.style.height = 'max-content';
       return;
     }
 
@@ -81,12 +107,13 @@ export default function PlacementDrivePage() {
       <QuestionnaireTopBarStep />
       <div className="flex gap-[2em]">
         <Box className="text-[#0E5F59]" sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
-          <FilterComponent key={filterKey} className="w-[30em]" />
+          <FilterComponent onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[30em]" />
         </Box>
         <div className="flex-grow p-3">
           <p className="text-[1.2rem] font-semibold text-darkGreen mb-2">Search</p>
           <div className="flex gap-[2.5em] h-[4em]">
-            <TextField className="flex-grow" placeholder="Enter Keyword" size="small" />
+            <TextField inputRef={searchFieldRef} className="flex-grow" placeholder="Enter Keyword" size="small" />
+            <Button variant="contained" onClick={searchByKeyword} >Search</Button>
 
             {/* Desktop View */}
             <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}><DropdownMenu variant='contained' endIcon={<KeyboardArrowDownIcon />} label="Sort" /></Box>
@@ -98,7 +125,7 @@ export default function PlacementDrivePage() {
 
           <Box ref={expandableRef} id='expandable-element' className='w-[100%] my-[4em] relative' style={{ height: '0px', transition: '1000ms ease' }} sx={{ overflow: 'hidden', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
             <div className="aboslute">
-              <FilterComponent key={filterKey} className="w-[100%]" />
+              <FilterComponent onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[100%]" />
             </div>
           </Box>
           {
