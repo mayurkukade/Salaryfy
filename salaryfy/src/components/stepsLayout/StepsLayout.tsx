@@ -3,6 +3,7 @@ import QuestionnaireTopBarStep from '../../modules/questionnaire/components/ques
 import { Outlet } from 'react-router-dom'
 
 const StepsLayout:React.FC= () => {
+ 
   return (
     <>
         <div className="w-100 flex flex-col items-center h-[100%]">

@@ -3,6 +3,7 @@
  */
 interface StepsCounterState {
   progress: [number, number, number];
+  
 }
 
 export default StepsCounterState;

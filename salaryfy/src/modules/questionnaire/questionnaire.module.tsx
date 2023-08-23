@@ -1,5 +1,5 @@
 import "./questionnaire.css";
-import { Navigate, Route, Routes } from "react-router-dom";
+import {  Route, Routes } from "react-router-dom";
 import QuestionnairePersonalDetails from "./pages/personal-details.page";
 import ScreeningQuestions from "./pages/screening-questions";
 import ScheduleInterviewPage from "./pages/schedule-interview.page";

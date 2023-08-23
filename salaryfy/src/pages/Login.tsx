@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import eyelogo from "../../assets/Logos/eyelogo.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Cookies  from "js-cookie";
 import { useLoginMutation } from "../features/api-integration/apiUserSlice/api-integration-user.slice";
 const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 import {toast} from 'react-toastify'
+import { useDispatch } from "react-redux";
+import { setToken,clearToken } from "../features/reducers/authReducers/auth-slice-reducer";
 export const Login = () => {
   const [userName, setUserName] = useState<string>("");
   const navigate = useNavigate()
-  const [validUserName, setValidUserName] = useState<boolean>(false);
+  const dispatch = useDispatch()
 
   const [login,{isLoading,isSuccess,isError}] = useLoginMutation()
   console.log(isLoading,isError)
@@ -19,30 +22,35 @@ export const Login = () => {
     e.preventDefault()
 
     try {
-      const res =   await login({username:userName,password})
-      console.log(res)
-      if(res?.data){
-        toast.success("successfully login", {
+      const response =   await login({username:userName,password})
+      if (response?.data) {
+        const token: string = response.data; // Access the actual token data
+        console.log(token);
+        dispatch(setToken(token));
+        Cookies.set('jwtToken', token);
+
+        toast.success("Successfully logged in", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
-  
           draggable: true,
           progress: undefined,
           theme: "light",
         });
-        navigate('/questionnaire/screening-questions')
+
+        navigate('/questionnaire/screening-questions'); // Make sure your routing is correctly set up
+      } else {
+        // Handle the error case
+        console.error("Login error:", response.error);
       }
     } catch (error) {
-      console.log(error)
+      console.error("Unexpected error:", error);
     }
   
   }
 
-  useEffect(() => {
-    setValidUserName(EMAIL_REGEX.test(userName));
-  }, [userName]);
+  
 
   return (
     <div className="bg-darkGreen min-h-[100vh] flex justify-center items-center">

@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/NavComponent/Navbar";
+
 import Home from "./pages/Home";
 import SignUp from "./components/SignUpComponents/SignUp";
 import VerifyEmail from "./components/SignUpComponents/VerifyEmail";
@@ -24,7 +24,7 @@ import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
 import EligibilityForm from "./pages/EligibilityForm";
 import JobDescription from "./pages/JobDescription";
 import Roadmap from "./pages/Roadmap";
-import StepsCounterSlice from "./features/steps-counter/steps-counter.slice";
+
 
 function App() {
   return (
@@ -38,6 +38,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
         </Route>
+
+        
     
     
         
@@ -66,7 +68,7 @@ function App() {
 
         <Route path="/roadmap" element={<Roadmap />} />
       </Routes>
-      3
+      
       <Footer />
     </>
   );

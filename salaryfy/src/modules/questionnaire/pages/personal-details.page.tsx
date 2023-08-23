@@ -1,4 +1,4 @@
-import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
+
 import UserJobDetails from "../components/job-details.component";
 import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
 import SubSteps from "../components/sub-steps.component";
@@ -11,6 +11,11 @@ import {
   useSendEmailMutation,
   useVerifyOTPMutation,
 } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
+import { useAppDispatch } from "../../../store/app.hook";
+import { emailStepsCounterDecrement, emailStepsCounterIncrement,  nameStepsCounterDecrement, nameStepsCounterIncrement, passwordStepsCounterDecrement, passwordStepsCounterIncrement, phoneNumberStepsCounterDecrement, phoneNumberStepsCounterIncrement, resSteptwoSelector } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
+
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/app.store";
 
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
@@ -516,6 +521,8 @@ const PersonalDetails = (): JSX.Element => {
 
   const userRef = useRef<HTMLInputElement>(null);
 
+ const dispatch = useAppDispatch()
+
   const [fullName, setfullName] = useState<string>("");
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
@@ -525,6 +532,7 @@ const PersonalDetails = (): JSX.Element => {
   const [phoneFocus, setPhoneFocus] = useState(false);
 
   const [email, setemail] = useState<string>("");
+  
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
@@ -544,6 +552,10 @@ const PersonalDetails = (): JSX.Element => {
   console.log(isError);
   console.log(isSuccess);
   console.log(matchpassword)
+
+  const resSubmitStatus = useSelector((state:RootState)=>state.mainStepsCounter.resStepTwo)
+
+console.log(resSubmitStatus)
   const contentDisabled =
     !validName ||
     !validMobile ||
@@ -567,9 +579,12 @@ const PersonalDetails = (): JSX.Element => {
         userProfileType,
         date,
       });
-      console.log(res);
+    
 
       if (res?.data) {
+
+        dispatch(resSteptwoSelector(true))
+
         return toast.success("register success", {
           position: "top-center",
           autoClose: 2000,
@@ -581,6 +596,7 @@ const PersonalDetails = (): JSX.Element => {
           theme: "light",
         });
       } else {
+        dispatch(resSteptwoSelector(false))
         return toast.error("error", {
           position: "top-center",
           autoClose: 2000,
@@ -600,15 +616,35 @@ const PersonalDetails = (): JSX.Element => {
 
   useEffect(() => {
     setValidName(USER_REGEX.test(fullName));
-  }, [fullName]);
+    if(validName){
+      dispatch(nameStepsCounterIncrement())
+    }else{
+      dispatch(nameStepsCounterDecrement())
+    }
+  }, [fullName,validName,dispatch]);
+
+ 
 
   useEffect(() => {
     setValidMobile(INDIAN_MOBILE_REGEX.test(mobile_no));
-  }, [mobile_no]);
+    if(validMobile){
+      dispatch(phoneNumberStepsCounterIncrement())
+    }else{
+      dispatch(phoneNumberStepsCounterDecrement())
+    }
+  }, [mobile_no,validMobile,dispatch]);
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
-  }, [email]);
+    if(validEmail){
+      dispatch(emailStepsCounterIncrement())
+    }else{
+      dispatch(emailStepsCounterDecrement)
+    }
+    
+  }, [email,validEmail,dispatch]);
+
+
 
   useEffect(() => {
     setMatchpassword(password === confirmpassword);
@@ -616,8 +652,13 @@ const PersonalDetails = (): JSX.Element => {
 
   useEffect(() => {
     setValidpassword(password_REGEX.test(password));
-  }, [password]);
-
+    if(validpassword){
+      dispatch(passwordStepsCounterIncrement())
+    }else{
+      dispatch(passwordStepsCounterDecrement())
+    }
+  }, [password,validpassword,dispatch]);
+  
   console.log(validpassword);
   console.log(matchpassword);
   return (
@@ -625,6 +666,7 @@ const PersonalDetails = (): JSX.Element => {
       <div className="font-semibold text-[1.8em] text-[#5B5B5B]">
         Fill the details below
       </div>
+   
       <div className="">
         <div className="bg-[#F3FAF9] rounded-md py-[3em] px-[2em] md:px-[7em] gap-[2em] flex flex-col">
           <div className="flex flex-col md:flex-row gap-[2em]">
