@@ -8,6 +8,7 @@ import SLICE_NAMES from '../slice-names.enum';
  */
 const initialState: StepsCounterState = {
   progress: [0, 0, 0],
+  
 };
 
 /**

@@ -1,26 +1,74 @@
 
-import { apiSlice } from '../../apiSlice';
-import { emailOTP } from '../interface/user.model.interface';
+import { apiSlice } from "../../apiSlice";
+import { email } from "../interface/user.model.interface";
+import { FormData } from "../interface/user.model.interface";
+import { userLogin } from "../interface/user.model.interface";
 const apiIntegrationSlice = apiSlice.injectEndpoints({
- 
   endpoints: (builder) => ({
     fetchItems: builder.query({
       query: (id) => `/user/getAllUsers?pageNo=${id}`, // Remove any query parameters here
     }),
-    register: builder.mutation<{}, emailOTP>({
-      query: emailOTP => ({
-          url: `/sendEmail?email=${emailOTP.addEmail}`,
-          transformResponse:console.log(emailOTP.addEmail),
-          
-          method: 'POST',
-          body: emailOTP    
+    register: builder.mutation<object, FormData>({
+      query: (register) => ({
+        url: `/user/register`,
+        transformResponse: console.log(register),
+        headers:{
+          "Content-Type":"application/json"
+        },
+        method: "POST",
+        body: register,
       }),
-      invalidatesTags: ['User']
-  }),
+      invalidatesTags: ["User"],
+    }),
+    sendEmail: builder.mutation<{}, email>({
+      query: (email) => ({
+        url: `/sendEmail?email=${email}`,
+        transformResponse: console.log(email),
+        method: "POST",
+        body: email,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    verifyOTP: builder.mutation<{}, email>({
+      query: ({ otp, email }) => ({
+        transformResponse: console.log(otp, email),
+        url: `/verifyOpt?otp=${otp}&email=${email}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: {
+          otp: otp,
+          email: email,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
+   login:builder.mutation<{},userLogin>({
+    query:({username,password})=>({
+      transformResponse: console.log(username,password),
+      url: '/jwt/login',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method:"POST",
+      body: {
+        username:username,
+        password:password
+      },
+    }),
+    
+      invalidatesTags: ["User"],
+   })
   }),
 });
 
-export const { useFetchItemsQuery,useRegisterMutation } = apiIntegrationSlice;
+export const {
+  useFetchItemsQuery,
+  useRegisterMutation,
+  useSendEmailMutation,
+  useVerifyOTPMutation,
+  useLoginMutation
+} = apiIntegrationSlice;
 
 export default apiIntegrationSlice;
-
