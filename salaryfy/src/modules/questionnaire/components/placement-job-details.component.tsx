@@ -5,7 +5,7 @@ import SideArrow from './side-arrow.icon';
 import { JobsDetailsType } from '../../../features/reducers/job-details/job-details.interface';
 import { CommonUtilities } from '../../../utils/common.utilities';
 
-export default function PlacementJobDetails({ jobDetails }: { jobDetails: JobsDetailsType }) {
+export default function PlacementJobDetails({ jobDetails, onGetHiredClick }: { jobDetails: JobsDetailsType, onGetHiredClick: () => void }) {
   return (
     <>
       <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
@@ -18,7 +18,7 @@ export default function PlacementJobDetails({ jobDetails }: { jobDetails: JobsDe
                 <div className='ml-[0.5em] text-[1.3em] text-[#0E5F59] font-medium'>Interview on: {CommonUtilities.date.formatDate( jobDetails.interviewStartDate )} </div>
               </div>
 
-              <div className="flex bg-yellow text-[#0E5F59] px-[1em] py-[0.5em] rounded-lg  justify-center items-center w-[max-content] h-[max-content]">
+              <div onClick={onGetHiredClick} className="cursor-pointer select-none flex bg-yellow text-[#0E5F59] px-[1em] py-[0.5em] rounded-lg  justify-center items-center w-[max-content] h-[max-content]">
                 <span className="text-[2em] font-medium">Get Hired</span>
                 <SideArrow />
               </div>
@@ -49,7 +49,7 @@ export default function PlacementJobDetails({ jobDetails }: { jobDetails: JobsDe
               <div className='mx-2 w-[1px] h-[1.4em] bg-[#0E5F594C]'></div>
               <div className='text-[#5B5B5B]'><span>Job Type:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.jobType }</span></div>
               <div className='mx-2 w-[1px] h-[1.4em] bg-[#0E5F594C]'></div>
-              <div className='text-[#5B5B5B]'><span>No of Posts:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.noOfPosts }</span></div>
+              <div className='text-[#5B5B5B]'><span>No of Posts:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.noOfPosts || 'posts' }</span></div>
             </div>
           </div>
 
@@ -80,24 +80,25 @@ export default function PlacementJobDetails({ jobDetails }: { jobDetails: JobsDe
           {/* Second */}
           <div className='w-[100%] flex flex-col gap-[1em]'>
             <div className='text-[1.8em] font-[700]'>Sales Associates (Frontend Sales)</div>
-            <div className='flex bg-white text-[1.1em] gap-[0.5em] text-[#EA4335] w-[max-content] border border-solid rounded-[2em] px-[1em] py-[0.5em]'>
+            <div className='flex bg-white text-[1.1em] gap-[0.5em] text-[#0E5F59] w-[max-content] border border-solid rounded-[2em] px-[1em] py-[0.5em]'>
               <span>
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.2923 2.70801H9.75065V1.62467C9.75065 1.48102 9.69358 1.34324 9.592 1.24166C9.49042 1.14008 9.35264 1.08301 9.20898 1.08301C9.06532 1.08301 8.92755 1.14008 8.82597 1.24166C8.72439 1.34324 8.66732 1.48102 8.66732 1.62467V2.70801H4.33398V1.62467C4.33398 1.48102 4.27692 1.34324 4.17533 1.24166C4.07375 1.14008 3.93598 1.08301 3.79232 1.08301C3.64866 1.08301 3.51088 1.14008 3.4093 1.24166C3.30772 1.34324 3.25065 1.48102 3.25065 1.62467V2.70801H2.70898C2.27801 2.70801 1.86468 2.87921 1.55994 3.18396C1.25519 3.48871 1.08398 3.90203 1.08398 4.33301V4.87467H11.9173V4.33301C11.9173 3.90203 11.7461 3.48871 11.4414 3.18396C11.1366 2.87921 10.7233 2.70801 10.2923 2.70801ZM1.08398 10.2913C1.08398 10.7223 1.25519 11.1356 1.55994 11.4404C1.86468 11.7451 2.27801 11.9163 2.70898 11.9163H10.2923C10.7233 11.9163 11.1366 11.7451 11.4414 11.4404C11.7461 11.1356 11.9173 10.7223 11.9173 10.2913V5.95801H1.08398V10.2913Z" fill="#EA4335" />
-                </svg>
+                </svg> */}
+                <CalendarVector />
               </span>
-              <span>Interview on: 03 May 2023</span>
+              <span>Interview on: { CommonUtilities.date.formatDate(jobDetails.interviewStartDate) }</span>
             </div>
 
-            <div className="flex bg-yellow text-[#0E5F59] px-[1em] py-[0.5em] rounded-lg  justify-center items-center w-[max-content] h-[max-content]">
+            <div onClick={onGetHiredClick} className="cursor-pointer select-none flex bg-yellow text-[#0E5F59] px-[1em] py-[0.5em] rounded-lg  justify-center items-center w-[max-content] h-[max-content]">
               <span className="text-[2em] font-[600]">Get Hired</span>
               <SideArrow />
             </div>
 
-            <div className='text-[1.4em] font-medium'><span className='text-[#5B5B5B]'>Location&nbsp;</span><span className='text-[#0E5F59]'>Bangalore</span></div>
-            <div className='text-[1.4em] font-medium'><span className='text-[#5B5B5B]'>Starting Salary:&nbsp;</span><span className='text-[#0E5F59]'>Upto 4 LPA</span></div>
-            <div className='text-[1.4em] font-medium'><span className='text-[#5B5B5B]'>Job Type:&nbsp;</span><span className='text-[#0E5F59]'>On-Site</span></div>
-            <div className='text-[1.4em] font-medium'><span className='text-[#5B5B5B]'>No of Posts:&nbsp;</span><span className='text-[#0E5F59]'>38</span></div>
+            <div className='text-[1.4em] font-medium'><span className='text-[#5B5B5B]'>Location&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.location }</span></div>
+            <div className='text-[1.4em] font-medium'><span className='text-[#5B5B5B]'>Starting Salary:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.startingSalary || 'salary' }</span></div>
+            <div className='text-[1.4em] font-medium'><span className='text-[#5B5B5B]'>Job Type:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.jobType }</span></div>
+            <div className='text-[1.4em] font-medium'><span className='text-[#5B5B5B]'>No of Posts:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.noOfPosts || 'posts' }</span></div>
 
           </div>
 
