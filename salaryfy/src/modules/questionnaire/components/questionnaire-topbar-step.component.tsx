@@ -27,7 +27,7 @@ if(token){
 }
 
   return (
-    <div className="flex w-[65%] p-[30px]">
+    <div className="flex w-[70%] p-[30px]">
       {/* Code for Desktop view  */}
       <Box
         className="flex-grow justify-center w-[80%] "
