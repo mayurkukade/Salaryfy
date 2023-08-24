@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import PlacementCarousel from "../components/PlacementDriveDetailsComponents/PlacementCarousel";
 import PlacementJobDetails from "../modules/questionnaire/components/placement-job-details.component";
+import { useParams, useNavigate } from "react-router-dom";
+import { useLazyGetJobByIdQuery } from "../features/api-integration/jobs-search-slice/jobs-search.slice";
 
 
 function GreenHeading({ label }: { label: string }) {
@@ -14,6 +17,31 @@ function GreenHeading({ label }: { label: string }) {
 }
 
 const PlacementDriveDetails = () => {
+
+  const { jobId } = useParams();
+  const navigate = useNavigate();
+  const [lazyFetchJob] = useLazyGetJobByIdQuery();
+
+  function navigateToPlacementDrive() {
+    navigate('/placementdrive');
+  }
+
+  async function fetchJob() {
+    if (jobId){
+
+      const { data: { object: details } } = await lazyFetchJob(jobId);
+
+      console.log(details);
+    }
+  }
+
+  useEffect(() => {
+    if (!jobId) { return navigateToPlacementDrive(); }
+
+    fetchJob();
+    
+  }, []);
+
   return (
     <div className="flex gap-[5em] px-[4em] py-[4em] flex-col-reverse md:flex-row">
       <div className="flex justify-center">

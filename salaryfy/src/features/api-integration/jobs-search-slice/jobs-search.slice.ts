@@ -10,11 +10,15 @@ const jobSearchSlice = apiSlice.injectEndpoints({
     getJobsFilter: builder.query({
       query: (properties: string) => `jobs/mainFilter?${properties}`,
       providesTags: ['jobs-filter']
+    }),
+    getJobById: builder.query({
+      query: (id: string) => `/job/getJob?JobId=${id}`,
+      providesTags: ['job-id']
     })
   }),
 });
 
-export const { useLazyGetJobsSearchQuery, useLazyGetJobsFilterQuery } = jobSearchSlice;
+export const { useLazyGetJobsSearchQuery, useLazyGetJobsFilterQuery, useLazyGetJobByIdQuery } = jobSearchSlice;
 
 export default jobSearchSlice;
 

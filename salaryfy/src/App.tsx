@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/NavComponent/Navbar";
 import Home from "./pages/Home";
@@ -41,7 +41,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/placementdrive" element={<PlacementDrivePage />} />
-        <Route path="/placementdetails" element={<PlacementDriveDetails />} />
+        <Route path="/placementdetails" element={ <Navigate to='/placementdrive' /> } />
+        <Route path="/placementdetails/:jobId" element={<PlacementDriveDetails />} />
         {/* <Routes> */}
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />

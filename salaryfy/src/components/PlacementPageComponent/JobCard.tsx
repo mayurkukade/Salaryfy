@@ -1,6 +1,21 @@
 import { Button } from "@mui/material";
 import lenscartlogo from "../../../assets/Logos/lenskartlogo.png";
-const JobCard = ({ details }: Record<string, any>) => {
+import { JobType } from "../../features/reducers/jobs/jobs.interface";
+import { useNavigate } from "react-router-dom";
+
+const JobCard = ({ details }: { details: JobType }) => {
+  
+  const navigate = useNavigate();
+
+  function onDetailsClick() {
+    console.log('details clicked: ', details.jobId);
+    if (details?.jobId) {
+      navigate('/placementdetails/' + details.jobId);
+    }
+  }
+  
+  function onGetHiredClick() {console.log('clicked')}
+
   return (
     <div className="p-[2em] app-box-shadow mx-auto mt-8 w-full rounded-[2em]" style={{ background: "linear-gradient(96deg, rgba(254, 205, 8, 0.01) 0%, rgba(0, 95, 89, 0.04) 100%)" }}>
       <div className="flex gap-[2em] mb-[1em] flex-col md:flex-row">
@@ -47,8 +62,8 @@ const JobCard = ({ details }: Record<string, any>) => {
           </div>
         </div>
         <div className="flex gap-[2em] ">
-          <Button variant="outlined" endIcon={<SideArrow />}><span className="text-[1.25em]" >Details</span></Button>
-          <Button variant="contained" color="secondary" endIcon={<SideArrow />}><span className="text-[1.25em] text-[#0E5F59]" >Get Hired</span></Button>
+          <Button onClick={onDetailsClick} variant="outlined" endIcon={<SideArrow />}><span className="text-[1.25em]" >Details</span></Button>
+          <Button onClick={onGetHiredClick} variant="contained" color="secondary" endIcon={<SideArrow />}><span className="text-[1.25em] text-[#0E5F59]" >Get Hired</span></Button>
         </div>
       </div>
     </div>
