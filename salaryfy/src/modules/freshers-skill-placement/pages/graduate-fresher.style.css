@@ -1,0 +1,3 @@
+.app-items > *:nth-last-child(-n + 5) {
+  /* border-bottom: none; */
+}

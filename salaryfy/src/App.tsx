@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 
 import Home from "./pages/Home";
@@ -24,7 +24,6 @@ import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
 import EligibilityForm from "./pages/EligibilityForm";
 import JobDescription from "./pages/JobDescription";
 import Roadmap from "./pages/Roadmap";
-import StepsLayout from "./components/stepsLayout/StepsLayout";
 
 
 function App() {
@@ -49,7 +48,7 @@ function App() {
     
         
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
-      
+        <Route path="/placementdrive" element={<PlacementDrivePage />} />
         <Route path="/placementdetails" element={<PlacementDriveDetails />} />
         {/* <Routes> */}
         <Route path="/" element={<Home />} />
@@ -60,18 +59,17 @@ function App() {
         <Route path="/forgotpasswordemail" element={<ForgorPasswordEmail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route
-          path="/passwordresetsuccessfully"
-          element={<PasswordResetSuccessful />}
-        />
+        <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful />}/>
         <Route path="/plannotavailable" element={<PlanNotAvailable />} />
         <Route path="/filldetails" element={<FillDetails />} />
         <Route path="/landingpage" element={<LandingPage />} />
 
+        <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
+        <Route path="/fresher-skill-placement/*" element={<FresherSkillPlacementModule />} />
         <Route path="/eligibilityform" element={<EligibilityForm />} />
         <Route path="/jobdescription" element={<JobDescription />} />
-
-        <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/roadmap" element={<Roadmap/>}/>
+        <Route path='/test' element={<TestComponent />} />
       </Routes>
       
       <Footer />

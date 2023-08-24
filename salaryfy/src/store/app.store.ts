@@ -3,6 +3,12 @@ import rootReducer from './app.reducer';
 import authSliceReducer from '../features/reducers/authReducers/auth-slice-reducer';
 import apiIntegrationSlice from '../features/api-integration/apiUserSlice/api-integration-user.slice'
 import mainStepsCounterReducer from '../features/reducers/main-steps-counter/main-steps-counter.reducer';
+
+export interface AppStoreStateType {
+  root: ReturnType<typeof rootReducer>,
+  [apiIntegrationSlice.reducerPath]: ReturnType<typeof apiIntegrationSlice.reducer>
+}
+
 const appStore = configureStore({
   reducer: {
     root: rootReducer,

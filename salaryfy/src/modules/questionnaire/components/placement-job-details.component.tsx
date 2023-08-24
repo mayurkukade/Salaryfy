@@ -2,8 +2,10 @@ import { Box } from '@mui/material';
 import image from '../../../assets/images/job-details-bg.png';
 import CalendarVector from './calendar-vector';
 import SideArrow from './side-arrow.icon';
+import { JobsDetailsType } from '../../../features/reducers/job-details/job-details.interface';
+import { CommonUtilities } from '../../../utils/common.utilities';
 
-export default function PlacementJobDetails() {
+export default function PlacementJobDetails({ jobDetails }: { jobDetails: JobsDetailsType }) {
   return (
     <>
       <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
@@ -13,7 +15,7 @@ export default function PlacementJobDetails() {
             <div className='flex items-center gap-[1.5em]'>
               <div className='w-[fit-content] h-[fit-content] bg-white flex items-center border border-[#0E5F59] border-solid py-[0.5em] px-[1em] rounded-[2em]'>
                 <CalendarVector />
-                <div className='ml-[0.5em] text-[1.3em] text-[#0E5F59] font-medium'>Interview on: 05th May 2023</div>
+                <div className='ml-[0.5em] text-[1.3em] text-[#0E5F59] font-medium'>Interview on: {CommonUtilities.date.formatDate( jobDetails.interviewStartDate )} </div>
               </div>
 
               <div className="flex bg-yellow text-[#0E5F59] px-[1em] py-[0.5em] rounded-lg  justify-center items-center w-[max-content] h-[max-content]">
@@ -33,21 +35,21 @@ export default function PlacementJobDetails() {
               <div className='absolute h-[5em] w-[5em] p-[0.5em] flex items-center justify-center rounded-md bg-[#D7E8F0] -translate-y-full overflow-hidden'>
                 <img src='src/assets/images/lenskart-icon.png'></img>
               </div>
-              <div className='relative text-center'>Lenskart</div>
+              <div className='relative text-center'>{ jobDetails.companyName }</div>
             </div>
           </div>
 
           {/* Second */}
           <div className='px-[1em] py-[1em]'>
-            <div className='text-[2em] font-bold mb-[0.5em]'>Sales Associate (Frontend Sales)</div>
+            <div className='text-[2em] font-bold mb-[0.5em]'>{ jobDetails.postName }</div>
             <div className='flex text-[1.4em] font-medium'>
-              <div className='text-[#5B5B5B]'><span>Location:&nbsp;</span><span className='text-[#0E5F59]'>Banglore</span></div>
+              <div className='text-[#5B5B5B]'><span>Location:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.location }</span></div>
               <div className='mx-2 w-[1px] h-[1.4em] bg-[#0E5F594C]'></div>
-              <div className='text-[#5B5B5B]'><span>Starting Salary:&nbsp;</span><span className='text-[#0E5F59]'>Upto 4 LPA</span></div>
+              <div className='text-[#5B5B5B]'><span>Starting Salary:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.startingSalary }</span></div>
               <div className='mx-2 w-[1px] h-[1.4em] bg-[#0E5F594C]'></div>
-              <div className='text-[#5B5B5B]'><span>Job Type:&nbsp;</span><span className='text-[#0E5F59]'>On-Site</span></div>
+              <div className='text-[#5B5B5B]'><span>Job Type:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.jobType }</span></div>
               <div className='mx-2 w-[1px] h-[1.4em] bg-[#0E5F594C]'></div>
-              <div className='text-[#5B5B5B]'><span>No of Posts:&nbsp;</span><span className='text-[#0E5F59]'>38</span></div>
+              <div className='text-[#5B5B5B]'><span>No of Posts:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.noOfPosts }</span></div>
             </div>
           </div>
 

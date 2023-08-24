@@ -1,7 +1,10 @@
-export default function Chip({ className, label }: { className?: string, label: string }) {
+export default function Chip({ className, label, onClick }: { className?: string, label: string, onClick?: () => void }) {
+
+  function chipClicked() { if (onClick) onClick(); }
+
   return (
     <>
-      <div className={'flex w-[max-content] items-center px-[1em] py-[0.25em] rounded-[1em] bg-[#005F59] ' + (className || '')}>
+      <div onClick={chipClicked} className={'flex w-[max-content] items-center px-[1em] py-[0.25em] rounded-[1em] bg-[#005F59] ' + (className || '')}>
         <div className='mr-[0.5em] text-white'>{label}</div>
         <div>
           <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
