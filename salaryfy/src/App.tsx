@@ -51,7 +51,8 @@ function App() {
         
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
         <Route path="/placementdrive" element={<PlacementDrivePage />} />
-        <Route path="/placementdetails" element={<PlacementDriveDetails />} />
+        <Route path="/placementdetails" element={ <Navigate to='/placementdrive' /> } />
+        <Route path="/placementdetails/:jobId" element={<PlacementDriveDetails />} />
         {/* <Routes> */}
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
