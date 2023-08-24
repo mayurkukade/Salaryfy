@@ -27,13 +27,15 @@ if(token){
 }
 
   return (
-    <div className="flex">
+    <div className="flex w-[70%] p-[30px]">
       {/* Code for Desktop view  */}
       <Box
         className="flex-grow justify-center w-[80%] "
         sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
       >
-        <div className="flex-grow   flex mb-[2em] gap-[2em]">
+        <div className="flex flex-grow w-[100%]    mb-[2em] gap-[2em]" 
+        
+        >
           <StepDesktop
             progress={100}
             active={false}
@@ -56,7 +58,7 @@ if(token){
         sx={{ display: { xs: "flex", md: "flex", lg: "none" } }}
         // style={{ border: "2px solid black" }}
       >
-        <div className="flex-grow   flex mb-[2em] gap-[2em]">
+        <div className="flex-grow   flex mb-[2em] gap-[2em] ">
           <StepMobile
           className="text-[0.5rem]"
             progress={100}
