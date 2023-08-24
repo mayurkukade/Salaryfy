@@ -1,0 +1,20 @@
+export interface JobsDetailsType {
+  companyName: string,
+  date: string,
+  essentialRequirements: string,
+  incentives: string,
+  interviewDetails: string,
+  interviewEndDate: string,
+  interviewStartDate: string,
+  jobDetails: string,
+  jobFairSetNo: number,
+  jobId: number,
+  jobType: string,
+  location: string,
+  logo: string,
+  noOfPosts: number,
+  postName: string,
+  startingSalary: string,
+  status: boolean,
+  user_Id: number
+}

@@ -3,6 +3,10 @@ import PlacementCarousel from "../components/PlacementDriveDetailsComponents/Pla
 import PlacementJobDetails from "../modules/questionnaire/components/placement-job-details.component";
 import { useParams, useNavigate } from "react-router-dom";
 import { useLazyGetJobByIdQuery } from "../features/api-integration/jobs-search-slice/jobs-search.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppStoreStateType } from "../store/app.store";
+import { SLICE_NAMES } from "../features/slice-names.enum";
+import { setJobDetails } from "../features/reducers/job-details/job-details.slice";
 
 
 function GreenHeading({ label }: { label: string }) {
@@ -18,6 +22,8 @@ function GreenHeading({ label }: { label: string }) {
 
 const PlacementDriveDetails = () => {
 
+  const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
+  const dispatch = useDispatch();
   const { jobId } = useParams();
   const navigate = useNavigate();
   const [lazyFetchJob] = useLazyGetJobByIdQuery();
@@ -27,11 +33,22 @@ const PlacementDriveDetails = () => {
   }
 
   async function fetchJob() {
-    if (jobId){
+    try {
 
-      const { data: { object: details } } = await lazyFetchJob(jobId);
+      if (jobId){
+  
+        const { data: { object: details } } = await lazyFetchJob(jobId);
+  
+        console.log(details);
 
-      console.log(details);
+        dispatch( setJobDetails(details) );
+      }
+    } catch (error) {
+      if (error instanceof TypeError) {
+        navigateToPlacementDrive();
+        return;
+      }
+      console.error('Got another error, needs to be handled')
     }
   }
 
@@ -58,7 +75,7 @@ const PlacementDriveDetails = () => {
           <p>Placement Drive Details</p>
         </div>
         <div className="app-box-shadow mb-[5em] rounded-[2em]">
-          <PlacementJobDetails />
+          <PlacementJobDetails jobDetails={jobDetails} />
           <div className="px-[5em] py-[0.5em]">
             <div className="flex justify-between items-center flex-col-reverse lg:flex-row mt-[2em]">
 
@@ -70,57 +87,25 @@ const PlacementDriveDetails = () => {
               </p>
             </div>
             <p className="text-[1.6em]">
-              Lorem ipsum is placeholder text commonly used in the graphic, print,
-              and publishing industries for previewing layouts and visual mockups.
-              Lorem ipsum is placeholder text commonly used in the graphic, print,
-              and publishing industries for previewing layouts and visual mockups.
-              Lorem ipsum is placeholder text commonly used in the graphic, print,
-              and publishing industries for previewing layouts and visual mockups.
+              { jobDetails.essentialRequirements }
             </p>
             <div className="">
               <GreenHeading label="Incentive" />
 
               <ol className="text-[1.6em]">
-                <li>1. Recognition and rewards</li>
-                <li>2. Referral programs</li>
-                <li>3. Professional development</li>
-                <li>4. Health and wellness</li>
-                <li>5. Tuition reimbursement</li>
-                <li>6. Bonuses and raises</li>
+                { jobDetails.incentives }
               </ol>
             </div>
             <div className="text-[1.6em]">
               <GreenHeading label="Interview Details" />
               <p className="mb-[1em]">
-                Lorem ipsum is placeholder text commonly used in the graphic,
-                print, and publishing industries for previewing layouts and visual
-                mockups. Lorem ipsum is placeholder text commonly used in the
-                graphic, print, and publishing industries for previewing layouts
-                and visual mockups. Lorem ipsum is placeholder text commonly used
-                in the graphic, print, and publishing industries for previewing
-                layouts and visual mockups.
-              </p>
-              <p>
-                Lorem ipsum is placeholder text commonly used in the graphic,
-                print, and publishing industries for previewing layouts and visual
-                mockups. Lorem ipsum is placeholder text.
+                { jobDetails.interviewDetails }
               </p>
             </div>
             <div className="text-[1.6em]">
               <GreenHeading label="Job Details" />
               <p className="mb-[1em]">
-                Lorem ipsum is placeholder text commonly used in the graphic,
-                print, and publishing industries for previewing layouts and visual
-                mockups. Lorem ipsum is placeholder text commonly used in the
-                graphic, print, and publishing industries for previewing layouts
-                and visual mockups. Lorem ipsum is placeholder text commonly used
-                in the graphic, print, and publishing industries for previewing
-                layouts and visual mockups.
-              </p>
-              <p className="mb-[1em]">
-                Lorem ipsum is placeholder text commonly used in the graphic,
-                print, and publishing industries for previewing layouts and visual
-                mockups. Lorem ipsum is placeholder text.
+                { jobDetails.jobDetails }
               </p>
               <div className="flex bg-yellow text-[#0E5F59] w-fit p-5 h-[43px] rounded-lg  justify-center items-center relative mb-[2em]">
                 <button className="  text-[20.247px] font-medium  ">Get Hired</button>
