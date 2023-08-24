@@ -23,6 +23,7 @@ export const Login = () => {
 
     try {
       const response =   await login({username:userName,password})
+      console.log(response)
       if (response?.data) {
         const token: string = response.data; // Access the actual token data
         console.log(token);
@@ -41,8 +42,19 @@ export const Login = () => {
 
         navigate('/questionnaire/screening-questions'); // Make sure your routing is correctly set up
       } else {
-        // Handle the error case
-        console.error("Login error:", response.error);
+        
+        console.error("Login error");
+      }
+      if(response.error){
+        toast.error("Unsuccesful login", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (error) {
       console.error("Unexpected error:", error);

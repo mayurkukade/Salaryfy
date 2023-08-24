@@ -24,6 +24,7 @@ import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
 import EligibilityForm from "./pages/EligibilityForm";
 import JobDescription from "./pages/JobDescription";
 import Roadmap from "./pages/Roadmap";
+import StepsLayout from "./components/stepsLayout/StepsLayout";
 
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
+          
+
+          
+          <Route path="/placementdrive" element={<PlacementDrivePage />} />
         </Route>
 
         
@@ -44,7 +49,7 @@ function App() {
     
         
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
-        <Route path="/placementdrive" element={<PlacementDrivePage />} />
+      
         <Route path="/placementdetails" element={<PlacementDriveDetails />} />
         {/* <Routes> */}
         <Route path="/" element={<Home />} />

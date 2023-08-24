@@ -30,7 +30,7 @@ if(token){
     <>
       {/* Code for Desktop view  */}
       <Box
-        className="flex-grow justify-center w-[80%] "
+        className="flex-grow justify-center w-[80%]  "
         sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
       >
         <div className="flex-grow   flex mb-[2em] gap-[2em]">
