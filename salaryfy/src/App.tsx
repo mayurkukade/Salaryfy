@@ -24,6 +24,8 @@ import QuestionnaireModule from "./modules/questionnaire/questionnaire.module";
 import EligibilityForm from "./pages/EligibilityForm";
 import JobDescription from "./pages/JobDescription";
 import Roadmap from "./pages/Roadmap";
+import FresherSkillPlacementModule from "./modules/freshers-skill-placement/freshers-skill-placement.module";
+import TestComponent from "./pages/test.component";
 
 
 function App() {
