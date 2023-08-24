@@ -1,37 +1,73 @@
-import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
+
 import UserJobDetails from "../components/job-details.component";
 import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
 import SubSteps from "../components/sub-steps.component";
-import { useRef, useState,useEffect } from "react";
-const USER_REGEX: RegExp =  /^[a-zA-Z]{4,}$/;
+import { useRef, useState, useEffect, CSSProperties } from "react";
+import OTPInput from "react-otp-input";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  useRegisterMutation,
+  useSendEmailMutation,
+  useVerifyOTPMutation,
+} from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
+import { useAppDispatch } from "../../../store/app.hook";
+import { emailStepsCounterDecrement, emailStepsCounterIncrement,  nameStepsCounterDecrement, nameStepsCounterIncrement, passwordStepsCounterDecrement, passwordStepsCounterIncrement, phoneNumberStepsCounterDecrement, phoneNumberStepsCounterIncrement, resSteptwoSelector } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
+
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/app.store";
+
+const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
-const EMAIL_REGEX:RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const password_REGEX: RegExp =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+type SubmitRegister = {
+  email: string;
+  password: string;
+  mobile_no: string;
+  role: string;
+  fullName: string;
+  date: string;
+  userProfileType: string;
+};
 
 export default function QuestionnairePersonalDetails() {
+  const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
+    email: "",
+    password: "",
+    mobile_no: "",
+    role: "",
+    fullName: "",
+    date: "",
+    userProfileType: "",
+  });
+  console.log(submitRegister);
+
   return (
-    <div className="w-100 flex flex-col items-center h-[100%]">
-      <QuestionnaireTopBarStep />
+    
+ 
       <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
         <div className="text-[1.4em]">Job Details</div>
         <UserJobDetails />
         {/* STEPS */}
         <div className="py-[2em] px-[3em] h-[100%]">
           <SubSteps />
-          <PersonalDetails />
+          <PersonalDetails setSubmitRegister={setSubmitRegister} />
 
           <BottomPageNavigationBar />
         </div>
       </div>
-    </div>
+    
   );
 }
 
 const NameComponent: React.FC<PersonDetails> = (props) => {
-  useEffect(()=>{
-    props.userRef.current.focus()
-    },[])
-  console.log(props.validName);
-  console.log(props.nameForm)
+  useEffect(() => {
+    props.userRef.current.focus();
+  }, []);
+
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]">
@@ -41,8 +77,8 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
             type="text"
             ref={props.userRef}
             autoComplete="off"
-            value={props.nameForm}
-            onChange={(e)=>props.setNameForm(e.target.value)}
+            value={props.fullName}
+            onChange={(e) => props.setfullName(e.target.value)}
             aria-invalid={props.validName ? "false" : "true"}
             placeholder="Your Name"
             className="w-[100%] px-[0.5em] border border-[#005F59] border-solid rounded-md outline-none"
@@ -52,132 +88,290 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
             required
           />
         </div>
-        {
-          props.userFocus && props.nameForm && !props.validName ? <p>4 to 24 characters.<br />
-          Must begin with a letter.<br />
-          Letters, numbers, underscores, hyphens not allowed.</p> :
-          ''
-        }
-     
+        {props.userFocus && props.fullName && !props.validName ? (
+          <p>
+            4 to 24 characters.
+            <br />
+            Must begin with a letter.
+            <br />
+            Letters, numbers, underscores, hyphens not allowed.
+          </p>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
 };
 
-const PhoneNumberComponent:React.FC<PersonDetails> = (props) =>{
-  console.log(props.validMobile)
-console.log(props.phoneFocus)
+const PhoneComponent: React.FC<PersonDetails> = (props) => {
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]">
-       <div className="flex">
-       <div>Phone number</div>
-        {
-          props.phoneFocus && props.phoneNumber &&!props.validMobile ? 
-      
-<svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 3.75L18 6m0 0l2.25 2.25M18 6l2.25-2.25M18 6l-2.25 2.25m1.5 13.5c-8.284 0-15-6.716-15-15V4.5A2.25 2.25 0 014.5 2.25h1.372c.516 0 .966.351 1.091.852l1.106 4.423c.11.44-.054.902-.417 1.173l-1.293.97a1.062 1.062 0 00-.38 1.21 12.035 12.035 0 007.143 7.143c.441.162.928-.004 1.21-.38l.97-1.293a1.125 1.125 0 011.173-.417l4.423 1.106c.5.125.852.575.852 1.091V19.5a2.25 2.25 0 01-2.25 2.25h-2.25z" />
-       </svg>
-         :
-           <svg xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-           <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-         </svg>
-        }
-       </div>
-       
+        <div className="flex">
+          <div>Phone number</div>
+          {props.phoneFocus && props.mobile_no && !props.validMobile ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="red"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 3.75L18 6m0 0l2.25 2.25M18 6l2.25-2.25M18 6l-2.25 2.25m1.5 13.5c-8.284 0-15-6.716-15-15V4.5A2.25 2.25 0 014.5 2.25h1.372c.516 0 .966.351 1.091.852l1.106 4.423c.11.44-.054.902-.417 1.173l-1.293.97a1.062 1.062 0 00-.38 1.21 12.035 12.035 0 007.143 7.143c.441.162.928-.004 1.21-.38l.97-1.293a1.125 1.125 0 011.173-.417l4.423 1.106c.5.125.852.575.852 1.091V19.5a2.25 2.25 0 01-2.25 2.25h-2.25z"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="green"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
+              />
+            </svg>
+          )}
+        </div>
+
         <div>
           <input
             type="number"
-            value={props.phoneNumber}
+            value={props.mobile_no}
             autoComplete="off"
             maxLength={10}
-            onChange={e=>props.setPhoneNumber( e.target.value)}
+            onChange={(e) => props.setmobile_no(e.target.value)}
             placeholder="+91"
             onFocus={() => props.setPhoneFocus(true)}
             onBlur={() => props.setPhoneFocus(false)}
             className="w-[100%] px-[0.5em] border border-[#005F59] border-solid rounded-md outline-none"
           />
-
-          
         </div>
-      
       </div>
     </>
   );
-}
+};
 
-const EmailComponent:React.FC<EmailComponent>=(props) =>{
+const EmailComponent: React.FC<EmailComponent> = (props) => {
+  const [loading, setLoading] = useState(false);
+  const toggleContent = () => {
+    props.setShowVerifyedOTP(true);
+  };
 
-const content = !props.validEmail && props.emailFocus  && props.formEmail ?   <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-</svg> :    
+  const [email] = useSendEmailMutation();
 
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-</svg> 
+  const handleSubmitEmail = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await email(props.email);
+      toast.success("otp is send to your email address", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
 
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setLoading(false);
+      toggleContent();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const content =
+    !props.validEmail && props.emailFocus && props.email ? (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="red"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-6 h-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+        />
+      </svg>
+    ) : (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-6 h-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+        />
+      </svg>
+    );
 
   return (
     <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[50%]">
-      
       <div className="flex">
-      <div>Email</div>
-      <div>{content}</div>
-   
+        <div>Email</div>
+
+        <div>{content}</div>
       </div>
-      
+
       <div className="flex gap-[1em]">
         <input
           type="email"
           placeholder="Email"
-          value={props.formEmail}
-          onChange={(e)=>props.setFormEmail(e.target.value)}
+          value={props.email}
+          onChange={(e) => props.setemail(e.target.value)}
           onFocus={() => props.setEmailFocus(true)}
-            onBlur={() => props.setEmailFocus(false)}
+          onBlur={() => props.setEmailFocus(false)}
+          autoComplete="off"
           className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
         />
-        <div className="bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]" onClick={()=>props.setShowVerifyedOTP(true)}>
-          Verify
-        </div>
+        <button
+          className="bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed "
+          disabled={!props.validEmail}
+          onClick={handleSubmitEmail}
+        >
+          Send OTP
+        </button>
+        {loading ? (
+          <div role="status">
+            <svg
+              aria-hidden="true"
+              className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              viewBox="0 0 100 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : (
+          " "
+        )}
       </div>
     </div>
   );
-}
+};
 
-function PasswordComponent() {
+const PasswordComponent: React.FC<PasswordComponent> = (props) => {
+  console.log(props.password);
   return (
     <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[50%]">
       <div>Password</div>
       <div className="flex gap-[1em]">
         <input
-          type="text"
-          placeholder="Email"
+          type="password"
+          value={props.password}
+          onChange={(e) => props.setpassword(e.target.value)}
+          placeholder="password"
+          autoComplete="new-password"
+          onFocus={() => props.setpasswordFocus(true)}
+          onBlur={() => props.setpasswordFocus(false)}
           className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
         />
-        <div className="bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]">
-          ✅
-        </div>
+      </div>
+      <div>
+        {props.password && props.passwordFocus && !props.validpassword ? (
+          <p className="text-[#fe4a08]">
+            8 to 24 characters.
+            <br />
+            Must include uppercase and lowercase letters, a number and a special
+            character.
+            <br />
+            Allowed special characters:{" "}
+            <span aria-label="exclamation mark">!</span>{" "}
+            <span aria-label="at symbol">@</span>{" "}
+            <span aria-label="hashtag">#</span>{" "}
+            <span aria-label="dollar sign">$</span>{" "}
+            <span aria-label="percent">%</span>
+          </p>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
-}
-function ComfirmPassword() {
+};
+const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
+  console.log(props.confirmpassword);
+  console.log(props.matchpassword);
+  const content =
+    props.matchpassword && props.confirmFocus ? (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-6 h-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    ) : (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-6 h-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    );
+
   return (
     <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[50%]">
       <div>confirmPassword</div>
       <div className="flex gap-[1em]">
         <input
-          type="text"
-          placeholder="Email"
+          type="password"
+          onChange={(e) => props.setConfirmpassword(e.target.value)}
+          value={props.confirmpassword}
+          placeholder="confirmpassword"
+          autoComplete="off"
+          onFocus={() => props.setConfirmFocus(true)}
+          onBlur={() => props.setConfirmFocus(false)}
           className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
         />
-        <div className="bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]">
-          ✅
-        </div>
+        {content}
       </div>
     </div>
   );
-}
+};
 
 function UploadResumeComponent() {
   return (
@@ -226,33 +420,72 @@ function UploadResumeComponent() {
   );
 }
 
-function Verified() {
+type PropT = { email: string }
+
+const Verified= (props: PropT):JSX.Element => {
+  const [otp, setOtp] = useState<string>("");
+  
+  const [verifyOTP] = useVerifyOTPMutation();
+  console.log(otp);
+  console.log(props.email);
+  const email = props.email;
+  console.log(otp, email);
+  const handleSubmitVerify = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await verifyOTP({ otp, email });
+console.log(response)
+      // Assuming the response structure doesn't have an "error" property
+      toast.success("OTP has been sent to your email address", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+      
+    } catch (error) {
+      console.log("API call error:", error);
+    }
+  };
+  const inputStyle: CSSProperties = {
+    width: "2rem", // Set your desired width
+    height: "2rem", // Set your desired height
+    textAlign: "center",
+    fontSize: "1.5rem",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    marginRight: "5px", // Add some spacing between inputs
+    marginBottom: "5px", // Add some spacing between inputs
+  };
+
   return (
     <div className="flex mb-[2em] justify-center md:justify-start">
       <div className="flex pb-[1em] flex-col max-w-[50%] flex-grow text-[#005F59] font-semibold text-[1.8em] pr-[1em]">
         <div className="mb-[0.25em]">OTP</div>
         <div className="flex justify-between">
-          <div className="flex">
-            <input
-              type="text"
-              className="w-[2em] mr-[1em] border border-[#005F59] border-solid rounded-md outline-none"
-            />
-            <input
-              type="text"
-              className="w-[2em] mr-[1em] border border-[#005F59] border-solid rounded-md outline-none"
-            />
-            <input
-              type="text"
-              className="w-[2em] mr-[1em] border border-[#005F59] border-solid rounded-md outline-none"
-            />
-            <input
-              type="text"
-              className="w-[2em] border border-[#005F59] border-solid rounded-md outline-none"
-            />
-          </div>
+          <OTPInput
+            value={otp}
+            onChange={setOtp}
+            numInputs={4}
+            renderSeparator={<span className="mx-2">-</span>}
+            renderInput={(props, index) => (
+              <input
+                {...props}
+                style={inputStyle}
+                key={index} // Important to add a unique key to each input
+              />
+            )}
+          />
           <div className="flex items-center">
             <div className="mr-[0.25em]">
-              <svg
+              {/* {
+                otp.length == 4 ?
+                <svg
                 width="15"
                 height="15"
                 viewBox="0 0 15 15"
@@ -263,97 +496,240 @@ function Verified() {
                   d="M6.07296 12.2577L6.00837 12.1477C5.02183 10.4668 2.40024 6.89977 2.37375 6.86395L2.33594 6.81257L3.2291 5.92988L6.05637 7.90408C7.83649 5.59411 9.49723 4.00751 10.5805 3.081C11.7655 2.0675 12.5369 1.60091 12.5447 1.59644L12.5622 1.58594H14.0773L13.9326 1.71482C10.2106 5.03 6.17634 12.0761 6.13616 12.1469L6.07296 12.2577Z"
                   fill="#005F59"
                 />
-              </svg>
+              </svg> :""
+              } */}
+             
             </div>
-            <div className="text-[0.75em]">Verified</div>
+            {
+              otp.length ==4 ?  <button
+              className="text-[0.75em] bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed"
+              onClick={handleSubmitVerify}
+            >
+              Verified
+            </button> :''
+            }
+           
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export function PersonalDetails() {
+const PersonalDetails = (): JSX.Element => {
+  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
+
   const userRef = useRef<HTMLInputElement>(null);
 
-  const [nameForm, setNameForm] = useState<string>("");
+ const dispatch = useAppDispatch()
+
+  const [fullName, setfullName] = useState<string>("");
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
-  const [phoneNumber , setPhoneNumber] = useState<string>(' ')
-  const [validMobile,setValidMobile] = useState<boolean>(false)
-  const [phoneFocus,setPhoneFocus] = useState(false)
+  const [mobile_no, setmobile_no] = useState<string>(" ");
+  const [validMobile, setValidMobile] = useState(false);
+  const [phoneFocus, setPhoneFocus] = useState(false);
 
-  const [formEmail,setFormEmail] = useState<string>('')
-  const [validEmail,setValidEmail] = useState(false)
-  const [emailFocus,setEmailFocus] = useState(false)
-
-  const [showVerifyedOTP,setShowVerifyedOTP] = useState(false)
-
-  useEffect(()=>{
-     setValidName(USER_REGEX.test(nameForm)) 
-  },[nameForm])
-
-useEffect(()=>{
-  setValidMobile(INDIAN_MOBILE_REGEX.test( phoneNumber))
+  const [email, setemail] = useState<string>("");
   
-},[phoneNumber])
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
 
-useEffect(()=>{
-  setValidEmail(EMAIL_REGEX.test(formEmail))
-},[formEmail])
+  const [password, setpassword] = useState<string>("");
+  const [validpassword, setValidpassword] = useState<boolean>(false);
+  const [passwordFocus, setpasswordFocus] = useState<boolean>(false);
+
+  const [confirmpassword, setConfirmpassword] = useState<string>("");
+  const [matchpassword, setMatchpassword] = useState<boolean>(false);
+  const [confirmFocus, setConfirmFocus] = useState(false);
+
+  const [showVerifyedOTP, setShowVerifyedOTP] = useState(false);
+  const role = "USER";
+  const userProfileType = "fresher";
+  const date = "2022-08-21";
+  console.log(password);
+  console.log(isError);
+  console.log(isSuccess);
+  console.log(matchpassword)
+
+  const resSubmitStatus = useSelector((state:RootState)=>state.mainStepsCounter.resStepTwo)
+
+console.log(resSubmitStatus)
+  const contentDisabled =
+    !validName ||
+    !validMobile ||
+    !validEmail ||
+    !validpassword ||
+    !role ||
+    !userProfileType ||
+    !date|| 
+    !matchpassword
+  const registerSubmitHanlder = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    try {
+      const res = await register({
+        fullName,
+        mobile_no,
+        email,
+        password,
+        role,
+        userProfileType,
+        date,
+      });
+    
+
+      if (res?.data) {
+
+        dispatch(resSteptwoSelector(true))
+
+        return toast.success("register success", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else {
+        dispatch(resSteptwoSelector(false))
+        return toast.error("error", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    setValidName(USER_REGEX.test(fullName));
+    if(validName){
+      dispatch(nameStepsCounterIncrement())
+    }else{
+      dispatch(nameStepsCounterDecrement())
+    }
+  }, [fullName,validName,dispatch]);
+
+ 
+
+  useEffect(() => {
+    setValidMobile(INDIAN_MOBILE_REGEX.test(mobile_no));
+    if(validMobile){
+      dispatch(phoneNumberStepsCounterIncrement())
+    }else{
+      dispatch(phoneNumberStepsCounterDecrement())
+    }
+  }, [mobile_no,validMobile,dispatch]);
+
+  useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email));
+    if(validEmail){
+      dispatch(emailStepsCounterIncrement())
+    }else{
+      dispatch(emailStepsCounterDecrement)
+    }
+    
+  }, [email,validEmail,dispatch]);
 
 
+
+  useEffect(() => {
+    setMatchpassword(password === confirmpassword);
+  }, [password, confirmpassword]);
+
+  useEffect(() => {
+    setValidpassword(password_REGEX.test(password));
+    if(validpassword){
+      dispatch(passwordStepsCounterIncrement())
+    }else{
+      dispatch(passwordStepsCounterDecrement())
+    }
+  }, [password,validpassword,dispatch]);
+  
+  console.log(validpassword);
+  console.log(matchpassword);
   return (
     <div className="flex flex-col gap-[2em] md:px-[10em]">
       <div className="font-semibold text-[1.8em] text-[#5B5B5B]">
         Fill the details below
       </div>
+   
       <div className="">
         <div className="bg-[#F3FAF9] rounded-md py-[3em] px-[2em] md:px-[7em] gap-[2em] flex flex-col">
           <div className="flex flex-col md:flex-row gap-[2em]">
             <NameComponent
               userRef={userRef}
-              nameForm={nameForm}
-              setNameForm={setNameForm}
-              validName = {validName}
-              setValidEmail = {setValidName}
-              userFocus = {userFocus}
-              setUserFocus = {setUserFocus}
+              fullName={fullName}
+              setfullName={setfullName}
+              validName={validName}
+              setValidEmail={setValidName}
+              userFocus={userFocus}
+              setUserFocus={setUserFocus}
             />
-            <PhoneNumberComponent
-              phoneNumber = {phoneNumber}
-              setPhoneNumber = {setPhoneNumber}
-              validMobile = {validMobile}
-              phoneFocus = {phoneFocus}
-              setPhoneFocus = {setPhoneFocus}
+            <PhoneComponent
+              mobile_no={mobile_no}
+              setmobile_no={setmobile_no}
+              validMobile={validMobile}
+              phoneFocus={phoneFocus}
+              setPhoneFocus={setPhoneFocus}
             />
           </div>
           <div className="flex flex-col md:flex-row gap-[2em]">
-            <EmailComponent 
-            formEmail = {formEmail}
-            setFormEmail = {setFormEmail}
-            validEmail = {validEmail}
-            setValidEmail = {setValidEmail}
-            emailFocus = {emailFocus}
-            setEmailFocus = {setEmailFocus}
-            setShowVerifyedOTP = {setShowVerifyedOTP}
+            <EmailComponent
+              email={email}
+              setemail={setemail}
+              validEmail={validEmail}
+              setValidEmail={setValidEmail}
+              emailFocus={emailFocus}
+              setEmailFocus={setEmailFocus}
+              setShowVerifyedOTP={setShowVerifyedOTP}
+              showVerifyedOTP={showVerifyedOTP}
             />
-            {
-              showVerifyedOTP ? <Verified />:''
-            }
-           
+            {showVerifyedOTP && validEmail ? <Verified email={email} /> : ""}
           </div>
           <div className="flex flex-col md:flex-row gap-[2em]">
-            <PasswordComponent />
-            <ComfirmPassword />
+            <PasswordComponent
+              password={password}
+              setpassword={setpassword}
+              passwordFocus={passwordFocus}
+              setpasswordFocus={setpasswordFocus}
+              validpassword={validpassword}
+              setValidpassword={setValidpassword}
+            />
+            <ComfirmPassword
+              confirmpassword={confirmpassword}
+              setConfirmpassword={setConfirmpassword}
+              matchpassword={matchpassword}
+              setConfirmFocus={setConfirmFocus}
+              confirmFocus={confirmFocus}
+            />
           </div>
           <UploadResumeComponent />
+          <button
+            className="bg-[#005F59] text-xl cursor-pointer h-[40px] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default  disabled:bg-gray-400 disabled:cursor-not-allowed "
+            onClick={registerSubmitHanlder}
+            disabled={contentDisabled}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export function SubStepArrow() {
   return (

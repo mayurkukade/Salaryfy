@@ -1,7 +1,31 @@
 import { Box } from "@mui/material";
+
 import { ReactNode } from "react";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/app.store";
+import Cookies from "js-cookie";
+
+
+
 export default function QuestionnaireTopBarStep() {
+  const token = Cookies.get('jwtToken')
+ const phoneNumberCounterStep2 = useSelector((state:RootState)=>state.mainStepsCounter.phoneNumberCounter)
+ const passwordCounterStep2 = useSelector((state:RootState)=>state.mainStepsCounter.passwordCounter)
+ const emailCounterStep2 = useSelector((state:RootState)=>state.mainStepsCounter.emailCounter)
+ const nameCounterStep2 =  useSelector((state:RootState)=>state.mainStepsCounter.fullNameCounter)
+ const confirmPasswordCounterStep2 = useSelector((state:RootState)=>state.mainStepsCounter.confirmPasswordCounter)
+console.log(emailCounterStep2)
+console.log(nameCounterStep2)
+
+let stepTwoTotal
+if(token){
+  stepTwoTotal = '25'
+}else{
+   stepTwoTotal = phoneNumberCounterStep2 +passwordCounterStep2 + emailCounterStep2 + nameCounterStep2 + confirmPasswordCounterStep2
+
+}
+
   return (
     <div className="flex">
       {/* Code for Desktop view  */}
@@ -12,12 +36,12 @@ export default function QuestionnaireTopBarStep() {
         <div className="flex-grow   flex mb-[2em] gap-[2em]">
           <StepDesktop
             progress={100}
-            active={true}
+            active={false}
             no={1}
             title="Select the job"
           />
           <StepDesktop
-            progress={5}
+            progress={stepTwoTotal}
             active={true}
             no={2}
             title="Upload your Resume"
@@ -53,6 +77,7 @@ export default function QuestionnaireTopBarStep() {
     </div>
   );
 }
+
 
 function StepMobile({
   className,
