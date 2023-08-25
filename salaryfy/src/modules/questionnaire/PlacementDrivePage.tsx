@@ -102,9 +102,11 @@ export default function PlacementDrivePage() {
   }
 
   return (
-    <div className="flex flex-col p-[2em]">
-
+    <div className="flex flex-col p-[2em]  ">
+      <div className="flex ">
       <QuestionnaireTopBarStep />
+      </div>
+      
       <div className="flex gap-[2em]">
         <Box className="text-[#0E5F59]" sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
           <FilterComponent onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[30em]" />

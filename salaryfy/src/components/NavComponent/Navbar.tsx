@@ -3,23 +3,57 @@ import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userNameSelection } from "../../features/reducers/authReducers/auth-slice-reducer";
+import { RootState } from "../../store/app.store";
+import Stack from "@mui/material/Stack";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { clearToken } from "../../features/reducers/authReducers/auth-slice-reducer";
+import { useNavigate } from "react-router-dom";
+
+interface TokenPayload {
+  fullName: string;
+}
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
+const navigate = useNavigate()
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const dispatch = useDispatch();
+  const userNameSelect = useSelector(
+    (state: RootState) => state.authSlice.userName
+  );
+
+
+
 
   const token = Cookies.get("jwtToken");
-  console.log(token);
-  let content;
-  if (token) {
-    const userDetails = jwt_decode(token);
-    content = userDetails.fullName;
+  const logoutHandleSubmit = ()=>{
+   dispatch(clearToken())
+    Cookies.remove("jwtToken")
+    navigate('/login')
+      }
+  useEffect(() => {
+    if (token) {
+      const userDetails: TokenPayload = jwt_decode(token);
 
-    console.log(userDetails);
-  } else {
-    console.log("no token");
-  }
-
+      const userName: string = userDetails.fullName;
+      console.log(userName);
+      console.log(userDetails);
+      dispatch(userNameSelection(userName));
+    }
+  }, [dispatch, token]);
   const handleNav = () => {
     setNav(!nav);
   };
@@ -266,7 +300,7 @@ const Navbar = () => {
         </div>
       </Link>
 
-      <ul className="hidden md:flex  ">
+      <ul className="hidden md:flex space-x-2 ">
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">
           Dashboard
         </li>
@@ -276,12 +310,70 @@ const Navbar = () => {
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">
           About us
         </li>
-        <li className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5">
-          <Link to={"/login"}>
-            <div className="text-center text-white cursor-pointer text-[1.6em]">
-              Sign In
+       
+        <li>
+          {token ? (
+            <Stack
+              direction="row"
+              spacing={2}
+              className=" w-[100px] h-[36px] flex items-center "
+            >
+              <Button
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+              
+              >
+                
+                <Avatar className="mr-2">U</Avatar>
+                <span className="text-lg decoration-solid ">
+                  {userNameSelect[0]}
+                </span>
+                <span>
+                  
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6 ml-1"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                    />
+                  </svg>
+                </span>
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={logoutHandleSubmit}>Logout</MenuItem>
+              </Menu>
+            </Stack>
+          ) : (
+            <div className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5">
+ <Link to={"/login"} >
+              <div className="text-center text-white cursor-pointer text-[1.6em]">
+                Sign In
+              </div>
+            </Link>
             </div>
-          </Link>
+           
+          
+          )}
         </li>
       </ul>
       <div onClick={handleNav} className="block md:hidden">

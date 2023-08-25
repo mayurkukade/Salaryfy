@@ -32,6 +32,10 @@ const PlacementDriveDetails = () => {
     navigate('/placementdrive');
   }
 
+  function onGetHiredClick() {
+    console.log('Get Hired Button clicked');
+  }
+
   async function fetchJob() {
     try {
 
@@ -54,9 +58,7 @@ const PlacementDriveDetails = () => {
 
   useEffect(() => {
     if (!jobId) { return navigateToPlacementDrive(); }
-
     fetchJob();
-    
   }, []);
 
   return (
@@ -75,7 +77,7 @@ const PlacementDriveDetails = () => {
           <p>Placement Drive Details</p>
         </div>
         <div className="app-box-shadow mb-[5em] rounded-[2em]">
-          <PlacementJobDetails jobDetails={jobDetails} />
+          <PlacementJobDetails onGetHiredClick={onGetHiredClick} jobDetails={jobDetails} />
           <div className="px-[5em] py-[0.5em]">
             <div className="flex justify-between items-center flex-col-reverse lg:flex-row mt-[2em]">
 
@@ -107,7 +109,7 @@ const PlacementDriveDetails = () => {
               <p className="mb-[1em]">
                 { jobDetails.jobDetails }
               </p>
-              <div className="flex bg-yellow text-[#0E5F59] w-fit p-5 h-[43px] rounded-lg  justify-center items-center relative mb-[2em]">
+              <div onClick={onGetHiredClick} className="flex bg-yellow text-[#0E5F59] w-fit p-5 h-[43px] rounded-lg  justify-center items-center relative mb-[2em]">
                 <button className="  text-[20.247px] font-medium  ">Get Hired</button>
                 <svg width="33" height="19" viewBox="0 0 33 19" fill="none" className="align-middle ml-3 mt-1 " ><path d="M31.8711 10.375C32.3522 9.89391 32.3522 9.1139 31.8711 8.63281L24.0312 0.792963C23.5502 0.311871 22.7701 0.311871 22.2891 0.792963C21.808 1.27405 21.808 2.05406 22.2891 2.53515L29.2578 9.50391L22.2891 16.4727C21.808 16.9538 21.808 17.7338 22.2891 18.2148C22.7701 18.6959 23.5502 18.6959 24.0312 18.2148L31.8711 10.375ZM0 10.7358H31V8.27199H0V10.7358Z" fill="#005F59" /></svg>
               </div>

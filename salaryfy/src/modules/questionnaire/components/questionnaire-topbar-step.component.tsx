@@ -27,10 +27,10 @@ if(token){
 }
 
   return (
-    <div className="flex w-[70%] p-[30px]">
+    <div className="flex w-[100%] p-[30px]">
       {/* Code for Desktop view  */}
       <Box
-        className="flex-grow justify-center w-[80%] "
+        className="flex-grow justify-center w-[80%]  "
         sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
       >
         <div className="flex flex-grow w-[100%]    mb-[2em] gap-[2em]" 
