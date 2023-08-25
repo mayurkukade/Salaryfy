@@ -4,6 +4,7 @@ import jobsFilterSlice from '../features/reducers/job-filter/jobs-filter.slice';
 import jobsSlice from '../features/reducers/jobs/jobs.slice';
 import { SLICE_NAMES } from '../features/slice-names.enum';
 import jobDetailsSlice from '../features/reducers/job-details/job-details.slice';
+import userProfileSlice from '../features/reducers/user-details/user-details.slice';
 
 const setTestValueReducer: CaseReducer<number, PayloadAction<number>>
   = (state: number, action: PayloadAction<number>) => {
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   [SLICE_NAMES.JOBS_FILTER]: jobsFilterSlice,
   [SLICE_NAMES.JOBS]: jobsSlice,
   [SLICE_NAMES.JOB_DETAILS]: jobDetailsSlice,
+  [SLICE_NAMES.USER_DETAILS]: userProfileSlice,
   test: testSlice.reducer
   // Add the other reducers here
 });

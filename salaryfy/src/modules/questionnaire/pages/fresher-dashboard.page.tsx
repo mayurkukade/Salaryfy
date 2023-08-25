@@ -5,9 +5,18 @@ import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.com
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { HavingDoubts } from "../components/having-doubts.component";
 import LenskartImage from "../../../assets/images/lenskart-icon.png";
+import { useDispatch, useSelector } from "react-redux";
+import { AppStoreStateType, RootState } from "../../../store/app.store";
+import { useEffect } from "react";
+import { SLICE_NAMES } from "../../../features/slice-names.enum";
+import { CommonUtilities } from "../../../utils/common.utilities";
+import { useLazyGetUserByIdQuery } from "../../../features/api-integration/user-profile/user-profile.slice";
+import { UserDetailsType } from "../../../features/reducers/user-details/user-details.interface";
+import { setUserDetails } from "../../../features/reducers/user-details/user-details.slice";
 
 // Main Page of fresher Dashboard Page
 export default function FresherDashboardPage() {
+  
   return (
     <div className="container mx-auto">
       <div className="p-4 flex flex-col items-center ">
@@ -24,17 +33,37 @@ export default function FresherDashboardPage() {
   );
 }
 
-{
-  /* Freshser Dashboard Section*/
-}
+{ /* Freshser Dashboard Section */ }
 export function FresherDashboard() {
+
+  const userId = useSelector((state:RootState)=>state.authSlice.userId);
+  const userProfile = useSelector((state: AppStoreStateType)=>state.root[SLICE_NAMES.USER_DETAILS]);
+  const [getLazyUserProfile] = useLazyGetUserByIdQuery();
+  const dispatch = useDispatch();
+
+  async function userIdUpdated() {
+    if (!userId) { return; }
+
+    const { data: { response: responseData } } = await getLazyUserProfile(userId.toString());
+    const userProfile = responseData as UserDetailsType;
+    
+    if (userProfile) {
+      dispatch( setUserDetails(userProfile) )
+    }
+  }
+
+  useEffect(() => {
+    userIdUpdated();
+  }, [userId]);
+
+
   return (
     <div className="container mx-auto">
       <div className=" flex flex-col gap-5 md:flex-row ">
         {/* Left Card Section */}
         <div className="flex flex-col">
           <div className="text-[1.5rem] text-[#005F59] font-bold mb-[1em] md:text-[4em]">
-            Hi Rahul,
+            Hi { userProfile.fullName },
           </div>
           <div className="mb-[2em]">
             <span className="text-[0.9rem] md:text-[2.2em] text-[#5B5B5B]">
@@ -49,11 +78,11 @@ export function FresherDashboard() {
             className="mb-[2em] text-[1.8em] rounded-xl overflow-hidden grid grid-cols-[max-content,auto] grid-cols-auto [&>*]:whitespace-nowrap [&>*]:px-[1.5em] [&>*]:py-[0.5em] [&>*]:border-b [&>*]:border-solid [&>*]:border-b-[#0E5F591A] [&>*:nth-child(odd)]:bg-[#0E5F5919] [&>*:nth-child(odd)]:text-[#5b5b5b] [&>*:nth-child(odd)]:w-[10em] [&>*:nth-child(even)]:w-[100%]"
           >
             <div>Full Name</div>
-            <div>Rahul Roy</div>
+            <div>{ userProfile.fullName }</div>
             <div>Phone</div>
-            <div>+91-9999999999</div>
+            <div>{ userProfile.mobile_no }</div>
             <div>Email</div>
-            <div>rahul.roy@mail.com</div>
+            <div>{ userProfile.email }</div>
             <div>Status</div>
             <div>
               <span className="bg-[#0CBC8B] rounded-[1em] text-[white] px-[0.5em] py-[0.25em]">
@@ -63,7 +92,7 @@ export function FresherDashboard() {
             <div>Plan Opted</div>
             <div>Rapid Placement</div>
             <div>Sign Up Date</div>
-            <div>30th MAy 2023</div>
+            <div>{ CommonUtilities.date.formatDate(userProfile.date) }</div>
             <div>Payment Method</div>
             <div>Card</div>
           </div>
