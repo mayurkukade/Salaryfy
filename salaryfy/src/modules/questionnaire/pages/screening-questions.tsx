@@ -1,4 +1,4 @@
-
+import React from "react";
 import { AppRadioButton } from "../../../components/app-radio.button.component";
 import { useGetScreeningQuestionQuery } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
 
@@ -7,14 +7,17 @@ import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.com
 
 import SubSteps from "../components/sub-steps.component";
 
-
+import { cureentSelector } from "../../../features/reducers/currentRouteReducers/current-route.reducer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/app.store";
 export default function ScreeningQuestions() {
   const {
     data: responseData,
     isError,
     isLoading,
   } = useGetScreeningQuestionQuery();
-  
+const cureentSelector = useSelector((state:RootState)=>state.currentRoute.currentRoute)
+console.log(cureentSelector)
   console.log(responseData);
   console.log(isError);
   console.log(isLoading);
