@@ -3,6 +3,7 @@ import rootReducer from './app.reducer';
 import authSliceReducer from '../features/reducers/authReducers/auth-slice-reducer';
 import apiIntegrationSlice from '../features/api-integration/apiUserSlice/api-integration-user.slice'
 import mainStepsCounterReducer from '../features/reducers/main-steps-counter/main-steps-counter.reducer';
+import screeningQuestionsSlice from '../features/api-integration/screeningQuestion/screeningQuestionStep2Slice';
 
 export interface AppStoreStateType {
   root: ReturnType<typeof rootReducer>,
@@ -13,11 +14,12 @@ const appStore = configureStore({
   reducer: {
     root: rootReducer,
     mainStepsCounter:mainStepsCounterReducer,
-    authSlice : authSliceReducer,
+    authSlice : authSliceReducer, 
     [apiIntegrationSlice.reducerPath]: apiIntegrationSlice.reducer,
+    [screeningQuestionsSlice.reducerPath]:screeningQuestionsSlice.reducer,
   },
-  middleware: () =>
-    getDefaultMiddleware().concat(apiIntegrationSlice.middleware)
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiIntegrationSlice.middleware).concat(screeningQuestionsSlice.middleware)
 
 });
 export type RootState = ReturnType<typeof appStore.getState>
