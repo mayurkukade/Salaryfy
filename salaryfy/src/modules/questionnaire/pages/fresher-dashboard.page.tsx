@@ -11,12 +11,12 @@ export default function FresherDashboardPage() {
   return (
     <div className="container mx-auto">
       <div className="p-4 flex flex-col items-center ">
-        <QuestionnaireTopBarStep />
+     
         <div className="w-[100%] mb-[2em] flex flex-col h-[100%]">
           {/* STEPS */}
           <div className=" md:py-[2em] md:px-[3em] md:h-[100%]">
             <FresherDashboard />
-            <BottomPageNavigationBar />
+          
           </div>
         </div>
       </div>

@@ -1,12 +1,10 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
 
+import { currentRouteState } from "./current-route.interface";
 
-interface currentRouteState{
-    currentRoute:string | null
-}
 
 const initialState:currentRouteState = {
-    currentRoute : '45'
+    currentRoute : null
 }
 
 const currentRoute = createSlice({

@@ -39,7 +39,7 @@ console.log(cureentSelector)
 
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
-      <QuestionnaireTopBarStep />
+     
       <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
         <div className="text-[1.4em]">Job Details</div>
         <UserJobDetails />
@@ -52,7 +52,7 @@ console.log(cureentSelector)
 
           {/* <BottomPageNavigationBar currentPageParent={setCurrentPage}/> */}
 
-          <div className="flex justify-center mt-6">
+          {/* <div className="flex justify-center mt-6">
             <div className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]">
               <span className="mr-[1em]">
                 <svg
@@ -89,7 +89,7 @@ console.log(cureentSelector)
                 </svg>
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

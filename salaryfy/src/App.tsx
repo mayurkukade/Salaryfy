@@ -27,7 +27,6 @@ import Roadmap from "./pages/Roadmap";
 import FresherSkillPlacementModule from "./modules/freshers-skill-placement/freshers-skill-placement.module";
 import TestComponent from "./pages/test.component";
 
-
 function App() {
   return (
     <>
@@ -39,21 +38,21 @@ function App() {
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
-          
 
-          
           <Route path="/placementdrive" element={<PlacementDrivePage />} />
-          <Route path="/placementdetails/:jobId" element={<PlacementDriveDetails />} />
+          <Route
+            path="/placementdetails/:jobId"
+            element={<PlacementDriveDetails />}
+          />
         </Route>
 
-        
-    
-    
-        
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
         <Route path="/placementdrive" element={<PlacementDrivePage />} />
-        <Route path="/placementdetails" element={ <Navigate to='/placementdrive' /> } />
-        
+        <Route
+          path="/placementdetails"
+          element={<Navigate to="/placementdrive" />}
+        />
+
         {/* <Routes> */}
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
@@ -63,19 +62,25 @@ function App() {
         <Route path="/forgotpasswordemail" element={<ForgorPasswordEmail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/passwordresetsuccessfully" element={<PasswordResetSuccessful />}/>
+        <Route
+          path="/passwordresetsuccessfully"
+          element={<PasswordResetSuccessful />}
+        />
         <Route path="/plannotavailable" element={<PlanNotAvailable />} />
         <Route path="/filldetails" element={<FillDetails />} />
         <Route path="/landingpage" element={<LandingPage />} />
 
         <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
-        <Route path="/fresher-skill-placement/*" element={<FresherSkillPlacementModule />} />
+        <Route
+          path="/fresher-skill-placement/*"
+          element={<FresherSkillPlacementModule />}
+        />
         <Route path="/eligibilityform" element={<EligibilityForm />} />
         <Route path="/jobdescription" element={<JobDescription />} />
-        <Route path="/roadmap" element={<Roadmap/>}/>
-        <Route path='/test' element={<TestComponent />} />
+        <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/test" element={<TestComponent />} />
       </Routes>
-      
+
       <Footer />
     </>
   );
