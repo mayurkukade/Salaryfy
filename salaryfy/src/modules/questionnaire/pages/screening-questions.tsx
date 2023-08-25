@@ -1,9 +1,19 @@
-import { AppRadioButton } from "../../../components/app-radio.button.component";
+import * as React from 'react';
 import { useGetScreeningQuestionQuery } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
-import { CommonUtilities } from "../../../utils/common.utilities";
 import UserJobDetails from "../components/job-details.component";
 import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
 import SubSteps from "../components/sub-steps.component";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
+// import { CommonUtilities } from "../../../utils/common.utilities";
+// import Typography from '@mui/material/Typography'
+// import { AppRadioButton } from "../../../components/app-radio.button.component";
+// import FormControl from '@mui/material/FormControl';
+// import FormLabel from '@mui/material/FormLabel';
+
 
 export default function ScreeningQuestions() {
   const {
@@ -75,20 +85,52 @@ export default function ScreeningQuestions() {
 }
 
 function YesNoQuestionSet({question}: any) {
+  const [response, setResponse] = React.useState("Yes");
+
+  const handleResponseChange = (selectedResponse:string)=>{
+    setResponse(selectedResponse);
+  }
   return (
   <>
     <Question question={question} />
-    <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" />
+    {/* <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" /> */}
+    <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        value={response}
+        onChange={(e)=>{
+          handleResponseChange(e.target.value)
+        }}
+      >
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" control={<Radio />} label="No" />
+      </RadioGroup>
     <QuestionSeparator className="mb-[2em]" />
   </>
   );
 }
 
 function RatingResponseSet({question}: any) {
+  const [value, setValue] = React.useState<number | null >(1);
   return (
   <>
      <Question question={question}/>
-      <RatingResponse className="ml-[2em] mb-[1em]" />
+      {/* <RatingResponse className="ml-[2em] mb-[1em]" /> */}
+      <Box
+      sx={{
+        '& > legend': { mt: 2 },
+      }}
+    >
+     
+      <Rating
+        name="simple-controlled"
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      />
+    </Box>
       <QuestionSeparator className="mb-[2em]" />
   </>
   );
@@ -113,10 +155,10 @@ function Questions({ responseData }: any) {
               <RatingResponseSet question={question.question} key={index}/>
           )
         }
-        return <></>
+        // return <></>
       })}
 
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
+      {/* <Question question="Do you currently live in the city for which you want to apply the job for?" />
       <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" />
       <QuestionSeparator className="mb-[2em]" />
 
@@ -142,7 +184,7 @@ function Questions({ responseData }: any) {
 
       <Question question="Do you currently live in the city for which you want to apply the job for?" />
       <RatingResponse className="ml-[2em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
+      <QuestionSeparator className="mb-[2em]" /> */}
     </>
   );
 }
@@ -178,63 +220,6 @@ export function Question({ question }: { question: string }) {
   );
 }
 
-export function RatingResponse({ className }: { className?: string }) {
-  function Star({
-    className,
-    active,
-  }: {
-    className?: string;
-    active?: boolean;
-  }) {
-    return (
-      <>
-        {active && (
-          <div className={className}>
-            <svg
-              width="19"
-              height="18"
-              viewBox="0 0 19 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9.5 0L12.7945 4.96546L18.535 6.56434L14.8307 11.232L15.084 17.1857L9.5 15.105L3.91604 17.1857L4.16933 11.232L0.464963 6.56434L6.20546 4.96546L9.5 0Z"
-                fill="#FECD08"
-              />
-            </svg>
-          </div>
-        )}
-
-        {!active && (
-          <div className={className}>
-            <svg
-              width="19"
-              height="18"
-              viewBox="0 0 19 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9.5 0L12.7945 4.96546L18.535 6.56434L14.8307 11.232L15.084 17.1857L9.5 15.105L3.91604 17.1857L4.16933 11.232L0.464963 6.56434L6.20546 4.96546L9.5 0Z"
-                fill="#D7E8F0"
-              />
-            </svg>
-          </div>
-        )}
-      </>
-    );
-  }
-  return (
-    <div className={"flex " + className}>
-      <Star className="mr-[1em]" active={true} />
-      <Star className="mr-[1em]" active={true} />
-      <Star className="mr-[1em]" active={true} />
-      <Star className="mr-[1em]" active={true} />
-      <Star className="" active={false} />
-    </div>
-  );
-}
-
 export function QuestionSeparator({ className }: { className?: string }) {
   return (
     <div
@@ -243,21 +228,80 @@ export function QuestionSeparator({ className }: { className?: string }) {
   );
 }
 
-export function YesNoResponse({ className }: { className?: string }) {
-  return (
-    <div className={"flex " + className}>
-      <div className="flex items-center mr-[0.5em]">
-        <span className="mr-[0.5em]">
-          <AppRadioButton active={true} />
-        </span>
-        <span>Yes</span>
-      </div>
-      <div className="flex items-center">
-        <span className="mr-[0.5em]">
-          <AppRadioButton active={false} />
-        </span>
-        <span>No</span>
-      </div>
-    </div>
-  );
-}
+// export function RatingResponse({ className }: { className?: string }) {
+//   function Star({
+//     className,
+//     active,
+//   }: {
+//     className?: string;
+//     active?: boolean;
+//   }) {
+//     return (
+//       <>
+//         {active && (
+//           <div className={className}>
+//             <svg
+//               width="19"
+//               height="18"
+//               viewBox="0 0 19 18"
+//               fill="none"
+//               xmlns="http://www.w3.org/2000/svg"
+//             >
+//               <path
+//                 d="M9.5 0L12.7945 4.96546L18.535 6.56434L14.8307 11.232L15.084 17.1857L9.5 15.105L3.91604 17.1857L4.16933 11.232L0.464963 6.56434L6.20546 4.96546L9.5 0Z"
+//                 fill="#FECD08"
+//               />
+//             </svg>
+//           </div>
+//         )}
+
+//         {!active && (
+//           <div className={className}>
+//             <svg
+//               width="19"
+//               height="18"
+//               viewBox="0 0 19 18"
+//               fill="none"
+//               xmlns="http://www.w3.org/2000/svg"
+//             >
+//               <path
+//                 d="M9.5 0L12.7945 4.96546L18.535 6.56434L14.8307 11.232L15.084 17.1857L9.5 15.105L3.91604 17.1857L4.16933 11.232L0.464963 6.56434L6.20546 4.96546L9.5 0Z"
+//                 fill="#D7E8F0"
+//               />
+//             </svg>
+//           </div>
+//         )}
+//       </>
+//     );
+//   }
+//   return (
+//     <div className={"flex " + className}>
+//       <Star className="mr-[1em]" active={true} />
+//       <Star className="mr-[1em]" active={true} />
+//       <Star className="mr-[1em]" active={true} />
+//       <Star className="mr-[1em]" active={true} />
+//       <Star className="" active={false} />
+//     </div>
+//   );
+// }
+
+
+
+// export function YesNoResponse({ className }: { className?: string }) {
+//   return (
+//     <div className={"flex " + className}>
+//       <div className="flex items-center mr-[0.5em]">
+//         <span className="mr-[0.5em]">
+//           <AppRadioButton active={true} />
+//         </span>
+//         <span>Yes</span>
+//       </div>
+//       <div className="flex items-center">
+//         <span className="mr-[0.5em]">
+//           <AppRadioButton active={false} />
+//         </span>
+//         <span>No</span>
+//       </div>
+//     </div>
+//   );
+// }

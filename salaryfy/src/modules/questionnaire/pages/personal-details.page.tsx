@@ -502,7 +502,7 @@ console.log(response)
             </div>
             {
               otp.length ==4 ?  <button
-              className="text-[0.75em] bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className=" bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed"
               onClick={handleSubmitVerify}
             >
               Verified
