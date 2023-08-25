@@ -25,6 +25,13 @@ export default function ScreeningQuestions() {
   console.log(isError);
   console.log(isLoading);
 
+  // type QuestionType = Array<{ ques: string, type: 'Boolean' | 'Rating' | 'String', ans: string }>;
+  // const initQuestions: QuestionType = [
+    
+  // ];
+
+  // const [questions, setQuestions] = React.useState<QuestionType>(initQuestions);
+
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
       <QuestionnaireTopBarStep />
@@ -84,62 +91,17 @@ export default function ScreeningQuestions() {
   );
 }
 
-function YesNoQuestionSet({question}: any) {
-  const [response, setResponse] = React.useState("Yes");
 
-  const handleResponseChange = (selectedResponse:string)=>{
-    setResponse(selectedResponse);
-  }
-  return (
-  <>
-    <Question question={question} />
-    {/* <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" /> */}
-    <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-        value={response}
-        onChange={(e)=>{
-          handleResponseChange(e.target.value)
-        }}
-      >
-        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-        <FormControlLabel value="No" control={<Radio />} label="No" />
-      </RadioGroup>
-    <QuestionSeparator className="mb-[2em]" />
-  </>
-  );
-}
-
-function RatingResponseSet({question}: any) {
-  const [value, setValue] = React.useState<number | null >(1);
-  return (
-  <>
-     <Question question={question}/>
-      {/* <RatingResponse className="ml-[2em] mb-[1em]" /> */}
-      <Box
-      sx={{
-        '& > legend': { mt: 2 },
-      }}
-    >
-     
-      <Rating
-        name="simple-controlled"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      />
-    </Box>
-      <QuestionSeparator className="mb-[2em]" />
-  </>
-  );
-}
 
 function Questions({ responseData }: any) {
   console.log("response for question is", responseData);
   const { response } = responseData;
   console.log("response for question is", response);
+
+  function changedFor(qId: string, response: string) {
+    console.log({ qId, response });
+  }
+
   return (
     <>
       <div className="font-semibold text-[1.8em] text-[#5B5B5B] mb-[1em]">
@@ -148,11 +110,11 @@ function Questions({ responseData }: any) {
       {response.map((question:any, index:number) => {
         if (question.questionType === "Boolean") {
           return (
-            <YesNoQuestionSet question={question.question} key={index} />      
+            <YesNoQuestionSet onResponseChange={(response: string) => changedFor(question.jobFairQ1Id, response)} question={question.question} key={index} />      
           );
         }else if(question.questionType === "Rating"){
           return(
-              <RatingResponseSet question={question.question} key={index}/>
+              <RatingResponseSet onResponseChange={(response: string) => changedFor(question.jobFairQ1Id, response)} question={question.question} key={index}/>
           )
         }
         // return <></>
@@ -188,6 +150,90 @@ function Questions({ responseData }: any) {
     </>
   );
 }
+
+//  this code is for boolen / Radio button
+function YesNoQuestionSet({question, onResponseChange }: any) {
+  const [response, setResponse] = React.useState("Yes");
+
+  const handleResponseChange = (selectedResponse:string)=>{
+    setResponse(selectedResponse);
+    onResponseChange(selectedResponse);
+  }
+  return (
+  <>
+    <Question question={question} />
+    {/* <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" /> */}
+    <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        value={response}
+        onChange={(e)=>{
+          handleResponseChange(e.target.value)
+        }}
+      >
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" control={<Radio />} label="No" />
+      </RadioGroup>
+    <QuestionSeparator className="mb-[2em]" />
+  </>
+  );
+}
+
+// this code is for Rating button
+function RatingResponseSet({ question, onResponseChange }: any) {
+  const [value, setValue] = React.useState<number | null>(1);
+
+  const handleResponseChange = (newValue: number | null) => {
+    setValue(newValue);
+    onResponseChange(newValue);
+  };
+
+  return (
+    <>
+      <Question question={question} />
+      <Box sx={{ '& > legend': { mt: 2 } }}>
+        <Rating
+          name="simple-controlled"
+          value={value}
+          onChange={(event, newValue) => handleResponseChange(newValue)}
+        />
+      </Box>
+      <QuestionSeparator className="mb-[2em]" />
+    </>
+  );
+}
+
+
+// function RatingResponseSet({question, onResponseChange}: any) {
+//   const [value, setValue] = React.useState<number | null >(1);
+//   const handleResponseChange = (selectedResponse:Number)=>{
+//     setValue(selectedResponse);
+//     onResponseChange(selectedResponse);
+//   }
+//   return (
+//   <>
+//      <Question question={question}/>
+//       {/* <RatingResponse className="ml-[2em] mb-[1em]" /> */}
+//       <Box
+//       sx={{
+//         '& > legend': { mt: 2 },
+//       }}
+//     >
+     
+//       <Rating
+//         name="simple-controlled"
+//         value={value}
+//         onChange={(e, newValue) => {
+//           setValue(newValue);
+//           handleResponseChange(e.target.newValue)
+//         }}
+//       />
+//     </Box>
+//       <QuestionSeparator className="mb-[2em]" />
+//   </>
+//   );
+// }
 
 export function Question({ question }: { question: string }) {
   return (
