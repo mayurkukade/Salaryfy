@@ -26,7 +26,7 @@ console.log(resSteptwoSelector)
     if(resSteptwoSelector){
       navigate('/questionnaire/screening-questions')
     }else{
-      toast.error("OTP has been sent to your email address", {
+      toast.error("Please submit form", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,

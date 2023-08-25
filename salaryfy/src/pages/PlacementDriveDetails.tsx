@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppStoreStateType } from "../store/app.store";
 import { SLICE_NAMES } from "../features/slice-names.enum";
 import { setJobDetails } from "../features/reducers/job-details/job-details.slice";
-
+import Cookies from "js-cookie";
+import QuestionnaireTopBarStep from "../modules/questionnaire/components/questionnaire-topbar-step.component";
 
 function GreenHeading({ label }: { label: string }) {
   return (
@@ -27,13 +28,22 @@ const PlacementDriveDetails = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
   const [lazyFetchJob] = useLazyGetJobByIdQuery();
-
+  const token = Cookies.get("jwtToken");
   function navigateToPlacementDrive() {
     navigate('/placementdrive');
   }
 
+  const BackSubmitHandler = ()=>{
+    navigate('/placementdrive')
+  }
   function onGetHiredClick() {
-    console.log('Get Hired Button clicked');
+    
+      if (token) {
+        navigate('/questionnaire/screening-questions')
+      } else {
+        navigate('/questionnaire')
+      }
+    
   }
 
   async function fetchJob() {
@@ -62,6 +72,8 @@ const PlacementDriveDetails = () => {
   }, []);
 
   return (
+    <div className="w-100 flex flex-col items-center h-[100%]">
+    <QuestionnaireTopBarStep/>
     <div className="flex gap-[5em] px-[4em] py-[4em] flex-col-reverse md:flex-row">
       <div className="flex justify-center">
         <div className="max-w-[36em] flex flex-col gap-[2em]">
@@ -73,8 +85,8 @@ const PlacementDriveDetails = () => {
       </div>
       <div className="">
         <div className="flex flex-col">
-          <p className="text-end">Back</p>
-          <p>Placement Drive Details</p>
+          <p className="text-end cursor-pointer text-lg " onClick={BackSubmitHandler}>Back</p>
+          <p className="text-lg">Placement Drive Details</p>
         </div>
         <div className="app-box-shadow mb-[5em] rounded-[2em]">
           <PlacementJobDetails onGetHiredClick={onGetHiredClick} jobDetails={jobDetails} />
@@ -110,7 +122,7 @@ const PlacementDriveDetails = () => {
                 { jobDetails.jobDetails }
               </p>
               <div onClick={onGetHiredClick} className="flex bg-yellow text-[#0E5F59] w-fit p-5 h-[43px] rounded-lg  justify-center items-center relative mb-[2em]">
-                <button className="  text-[20.247px] font-medium  ">Get Hired</button>
+                <button className="  text-[20.247px] font-medium  " >Get Hired</button>
                 <svg width="33" height="19" viewBox="0 0 33 19" fill="none" className="align-middle ml-3 mt-1 " ><path d="M31.8711 10.375C32.3522 9.89391 32.3522 9.1139 31.8711 8.63281L24.0312 0.792963C23.5502 0.311871 22.7701 0.311871 22.2891 0.792963C21.808 1.27405 21.808 2.05406 22.2891 2.53515L29.2578 9.50391L22.2891 16.4727C21.808 16.9538 21.808 17.7338 22.2891 18.2148C22.7701 18.6959 23.5502 18.6959 24.0312 18.2148L31.8711 10.375ZM0 10.7358H31V8.27199H0V10.7358Z" fill="#005F59" /></svg>
               </div>
             </div>
@@ -118,6 +130,7 @@ const PlacementDriveDetails = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
