@@ -57,7 +57,7 @@ export default function QuestionnairePersonalDetails() {
           <SubSteps />
           <PersonalDetails setSubmitRegister={setSubmitRegister} />
 
-          <BottomPageNavigationBar />
+          {/* <BottomPageNavigationBar /> */}
         </div>
       </div>
     

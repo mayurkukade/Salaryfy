@@ -1,5 +1,5 @@
 import "./questionnaire.css";
-import {  Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import QuestionnairePersonalDetails from "./pages/personal-details.page";
 import ScreeningQuestions from "./pages/screening-questions";
 import ScheduleInterviewPage from "./pages/schedule-interview.page";
@@ -12,10 +12,10 @@ export default function QuestionnaireModule() {
     <Routes>
       <Route element={<StepsLayout />}>
         <Route index element={<QuestionnairePersonalDetails />} />
+        <Route path="screening-questions" element={<ScreeningQuestions />} />
+        <Route path="schedule-interview" element={<ScheduleInterviewPage />} />
+        
       </Route>
-
-      <Route path="screening-questions" element={<ScreeningQuestions />} />
-      <Route path="schedule-interview" element={<ScheduleInterviewPage />} />
       <Route path="fresher-dashboard" element={<FresherDashboardPage />} />
       <Route
         path="fresher-profile-upload"
