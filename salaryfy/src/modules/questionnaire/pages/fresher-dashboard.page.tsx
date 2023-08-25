@@ -7,16 +7,30 @@ import { HavingDoubts } from "../components/having-doubts.component";
 import LenskartImage from "../../../assets/images/lenskart-icon.png";
 import { useDispatch, useSelector } from "react-redux";
 import { AppStoreStateType, RootState } from "../../../store/app.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import { CommonUtilities } from "../../../utils/common.utilities";
 import { useLazyGetUserByIdQuery } from "../../../features/api-integration/user-profile/user-profile.slice";
 import { UserDetailsType } from "../../../features/reducers/user-details/user-details.interface";
 import { setUserDetails } from "../../../features/reducers/user-details/user-details.slice";
+import { useLazyGetUpcomingInterviewsQuery } from "../../../features/api-integration/upcoming-interviews/upcoming-interviews.slice";
+import { useLazyGetJobByIdQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
+import { JobsDetailsType } from "../../../features/reducers/job-details/job-details.interface";
+
+interface UpcomingInterviewType {
+  date: "2023-08-01",
+  interviewDate: "2023-08-10",
+  interviewScheduleId: 15,
+  jobId: 41,
+  location: "Office A",
+  status: "Scheduled",
+  time: "15:00:00",
+  userId: 5
+}
 
 // Main Page of fresher Dashboard Page
 export default function FresherDashboardPage() {
-  
+
   return (
     <div className="container mx-auto">
       <div className="p-4 flex flex-col items-center ">
@@ -36,19 +50,26 @@ export default function FresherDashboardPage() {
 { /* Freshser Dashboard Section */ }
 export function FresherDashboard() {
 
-  const userId = useSelector((state:RootState)=>state.authSlice.userId);
-  const userProfile = useSelector((state: AppStoreStateType)=>state.root[SLICE_NAMES.USER_DETAILS]);
+  const userId = useSelector((state: RootState) => state.authSlice.userId);
+  const userProfile = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.USER_DETAILS]);
   const [getLazyUserProfile] = useLazyGetUserByIdQuery();
+  const [getLazyUpcomingInterviews] = useLazyGetUpcomingInterviewsQuery();
   const dispatch = useDispatch();
+
+  const [listUpcomingInterviews, setListUpcomingInterviews] = useState<Array<UpcomingInterviewType>>([]);
 
   async function userIdUpdated() {
     if (!userId) { return; }
 
     const { data: { response: responseData } } = await getLazyUserProfile(userId.toString());
     const userProfile = responseData as UserDetailsType;
-    
+
     if (userProfile) {
-      dispatch( setUserDetails(userProfile) )
+      dispatch(setUserDetails(userProfile));
+
+      const { data: { list: responseData } } = await getLazyUpcomingInterviews(userId);
+      const listUpcomingInterviewsResponse = responseData as Array<UpcomingInterviewType>;
+      setListUpcomingInterviews(() => listUpcomingInterviewsResponse);
     }
   }
 
@@ -63,7 +84,7 @@ export function FresherDashboard() {
         {/* Left Card Section */}
         <div className="flex flex-col">
           <div className="text-[1.5rem] text-[#005F59] font-bold mb-[1em] md:text-[4em]">
-            Hi { userProfile.fullName },
+            Hi {userProfile.fullName},
           </div>
           <div className="mb-[2em]">
             <span className="text-[0.9rem] md:text-[2.2em] text-[#5B5B5B]">
@@ -78,11 +99,11 @@ export function FresherDashboard() {
             className="mb-[2em] text-[1.8em] rounded-xl overflow-hidden grid grid-cols-[max-content,auto] grid-cols-auto [&>*]:whitespace-nowrap [&>*]:px-[1.5em] [&>*]:py-[0.5em] [&>*]:border-b [&>*]:border-solid [&>*]:border-b-[#0E5F591A] [&>*:nth-child(odd)]:bg-[#0E5F5919] [&>*:nth-child(odd)]:text-[#5b5b5b] [&>*:nth-child(odd)]:w-[10em] [&>*:nth-child(even)]:w-[100%]"
           >
             <div>Full Name</div>
-            <div>{ userProfile.fullName }</div>
+            <div>{userProfile.fullName}</div>
             <div>Phone</div>
-            <div>{ userProfile.mobile_no }</div>
+            <div>{userProfile.mobile_no}</div>
             <div>Email</div>
-            <div>{ userProfile.email }</div>
+            <div>{userProfile.email}</div>
             <div>Status</div>
             <div>
               <span className="bg-[#0CBC8B] rounded-[1em] text-[white] px-[0.5em] py-[0.25em]">
@@ -92,7 +113,7 @@ export function FresherDashboard() {
             <div>Plan Opted</div>
             <div>Rapid Placement</div>
             <div>Sign Up Date</div>
-            <div>{ CommonUtilities.date.formatDate(userProfile.date) }</div>
+            <div>{CommonUtilities.date.formatDate(userProfile.date)}</div>
             <div>Payment Method</div>
             <div>Card</div>
           </div>
@@ -247,12 +268,11 @@ export function FresherDashboard() {
           <div className="mx-[1em] whitespace-nowrap my-[1em] font-medium text-[2.6em] text-[#0E5F59]">
             Upcoming Interviews
           </div>
-          <div className="p-4 app-scrollbar h-[50em]">
-            <UpcomingInterviewCard className="mb-[2em]" />
-            <UpcomingInterviewCard className="mb-[2em]" />
-            <UpcomingInterviewCard className="mb-[2em]" />
-            <UpcomingInterviewCard className="mb-[2em]" />
-            <UpcomingInterviewCard />
+          <div className="p-4 app-scrollbar h-[50em] flex flex-col gap-[2em]">
+            {
+              listUpcomingInterviews.map((upcomingInterview: UpcomingInterviewType) => <UpcomingInterviewCard details={upcomingInterview} key={CommonUtilities.generateRandomString(20)} /> )
+            }
+            
           </div>
 
           {/* Having Doubts section */}
@@ -264,7 +284,19 @@ export function FresherDashboard() {
 }
 
 // Upcoming Card Interview Section
-function UpcomingInterviewCard({ className }: { className?: string }) {
+function UpcomingInterviewCard({ className, details }: { className?: string, details: UpcomingInterviewType }) {
+  const [getLazyJobById] = useLazyGetJobByIdQuery();
+  const [jobDetails, setJobDetails] = useState<JobsDetailsType>();
+
+  async function init() {
+    const { data: { object: jobDetailsResponse } } = await getLazyJobById(details.jobId.toString());
+    console.log(jobDetailsResponse);
+    setJobDetails(() => jobDetailsResponse);
+  }
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <div
       className={"p-[1.5em] rounded-[1em] " + className}
@@ -285,7 +317,7 @@ function UpcomingInterviewCard({ className }: { className?: string }) {
           </div>
           <div className="text-[1.5em] font-semibold">
             <div className="text-[#0E5F59]">
-              Sales Associates (Frontend Sales)
+              {jobDetails?.postName}
             </div>
             <div className="text-[#5B5B5B]">Lenskart</div>
           </div>
