@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import {  useNavigate } from "react-router-dom";
 import { RootState } from "../../../store/app.store";
 import {  toast } from 'react-toastify';
-import { useState } from "react";
+import {useEffect} from 'react'
 
 
 // // For Accepting Props
@@ -11,21 +11,30 @@ import { useState } from "react";
 // }
 
 
-export default function BottomPageNavigationBar({currentPageParent}) {
+export default function BottomPageNavigationBar() {
 
+const registerFormData = useSelector((state:RootState)=>state.registerFormSlice.registerFormData)
+console.log(registerFormData)
+ 
+const registerData = window.location.href.slice(22)
+console.log(registerData)
 
-  //  state hooke for currentPage
-  const [currentPage, setCurrentPage] = useState(0);
-
-
+if(registerData === 'questionnaire'){
+  console.log('done')
+}
+ 
   const resSteptwoSelector = useSelector((state:RootState)=>state.mainStepsCounter.resStepTwo
   )
 console.log(resSteptwoSelector)
   const navigate = useNavigate()
   const nextHandler =()=>{
-    if(resSteptwoSelector){
+    if(registerFormData){
       navigate('/questionnaire/screening-questions')
-    }else{
+    }else if(registerData === 'questionnaire'){
+      console.log('done')
+    }else if(registerData == 'questionnaire/screening-questions'){
+console.log('ques')
+    } else{
       toast.error("Please submit form", {
         position: "top-center",
         autoClose: 2000,
@@ -43,8 +52,10 @@ console.log(resSteptwoSelector)
   }
 
   
+useEffect(()=>{
 
-  //Funtion to send data to parent
+},[])
+ 
   
 
   return (
