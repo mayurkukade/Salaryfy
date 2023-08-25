@@ -3,12 +3,12 @@ import { createSlice , PayloadAction} from "@reduxjs/toolkit";
 interface AuthState {
     token: string | null;
     userName: string[];
-    userId: string[];
+    userId: string | null;
 }
 const initialState:AuthState ={
     token :null,
     userName:[],
-    userId:[]
+    userId:null
 }
 
 const authSlice = createSlice({
@@ -26,7 +26,7 @@ const authSlice = createSlice({
            console.log(action.payload)
         },
         userIdSelection: (state, action: PayloadAction<string>) => {
-            state.userId.push(action.payload);
+            state.userId = action.payload
         },
        
     }

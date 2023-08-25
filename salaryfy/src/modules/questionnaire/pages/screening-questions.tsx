@@ -1,9 +1,12 @@
+
 import { AppRadioButton } from "../../../components/app-radio.button.component";
 import { useGetScreeningQuestionQuery } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
-import { CommonUtilities } from "../../../utils/common.utilities";
+
 import UserJobDetails from "../components/job-details.component";
 import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
+
 import SubSteps from "../components/sub-steps.component";
+
 
 export default function ScreeningQuestions() {
   const {
@@ -11,6 +14,7 @@ export default function ScreeningQuestions() {
     isError,
     isLoading,
   } = useGetScreeningQuestionQuery();
+  
   console.log(responseData);
   console.log(isError);
   console.log(isLoading);

@@ -14,8 +14,9 @@ import {
 import { useAppDispatch } from "../../../store/app.hook";
 import { emailStepsCounterDecrement, emailStepsCounterIncrement,  nameStepsCounterDecrement, nameStepsCounterIncrement, passwordStepsCounterDecrement, passwordStepsCounterIncrement, phoneNumberStepsCounterDecrement, phoneNumberStepsCounterIncrement, resSteptwoSelector } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
+import { registerFormQuestionnaire } from "../../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
@@ -544,6 +545,8 @@ const PersonalDetails = (): JSX.Element => {
   const [matchpassword, setMatchpassword] = useState<boolean>(false);
   const [confirmFocus, setConfirmFocus] = useState(false);
 
+
+
   const [showVerifyedOTP, setShowVerifyedOTP] = useState(false);
   const role = "USER";
   const userProfileType = "fresher";
@@ -565,6 +568,23 @@ console.log(resSubmitStatus)
     !userProfileType ||
     !date|| 
     !matchpassword
+
+
+
+
+
+  const regiterDispatchHandler= () =>{
+    dispatch(registerFormQuestionnaire({
+      fullName,
+      mobile_no,
+      email,
+      password,
+      role,
+      userProfileType,
+      date,
+    }))
+  }
+
   const registerSubmitHanlder = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -658,6 +678,25 @@ console.log(resSubmitStatus)
       dispatch(passwordStepsCounterDecrement())
     }
   }, [password,validpassword,dispatch]);
+
+  useEffect(()=>{
+    if(contentDisabled){
+      console.log(contentDisabled)
+    }
+  },[contentDisabled])
+
+  useEffect(()=>{
+    if(contentDisabled)
+    dispatch(registerFormQuestionnaire({
+      fullName,
+      mobile_no,
+      email,
+      password,
+      role,
+      userProfileType,
+      date,
+    }))
+  },[dispatch,fullName,mobile_no,email,password,role,userProfileType,date,contentDisabled])
   
   console.log(validpassword);
   console.log(matchpassword);
@@ -719,8 +758,8 @@ console.log(resSubmitStatus)
           </div>
           <UploadResumeComponent />
           <button
-            className="bg-[#005F59] text-xl cursor-pointer h-[40px] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default  disabled:bg-gray-400 disabled:cursor-not-allowed "
-            onClick={registerSubmitHanlder}
+            className="bg-[#005F59] text-xl cursor-pointer h-[40px] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]   disabled:bg-gray-400 disabled:cursor-not-allowed "
+            onClick={regiterDispatchHandler}
             disabled={contentDisabled}
           >
             Submit

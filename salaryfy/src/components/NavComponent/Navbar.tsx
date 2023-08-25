@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { userNameSelection } from "../../features/reducers/authReducers/auth-slice-reducer";
+import { userIdSelection, userNameSelection } from "../../features/reducers/authReducers/auth-slice-reducer";
 import { RootState } from "../../store/app.store";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 interface TokenPayload {
   fullName: string;
+  userId:string
 }
 
 const Navbar = () => {
@@ -49,9 +50,12 @@ const navigate = useNavigate()
       const userDetails: TokenPayload = jwt_decode(token);
 
       const userName: string = userDetails.fullName;
+      const userId:string = userDetails.userId
+      
       console.log(userName);
       console.log(userDetails);
       dispatch(userNameSelection(userName));
+      dispatch(userIdSelection(userId))
     }
   }, [dispatch, token]);
   const handleNav = () => {
