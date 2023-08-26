@@ -32,6 +32,28 @@ export default function SubSteps() {
         />
       </>
     );
+  }else if(currentRoute == "questionnaire/schedule-interview"){
+    subStepContent = (
+      <>
+        <SubStep
+          status={SUB_STEP_STATUS.PENDING}
+          no={1}
+          title="Upload your Resume"
+        />
+        <SubStepArrow />
+        <SubStep
+          status={SUB_STEP_STATUS.COMPLETED}
+          no={2}
+          title="Screening Quesions"
+        />
+        <SubStepArrow />
+        <SubStep
+          status={SUB_STEP_STATUS.REMAINING}
+          no={3}
+          title="Confirming Interview Slot"
+        />
+      </>
+    );
   } else {
     subStepContent = (
       <>

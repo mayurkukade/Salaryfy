@@ -6,26 +6,43 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import Cookies from "js-cookie";
 
-
-
 export default function QuestionnaireTopBarStep() {
-  const token = Cookies.get('jwtToken')
- const phoneNumberCounterStep2 = useSelector((state:RootState)=>state.mainStepsCounter.phoneNumberCounter)
- const passwordCounterStep2 = useSelector((state:RootState)=>state.mainStepsCounter.passwordCounter)
- const emailCounterStep2 = useSelector((state:RootState)=>state.mainStepsCounter.emailCounter)
- const nameCounterStep2 =  useSelector((state:RootState)=>state.mainStepsCounter.fullNameCounter)
- const confirmPasswordCounterStep2 = useSelector((state:RootState)=>state.mainStepsCounter.confirmPasswordCounter)
-console.log(emailCounterStep2)
-console.log(nameCounterStep2)
-const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
-console.log(currentRoute)
-let stepTwoTotal:number
-if(currentRoute == 'questionnaire/screening-questions'){
-  stepTwoTotal = 25
-}else{
-   stepTwoTotal = phoneNumberCounterStep2 +passwordCounterStep2 + emailCounterStep2 + nameCounterStep2 + confirmPasswordCounterStep2
+  const token = Cookies.get("jwtToken");
+  const phoneNumberCounterStep2 = useSelector(
+    (state: RootState) => state.mainStepsCounter.phoneNumberCounter
+  );
+  const passwordCounterStep2 = useSelector(
+    (state: RootState) => state.mainStepsCounter.passwordCounter
+  );
+  const emailCounterStep2 = useSelector(
+    (state: RootState) => state.mainStepsCounter.emailCounter
+  );
+  const nameCounterStep2 = useSelector(
+    (state: RootState) => state.mainStepsCounter.fullNameCounter
+  );
+  const confirmPasswordCounterStep2 = useSelector(
+    (state: RootState) => state.mainStepsCounter.confirmPasswordCounter
+  );
 
-}
+  const currentRoute = useSelector(
+    (state: RootState) => state.currentRoute.currentRoute
+  );
+  console.log(currentRoute);
+  let stepTwoTotal: number;
+  if (currentRoute == "questionnaire/screening-questions") {
+    stepTwoTotal = 25;
+  }else if(currentRoute == 'questionnaire/fresher-dashboard'){
+    stepTwoTotal = 100;
+  } else if(currentRoute == 'questionnaire/schedule-interview'){
+    stepTwoTotal = 70;
+  } else {
+    stepTwoTotal =
+      phoneNumberCounterStep2 +
+      passwordCounterStep2 +
+      emailCounterStep2 +
+      nameCounterStep2 +
+      confirmPasswordCounterStep2;
+  }
 
   return (
     <div className="flex w-[100%] p-[30px]">
@@ -34,9 +51,7 @@ if(currentRoute == 'questionnaire/screening-questions'){
         className="flex-grow justify-center w-[80%]  "
         sx={{ display: { xs: "none", md: "none", lg: "flex" } }}
       >
-        <div className="flex flex-grow w-[100%]    mb-[2em] gap-[2em]" 
-        
-        >
+        <div className="flex flex-grow w-[100%]    mb-[2em] gap-[2em]">
           <StepDesktop
             progress={100}
             active={false}
@@ -61,26 +76,31 @@ if(currentRoute == 'questionnaire/screening-questions'){
       >
         <div className="flex-grow   flex mb-[2em] gap-[2em] ">
           <StepMobile
-          className="text-[0.5rem]"
+            className="text-[0.5rem]"
             progress={100}
             active={true}
             no={1}
             title="Select the job"
           />
           <StepMobile
-          className="text-[0.5rem]"
+            className="text-[0.5rem]"
             progress={65}
             active={true}
             no={2}
             title="Upload your Resume"
           />
-          <StepMobile className="text-[0.5rem]" progress={0} active={false} no={3} title="Get hired!" />
+          <StepMobile
+            className="text-[0.5rem]"
+            progress={0}
+            active={false}
+            no={3}
+            title="Get hired!"
+          />
         </div>
       </Box>
     </div>
   );
 }
-
 
 function StepMobile({
   className,
@@ -138,19 +158,32 @@ function StepDesktop({
 }) {
   if (progress > 100 || progress < 0)
     throw new Error("Progress value must be between 0 and 100");
-  const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
-  console.log(currentRoute)
-  
+  const currentRoute = useSelector(
+    (state: RootState) => state.currentRoute.currentRoute
+  );
+  console.log(currentRoute);
+  console.log(currentRoute == "questionnaire/fresher-dashboard");
   return (
     <div className={"flex flex-grow " + (className || "")}>
       <div className="flex flex-col items-center mr-[1.5em]">
         <div className="text-[1.5em] text-[#005F59] mb-[0.5em]">STEP</div>
+
         <div
-          className={`w-[6.5em] h-[6.5em] rounded-[50%] ${
-            active ? "bg-[#FECD08]" : "bg-[#005F59] "
+          className={`w-[6.5em] h-[6.5em] rounded-[50%]  ${
+            active ? "bg-[#FECD08] " : "bg-[#005F59] "
           } ${
             active ? "text-[#005F59]" : "text-[#fff]"
-          } flex justify-center items-center`} 
+          } flex justify-center items-center ${
+            no == 3 ? "bg-[#9ca3af] text-black" : null
+          } ${
+            no == 3 && currentRoute == "questionnaire/fresher-dashboard"
+              ? "!bg-[#FECD08] text-black"
+              : null
+          } ${
+            no == 2 && currentRoute == "questionnaire/fresher-dashboard"
+              ? "!bg-[#005F59] text-white"
+              : null
+          } `}
         >
           <span className="text-[2em]">{no}</span>
         </div>
