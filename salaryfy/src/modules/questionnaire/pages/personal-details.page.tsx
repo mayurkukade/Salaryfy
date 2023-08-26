@@ -570,20 +570,35 @@ console.log(resSubmitStatus)
     !matchpassword
 
 
-
-
-
-  const regiterDispatchHandler= () =>{
+console.log(!contentDisabled)
+useEffect(()=>{
+  if(!contentDisabled){
+    console.log('dispatch')
     dispatch(registerFormQuestionnaire({
-      fullName,
-      mobile_no,
-      email,
-      password,
-      role,
-      userProfileType,
-      date,
-    }))
+          fullName,
+          mobile_no,
+          email,
+          password,
+          role,
+          userProfileType,
+          date,
+        }))
+        dispatch(resSteptwoSelector(true))
   }
+
+},[contentDisabled, dispatch, email, fullName, mobile_no, password])
+
+  // const regiterDispatchHandler= () =>{
+  //   dispatch(registerFormQuestionnaire({
+  //     fullName,
+  //     mobile_no,
+  //     email,
+  //     password,
+  //     role,
+  //     userProfileType,
+  //     date,
+  //   }))
+  // }
 
   const registerSubmitHanlder = async (
     e: React.MouseEvent<HTMLButtonElement>
@@ -684,19 +699,8 @@ console.log(resSubmitStatus)
       console.log(contentDisabled)
     }
   },[contentDisabled])
-
-  useEffect(()=>{
-    if(contentDisabled)
-    dispatch(registerFormQuestionnaire({
-      fullName,
-      mobile_no,
-      email,
-      password,
-      role,
-      userProfileType,
-      date,
-    }))
-  },[dispatch,fullName,mobile_no,email,password,role,userProfileType,date,contentDisabled])
+console.log(contentDisabled)
+  
   
   console.log(validpassword);
   console.log(matchpassword);
@@ -759,7 +763,7 @@ console.log(resSubmitStatus)
           <UploadResumeComponent />
           <button
             className="bg-[#005F59] text-xl cursor-pointer h-[40px] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]   disabled:bg-gray-400 disabled:cursor-not-allowed "
-            onClick={regiterDispatchHandler}
+            // onClick={regiterDispatchHandler}
             disabled={contentDisabled}
           >
             Submit

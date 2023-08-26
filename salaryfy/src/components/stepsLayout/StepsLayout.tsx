@@ -1,11 +1,10 @@
 
 import QuestionnaireTopBarStep from '../../modules/questionnaire/components/questionnaire-topbar-step.component'
-import { Navigate, Outlet } from 'react-router-dom'
+import {  Outlet } from 'react-router-dom'
 import BottomPageNavigationBar from '../../modules/questionnaire/components/bottom-navigation-bar.component'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store/app.store'
+
 const StepsLayout:React.FC= () => {
- const token = useSelector((state:RootState)=>state.authSlice.token)
+
 
   return (
     <>

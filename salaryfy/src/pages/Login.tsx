@@ -6,8 +6,9 @@ import Cookies  from "js-cookie";
 import { useLoginMutation } from "../features/api-integration/apiUserSlice/api-integration-user.slice";
 
 import {toast} from 'react-toastify'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../features/reducers/authReducers/auth-slice-reducer";
+import { RootState } from "../store/app.store";
 export const Login = () => {
   const [userName, setUserName] = useState<string>("");
   const navigate = useNavigate()
@@ -16,8 +17,12 @@ export const Login = () => {
   const [login,{isLoading,isError}] = useLoginMutation()
   console.log(isLoading,isError)
 
-  const [password, setpassword] = useState<string>("");
 
+  const [password, setpassword] = useState<string>("");
+const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
+
+
+console.log(currentRoute)
   const LoginSubmitHandler = async(e:React.MouseEvent<HTMLButtonElement>)=>{
     e.preventDefault()
 
@@ -39,8 +44,12 @@ export const Login = () => {
           progress: undefined,
           theme: "light",
         });
-
-        navigate('/'); // Make sure your routing is correctly set up
+        if(token && currentRoute == 'questionnaire'){
+          navigate('/questionnaire/screening-questions')
+        }else{
+          navigate(`/${currentRoute}`); 
+        }
+        
       } else {
         
         console.error("Login error");

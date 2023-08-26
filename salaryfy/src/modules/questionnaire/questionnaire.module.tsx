@@ -10,24 +10,27 @@ import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/app.store";
 export default function QuestionnaireModule() {
-  const token = Cookies.get('jwtToken')
-const currentPath = useSelector((state:RootState)=>state.currentRoute.currentRoute)
-console.log(currentPath)
-const navigate = useNavigate()
-if(token && currentPath == 'questionnaire'){
- navigate('/questionnaire/screening-questions')
-}
+  const token = Cookies.get("jwtToken");
+  const currentPath = useSelector(
+    (state: RootState) => state.currentRoute.currentRoute
+  );
+  console.log(currentPath);
+  const navigate = useNavigate();
+  if (token && currentPath == "questionnaire") {
+    navigate("/questionnaire/screening-questions");
+  }
 
   return (
     <Routes>
       <Route element={<StepsLayout />}>
-        <Route index element={<QuestionnairePersonalDetails />}   />
-      
-          <Route path="screening-questions" element={<ScreeningQuestions />} />
-        
+        <Route index element={<QuestionnairePersonalDetails />} />
+
+        <Route path="screening-questions" element={<ScreeningQuestions />} />
+
         <Route path="schedule-interview" element={<ScheduleInterviewPage />} />
+        <Route path="fresher-dashboard" element={<FresherDashboardPage />} />
       </Route>
-      <Route path="fresher-dashboard" element={<FresherDashboardPage />} />
+    
       <Route
         path="fresher-profile-upload"
         element={<FresherProfileUploadPage />}

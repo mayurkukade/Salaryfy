@@ -17,10 +17,11 @@ export default function QuestionnaireTopBarStep() {
  const confirmPasswordCounterStep2 = useSelector((state:RootState)=>state.mainStepsCounter.confirmPasswordCounter)
 console.log(emailCounterStep2)
 console.log(nameCounterStep2)
-
-let stepTwoTotal
-if(token){
-  stepTwoTotal = '25'
+const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
+console.log(currentRoute)
+let stepTwoTotal:number
+if(currentRoute == 'questionnaire/screening-questions'){
+  stepTwoTotal = 25
 }else{
    stepTwoTotal = phoneNumberCounterStep2 +passwordCounterStep2 + emailCounterStep2 + nameCounterStep2 + confirmPasswordCounterStep2
 
@@ -137,16 +138,19 @@ function StepDesktop({
 }) {
   if (progress > 100 || progress < 0)
     throw new Error("Progress value must be between 0 and 100");
+  const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
+  console.log(currentRoute)
+  
   return (
     <div className={"flex flex-grow " + (className || "")}>
       <div className="flex flex-col items-center mr-[1.5em]">
         <div className="text-[1.5em] text-[#005F59] mb-[0.5em]">STEP</div>
         <div
           className={`w-[6.5em] h-[6.5em] rounded-[50%] ${
-            active ? "bg-[#FECD08]" : "bg-[#005F59]"
+            active ? "bg-[#FECD08]" : "bg-[#005F59] "
           } ${
             active ? "text-[#005F59]" : "text-[#fff]"
-          } flex justify-center items-center`}
+          } flex justify-center items-center`} 
         >
           <span className="text-[2em]">{no}</span>
         </div>
