@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 // import { AppRadioButton } from "../../../components/app-radio.button.component";
-import { useGetScreeningQuestionQuery } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
+import {
+  useGetScreeningQuestionQuery,
+  usePostScreeningQuestionSliceMutation,
+} from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
 import UserJobDetails from "../components/job-details.component";
 // import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
 import SubSteps from "../components/sub-steps.component";
@@ -20,58 +23,75 @@ import Rating from "@mui/material/Rating";
 // import { cureentSelector } from "../../../features/reducers/currentRouteReducers/current-route.reducer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 export default function ScreeningQuestions() {
+  //  RTK-Query Hook to get all the questions
   const {
     data: responseData,
     // isError,
     // isLoading,
   } = useGetScreeningQuestionQuery();
+
+  // RTK-Query hook to post all response
+  // const {data,isError, isLoading} = usePostScreeningQuestionSliceMutation();
+
   const cureentSelector = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-  console.log(cureentSelector);
-  // console.log(responseData);
-  // console.log(isError);
-  // console.log(isLoading);
 
-  // type QuestionType = Array<{ ques: string, type: 'Boolean' | 'Rating' | 'String', ans: string }>;
-  // const initQuestions: QuestionType = [
+  console.log("Get all quesation", responseData);
+  const navigate = useNavigate();
+  const [collectResponse, setCollectResponse] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
-  // ];
+  const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
 
-  // const [questions, setQuestions] = React.useState<QuestionType>(initQuestions);
-  
-  //  Function to send response to backend
-  // const [collectResponse, setCollectResponse ] = useState();
-  // const submitResponse = () =>{
-  //   console.log('Submitted Data is',collectResponse);
-  //   const filteredResponses = Array.from(new Set(collectResponse));
+  const submitResponse = async () => {
+    try {
+      if (collectResponse.length <= 0) {
+        toast.error("Submit at least two question", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else {
+        console.log("Submitted Data is", collectResponse);
+        const filteredResponses = removeDuplicateResponses(collectResponse);
+        console.log("Remove duplicate", filteredResponses);
+        setFilteredData(filteredResponses);
 
-  //   console.log('Remove duplicate',filteredResponses)
-    
-  // }
+        await postQuestion(filteredData);
 
-  const [collectResponse, setCollectResponse] = useState([]); 
-const submitResponse = () => {
-  console.log('Submitted Data is', collectResponse);
-  const filteredResponses = removeDuplicateResponses(collectResponse);
+        if (postQuestionResponse.error) {
+          toast.error("Error While Submitting Response");
+        } else {
+          // navigate("/"); // Navigate to a success page
 
-  console.log('Remove duplicate', filteredResponses);
-};
+          console.log('data added ', filteredData)
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-function removeDuplicateResponses(responses:any) {
-  const uniqueResponses: { [key: string]: { jobFairQ1Id: string } } = {};
+  function removeDuplicateResponses(responses: any) {
+    const uniqueResponses: { [key: string]: { jobFairQ1Id: string } } = {};
 
-  for (const response of responses) {
-    uniqueResponses[response.jobFairQ1Id] = response;
+    for (const response of responses) {
+      uniqueResponses[response.jobFairQ1Id] = response;
+    }
+
+    const filteredResponses = Object.values(uniqueResponses);
+
+    return filteredResponses;
   }
-
-  const filteredResponses = Object.values(uniqueResponses);
-
-  return filteredResponses;
-}
-
-
 
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
@@ -83,10 +103,18 @@ function removeDuplicateResponses(responses:any) {
         <div className="py-[2em] px-[3em] h-[100%]">
           <SubSteps />
 
-          {responseData && <Questions responseData={responseData} setCollectResponse={setCollectResponse}/>}
+          {responseData && (
+            <Questions
+              responseData={responseData}
+              setCollectResponse={setCollectResponse}
+            />
+          )}
 
-          <button className="text-[2em] bg-[#FECD08] w-[100px] font-medium mr-[0.5em] text-[#005F59] cursor-pointer " onClick={submitResponse}>
-            Submit 
+          <button
+            className="text-[2em] bg-[#FECD08] w-[100px] font-medium mr-[0.5em] text-[#005F59] cursor-pointer "
+            onClick={submitResponse}
+          >
+            Submit
           </button>
           {/* <BottomPageNavigationBar currentPageParent={setCurrentPage}/> */}
 
@@ -158,8 +186,8 @@ function Questions({ responseData, setCollectResponse }: any) {
       const updatedData = [...prevData, updatedQuestion];
       return updatedData;
     });
+    setCollectResponse(responseData1);
   }
-  setCollectResponse(responseData1)
 
   console.log("Updated reposne is ", responseData1);
 
@@ -287,109 +315,3 @@ export function QuestionSeparator({ className }: { className?: string }) {
     ></div>
   );
 }
-
-// function RatingResponseSet({question, onResponseChange}: any) {
-//   const [value, setValue] = React.useState<number | null >(1);
-//   const handleResponseChange = (selectedResponse:Number)=>{
-//     setValue(selectedResponse);
-//     onResponseChange(selectedResponse);
-//   }
-//   return (
-//   <>
-//      <Question question={question}/>
-//       {/* <RatingResponse className="ml-[2em] mb-[1em]" /> */}
-//       <Box
-//       sx={{
-//         '& > legend': { mt: 2 },
-//       }}
-//     >
-
-//       <Rating
-//         name="simple-controlled"
-//         value={value}
-//         onChange={(e, newValue) => {
-//           setValue(newValue);
-//           handleResponseChange(e.target.newValue)
-//         }}
-//       />
-//     </Box>
-//       <QuestionSeparator className="mb-[2em]" />
-//   </>
-//   );
-// }
-
-// export function RatingResponse({ className }: { className?: string }) {
-//   function Star({
-//     className,
-//     active,
-//   }: {
-//     className?: string;
-//     active?: boolean;
-//   }) {
-//     return (
-//       <>
-//         {active && (
-//           <div className={className}>
-//             <svg
-//               width="19"
-//               height="18"
-//               viewBox="0 0 19 18"
-//               fill="none"
-//               xmlns="http://www.w3.org/2000/svg"
-//             >
-//               <path
-//                 d="M9.5 0L12.7945 4.96546L18.535 6.56434L14.8307 11.232L15.084 17.1857L9.5 15.105L3.91604 17.1857L4.16933 11.232L0.464963 6.56434L6.20546 4.96546L9.5 0Z"
-//                 fill="#FECD08"
-//               />
-//             </svg>
-//           </div>
-//         )}
-
-//         {!active && (
-//           <div className={className}>
-//             <svg
-//               width="19"
-//               height="18"
-//               viewBox="0 0 19 18"
-//               fill="none"
-//               xmlns="http://www.w3.org/2000/svg"
-//             >
-//               <path
-//                 d="M9.5 0L12.7945 4.96546L18.535 6.56434L14.8307 11.232L15.084 17.1857L9.5 15.105L3.91604 17.1857L4.16933 11.232L0.464963 6.56434L6.20546 4.96546L9.5 0Z"
-//                 fill="#D7E8F0"
-//               />
-//             </svg>
-//           </div>
-//         )}
-//       </>
-//     );
-//   }
-//   return (
-//     <div className={"flex " + className}>
-//       <Star className="mr-[1em]" active={true} />
-//       <Star className="mr-[1em]" active={true} />
-//       <Star className="mr-[1em]" active={true} />
-//       <Star className="mr-[1em]" active={true} />
-//       <Star className="" active={false} />
-//     </div>
-//   );
-// }
-
-// export function YesNoResponse({ className }: { className?: string }) {
-//   return (
-//     <div className={"flex " + className}>
-//       <div className="flex items-center mr-[0.5em]">
-//         <span className="mr-[0.5em]">
-//           <AppRadioButton active={true} />
-//         </span>
-//         <span>Yes</span>
-//       </div>
-//       <div className="flex items-center">
-//         <span className="mr-[0.5em]">
-//           <AppRadioButton active={false} />
-//         </span>
-//         <span>No</span>
-//       </div>
-//     </div>
-//   );
-// }
