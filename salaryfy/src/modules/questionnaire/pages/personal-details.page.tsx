@@ -1,6 +1,6 @@
 
 import UserJobDetails from "../components/job-details.component";
-import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
+
 import SubSteps from "../components/sub-steps.component";
 import { useRef, useState, useEffect, CSSProperties } from "react";
 import OTPInput from "react-otp-input";
@@ -14,7 +14,7 @@ import {
 import { useAppDispatch } from "../../../store/app.hook";
 import { emailStepsCounterDecrement, emailStepsCounterIncrement,  nameStepsCounterDecrement, nameStepsCounterIncrement, passwordStepsCounterDecrement, passwordStepsCounterIncrement, phoneNumberStepsCounterDecrement, phoneNumberStepsCounterIncrement, resSteptwoSelector } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { registerFormQuestionnaire } from "../../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 

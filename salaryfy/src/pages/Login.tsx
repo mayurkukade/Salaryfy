@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import eyelogo from "../../assets/Logos/eyelogo.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Cookies  from "js-cookie";
 import { useLoginMutation } from "../features/api-integration/apiUserSlice/api-integration-user.slice";
-const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
 import {toast} from 'react-toastify'
 import { useDispatch } from "react-redux";
-import { setToken,clearToken } from "../features/reducers/authReducers/auth-slice-reducer";
+import { setToken } from "../features/reducers/authReducers/auth-slice-reducer";
 export const Login = () => {
   const [userName, setUserName] = useState<string>("");
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [login,{isLoading,isSuccess,isError}] = useLoginMutation()
+  const [login,{isLoading,isError}] = useLoginMutation()
   console.log(isLoading,isError)
 
   const [password, setpassword] = useState<string>("");
@@ -40,7 +40,7 @@ export const Login = () => {
           theme: "light",
         });
 
-        navigate('/questionnaire/screening-questions'); // Make sure your routing is correctly set up
+        navigate('/'); // Make sure your routing is correctly set up
       } else {
         
         console.error("Login error");

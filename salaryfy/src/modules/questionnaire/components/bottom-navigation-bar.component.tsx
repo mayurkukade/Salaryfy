@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../store/app.store";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
+
 
 // // For Accepting Props
 // interface BottomPageNavigationBarProps {
@@ -24,34 +23,45 @@ export default function BottomPageNavigationBar() {
 
   const navigate = useNavigate();
 
+  // const nextHandler = () => {
+  //   if (registerFormData) {
+  //     navigate("/questionnaire/screening-questions");
+  //   } else if (registerData === "questionnaire") {
+  //     console.log("done");
+  //   } else if (registerData == "questionnaire/screening-questions") {
+  //     console.log("ques");
+  //   } else {
+  //     toast.error("Please submit form", {
+  //       position: "top-center",
+  //       autoClose: 2000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //   }
+  // };
+
   const nextHandler = () => {
-    if (registerFormData) {
+    if (registerData === "questionnaire") {
       navigate("/questionnaire/screening-questions");
-    } else if (registerData === "questionnaire") {
-      console.log("done");
-    } else if (registerData == "questionnaire/screening-questions") {
-      console.log("ques");
-    } else {
-      toast.error("Please submit form", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+    } else if (registerData === "questionnaire/screening-questions") {
+      navigate("/questionnaire/schedule-interview");
     }
   };
-  const backHandler = () => {
-    navigate("/questionnaire");
-  };
 
-  useEffect(() => {}, []);
+  const backHandler = () => {
+    if (registerData === "questionnaire/screening-questions") {
+      navigate("/questionnaire");
+    } else if (registerData === "questionnaire/schedule-interview") {
+      navigate("/questionnaire/screening-questions");
+    }
+  };
 
   return (
     <div className="flex justify-center mt-6 mb-6">
-      <div className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]">
+      <div className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]" onClick={backHandler}>
         <span className="mr-[1em]">
           <svg
             width="35"
