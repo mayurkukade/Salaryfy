@@ -16,6 +16,7 @@ import { setUserDetails } from "../../../features/reducers/user-details/user-det
 import { useLazyGetUpcomingInterviewsQuery } from "../../../features/api-integration/upcoming-interviews/upcoming-interviews.slice";
 import { useLazyGetJobByIdQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { JobsDetailsType } from "../../../features/reducers/job-details/job-details.interface";
+import { useLazyGetProfileQuery } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 
 interface UpcomingInterviewType {
   date: "2023-08-01",
@@ -54,6 +55,7 @@ export function FresherDashboard() {
   const userProfile = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.USER_DETAILS]);
   const [getLazyUserProfile] = useLazyGetUserByIdQuery();
   const [getLazyUpcomingInterviews] = useLazyGetUpcomingInterviewsQuery();
+  const [getLazyProfile] = useLazyGetProfileQuery();
   const dispatch = useDispatch();
 
   const [listUpcomingInterviews, setListUpcomingInterviews] = useState<Array<UpcomingInterviewType>>([]);
@@ -69,8 +71,13 @@ export function FresherDashboard() {
 
       const { data: { list: responseData } } = await getLazyUpcomingInterviews(userId);
       const listUpcomingInterviewsResponse = responseData as Array<UpcomingInterviewType>;
+      console.log(listUpcomingInterviews);
       setListUpcomingInterviews(() => listUpcomingInterviewsResponse);
     }
+
+    const { data: { response: profileResponseData } } = await getLazyProfile(userId);
+
+    console.log({ profileResponseData });
   }
 
   useEffect(() => {
@@ -123,7 +130,7 @@ export function FresherDashboard() {
             style={{ boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)" }}
             className="rounded-xl mb-[2em] p-3"
           >
-            <div className="p-2 md:grid md:grid-cols-[1fr,1fr] md:[&>*]:mx-[2em] md:[&>*]:my-[1em] md:p-[1.5em]">
+            <div className="p-2 md:grid md:grid-cols-[1fr,1fr] md:[&>*]:mx-[2em] md:[&>*]:my-[1em] md:p-[1.5em] [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
               <div>
                 <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">
                   Highest Level of Education
@@ -270,9 +277,9 @@ export function FresherDashboard() {
           </div>
           <div className="p-4 app-scrollbar h-[50em] flex flex-col gap-[2em]">
             {
-              listUpcomingInterviews.map((upcomingInterview: UpcomingInterviewType) => <UpcomingInterviewCard details={upcomingInterview} key={CommonUtilities.generateRandomString(20)} /> )
+              listUpcomingInterviews.map((upcomingInterview: UpcomingInterviewType) => <UpcomingInterviewCard details={upcomingInterview} key={CommonUtilities.generateRandomString(20)} />)
             }
-            
+
           </div>
 
           {/* Having Doubts section */}
@@ -290,7 +297,6 @@ function UpcomingInterviewCard({ className, details }: { className?: string, det
 
   async function init() {
     const { data: { object: jobDetailsResponse } } = await getLazyJobById(details.jobId.toString());
-    console.log(jobDetailsResponse);
     setJobDetails(() => jobDetailsResponse);
   }
   useEffect(() => {
@@ -319,7 +325,7 @@ function UpcomingInterviewCard({ className, details }: { className?: string, det
             <div className="text-[#0E5F59]">
               {jobDetails?.postName}
             </div>
-            <div className="text-[#5B5B5B]">Lenskart</div>
+            <div className="text-[#5B5B5B]">{jobDetails?.companyName}</div>
           </div>
         </div>
         <div className="flex pb-[1em]">
@@ -327,18 +333,18 @@ function UpcomingInterviewCard({ className, details }: { className?: string, det
             <div className="text-[1.4em] flex mb-[1em]">
               <div className="mr-[0.5em] whitespace-nowrap">Interview on:</div>
               <div className="bg-[#0E5F59] text-[#FECD08] px-[1em] rounded-[2em] whitespace-nowrap">
-                04 May 2023
+                {CommonUtilities.date.formatDate(details.interviewDate)}
               </div>
             </div>
             <div className="text-[1.4em] flex mb-[1em]">
               <div className="mr-[0.5em]">Status:</div>
               <div className="border border-solid border-[#1877F2] text-[#1877F2] px-[1em] rounded-[2em]">
-                Scheduled
+                {details.status}
               </div>
             </div>
             <div className="text-[1.4em] flex">
               <div className="mr-[0.5em]">Location:</div>
-              <div className="text-[#0E5F59]">Bangalore</div>
+              <div className="text-[#0E5F59]">{jobDetails?.location}</div>
             </div>
           </div>
           <div className="px-[1em] flex flex-row items-end">

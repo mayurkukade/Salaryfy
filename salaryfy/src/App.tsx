@@ -72,7 +72,6 @@ function App() {
         <Route path="/fresher-skill-placement/*" element={<FresherSkillPlacementModule />} />
         <Route path="/eligibilityform" element={<EligibilityForm />} />
         <Route path="/jobdescription" element={<JobDescription />} />
-        <Route path="/roadmap" element={<Roadmap/>}/>
         <Route path='/test' element={<TestComponent />} />
       </Routes>
       

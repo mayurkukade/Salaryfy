@@ -6,6 +6,7 @@ import mainStepsCounterReducer from '../features/reducers/main-steps-counter/mai
 import screeningQuestionsSlice from '../features/api-integration/screeningQuestion/screeningQuestionStep2Slice';
 import questionnaireRegisterFormSlice from '../features/reducers/questionnaire-register-form/questionnaire-register-form.slice';
 import upcomingInterviewSlice from '../features/api-integration/upcoming-interviews/upcoming-interviews.slice';
+import profileQualificationSlice from '../features/api-integration/profile-qualification/profile-qualification.slice';
 export interface AppStoreStateType {
   root: ReturnType<typeof rootReducer>,
   [apiIntegrationSlice.reducerPath]: ReturnType<typeof apiIntegrationSlice.reducer>
@@ -20,7 +21,8 @@ const appStore = configureStore({
 
     [apiIntegrationSlice.reducerPath]: apiIntegrationSlice.reducer,
     [screeningQuestionsSlice.reducerPath]:screeningQuestionsSlice.reducer,
-    [upcomingInterviewSlice.reducerPath]: upcomingInterviewSlice.reducer
+    [upcomingInterviewSlice.reducerPath]: upcomingInterviewSlice.reducer,
+    [profileQualificationSlice.reducerPath]: profileQualificationSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiIntegrationSlice.middleware).concat(screeningQuestionsSlice.middleware)
