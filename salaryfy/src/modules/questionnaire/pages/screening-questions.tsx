@@ -1,14 +1,14 @@
-import React from "react";
-import { AppRadioButton } from "../../../components/app-radio.button.component";
+import React, { useState } from "react";
+// import { AppRadioButton } from "../../../components/app-radio.button.component";
 import { useGetScreeningQuestionQuery } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
 import UserJobDetails from "../components/job-details.component";
-import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
+// import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
 import SubSteps from "../components/sub-steps.component";
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
 // import { RootState } from '../../../store/app.store';
 // import { useSelector } from 'react-redux';
 // import { CommonUtilities } from "../../../utils/common.utilities";
@@ -17,31 +17,64 @@ import Rating from '@mui/material/Rating';
 // import FormControl from '@mui/material/FormControl';
 // import FormLabel from '@mui/material/FormLabel';
 
-import { cureentSelector } from "../../../features/reducers/currentRouteReducers/current-route.reducer";
+// import { cureentSelector } from "../../../features/reducers/currentRouteReducers/current-route.reducer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 export default function ScreeningQuestions() {
   const {
     data: responseData,
-    isError,
-    isLoading,
+    // isError,
+    // isLoading,
   } = useGetScreeningQuestionQuery();
-const cureentSelector = useSelector((state:RootState)=>state.currentRoute.currentRoute)
-console.log(cureentSelector)
+  const cureentSelector = useSelector(
+    (state: RootState) => state.currentRoute.currentRoute
+  );
+  console.log(cureentSelector);
   // console.log(responseData);
   // console.log(isError);
   // console.log(isLoading);
 
   // type QuestionType = Array<{ ques: string, type: 'Boolean' | 'Rating' | 'String', ans: string }>;
   // const initQuestions: QuestionType = [
-    
+
   // ];
 
   // const [questions, setQuestions] = React.useState<QuestionType>(initQuestions);
+  
+  //  Function to send response to backend
+  // const [collectResponse, setCollectResponse ] = useState();
+  // const submitResponse = () =>{
+  //   console.log('Submitted Data is',collectResponse);
+  //   const filteredResponses = Array.from(new Set(collectResponse));
+
+  //   console.log('Remove duplicate',filteredResponses)
+    
+  // }
+
+  const [collectResponse, setCollectResponse] = useState([]); 
+const submitResponse = () => {
+  console.log('Submitted Data is', collectResponse);
+  const filteredResponses = removeDuplicateResponses(collectResponse);
+
+  console.log('Remove duplicate', filteredResponses);
+};
+
+function removeDuplicateResponses(responses:any) {
+  const uniqueResponses: { [key: string]: { jobFairQ1Id: string } } = {};
+
+  for (const response of responses) {
+    uniqueResponses[response.jobFairQ1Id] = response;
+  }
+
+  const filteredResponses = Object.values(uniqueResponses);
+
+  return filteredResponses;
+}
+
+
 
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
-     
       <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
         <div className="text-[1.4em]">Job Details</div>
         <UserJobDetails />
@@ -50,8 +83,11 @@ console.log(cureentSelector)
         <div className="py-[2em] px-[3em] h-[100%]">
           <SubSteps />
 
-          {responseData && <Questions responseData={responseData} />}
+          {responseData && <Questions responseData={responseData} setCollectResponse={setCollectResponse}/>}
 
+          <button className="text-[2em] bg-[#FECD08] w-[100px] font-medium mr-[0.5em] text-[#005F59] cursor-pointer " onClick={submitResponse}>
+            Submit 
+          </button>
           {/* <BottomPageNavigationBar currentPageParent={setCurrentPage}/> */}
 
           {/* <div className="flex justify-center mt-6">
@@ -75,7 +111,7 @@ console.log(cureentSelector)
             </div>
             <div className="flex items-center bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em]">
               <button className="text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer">
-                Next
+                             
               </button>
               <span className="" style={{ transform: "scaleX(-1)" }}>
                 <svg
@@ -98,87 +134,94 @@ console.log(cureentSelector)
   );
 }
 
-
-
-function Questions({ responseData }: any) {
+function Questions({ responseData, setCollectResponse }: any) {
   // console.log("response for question is", responseData);
   const { response } = responseData;
   // console.log("response for question is", response);
 
   // selsctor hook
-  const userId = useSelector((state:RootState)=>state.authSlice.userId)
-// console.log('user id is',userId);
+  const userId = useSelector((state: RootState) => state.authSlice.userId);
+  // console.log('user id is',userId);
 
   // const [responseData1, setResponseData] = React.useState([{ question: '', response: '' }]);
   const [responseData1, setResponseData] = React.useState([]);
-  
-function changedFor(question: string, ans: string) {
-  console.log('Sent question is ', question, 'response is ', ans);
 
-  setResponseData(prevData => {
-    const updatedQuestion = {
-      ...question,
-      ans,
-       userId
-    };
-    const updatedData = [...prevData, updatedQuestion];
-    return updatedData;
-  });
-}
+  function changedFor(question: string, ans: string) {
+    console.log("Sent question is ", question, "response is ", ans);
 
-console.log('Uopdated reposne is ', responseData1)
+    setResponseData((prevData) => {
+      const updatedQuestion = {
+        ...question,
+        ans,
+        userId,
+      };
+      const updatedData = [...prevData, updatedQuestion];
+      return updatedData;
+    });
+  }
+  setCollectResponse(responseData1)
 
+  console.log("Updated reposne is ", responseData1);
 
-  
   return (
     <>
       <div className="font-semibold text-[1.8em] text-[#5B5B5B] mb-[1em]">
         Fill the details below
       </div>
-      {response.map((question:any, index:number) => {
+      {response.map((question: any, index: number) => {
         if (question.questionType === "Boolean") {
           return (
-            <YesNoQuestionSet onResponseChange={(response: string) => changedFor(question, response)} question={question.question} key={index} />      
+            <YesNoQuestionSet
+              onResponseChange={(response: string) =>
+                changedFor(question, response)
+              }
+              question={question.question}
+              key={index}
+            />
           );
-        }else if(question.questionType === "Rating"){
-          return(
-              <RatingResponseSet onResponseChange={(response: string) => changedFor(question, response)} question={question.question} key={index}/>
-          )
+        } else if (question.questionType === "Rating") {
+          return (
+            <RatingResponseSet
+              onResponseChange={(response: string) =>
+                changedFor(question, response)
+              }
+              question={question.question}
+              key={index}
+            />
+          );
         }
         // return <></>
       })}
-
-      
     </>
   );
 }
 
 //  this code is for boolen / Radio button
-function YesNoQuestionSet({question, onResponseChange }: any) {
+function YesNoQuestionSet({ question, onResponseChange }: any) {
   const [response, setResponse] = React.useState("");
 
-  const handleResponseChange = (selectedResponse:string)=>{
+  const handleResponseChange = (selectedResponse: string) => {
     setResponse(selectedResponse);
     onResponseChange(selectedResponse);
-  }
+  };
   return (
-  <>
-    <Question question={question} />
-    {/* <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" /> */}
-    <RadioGroup
+    <>
+      <Question question={question} />
+      {/* <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" /> */}
+      <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
         value={response}
-        onChange={(e)=>{
-          handleResponseChange(e.target.value)
+        onChange={(e) => {
+          handleResponseChange(e.target.value);
         }}
       >
         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
         <FormControlLabel value="No" control={<Radio />} label="No" />
       </RadioGroup>
-    <QuestionSeparator className="mb-[2em]" />
-  </>
+      <QuestionSeparator className="mb-[2em]" />
+    </>
   );
 }
 
@@ -194,7 +237,7 @@ function RatingResponseSet({ question, onResponseChange }: any) {
   return (
     <>
       <Question question={question} />
-      <Box sx={{ '& > legend': { mt: 2 } }}>
+      <Box sx={{ "& > legend": { mt: 2 } }}>
         <Rating
           name="simple-controlled"
           value={value}
@@ -205,37 +248,6 @@ function RatingResponseSet({ question, onResponseChange }: any) {
     </>
   );
 }
-
-
-// function RatingResponseSet({question, onResponseChange}: any) {
-//   const [value, setValue] = React.useState<number | null >(1);
-//   const handleResponseChange = (selectedResponse:Number)=>{
-//     setValue(selectedResponse);
-//     onResponseChange(selectedResponse);
-//   }
-//   return (
-//   <>
-//      <Question question={question}/>
-//       {/* <RatingResponse className="ml-[2em] mb-[1em]" /> */}
-//       <Box
-//       sx={{
-//         '& > legend': { mt: 2 },
-//       }}
-//     >
-     
-//       <Rating
-//         name="simple-controlled"
-//         value={value}
-//         onChange={(e, newValue) => {
-//           setValue(newValue);
-//           handleResponseChange(e.target.newValue)
-//         }}
-//       />
-//     </Box>
-//       <QuestionSeparator className="mb-[2em]" />
-//   </>
-//   );
-// }
 
 export function Question({ question }: { question: string }) {
   return (
@@ -275,6 +287,36 @@ export function QuestionSeparator({ className }: { className?: string }) {
     ></div>
   );
 }
+
+// function RatingResponseSet({question, onResponseChange}: any) {
+//   const [value, setValue] = React.useState<number | null >(1);
+//   const handleResponseChange = (selectedResponse:Number)=>{
+//     setValue(selectedResponse);
+//     onResponseChange(selectedResponse);
+//   }
+//   return (
+//   <>
+//      <Question question={question}/>
+//       {/* <RatingResponse className="ml-[2em] mb-[1em]" /> */}
+//       <Box
+//       sx={{
+//         '& > legend': { mt: 2 },
+//       }}
+//     >
+
+//       <Rating
+//         name="simple-controlled"
+//         value={value}
+//         onChange={(e, newValue) => {
+//           setValue(newValue);
+//           handleResponseChange(e.target.newValue)
+//         }}
+//       />
+//     </Box>
+//       <QuestionSeparator className="mb-[2em]" />
+//   </>
+//   );
+// }
 
 // export function RatingResponse({ className }: { className?: string }) {
 //   function Star({
@@ -332,8 +374,6 @@ export function QuestionSeparator({ className }: { className?: string }) {
 //     </div>
 //   );
 // }
-
-
 
 // export function YesNoResponse({ className }: { className?: string }) {
 //   return (
