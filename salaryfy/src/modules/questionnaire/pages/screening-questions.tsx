@@ -9,6 +9,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
+import { RootState } from '../../../store/app.store';
+import { useSelector } from 'react-redux';
 // import { CommonUtilities } from "../../../utils/common.utilities";
 // import Typography from '@mui/material/Typography'
 // import { AppRadioButton } from "../../../components/app-radio.button.component";
@@ -26,9 +28,9 @@ export default function ScreeningQuestions() {
   } = useGetScreeningQuestionQuery();
 const cureentSelector = useSelector((state:RootState)=>state.currentRoute.currentRoute)
 console.log(cureentSelector)
-  console.log(responseData);
-  console.log(isError);
-  console.log(isLoading);
+  // console.log(responseData);
+  // console.log(isError);
+  // console.log(isLoading);
 
   // type QuestionType = Array<{ ques: string, type: 'Boolean' | 'Rating' | 'String', ans: string }>;
   // const initQuestions: QuestionType = [
@@ -99,14 +101,35 @@ console.log(cureentSelector)
 
 
 function Questions({ responseData }: any) {
-  console.log("response for question is", responseData);
+  // console.log("response for question is", responseData);
   const { response } = responseData;
-  console.log("response for question is", response);
+  // console.log("response for question is", response);
 
-  function changedFor(qId: string, response: string) {
-    console.log({ qId, response });
-  }
+  // selsctor hook
+  const userId = useSelector((state:RootState)=>state.authSlice.userId)
+// console.log('user id is',userId);
 
+  // const [responseData1, setResponseData] = React.useState([{ question: '', response: '' }]);
+  const [responseData1, setResponseData] = React.useState([]);
+  
+function changedFor(question: string, ans: string) {
+  console.log('Sent question is ', question, 'response is ', ans);
+
+  setResponseData(prevData => {
+    const updatedQuestion = {
+      ...question,
+      ans,
+       userId
+    };
+    const updatedData = [...prevData, updatedQuestion];
+    return updatedData;
+  });
+}
+
+console.log('Uopdated reposne is ', responseData1)
+
+
+  
   return (
     <>
       <div className="font-semibold text-[1.8em] text-[#5B5B5B] mb-[1em]">
@@ -115,50 +138,24 @@ function Questions({ responseData }: any) {
       {response.map((question:any, index:number) => {
         if (question.questionType === "Boolean") {
           return (
-            <YesNoQuestionSet onResponseChange={(response: string) => changedFor(question.jobFairQ1Id, response)} question={question.question} key={index} />      
+            <YesNoQuestionSet onResponseChange={(response: string) => changedFor(question, response)} question={question.question} key={index} />      
           );
         }else if(question.questionType === "Rating"){
           return(
-              <RatingResponseSet onResponseChange={(response: string) => changedFor(question.jobFairQ1Id, response)} question={question.question} key={index}/>
+              <RatingResponseSet onResponseChange={(response: string) => changedFor(question, response)} question={question.question} key={index}/>
           )
         }
         // return <></>
       })}
 
-      {/* <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <RatingResponse className="ml-[2em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <RatingResponse className="ml-[2em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <RatingResponse className="ml-[2em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <RatingResponse className="ml-[2em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" /> */}
+      
     </>
   );
 }
 
 //  this code is for boolen / Radio button
 function YesNoQuestionSet({question, onResponseChange }: any) {
-  const [response, setResponse] = React.useState("Yes");
+  const [response, setResponse] = React.useState("");
 
   const handleResponseChange = (selectedResponse:string)=>{
     setResponse(selectedResponse);
@@ -187,7 +184,7 @@ function YesNoQuestionSet({question, onResponseChange }: any) {
 
 // this code is for Rating button
 function RatingResponseSet({ question, onResponseChange }: any) {
-  const [value, setValue] = React.useState<number | null>(1);
+  const [value, setValue] = React.useState<number | null>(0);
 
   const handleResponseChange = (newValue: number | null) => {
     setValue(newValue);
