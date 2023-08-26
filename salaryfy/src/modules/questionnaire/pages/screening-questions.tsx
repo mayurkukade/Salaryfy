@@ -31,7 +31,7 @@ export default function ScreeningQuestions() {
   const cureentSelector = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-  console.log(cureentSelector);
+  // console.log(cureentSelector);
   // console.log(responseData);
   // console.log(isError);
   // console.log(isLoading);
@@ -53,10 +53,9 @@ export default function ScreeningQuestions() {
     
   // }
 
-  console.log("Get all quesation", responseData);
   const navigate = useNavigate();
   const [collectResponse, setCollectResponse] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+  // const [filteredData, setFilteredData] = useState([]);
 
   // used to post the question and answer
   const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
@@ -76,17 +75,17 @@ export default function ScreeningQuestions() {
       } else {
         console.log("Submitted Data is", collectResponse);
         const filteredResponses = removeDuplicateResponses(collectResponse);
-        console.log("Remove duplicate", filteredResponses);
-        setFilteredData(filteredResponses);
+        // console.log("Remove duplicate", filteredResponses);
+        // setFilteredData(filteredResponses);
 
-        await postQuestion(filteredData);
-
+         postQuestion(filteredResponses);
+        console.log('postQuestionResponse is ',postQuestionResponse)
         if (postQuestionResponse.error) {
           toast.error("Error While Submitting Response");
         } else {
           // navigate("/"); // Navigate to a success page
 
-          console.log('data added ', filteredData)
+          console.log('data sent ', filteredResponses)
         }
       }
     } catch (error) {
@@ -182,7 +181,6 @@ function Questions({ responseData, setCollectResponse }: any) {
   const [responseData1, setResponseData] = React.useState([]);
 
   function changedFor(question: string, ans: string) {
-    console.log("Sent question is ", question, "response is ", ans);
 
     setResponseData((prevData) => {
       const updatedQuestion = {
@@ -193,10 +191,9 @@ function Questions({ responseData, setCollectResponse }: any) {
       const updatedData = [...prevData, updatedQuestion];
       return updatedData;
     });
+    setCollectResponse(responseData1)
   }
-  setCollectResponse(responseData1)
 
-  console.log("Updated reposne is ", responseData1);
 
   return (
     <>
