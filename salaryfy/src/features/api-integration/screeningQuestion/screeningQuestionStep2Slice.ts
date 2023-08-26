@@ -9,7 +9,7 @@ const screeningQuestionsSlice = apiSlice.injectEndpoints({
     }),
     postScreeningQuestionSlice :builder.mutation<[object],ScreeningData>({
       query: (filteredData) => ({
-        url: `JobFair/saveAllJobFairques`,
+        url: `/jobFairQueAns/saveAllJobFairques`,
         transformResponse: console.log(filteredData),
         headers:{
           "Content-Type":"application/json"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { AppRadioButton } from "../../../components/app-radio.button.component";
-import { useGetScreeningQuestionQuery } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
+import { useGetScreeningQuestionQuery,usePostScreeningQuestionSliceMutation } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
 import UserJobDetails from "../components/job-details.component";
 // import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
 import SubSteps from "../components/sub-steps.component";
@@ -20,6 +20,8 @@ import Rating from "@mui/material/Rating";
 // import { cureentSelector } from "../../../features/reducers/currentRouteReducers/current-route.reducer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export default function ScreeningQuestions() {
   const {
     data: responseData,
@@ -51,13 +53,46 @@ export default function ScreeningQuestions() {
     
   // }
 
-  const [collectResponse, setCollectResponse] = useState([]); 
-const submitResponse = () => {
-  console.log('Submitted Data is', collectResponse);
-  const filteredResponses = removeDuplicateResponses(collectResponse);
+  console.log("Get all quesation", responseData);
+  const navigate = useNavigate();
+  const [collectResponse, setCollectResponse] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
-  console.log('Remove duplicate', filteredResponses);
-};
+  // used to post the question and answer
+  const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
+
+  const submitResponse = async () => {
+    try {
+      if (collectResponse.length <= 0) {
+        toast.error("Submit at least two question", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else {
+        console.log("Submitted Data is", collectResponse);
+        const filteredResponses = removeDuplicateResponses(collectResponse);
+        console.log("Remove duplicate", filteredResponses);
+        setFilteredData(filteredResponses);
+
+        await postQuestion(filteredData);
+
+        if (postQuestionResponse.error) {
+          toast.error("Error While Submitting Response");
+        } else {
+          // navigate("/"); // Navigate to a success page
+
+          console.log('data added ', filteredData)
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 function removeDuplicateResponses(responses:any) {
   const uniqueResponses: { [key: string]: { jobFairQ1Id: string } } = {};
