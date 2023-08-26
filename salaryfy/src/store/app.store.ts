@@ -5,6 +5,7 @@ import apiIntegrationSlice from '../features/api-integration/apiUserSlice/api-in
 import mainStepsCounterReducer from '../features/reducers/main-steps-counter/main-steps-counter.reducer';
 import screeningQuestionsSlice from '../features/api-integration/screeningQuestion/screeningQuestionStep2Slice';
 import questionnaireRegisterFormSlice from '../features/reducers/questionnaire-register-form/questionnaire-register-form.slice';
+import currentRouteReducer from '../features/reducers/currentRouteReducers/current-route.reducer';
 export interface AppStoreStateType {
   root: ReturnType<typeof rootReducer>,
   [apiIntegrationSlice.reducerPath]: ReturnType<typeof apiIntegrationSlice.reducer>
@@ -16,6 +17,7 @@ const appStore = configureStore({
     mainStepsCounter:mainStepsCounterReducer,
     authSlice : authSliceReducer, 
     registerFormSlice:questionnaireRegisterFormSlice,
+    currentRoute:currentRouteReducer,
 
     [apiIntegrationSlice.reducerPath]: apiIntegrationSlice.reducer,
     [screeningQuestionsSlice.reducerPath]:screeningQuestionsSlice.reducer,

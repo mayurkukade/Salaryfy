@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from "react";
+import { AppRadioButton } from "../../../components/app-radio.button.component";
 import { useGetScreeningQuestionQuery } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
 import UserJobDetails from "../components/job-details.component";
 import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
@@ -16,14 +17,17 @@ import { useSelector } from 'react-redux';
 // import FormControl from '@mui/material/FormControl';
 // import FormLabel from '@mui/material/FormLabel';
 
-
+import { cureentSelector } from "../../../features/reducers/currentRouteReducers/current-route.reducer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/app.store";
 export default function ScreeningQuestions() {
   const {
     data: responseData,
     isError,
     isLoading,
   } = useGetScreeningQuestionQuery();
-  
+const cureentSelector = useSelector((state:RootState)=>state.currentRoute.currentRoute)
+console.log(cureentSelector)
   // console.log(responseData);
   // console.log(isError);
   // console.log(isLoading);
@@ -37,7 +41,7 @@ export default function ScreeningQuestions() {
 
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
-      <QuestionnaireTopBarStep />
+     
       <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
         <div className="text-[1.4em]">Job Details</div>
         <UserJobDetails />
@@ -50,7 +54,7 @@ export default function ScreeningQuestions() {
 
           {/* <BottomPageNavigationBar currentPageParent={setCurrentPage}/> */}
 
-          <div className="flex justify-center mt-6">
+          {/* <div className="flex justify-center mt-6">
             <div className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]">
               <span className="mr-[1em]">
                 <svg
@@ -87,7 +91,7 @@ export default function ScreeningQuestions() {
                 </svg>
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

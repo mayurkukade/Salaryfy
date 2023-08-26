@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { userIdSelection, userNameSelection } from "../../features/reducers/authReducers/auth-slice-reducer";
+import {
+  userIdSelection,
+  userNameSelection,
+} from "../../features/reducers/authReducers/auth-slice-reducer";
 import { RootState } from "../../store/app.store";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
@@ -13,17 +16,21 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { clearToken } from "../../features/reducers/authReducers/auth-slice-reducer";
 import { useNavigate } from "react-router-dom";
-
+import { cureentSelector } from "../../features/reducers/currentRouteReducers/current-route.reducer";
 interface TokenPayload {
   fullName: string;
-  userId:string
+  userId: string;
 }
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
-const navigate = useNavigate()
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+ 
   const open = Boolean(anchorEl);
+console.log(window.location.href)
+  const registerData = window.location.href.slice(22)
+console.log(registerData)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -36,31 +43,32 @@ const navigate = useNavigate()
     (state: RootState) => state.authSlice.userName
   );
 
-
-
-
   const token = Cookies.get("jwtToken");
-  const logoutHandleSubmit = ()=>{
-   dispatch(clearToken())
-    Cookies.remove("jwtToken")
-    navigate('/login')
-      }
+  const logoutHandleSubmit = () => {
+    dispatch(clearToken());
+    Cookies.remove("jwtToken");
+    navigate("/login");
+  };
   useEffect(() => {
     if (token) {
       const userDetails: TokenPayload = jwt_decode(token);
 
       const userName: string = userDetails.fullName;
-      const userId:string = userDetails.userId
-      
+      const userId: string = userDetails.userId;
+
       console.log(userName);
       console.log(userDetails);
       dispatch(userNameSelection(userName));
-      dispatch(userIdSelection(userId))
+      dispatch(userIdSelection(userId));
     }
   }, [dispatch, token]);
   const handleNav = () => {
     setNav(!nav);
   };
+
+useEffect(()=>{
+dispatch(cureentSelector(registerData))
+},[dispatch,registerData])
 
   return (
     <nav className="flex justify-between  items-center h-24  w-full p-10 ">
@@ -314,7 +322,7 @@ const navigate = useNavigate()
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">
           About us
         </li>
-       
+
         <li>
           {token ? (
             <Stack
@@ -328,15 +336,12 @@ const navigate = useNavigate()
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
-              
               >
-                
                 <Avatar className="mr-2">U</Avatar>
                 <span className="text-lg decoration-solid ">
                   {userNameSelect[0]}
                 </span>
                 <span>
-                  
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -369,14 +374,12 @@ const navigate = useNavigate()
             </Stack>
           ) : (
             <div className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5">
- <Link to={"/login"} >
-              <div className="text-center text-white cursor-pointer text-[1.6em]">
-                Sign In
-              </div>
-            </Link>
+              <Link to={"/login"}>
+                <div className="text-center text-white cursor-pointer text-[1.6em]">
+                  Sign In
+                </div>
+              </Link>
             </div>
-           
-          
           )}
         </li>
       </ul>
