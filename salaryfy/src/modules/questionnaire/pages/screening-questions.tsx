@@ -15,11 +15,7 @@ import { AppStoreStateType } from '../../../store/app.store';
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
 
 export default function ScreeningQuestions() {
-  const {
-    data: responseData,
-    isError,
-    isLoading,
-  } = useGetScreeningQuestionQuery();
+
   // const cureentSelector = useSelector(
   //   (state: RootState) => state.currentRoute.currentRoute
   // );
@@ -34,6 +30,12 @@ export default function ScreeningQuestions() {
   const navigate = useNavigate();
   const [collectResponse, setCollectResponse] = useState([]);
 
+  //  RTK query hook to get all question related to job
+  const {
+    data: responseData,
+    isError,
+    isLoading,
+  } = useGetScreeningQuestionQuery(id);
   
   // used to post the question and answer
   const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
