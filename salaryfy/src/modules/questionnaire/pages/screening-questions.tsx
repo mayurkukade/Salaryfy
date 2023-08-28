@@ -21,11 +21,12 @@ export default function ScreeningQuestions() {
   // );
   // console.log(cureentSelector);
 
-  // console.log("Get all quesation", responseData);
+ 
    // selector hook to get all job details
    const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
    console.log( jobDetails?.jobId);
    const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;
+  //  const id = jobDetails?.jobId;
    console.log(id)
   const navigate = useNavigate();
   const [collectResponse, setCollectResponse] = useState([]);
@@ -36,27 +37,22 @@ export default function ScreeningQuestions() {
     isError,
     isLoading,
   } = useGetScreeningQuestionQuery(id);
-  
+   console.log("Get all quesation", responseData);
   // used to post the question and answer
   const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
   // const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation(id);
 
   // Function to sent response to backend 
   const submitResponse = async () => {
+    
     try {
-      if (collectResponse.length <= 0) {
-        toast.error("Submit at least one question", {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      } else {
+      const filteredResponses = removeDuplicateResponses(collectResponse);
+      // applied validation to submit all question
+      console.log("filteredResponses length is", filteredResponses.length)
+      console.log("Response Data length is", responseData.response.length);
+      if (filteredResponses.length === responseData?.response.length - 1)  {
         
-        const filteredResponses = removeDuplicateResponses(collectResponse);
+       
         //  console.log("Submitted Data is", filteredResponses);
         // console.log('postQuestionResponse is ',postQuestionResponse)
         if (postQuestionResponse.error) {
@@ -66,8 +62,22 @@ export default function ScreeningQuestions() {
           // seding data to backend
           postQuestion(filteredResponses);
           console.log('data sent to backend is ', filteredResponses)
+          navigate("/questionnaire/schedule-interview"); // Navigate to a Next page
         }
-        navigate("/questionnaire/schedule-interview"); // Navigate to a Next page
+
+
+
+      } else {
+        
+        toast.error("Submit All question", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (error) {
       console.log(error);
