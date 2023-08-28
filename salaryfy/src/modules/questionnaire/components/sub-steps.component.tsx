@@ -15,7 +15,7 @@ export default function SubSteps() {
           <SubStep status={SUB_STEP_STATUS.REMAINING} no={3} title='Confirming Interview Slot' />
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center" >
         <div className="flex md:hidden flex-col w-[max-content] rounded-[1.5em]" style={{ background: "linear-gradient(to bottom, #FECD08 1%, #fff 30%, #fff 50%, #fff 100%)" }}>
           <div className="text-[#0E5F59] text-[1.4em] px-[1em] pt-[0.5em]"><span>3 Steps selection process for&nbsp;</span><span className="font-bold">Lenskart</span></div>
           <div className="flex items-center gap-[0.5em] bg-[#0E5F59] p-[1em] rounded-[1.5em]">
