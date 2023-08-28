@@ -20,10 +20,10 @@ export default function ScreeningQuestions() {
   const cureentSelector = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-  console.log(cureentSelector);
+  // console.log(cureentSelector);
 
-  console.log("Get all quesation", responseData);
-  // const navigate = useNavigate();
+  // console.log("Get all quesation", responseData);
+  const navigate = useNavigate();
   const [collectResponse, setCollectResponse] = useState([]);
 
   // used to post the question and answer
@@ -44,17 +44,17 @@ export default function ScreeningQuestions() {
       } else {
         
         const filteredResponses = removeDuplicateResponses(collectResponse);
-         console.log("Submitted Data is", filteredResponses);
+        //  console.log("Submitted Data is", filteredResponses);
         // console.log('postQuestionResponse is ',postQuestionResponse)
         if (postQuestionResponse.error) {
           toast.error("Error While Submitting Response");
         } else {
-          // navigate("/"); // Navigate to a success page
-
-        // seding data to backend
-        postQuestion(filteredResponses);
+          
+          // seding data to backend
+          postQuestion(filteredResponses);
           console.log('data sent to backend is ', filteredResponses)
         }
+        navigate("/"); // Navigate to a success page
       }
     } catch (error) {
       console.log(error);
@@ -109,7 +109,7 @@ function Questions({ responseData, setCollectResponse }: any) {
   const [responseData1, setResponseData] = React.useState([]);
 
   function changedFor(question: string, ans: string) {
-    console.log("Sent question is ", question, "response is ", ans);
+    // console.log("Sent question is ", question, "response is ", ans);
 
     setResponseData((prevData:any) => {
       const updatedQuestion = {
@@ -123,7 +123,7 @@ function Questions({ responseData, setCollectResponse }: any) {
   }
   setCollectResponse(responseData1)
 
-  console.log("Updated reposne is ", responseData1);
+  // console.log("Updated reposne is ", responseData1);
 
   return (
     <>
