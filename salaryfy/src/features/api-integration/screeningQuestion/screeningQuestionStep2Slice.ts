@@ -1,4 +1,3 @@
-import { url } from "inspector";
 import { apiSlice } from "../../apiSlice";
 import { ScreeningData } from "./screening.model.interface";
 
