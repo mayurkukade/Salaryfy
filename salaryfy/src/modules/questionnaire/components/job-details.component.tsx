@@ -9,11 +9,11 @@ export default function UserJobDetails() {
 
   // selector hook to get all job details
   const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
-  // console.log(jobDetails);
+  console.log(jobDetails);
   return (
     <>
     {/* This is For Webiste View Components */}
-      <div className='hidden md:block' style={{border:"2px solid black"}}>
+      <div className='hidden md:block' >
         <div className='bg-cover-container'>
           <img src={image} style={{ width: '100%' }} />
         </div>

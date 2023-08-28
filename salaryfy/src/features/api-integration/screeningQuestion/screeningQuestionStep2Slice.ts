@@ -3,7 +3,8 @@ import { ScreeningData } from "./screening.model.interface";
 
 const screeningQuestionsSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getScreeningQuestion: builder.query<any, void>({
+    getScreeningQuestion: builder.query({
+      // query: (id) => `/JobFair/getJobFairDetailsByJobId?jobId=${id}`,
       query: () => `/JobFair/getJobFairDetailsByJobId?jobId=1`,
     }),
     postScreeningQuestionSlice :builder.mutation<[object],ScreeningData>({
