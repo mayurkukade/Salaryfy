@@ -29,6 +29,7 @@ export default function ScreeningQuestions() {
   // used to post the question and answer
   const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
 
+  // Function to sent response to backend 
   const submitResponse = async () => {
     try {
       if (collectResponse.length <= 0) {
@@ -61,6 +62,7 @@ export default function ScreeningQuestions() {
     }
   };
 
+  // Function to remove dupliacte response from ARRAY of object
 function removeDuplicateResponses(responses:any) {
   const uniqueResponses: { [key: string]: { jobFairQ1Id: string } } = {};
 
@@ -93,19 +95,20 @@ function removeDuplicateResponses(responses:any) {
   );
 }
 
+// Main Question components
 function Questions({ responseData, setCollectResponse }: any) {
   // console.log("response for question is", responseData);
   const { response } = responseData;
   // console.log("response for question is", response);
 
-  // selsctor hook
+  // selector  hook to grab userID from redux state of user
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   // console.log('user id is',userId);
 
   // const [responseData1, setResponseData] = React.useState([{ question: '', response: '' }]);
   const [responseData1, setResponseData] = React.useState([]);
 
-  function changedFor(question: string, ans: string) {
+  function responseOfQuestion(question: string, ans: string) {
     // console.log("Sent question is ", question, "response is ", ans);
 
     setResponseData((prevData: any[]) => {
@@ -132,7 +135,7 @@ function Questions({ responseData, setCollectResponse }: any) {
           return (
             <YesNoQuestionSet
               onResponseChange={(response: string) =>
-                changedFor(question, response)
+                responseOfQuestion(question, response)
               }
               question={question.question}
               key={index}
@@ -142,7 +145,7 @@ function Questions({ responseData, setCollectResponse }: any) {
           return (
             <RatingResponseSet
               onResponseChange={(response: string) =>
-                changedFor(question, response)
+                responseOfQuestion(question, response)
               }
               question={question.question}
               key={index}
@@ -157,8 +160,11 @@ function Questions({ responseData, setCollectResponse }: any) {
 
 //  this code is for boolen / Radio button
 function YesNoQuestionSet({ question, onResponseChange }: any) {
+  
+  // Storing response of Question into this state variable
   const [response, setResponse] = React.useState("");
 
+  // Function to sent Response to parent component using Lifting the state Feature of Reactjs
   const handleResponseChange = (selectedResponse: string) => {
     setResponse(selectedResponse);
     onResponseChange(selectedResponse);
@@ -185,11 +191,12 @@ function YesNoQuestionSet({ question, onResponseChange }: any) {
 
 // this code is for Rating button
 function RatingResponseSet({ question, onResponseChange }: any) {
+  // Storing response of Question into this state variable
   const [value, setValue] = React.useState<number | null>(0);
 
+   // Function to sent Response to parent component using Lifting the state Feature of Reactjs
   const handleResponseChange = (newValue: number | null) => {
     setValue(newValue);
-
     const numberToString = newValue !== null ? newValue.toString():null;
     onResponseChange(numberToString);
   };
@@ -209,6 +216,7 @@ function RatingResponseSet({ question, onResponseChange }: any) {
   );
 }
 
+// Question components
 export function Question({ question }: { question: string }) {
   return (
     <div className="flex">
@@ -240,6 +248,7 @@ export function Question({ question }: { question: string }) {
   );
 }
 
+// Line to separate question 
 export function QuestionSeparator({ className }: { className?: string }) {
   return (
     <div
