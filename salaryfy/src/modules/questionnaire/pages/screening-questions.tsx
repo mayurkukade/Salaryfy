@@ -14,8 +14,8 @@ import { useNavigate } from "react-router-dom";
 export default function ScreeningQuestions() {
   const {
     data: responseData,
-    // isError,
-    // isLoading,
+    isError,
+    isLoading,
   } = useGetScreeningQuestionQuery();
   // const cureentSelector = useSelector(
   //   (state: RootState) => state.currentRoute.currentRoute
@@ -33,7 +33,7 @@ export default function ScreeningQuestions() {
   const submitResponse = async () => {
     try {
       if (collectResponse.length <= 0) {
-        toast.error("Submit at least two question", {
+        toast.error("Submit at least one question", {
           position: "top-center",
           autoClose: 1000,
           hideProgressBar: false,
@@ -74,25 +74,44 @@ function removeDuplicateResponses(responses:any) {
 
   return filteredResponses;
 }
-  return (
-    <div className="w-100 flex flex-col items-center h-[100%]">
-      <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
-        <div className="text-[1.4em]">Job Details</div>
-        <UserJobDetails />
 
-        {/* STEPS */}
-        <div className="py-[2em] px-[3em] h-[100%]">
-          <SubSteps />
+  // Early Return if Error Occur
+  if(isError) return <div><h1 className="text-[5rem]">OOps Something went wrong</h1></div>
 
-          {responseData && <Questions responseData={responseData} setCollectResponse={setCollectResponse}/>}
+return (
+  <>
+  {/* teneray opearator added if Loading is true then Loading show else Question show */}
+    {isLoading ? (
+      <div><h1 className="text-[5rem]">Loading...</h1></div>
+    ) : (
+      <div className="w-100 flex flex-col items-center h-[100%]">
+        <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
+          <div className="text-[1.4em]">Job Details</div>
+          <UserJobDetails />
 
-          <button className="text-[2em] bg-[#FECD08] w-[100px] font-medium mr-[0.5em] text-[#005F59] cursor-pointer " onClick={submitResponse}>
-            Submit 
-          </button>
+          {/* STEPS */}
+          <div className="py-[2em] px-[3em] h-[100%]">
+            <SubSteps />
+
+            {responseData && (
+              <Questions
+                responseData={responseData}
+                setCollectResponse={setCollectResponse}
+              />
+            )}
+
+            <button
+              className="text-[2em] bg-[#FECD08] w-[100px] font-medium mr-[0.5em] text-[#005F59] cursor-pointer"
+              onClick={submitResponse}
+            >
+              Submit
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    )}
+  </>
+);
 }
 
 // Main Question components
