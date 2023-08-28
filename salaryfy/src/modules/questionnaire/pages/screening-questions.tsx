@@ -7,10 +7,13 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
-import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { AppStoreStateType } from '../../../store/app.store';
+import { SLICE_NAMES } from "../../../features/slice-names.enum";
+
 export default function ScreeningQuestions() {
   const {
     data: responseData,
@@ -23,11 +26,18 @@ export default function ScreeningQuestions() {
   // console.log(cureentSelector);
 
   // console.log("Get all quesation", responseData);
+   // selector hook to get all job details
+   const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
+   console.log( jobDetails?.jobId);
+   const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;
+   console.log(id)
   const navigate = useNavigate();
   const [collectResponse, setCollectResponse] = useState([]);
 
+  
   // used to post the question and answer
   const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
+  // const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation(id);
 
   // Function to sent response to backend 
   const submitResponse = async () => {
@@ -76,13 +86,13 @@ function removeDuplicateResponses(responses:any) {
 }
 
   // Early Return if Error Occur
-  if(isError) return <div><h1 className="text-[5rem]">OOps Something went wrong</h1></div>
+  if(isError) return <div><h1 className="text-[2rem] md:text-[5rem]">OOps Something went wrong</h1></div>
 
 return (
   <>
   {/* teneray opearator added if Loading is true then Loading show else Question show */}
     {isLoading ? (
-      <div><h1 className="text-[5rem]">Loading...</h1></div>
+      <div><h1 className="text-[2rem] md:text-[5rem]">Loading...</h1></div>
     ) : (
       <div className="w-100 flex flex-col items-center h-[100%]">
         <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
