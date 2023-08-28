@@ -6,11 +6,19 @@ const profileQualificationSlice = apiSlice.injectEndpoints({
     getProfile: builder.query({
       query: (userId: string) => `/profileLevel/getByUserId?userId=${userId}`,
       providesTags: ['get-profile-qualiication']
+    }),
+    saveProfile: builder.mutation({
+      query: (payload) => ({
+        url: '/profileLevel/save',
+        method: 'POST',
+        body: payload
+      }),
+      invalidatesTags: ['get-profile-qualiication']
     })
   }),
 });
 
-export const { useLazyGetProfileQuery } = profileQualificationSlice;
+export const { useLazyGetProfileQuery, useSaveProfileMutation } = profileQualificationSlice;
 
 export default profileQualificationSlice;
 

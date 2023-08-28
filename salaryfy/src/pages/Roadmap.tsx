@@ -153,7 +153,7 @@ const Roadmap = () => {
                         width="78.9006"
                         height="78.9026"
                         filterUnits="userSpaceOnUse"
-                        color-interpolation-filters="sRGB"
+                        colorInterpolationFilters="sRGB"
                       >
                         <feFlood
                           floodOpacity="0"
@@ -269,7 +269,7 @@ const Roadmap = () => {
                         width="78.9006"
                         height="78.9026"
                         filterUnits="userSpaceOnUse"
-                        color-interpolation-filters="sRGB"
+                        colorInterpolationFilters="sRGB"
                       >
                         <feFlood
                           floodOpacity="0"

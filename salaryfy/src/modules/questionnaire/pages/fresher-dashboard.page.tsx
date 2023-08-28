@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import DropdownMenu from "../../../components/DropdownMenu";
 import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
 import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
@@ -7,7 +7,7 @@ import { HavingDoubts } from "../components/having-doubts.component";
 import LenskartImage from "../../../assets/images/lenskart-icon.png";
 import { useDispatch, useSelector } from "react-redux";
 import { AppStoreStateType, RootState } from "../../../store/app.store";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import { CommonUtilities } from "../../../utils/common.utilities";
 import { useLazyGetUserByIdQuery } from "../../../features/api-integration/user-profile/user-profile.slice";
@@ -16,17 +16,25 @@ import { setUserDetails } from "../../../features/reducers/user-details/user-det
 import { useLazyGetUpcomingInterviewsQuery } from "../../../features/api-integration/upcoming-interviews/upcoming-interviews.slice";
 import { useLazyGetJobByIdQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { JobsDetailsType } from "../../../features/reducers/job-details/job-details.interface";
-import { useLazyGetProfileQuery } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
+import { useLazyGetProfileQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
+import React from "react";
 
 interface UpcomingInterviewType {
-  date: "2023-08-01",
-  interviewDate: "2023-08-10",
-  interviewScheduleId: 15,
-  jobId: 41,
-  location: "Office A",
-  status: "Scheduled",
-  time: "15:00:00",
-  userId: 5
+  date: string,
+  interviewDate: string,
+  interviewScheduleId: number,
+  jobId: number,
+  location: string,
+  status: string,
+  time: string,
+  userId: number,
+}
+
+interface ProfileLeveType {
+  board: Array<string>
+  highestLevelOfEdu: Array<string>,
+  percentage: string,
+  stream: Array<string>
 }
 
 // Main Page of fresher Dashboard Page
@@ -53,12 +61,23 @@ export function FresherDashboard() {
 
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   const userProfile = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.USER_DETAILS]);
+  const [profileLevel, setProfileLevel] = useState<ProfileLeveType>({ board: [], highestLevelOfEdu: [], percentage: "", stream: [] });
+  const percentageTextfieldRef = useRef<HTMLInputElement | null>(null);
   const [getLazyUserProfile] = useLazyGetUserByIdQuery();
   const [getLazyUpcomingInterviews] = useLazyGetUpcomingInterviewsQuery();
   const [getLazyProfile] = useLazyGetProfileQuery();
+  const [saveProfile] = useSaveProfileMutation();
   const dispatch = useDispatch();
 
+  const profileLevelPayload: ProfileLeveType = React.useMemo(() => ({board: [], highestLevelOfEdu: [], percentage: "", stream: []}), []);
+
   const [listUpcomingInterviews, setListUpcomingInterviews] = useState<Array<UpcomingInterviewType>>([]);
+
+  function handlePercentageChange(value: string) {
+    const percentageElement = percentageTextfieldRef.current;
+    // percentageElement
+    profileLevelPayload.percentage = value;
+  }
 
   async function userIdUpdated() {
     if (!userId) { return; }
@@ -78,6 +97,35 @@ export function FresherDashboard() {
     const { data: { response: profileResponseData } } = await getLazyProfile(userId);
 
     console.log({ profileResponseData });
+
+    const updatedProfileLevel = { ...profileLevel };
+    updatedProfileLevel.board.push(profileResponseData.board);
+    updatedProfileLevel.highestLevelOfEdu.push(profileResponseData.highestLevelOfEdu);
+    updatedProfileLevel.stream.push(profileResponseData.stream);
+    updatedProfileLevel.percentage = profileResponseData.percentage;
+
+    setProfileLevel(() => updatedProfileLevel);
+    
+    if (percentageTextfieldRef?.current) {
+      percentageTextfieldRef.current.value = profileResponseData.percentage;
+      profileLevelPayload.percentage = profileResponseData.percentage;
+      console.log(profileLevelPayload);
+    }
+  }
+
+  async function onUpdate() {
+    const updateProfileLevelPayload = { ...profileLevel, percentage: profileLevelPayload.percentage };
+    const payload = {
+      highestLevelOfEdu: "10Th",
+      board: "Nagpur",
+      stream: "ENTC",
+      percentage: profileLevelPayload.percentage,
+      UserId: userId,
+    }
+    
+    const response = await saveProfile(payload);
+    console.log(response);
+
   }
 
   useEffect(() => {
@@ -126,47 +174,29 @@ export function FresherDashboard() {
           </div>
 
           {/* Education Details Section*/}
-          <div
-            style={{ boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)" }}
-            className="rounded-xl mb-[2em] p-3"
-          >
+          <div style={{ boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)" }} className="rounded-xl mb-[2em] p-3">
             <div className="p-2 md:grid md:grid-cols-[1fr,1fr] md:[&>*]:mx-[2em] md:[&>*]:my-[1em] md:p-[1.5em] [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
               <div>
-                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">
-                  Highest Level of Education
-                </div>
-                <DropdownMenu label="AM" endIcon={<KeyboardArrowDownIcon />} />
+                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Highest Level of Education</div><DropdownMenu label={ profileLevel.highestLevelOfEdu[0] || '' } options={profileLevel.highestLevelOfEdu} endIcon={<KeyboardArrowDownIcon />} />
               </div>
               <div>
-                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">
-                  Board/University
-                </div>
-                <DropdownMenu label="AM" endIcon={<KeyboardArrowDownIcon />} />
+                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Board/University</div><DropdownMenu label={ profileLevel.board[0] || '' } options={profileLevel.board} endIcon={<KeyboardArrowDownIcon />} />
               </div>
               <div>
-                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">
-                  Stream
-                </div>
-                <DropdownMenu label="AM" endIcon={<KeyboardArrowDownIcon />} />
+                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Stream</div><DropdownMenu label={ profileLevel.stream[0] || '' } options={profileLevel.stream} endIcon={<KeyboardArrowDownIcon />} />
               </div>
               <div>
-                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">
-                  Percentage secured
-                </div>
-                <DropdownMenu label="AM" endIcon={<KeyboardArrowDownIcon />} />
+                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Percentage secured</div>
+                <TextField inputRef={percentageTextfieldRef} type="number" onChange={(e) => handlePercentageChange(e.target.value)} defaultValue={profileLevel.percentage} size="small"  />
               </div>
             </div>
             <div className="mr-[50px] ms-[3.5em] mb-[3em] flex justify-center md:justify-start">
-              <Button variant="contained" sx={{ padding: "0.5em 2em" }}>
-                Update
-              </Button>
+              <Button variant="contained" onClick={onUpdate} sx={{ padding: "0.5em 2em" }}>Update</Button>
             </div>
           </div>
 
           {/* Recommended Jobs Section Heading*/}
-          <div className="text-[2.6em] font-semibold my-[1em]">
-            Recommended jobs
-          </div>
+          <div className="text-[2.6em] font-semibold my-[1em]">Recommended jobs</div>
 
           {/* Recommended Jobs Card section*/}
 
