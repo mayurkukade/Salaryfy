@@ -17,9 +17,9 @@ export default function ScreeningQuestions() {
     // isError,
     // isLoading,
   } = useGetScreeningQuestionQuery();
-  const cureentSelector = useSelector(
-    (state: RootState) => state.currentRoute.currentRoute
-  );
+  // const cureentSelector = useSelector(
+  //   (state: RootState) => state.currentRoute.currentRoute
+  // );
   // console.log(cureentSelector);
 
   // console.log("Get all quesation", responseData);
@@ -54,7 +54,7 @@ export default function ScreeningQuestions() {
           postQuestion(filteredResponses);
           console.log('data sent to backend is ', filteredResponses)
         }
-        navigate("/"); // Navigate to a success page
+        navigate("/questionnaire/schedule-interview"); // Navigate to a Next page
       }
     } catch (error) {
       console.log(error);
@@ -72,9 +72,6 @@ function removeDuplicateResponses(responses:any) {
 
   return filteredResponses;
 }
-
-
-
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
       <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
@@ -111,7 +108,7 @@ function Questions({ responseData, setCollectResponse }: any) {
   function changedFor(question: string, ans: string) {
     // console.log("Sent question is ", question, "response is ", ans);
 
-    setResponseData((prevData:any) => {
+    setResponseData((prevData: any[]) => {
       const updatedQuestion = {
         ...question,
         ans,
