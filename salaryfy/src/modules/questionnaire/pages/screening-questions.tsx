@@ -139,8 +139,8 @@ function Questions({ responseData, setCollectResponse }: any) {
       const updatedData = [...prevData, updatedQuestion];
       return updatedData;
     });
+    setCollectResponse(responseData1)
   }
-  setCollectResponse(responseData1)
 
   // console.log("Updated reposne is ", responseData1);
 
