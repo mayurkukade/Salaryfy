@@ -14,7 +14,7 @@ import { useLazyGetUserByIdQuery } from "../../../features/api-integration/user-
 import { UserDetailsType } from "../../../features/reducers/user-details/user-details.interface";
 import { setUserDetails } from "../../../features/reducers/user-details/user-details.slice";
 import { useLazyGetUpcomingInterviewsQuery } from "../../../features/api-integration/upcoming-interviews/upcoming-interviews.slice";
-import { useLazyGetJobByIdQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
+import { useLazyGetJobByIdQuery, useLazyGetRecommendedJobsQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { JobsDetailsType } from "../../../features/reducers/job-details/job-details.interface";
 import { useLazyGetProfileQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 import React from "react";
@@ -67,11 +67,13 @@ export function FresherDashboard() {
   const [getLazyUpcomingInterviews] = useLazyGetUpcomingInterviewsQuery();
   const [getLazyProfile] = useLazyGetProfileQuery();
   const [saveProfile] = useSaveProfileMutation();
+  const [getRecommendedJobs] = useLazyGetRecommendedJobsQuery();
   const dispatch = useDispatch();
 
-  const profileLevelPayload: ProfileLeveType = React.useMemo(() => ({board: [], highestLevelOfEdu: [], percentage: "", stream: []}), []);
+  const profileLevelPayload: ProfileLeveType = React.useMemo(() => ({ board: [], highestLevelOfEdu: [], percentage: "", stream: [] }), []);
 
   const [listUpcomingInterviews, setListUpcomingInterviews] = useState<Array<UpcomingInterviewType>>([]);
+  const [recommendJobsState, setRecommendJobsState] = useState<Array<JobsDetailsType>>([]);
 
   function handlePercentageChange(value: string) {
     const percentageElement = percentageTextfieldRef.current;
@@ -105,12 +107,16 @@ export function FresherDashboard() {
     updatedProfileLevel.percentage = profileResponseData.percentage;
 
     setProfileLevel(() => updatedProfileLevel);
-    
+
     if (percentageTextfieldRef?.current) {
       percentageTextfieldRef.current.value = profileResponseData.percentage;
       profileLevelPayload.percentage = profileResponseData.percentage;
       console.log(profileLevelPayload);
     }
+
+    const { data: { list: responseRecommendJobs } } = await getRecommendedJobs('');
+
+    setRecommendJobsState(() => responseRecommendJobs);
   }
 
   async function onUpdate() {
@@ -122,7 +128,7 @@ export function FresherDashboard() {
       percentage: profileLevelPayload.percentage,
       UserId: userId,
     }
-    
+
     const response = await saveProfile(payload);
     console.log(response);
 
@@ -177,17 +183,17 @@ export function FresherDashboard() {
           <div style={{ boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)" }} className="rounded-xl mb-[2em] p-3">
             <div className="p-2 md:grid md:grid-cols-[1fr,1fr] md:[&>*]:mx-[2em] md:[&>*]:my-[1em] md:p-[1.5em] [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
               <div>
-                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Highest Level of Education</div><DropdownMenu label={ profileLevel.highestLevelOfEdu[0] || '' } options={profileLevel.highestLevelOfEdu} endIcon={<KeyboardArrowDownIcon />} />
+                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Highest Level of Education</div><DropdownMenu label={profileLevel.highestLevelOfEdu[0] || ''} options={profileLevel.highestLevelOfEdu} endIcon={<KeyboardArrowDownIcon />} />
               </div>
               <div>
-                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Board/University</div><DropdownMenu label={ profileLevel.board[0] || '' } options={profileLevel.board} endIcon={<KeyboardArrowDownIcon />} />
+                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Board/University</div><DropdownMenu label={profileLevel.board[0] || ''} options={profileLevel.board} endIcon={<KeyboardArrowDownIcon />} />
               </div>
               <div>
-                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Stream</div><DropdownMenu label={ profileLevel.stream[0] || '' } options={profileLevel.stream} endIcon={<KeyboardArrowDownIcon />} />
+                <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Stream</div><DropdownMenu label={profileLevel.stream[0] || ''} options={profileLevel.stream} endIcon={<KeyboardArrowDownIcon />} />
               </div>
               <div>
                 <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Percentage secured</div>
-                <TextField inputRef={percentageTextfieldRef} type="number" onChange={(e) => handlePercentageChange(e.target.value)} defaultValue={profileLevel.percentage} size="small"  />
+                <TextField inputRef={percentageTextfieldRef} type="number" onChange={(e) => handlePercentageChange(e.target.value)} defaultValue={profileLevel.percentage} size="small" />
               </div>
             </div>
             <div className="mr-[50px] ms-[3.5em] mb-[3em] flex justify-center md:justify-start">
@@ -200,81 +206,10 @@ export function FresherDashboard() {
 
           {/* Recommended Jobs Card section*/}
 
-          <div className="flex flex-col gap-6 ">
-            <div className="rounded-[2em] px-[2.5em] py-[2em] app-box-shadow">
-              <div className="flex mb-[1em]">
-                <div
-                  className="rounded-md border border-solid border-[#D7E8F0] p-[1em] h-[7.7em] w-[7.7em] flex items-center justify-center"
-                  style={{
-                    background: "linear-gradient(to right, #D7E8F0, #F1FAFB)",
-                  }}
-                >
-                  <img src={LenskartImage} />
-                </div>
-                <div className="flex flex-col justify-center flex-grow px-[1em]">
-                  <div className="text-[2em] font-semibold text-[#005F59]">
-                    Sales Associates (Frontend Sales)
-                  </div>
-                  <div className="text-[1.8em] font-semibold text-[#5b5b5b]">
-                    Lenskart
-                  </div>
-                </div>
-                <div className="text-[#5B5B5B] flex">
-                  <div className="mr-[0.5em]">Status</div>
-                  <div className="border border-solid h-[max-content] border-[#5B5B5B] px-[0.5em] rounded-[1em]">
-                    Application Sent
-                  </div>
-                </div>
-              </div>
-              <div className="mb-[0.5em] text-[1.6em] flex">
-                <div className="mr-[0.5em] text-[#5B5B5B]">Location:</div>
-                <div className="text-[#005F59]">Bangalore</div>
-              </div>
-              <div className="text-[1.6em] flex flex-row">
-                <div className="mr-[0.5em] text-[#5B5B5B]">Job-Type:</div>
-                <div className="text-[#005F59]">On-Site</div>
-                <div className="bg-[#00595F4C] mx-[2em] flex-grow max-w-[1px]"></div>
-                <div className="mr-[0.5em] text-[#5B5B5B]">No of Posts:</div>
-                <div className="text-[#005F59]">38</div>
-              </div>
-            </div>
-            <div className="rounded-[2em] px-[2.5em] py-[2em] app-box-shadow">
-              <div className="flex mb-[1em]">
-                <div
-                  className="rounded-md border border-solid border-[#D7E8F0] p-[1em] h-[7.7em] w-[7.7em] flex items-center justify-center"
-                  style={{
-                    background: "linear-gradient(to right, #D7E8F0, #F1FAFB)",
-                  }}
-                >
-                  <img src={LenskartImage} />
-                </div>
-                <div className="flex flex-col justify-center flex-grow px-[1em]">
-                  <div className="text-[2em] font-semibold text-[#005F59]">
-                    Sales Associates (Frontend Sales)
-                  </div>
-                  <div className="text-[1.8em] font-semibold text-[#5b5b5b]">
-                    Lenskart
-                  </div>
-                </div>
-                <div className="text-[#5B5B5B] flex">
-                  <div className="mr-[0.5em]">Status</div>
-                  <div className="border border-solid h-[max-content] border-[#5B5B5B] px-[0.5em] rounded-[1em]">
-                    Application Sent
-                  </div>
-                </div>
-              </div>
-              <div className="mb-[0.5em] text-[1.6em] flex">
-                <div className="mr-[0.5em] text-[#5B5B5B]">Location:</div>
-                <div className="text-[#005F59]">Bangalore</div>
-              </div>
-              <div className="text-[1.6em] flex flex-row">
-                <div className="mr-[0.5em] text-[#5B5B5B]">Job-Type:</div>
-                <div className="text-[#005F59]">On-Site</div>
-                <div className="bg-[#00595F4C] mx-[2em] flex-grow max-w-[1px]"></div>
-                <div className="mr-[0.5em] text-[#5B5B5B]">No of Posts:</div>
-                <div className="text-[#005F59]">38</div>
-              </div>
-            </div>
+          <div className="flex flex-col gap-6">
+            {
+              recommendJobsState.map((details: JobsDetailsType) => <RecommendJobsCard key={CommonUtilities.generateRandomString(100)} details={details} />)
+            }
           </div>
         </div>
 
@@ -315,6 +250,48 @@ export function FresherDashboard() {
           {/* Having Doubts section */}
           <HavingDoubts />
         </div>
+      </div>
+    </div>
+  );
+}
+
+function RecommendJobsCard({ details }: { details: JobsDetailsType }) {
+  return (
+    <div className="rounded-[2em] px-[2.5em] py-[2em] app-box-shadow">
+      <div className="flex mb-[1em]">
+        <div
+          className="rounded-md border border-solid border-[#D7E8F0] p-[1em] h-[7.7em] w-[7.7em] flex items-center justify-center"
+          style={{
+            background: "linear-gradient(to right, #D7E8F0, #F1FAFB)",
+          }}
+        >
+          <img src={LenskartImage} />
+        </div>
+        <div className="flex flex-col justify-center flex-grow px-[1em]">
+          <div className="text-[2em] font-semibold text-[#005F59]">
+            { details.postName }
+          </div>
+          <div className="text-[1.8em] font-semibold text-[#5b5b5b]">
+            { details.companyName }
+          </div>
+        </div>
+        <div className="text-[#5B5B5B] flex">
+          <div className="mr-[0.5em]">Status</div>
+          <div className="border border-solid h-[max-content] border-[#5B5B5B] px-[0.5em] rounded-[1em]">
+            Application Sent
+          </div>
+        </div>
+      </div>
+      <div className="mb-[0.5em] text-[1.6em] flex">
+        <div className="mr-[0.5em] text-[#5B5B5B]">Location:</div>
+        <div className="text-[#005F59]">{ details.location }</div>
+      </div>
+      <div className="text-[1.6em] flex flex-row">
+        <div className="mr-[0.5em] text-[#5B5B5B]">Job-Type:</div>
+        <div className="text-[#005F59]">{ details.jobType }</div>
+        <div className="bg-[#00595F4C] mx-[2em] flex-grow max-w-[1px]"></div>
+        <div className="mr-[0.5em] text-[#5B5B5B]">No of Posts:</div>
+        <div className="text-[#005F59]">{ details.noOfPosts }</div>
       </div>
     </div>
   );

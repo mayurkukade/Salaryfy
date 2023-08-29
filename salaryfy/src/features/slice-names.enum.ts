@@ -6,6 +6,7 @@ enum SLICE_NAMES {
   API_INTEGRATION = 'api-integration',
   JOB_DETAILS = 'job-details',
   USER_DETAILS = 'user-details',
+  SELECTED_CITY = 'selected-city',
 }
 
 export { SLICE_NAMES };

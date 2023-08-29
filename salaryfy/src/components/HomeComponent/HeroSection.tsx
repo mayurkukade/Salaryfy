@@ -1,12 +1,24 @@
+import { ChangeEvent, useState } from "react";
 import herowave from "../../../assets/Homepage/Vector 30.jpg";
 import herosection from "../../../assets/Homepage/herosection.png";
 import { useNavigate } from "react-router-dom";
 // import React from 'react';
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSelectedCity } from "../../features/reducers/selected-city/selected-city.slice";
+
 const HeroSection2 = () => {
+  const [selectedCityState, setSelectedCityState] = useState<string>('');
+  const dispatch = useDispatch();
   const navigate = useNavigate()
   const goHandler = ()=>{
-    navigate('/placementdrive')
+    dispatch( setSelectedCity(selectedCityState) );
+    console.log({ selectedCityState });
+    navigate('/placementdrive');
+  }
+
+  function cityChange(cityChangeEvent: ChangeEvent<HTMLSelectElement>) {
+    setSelectedCityState(() => cityChangeEvent.target.value);
   }
   return (
    
@@ -65,10 +77,11 @@ const HeroSection2 = () => {
               className="px-5 md:px-0 flex justify-center md:justify-start"
               // style={{border:"2px solid black"}}
             >
-              <select className="border-2 border-darkGreen-600 h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base ">
-                <option>Delhi</option>
-                <option>Mumbai</option>
+              <select onChange={cityChange} className="border-2 border-darkGreen-600 h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base ">
+                <option></option>
                 <option>Pune</option>
+                <option>Delhi</option>
+                <option>Zimbabwe</option>
               </select>
               <div className="flex bg-yellow text-darkGreen ml-3 w-[123px] h-[43px] rounded-md  justify-center items-center relative ">
            
