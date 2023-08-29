@@ -30,7 +30,7 @@ interface UpcomingInterviewType {
   userId: number,
 }
 
-interface ProfileLeveType {
+interface ProfileLevelType {
   board: Array<string>
   highestLevelOfEdu: Array<string>,
   percentage: string,
@@ -61,7 +61,7 @@ export function FresherDashboard() {
 
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   const userProfile = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.USER_DETAILS]);
-  const [profileLevel, setProfileLevel] = useState<ProfileLeveType>({ board: [], highestLevelOfEdu: [], percentage: "", stream: [] });
+  const [profileLevel, setProfileLevel] = useState<ProfileLevelType>({ board: [], highestLevelOfEdu: [], percentage: "", stream: [] });
   const percentageTextfieldRef = useRef<HTMLInputElement | null>(null);
   const [getLazyUserProfile] = useLazyGetUserByIdQuery();
   const [getLazyUpcomingInterviews] = useLazyGetUpcomingInterviewsQuery();
@@ -70,7 +70,7 @@ export function FresherDashboard() {
   const [getRecommendedJobs] = useLazyGetRecommendedJobsQuery();
   const dispatch = useDispatch();
 
-  const profileLevelPayload: ProfileLeveType = React.useMemo(() => ({ board: [], highestLevelOfEdu: [], percentage: "", stream: [] }), []);
+  const profileLevelPayload: ProfileLevelType = React.useMemo(() => ({ board: [], highestLevelOfEdu: [], percentage: "", stream: [] }), []);
 
   const [listUpcomingInterviews, setListUpcomingInterviews] = useState<Array<UpcomingInterviewType>>([]);
   const [recommendJobsState, setRecommendJobsState] = useState<Array<JobsDetailsType>>([]);
