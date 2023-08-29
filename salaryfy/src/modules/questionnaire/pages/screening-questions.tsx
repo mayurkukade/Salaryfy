@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useGetScreeningQuestionQuery,usePostScreeningQuestionSliceMutation } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
 import UserJobDetails from "../components/job-details.component";
 import SubSteps from "../components/sub-steps.component";
@@ -47,10 +47,10 @@ export default function ScreeningQuestions() {
     
     try {
       const filteredResponses = removeDuplicateResponses(collectResponse);
+      console.log("filteredResponses length is", filteredResponses)
+      console.log("Response Data length is", responseData.response);
       // applied validation to submit all question
-      console.log("filteredResponses length is", filteredResponses.length)
-      console.log("Response Data length is", responseData.response.length);
-      if (filteredResponses.length === responseData?.response.length - 1)  {
+      if (filteredResponses.length === responseData?.response.length )  {
         
        
         //  console.log("Submitted Data is", filteredResponses);
@@ -161,8 +161,11 @@ function Questions({ responseData, setCollectResponse }: any) {
       const updatedData = [...prevData, updatedQuestion];
       return updatedData;
     });
-    setCollectResponse(responseData1)
   }
+  // setCollectResponse(responseData1)
+  useEffect(() => {
+    setCollectResponse(responseData1);
+  }, [responseData1, setCollectResponse]);
 
   // console.log("Updated reposne is ", responseData1);
 
