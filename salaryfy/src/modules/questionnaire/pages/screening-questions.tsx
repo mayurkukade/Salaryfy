@@ -54,22 +54,27 @@ export default function ScreeningQuestions() {
         
        
         //  console.log("Submitted Data is", filteredResponses);
-        // console.log('postQuestionResponse is ',postQuestionResponse)
+        console.log('postQuestionResponse is ',postQuestionResponse)
         if (postQuestionResponse.error) {
           toast.error("Error While Submitting Response");
         } else {
-          
+          // toast.success("Form Submitted", {
+          //   position: "top-center",
+          //   autoClose: 1000,
+          //   hideProgressBar: false,
+          //   closeOnClick: true,
+          //   draggable: true,
+          //   progress: undefined,
+          //   theme: "light",
+          // });
           // seding data to backend
           postQuestion(filteredResponses);
           console.log('data sent to backend is ', filteredResponses)
           navigate("/questionnaire/schedule-interview"); // Navigate to a Next page
         }
-
-
-
       } else {
         
-        toast.error("Submit All question", {
+        toast.error("Please complete all questions before submitting", {
           position: "top-center",
           autoClose: 1000,
           hideProgressBar: false,
@@ -110,18 +115,15 @@ return (
         <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
           <div className="text-[1.4em]">Job Details</div>
           <UserJobDetails />
-
           {/* STEPS */}
           <div className="py-[2em] px-[3em] h-[100%]">
             <SubSteps />
-
             {responseData && (
               <Questions
                 responseData={responseData}
                 setCollectResponse={setCollectResponse}
               />
             )}
-
             <button
               className="text-[2em] bg-[#FECD08] w-[100px] font-medium mr-[0.5em] text-[#005F59] cursor-pointer"
               onClick={submitResponse}
@@ -202,7 +204,7 @@ function Questions({ responseData, setCollectResponse }: any) {
   );
 }
 
-//  this code is for boolen / Radio button
+//  this code is for boolen / Radio button Question
 function YesNoQuestionSet({ question, onResponseChange }: any) {
   
   // Storing response of Question into this state variable
@@ -233,7 +235,7 @@ function YesNoQuestionSet({ question, onResponseChange }: any) {
   );
 }
 
-// this code is for Rating button
+// this code is for Rating button Question
 function RatingResponseSet({ question, onResponseChange }: any) {
   // Storing response of Question into this state variable
   const [value, setValue] = React.useState<number | null>(0);
