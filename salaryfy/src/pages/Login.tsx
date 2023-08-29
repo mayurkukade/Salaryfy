@@ -94,7 +94,7 @@ export const Login = () => {
               value={password}
               onChange={(e) => setpassword(e.target.value)}
               placeholder="****"
-              className="w-[23rem] h-[3.40669rem]  border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder "
+              className="w-[23rem] h-[3.40669rem]  border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder rounded-l-[0.3125rem] border-l"
               style={{borderRight:"None"}}
             />
 
