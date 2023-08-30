@@ -274,8 +274,8 @@ const Universities = () => {
     //   </div>
     // </div>
 
-    <div className="container mx-auto font-Lexend mt-[10rem] mb-[8rem] ">
-      <p className="text-center text-darkGreen text-[3.9375rem] font-semibold ">
+    <div className="container mx-auto font-Lexend mt-[6rem] mb-[8rem] ">
+      <p className="text-center text-darkGreen text-[3.9375rem] font-semibold  mb-8">
         Students from <span className="text-yellow">Universities</span>
       </p>
       <div className="p-[1em] md:app-scrollbar md:h-[50em] lg:app-scrollbar lg:h-[50em] overflow-[auto] ">
