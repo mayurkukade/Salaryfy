@@ -29,8 +29,8 @@ const Navbar = () => {
  
   const open = Boolean(anchorEl);
 console.log(window.location.href)
-  const currentLocation = window.location.href.slice(22)
-console.log(currentLocation)
+  const registerData = window.location.href.slice(22)
+console.log(registerData)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -67,8 +67,8 @@ console.log(currentLocation)
   };
 
 useEffect(()=>{
-dispatch(cureentSelector(currentLocation))
-},[dispatch,currentLocation])
+dispatch(cureentSelector(registerData))
+},[dispatch,registerData])
 
   return (
     <nav className="flex justify-between  items-center h-24  w-full p-10 ">

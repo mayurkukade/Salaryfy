@@ -18,6 +18,5 @@ const questionnarieFormSLice = createSlice({
 })
 
 
-
 export const {registerFormQuestionnaire} = questionnarieFormSLice.actions
 export default questionnarieFormSLice.reducer

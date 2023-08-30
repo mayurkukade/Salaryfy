@@ -4,7 +4,7 @@ import PlacementJobDetails from "../modules/questionnaire/components/placement-j
 import { useParams, useNavigate } from "react-router-dom";
 import { useLazyGetJobByIdQuery } from "../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { useDispatch, useSelector } from "react-redux";
-import { AppStoreStateType, RootState } from "../store/app.store";
+import { AppStoreStateType } from "../store/app.store";
 import { SLICE_NAMES } from "../features/slice-names.enum";
 import { setJobDetails } from "../features/reducers/job-details/job-details.slice";
 import Cookies from "js-cookie";
@@ -22,8 +22,7 @@ function GreenHeading({ label }: { label: string }) {
 }
 
 const PlacementDriveDetails = () => {
-const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
-console.log(currentRoute)
+
   const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
   const dispatch = useDispatch();
   const { jobId } = useParams();
@@ -90,7 +89,7 @@ console.log(currentRoute)
           <p className="text-lg">Placement Drive Details</p>
         </div>
         <div className="app-box-shadow mb-[5em] rounded-[2em]">
-        <PlacementJobDetails onGetHiredClick={onGetHiredClick} jobDetails={jobDetails} />
+          <PlacementJobDetails onGetHiredClick={onGetHiredClick} jobDetails={jobDetails} />
           <div className="px-[5em] py-[0.5em]">
             <div className="flex justify-between items-center flex-col-reverse lg:flex-row mt-[2em]">
 
