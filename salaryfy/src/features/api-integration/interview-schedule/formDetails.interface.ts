@@ -1,8 +1,12 @@
 export interface formDetails {
-    id:number,
-    selectedDate:Date | null,
-    selectedLocation:string,
-    selectedTime:Date | null
+    
+location:string,
+interviewDate:string | null,
+time:string,
+date:number,
+userId:string | null,
+jobId:number,
+status:string
 
 
 }

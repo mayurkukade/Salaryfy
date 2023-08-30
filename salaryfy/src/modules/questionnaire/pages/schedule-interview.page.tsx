@@ -18,6 +18,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from "react-redux";
 import { AppStoreStateType, RootState } from "../../../store/app.store";
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
+import interviewSchedule, { useInterviewScheduleApiMutation } from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
 export default function ScheduleInterviewPage() {
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
@@ -44,7 +45,7 @@ export function ScheduleInterview() {
   const userId = useSelector((state:RootState)=>state.authSlice.userId)
   const selectInterviewData = useSelector((state: AppStoreStateType)=>state.root[SLICE_NAMES.JOB_DETAILS])
   console.log(selectInterviewData.interviewEndDate)
-  
+  const [interviewScheduleApi] = useInterviewScheduleApiMutation()
   console.log(userId)
   const handleHourChange = (event) => {
     setSelectedHour(event.target.value);
@@ -69,19 +70,25 @@ export function ScheduleInterview() {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-   const AddSubmitHandler = (e:React.MouseEvent)=>{
+   const AddSubmitHandler = async(e:React.MouseEvent)=>{
 e.preventDefault()
 console.log(location,selectedDate,selectedHour,selectedMinute,selectMeridiem)
-const formDetails = {
-  "location": location,
-  "interviewDate":selectedDate,
-  "time": selectedMinute,
-  "date": selectedDate,
-  "userId": userId,
-  "jobId": 41,
-  "status": "Scheduled"
+
+try {
+  const formDetails = {
+    "location": location,
+    "interviewDate":selectedDate,
+    "time": selectedMinute,
+    "date": "2023-08-01",
+    "userId": userId,
+    "jobId": 41,
+    "status": "Scheduled"
+  }
+  const res = await  interviewScheduleApi(formDetails).unwrap()
+  console.log(res)
+} catch (error) {
+  console.log(error)
 }
-console.log(formDetails)
    }
   return (
     <div className="h-[100%]">
