@@ -102,8 +102,8 @@ export default function PlacementDrivePage() {
   }
 
   return (
-    <div className="flex flex-col p-[2em]  ">
-      <div className="flex ">
+    <div className="flex flex-col p-[2em]  " >
+      <div className="flex justify-center" >
       <QuestionnaireTopBarStep />
       </div>
       

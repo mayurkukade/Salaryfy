@@ -1,10 +1,11 @@
-
 import UserJobDetails from "../components/job-details.component";
 
 import SubSteps from "../components/sub-steps.component";
 import { useRef, useState, useEffect, CSSProperties } from "react";
 import OTPInput from "react-otp-input";
 import { toast } from "react-toastify";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import "react-toastify/dist/ReactToastify.css";
 import {
   useRegisterMutation,
@@ -12,7 +13,17 @@ import {
   useVerifyOTPMutation,
 } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
 import { useAppDispatch } from "../../../store/app.hook";
-import { emailStepsCounterDecrement, emailStepsCounterIncrement,  nameStepsCounterDecrement, nameStepsCounterIncrement, passwordStepsCounterDecrement, passwordStepsCounterIncrement, phoneNumberStepsCounterDecrement, phoneNumberStepsCounterIncrement, resSteptwoSelector } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
+import {
+  emailStepsCounterDecrement,
+  emailStepsCounterIncrement,
+  nameStepsCounterDecrement,
+  nameStepsCounterIncrement,
+  passwordStepsCounterDecrement,
+  passwordStepsCounterIncrement,
+  phoneNumberStepsCounterDecrement,
+  phoneNumberStepsCounterIncrement,
+  resSteptwoSelector,
+} from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 
 import {  useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
@@ -47,20 +58,17 @@ export default function QuestionnairePersonalDetails() {
   console.log(submitRegister);
 
   return (
-    
- 
-      <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
-        <div className="text-[1.4em]">Job Details</div>
-        <UserJobDetails />
-        {/* STEPS */}
-        <div className="py-[2em] px-[3em] h-[100%]">
-          <SubSteps />
-          <PersonalDetails setSubmitRegister={setSubmitRegister} />
+    <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
+      <div className="text-[1.4em]">Job Details</div>
+      <UserJobDetails />
+      {/* STEPS */}
+      <div className="py-[2em] px-[3em] h-[100%]">
+        <SubSteps />
+        <PersonalDetails setSubmitRegister={setSubmitRegister} />
 
-          {/* <BottomPageNavigationBar /> */}
-        </div>
+        {/* <BottomPageNavigationBar /> */}
       </div>
-    
+    </div>
   );
 }
 
@@ -279,22 +287,29 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
   );
 };
 
-const PasswordComponent: React.FC<PasswordComponent> = (props) => {
-  console.log(props.password);
+const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[50%]">
+    <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[45%]">
       <div>Password</div>
-      <div className="flex gap-[1em]">
+      <div className="flex gap-[1em] relative">
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           value={props.password}
           onChange={(e) => props.setpassword(e.target.value)}
-          placeholder="password"
+          placeholder="Password"
           autoComplete="new-password"
           onFocus={() => props.setpasswordFocus(true)}
           onBlur={() => props.setpasswordFocus(false)}
-          className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
+          className="flex-grow border border-[#005F59] border-solid rounded-md pl-2 outline-none"
         />
+        <button
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border-none focus:outline-none"
+        >
+          {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+        </button>
       </div>
       <div>
         {props.password && props.passwordFocus && !props.validpassword ? (
@@ -318,13 +333,13 @@ const PasswordComponent: React.FC<PasswordComponent> = (props) => {
     </div>
   );
 };
+
 const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
-  console.log(props.confirmpassword);
-  console.log(props.matchpassword);
+  const [showPassword, setShowPassword] = useState(false);
   const content =
     props.matchpassword && props.confirmFocus ? (
       <svg
-        xmlns="http://www.w3.org/2000/svg"
+        xmlns="http:www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         strokeWidth={1.5}
@@ -353,26 +368,93 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
         />
       </svg>
     );
-
   return (
-    <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[50%]">
-      <div>confirmPassword</div>
-      <div className="flex gap-[1em]">
-        <input
-          type="password"
-          onChange={(e) => props.setConfirmpassword(e.target.value)}
-          value={props.confirmpassword}
-          placeholder="confirmpassword"
-          autoComplete="off"
-          onFocus={() => props.setConfirmFocus(true)}
-          onBlur={() => props.setConfirmFocus(false)}
-          className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
-        />
+    <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[45%]">
+      <div>Confirm Password</div>
+      <div className="flex w-full items-center" >
+        <div className="flex gap-[1em] relative w-full">
+          <input
+            type={showPassword ? "text" : "password"}
+            onChange={(e) => props.setConfirmpassword(e.target.value)}
+            value={props.confirmpassword}
+            placeholder="confirmpassword"
+            autoComplete="off"
+            onFocus={() => props.setConfirmFocus(true)}
+            onBlur={() => props.setConfirmFocus(false)}
+            className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
+          />
+          <button
+            onClick={() => setShowPassword(showPassword ? false : true)}
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border-none focus:outline-none"
+          >
+            {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+          </button>
+        </div>
+        <div className="ml-1">
+          
         {content}
+        </div>
       </div>
     </div>
   );
 };
+
+// const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
+//   console.log(props.confirmpassword);
+//   console.log(props.matchpassword);
+//   const [showPassword,setShowPassword] = useState(false)
+//   const content =
+//     props.matchpassword && props.confirmFocus ? (
+//       <svg
+//         xmlns="http://www.w3.org/2000/svg"
+//         fill="none"
+//         viewBox="0 0 24 24"
+//         strokeWidth={1.5}
+//         stroke="currentColor"
+//         className="w-6 h-6"
+//       >
+//         <path
+//           strokeLinecap="round"
+//           strokeLinejoin="round"
+//           d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+//         />
+//       </svg>
+//     ) : (
+//       <svg
+//         xmlns="http://www.w3.org/2000/svg"
+//         fill="none"
+//         viewBox="0 0 24 24"
+//         strokeWidth={1.5}
+//         stroke="currentColor"
+//         className="w-6 h-6"
+//       >
+//         <path
+//           strokeLinecap="round"
+//           strokeLinejoin="round"
+//           d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+//         />
+//       </svg>
+//     );
+
+//   return (
+//     <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[50%]">
+//       <div>ConfirmPassword</div>
+//       <div className="flex gap-[1em]">
+//         <input
+//            type={showPassword ? "text" : "password"}
+//           onChange={(e) => props.setConfirmpassword(e.target.value)}
+//           value={props.confirmpassword}
+//           placeholder="confirmpassword"
+//           autoComplete="off"
+//           onFocus={() => props.setConfirmFocus(true)}
+//           onBlur={() => props.setConfirmFocus(false)}
+//           className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
+//         />
+//         {content}
+//       </div>
+//     </div>
+//   );
+// };
 
 function UploadResumeComponent() {
   return (
@@ -421,11 +503,11 @@ function UploadResumeComponent() {
   );
 }
 
-type PropT = { email: string }
+type PropT = { email: string };
 
-const Verified= (props: PropT):JSX.Element => {
+const Verified = (props: PropT): JSX.Element => {
   const [otp, setOtp] = useState<string>("");
-  
+
   const [verifyOTP] = useVerifyOTPMutation();
   console.log(otp);
   console.log(props.email);
@@ -436,7 +518,7 @@ const Verified= (props: PropT):JSX.Element => {
 
     try {
       const response = await verifyOTP({ otp, email });
-console.log(response)
+      console.log(response);
       // Assuming the response structure doesn't have an "error" property
       toast.success("OTP has been sent to your email address", {
         position: "top-center",
@@ -447,8 +529,6 @@ console.log(response)
         progress: undefined,
         theme: "light",
       });
-
-      
     } catch (error) {
       console.log("API call error:", error);
     }
@@ -499,17 +579,17 @@ console.log(response)
                 />
               </svg> :""
               } */}
-             
             </div>
-            {
-              otp.length ==4 ?  <button
-              className=" bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed"
-              onClick={handleSubmitVerify}
-            >
-              Verified
-            </button> :''
-            }
-           
+            {otp.length == 4 ? (
+              <button
+                className=" bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed"
+                onClick={handleSubmitVerify}
+              >
+                Verified
+              </button>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
@@ -522,7 +602,7 @@ const PersonalDetails = (): JSX.Element => {
 
   const userRef = useRef<HTMLInputElement>(null);
 
- const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const [fullName, setfullName] = useState<string>("");
   const [validName, setValidName] = useState(false);
@@ -533,7 +613,7 @@ const PersonalDetails = (): JSX.Element => {
   const [phoneFocus, setPhoneFocus] = useState(false);
 
   const [email, setemail] = useState<string>("");
-  
+
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
@@ -545,8 +625,6 @@ const PersonalDetails = (): JSX.Element => {
   const [matchpassword, setMatchpassword] = useState<boolean>(false);
   const [confirmFocus, setConfirmFocus] = useState(false);
 
-
-
   const [showVerifyedOTP, setShowVerifyedOTP] = useState(false);
   const role = "USER";
   const userProfileType = "fresher";
@@ -554,11 +632,13 @@ const PersonalDetails = (): JSX.Element => {
   console.log(password);
   console.log(isError);
   console.log(isSuccess);
-  console.log(matchpassword)
+  console.log(matchpassword);
 
-  const resSubmitStatus = useSelector((state:RootState)=>state.mainStepsCounter.resStepTwo)
+  const resSubmitStatus = useSelector(
+    (state: RootState) => state.mainStepsCounter.resStepTwo
+  );
 
-console.log(resSubmitStatus)
+  console.log(resSubmitStatus);
   const contentDisabled =
     !validName ||
     !validMobile ||
@@ -566,8 +646,8 @@ console.log(resSubmitStatus)
     !validpassword ||
     !role ||
     !userProfileType ||
-    !date|| 
-    !matchpassword
+    !date ||
+    !matchpassword;
 
 
 console.log(!contentDisabled)
@@ -614,11 +694,9 @@ useEffect(()=>{
         userProfileType,
         date,
       });
-    
 
       if (res?.data) {
-
-        dispatch(resSteptwoSelector(true))
+        dispatch(resSteptwoSelector(true));
 
         return toast.success("register success", {
           position: "top-center",
@@ -631,7 +709,7 @@ useEffect(()=>{
           theme: "light",
         });
       } else {
-        dispatch(resSteptwoSelector(false))
+        dispatch(resSteptwoSelector(false));
         return toast.error("error", {
           position: "top-center",
           autoClose: 2000,
@@ -643,7 +721,6 @@ useEffect(()=>{
           theme: "light",
         });
       }
-      
     } catch (error) {
       console.log(error);
     }
@@ -651,35 +728,30 @@ useEffect(()=>{
 
   useEffect(() => {
     setValidName(USER_REGEX.test(fullName));
-    if(validName){
-      dispatch(nameStepsCounterIncrement())
-    }else{
-      dispatch(nameStepsCounterDecrement())
+    if (validName) {
+      dispatch(nameStepsCounterIncrement());
+    } else {
+      dispatch(nameStepsCounterDecrement());
     }
-  }, [fullName,validName,dispatch]);
-
- 
+  }, [fullName, validName, dispatch]);
 
   useEffect(() => {
     setValidMobile(INDIAN_MOBILE_REGEX.test(mobile_no));
-    if(validMobile){
-      dispatch(phoneNumberStepsCounterIncrement())
-    }else{
-      dispatch(phoneNumberStepsCounterDecrement())
+    if (validMobile) {
+      dispatch(phoneNumberStepsCounterIncrement());
+    } else {
+      dispatch(phoneNumberStepsCounterDecrement());
     }
-  }, [mobile_no,validMobile,dispatch]);
+  }, [mobile_no, validMobile, dispatch]);
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
-    if(validEmail){
-      dispatch(emailStepsCounterIncrement())
-    }else{
-      dispatch(emailStepsCounterDecrement)
+    if (validEmail) {
+      dispatch(emailStepsCounterIncrement());
+    } else {
+      dispatch(emailStepsCounterDecrement);
     }
-    
-  }, [email,validEmail,dispatch]);
-
-
+  }, [email, validEmail, dispatch]);
 
   useEffect(() => {
     setMatchpassword(password === confirmpassword);
@@ -687,16 +759,16 @@ useEffect(()=>{
 
   useEffect(() => {
     setValidpassword(password_REGEX.test(password));
-    if(validpassword){
-      dispatch(passwordStepsCounterIncrement())
-    }else{
-      dispatch(passwordStepsCounterDecrement())
+    if (validpassword) {
+      dispatch(passwordStepsCounterIncrement());
+    } else {
+      dispatch(passwordStepsCounterDecrement());
     }
-  }, [password,validpassword,dispatch]);
+  }, [password, validpassword, dispatch]);
 
-  useEffect(()=>{
-    if(contentDisabled){
-      console.log(contentDisabled)
+  useEffect(() => {
+    if (contentDisabled) {
+      console.log(contentDisabled);
     }
   },[contentDisabled])
 console.log(contentDisabled)
@@ -709,7 +781,7 @@ console.log(contentDisabled)
       <div className="font-semibold text-[1.8em] text-[#5B5B5B]">
         Fill the details below
       </div>
-   
+
       <div className="">
         <div className="bg-[#F3FAF9] rounded-md py-[3em] px-[2em] md:px-[7em] gap-[2em] flex flex-col">
           <div className="flex flex-col md:flex-row gap-[2em]">
