@@ -26,10 +26,9 @@ export default function QuestionnaireModule() {
   return (
     <Routes>
       <Route element={<StepsLayout />}>
+
         <Route index element={<QuestionnairePersonalDetails />} />
-
         <Route path="screening-questions" element={<ScreeningQuestions />} />
-
         <Route path="schedule-interview" element={<ScheduleInterviewPage />} />
 
         <Route element={<SideBar />}>
