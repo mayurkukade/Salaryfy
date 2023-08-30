@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState,useEffect } from "react";
 
 import UserJobDetails from "../components/job-details.component";
 
@@ -42,6 +42,7 @@ export function ScheduleInterview() {
   const [selectedMinute, setSelectedMinute] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectMeridiem,setSelectMeridiem] = useState('')
+  const [selectDateFormat,setSelectFormatDate] = useState()
   const userId = useSelector((state:RootState)=>state.authSlice.userId)
   const selectInterviewData = useSelector((state: AppStoreStateType)=>state.root[SLICE_NAMES.JOB_DETAILS])
   console.log(selectInterviewData.interviewEndDate)
@@ -66,20 +67,23 @@ export function ScheduleInterview() {
     setChecked(event.target.checked);
   };
  
-
+ 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+ 
+ 
    const AddSubmitHandler = async(e:React.MouseEvent)=>{
 e.preventDefault()
 console.log(location,selectedDate,selectedHour,selectedMinute,selectMeridiem)
+const dateFormat = selectedDate != null ? selectedDate.toISOString().split('T')[0] : ''
 
 try {
   const formDetails = {
     "location": location,
-    "interviewDate":selectedDate,
-    "time": selectedMinute,
-    "date": "2023-08-01",
+    "interviewDate": "2023-08-10",
+    "time": `${selectedHour}:${selectedMinute} ${selectMeridiem}`,
+    "date":dateFormat,
     "userId": userId,
     "jobId": 41,
     "status": "Scheduled"
@@ -89,6 +93,8 @@ try {
 } catch (error) {
   console.log(error)
 }
+
+
    }
   return (
     <div className="h-[100%]">
@@ -131,9 +137,10 @@ try {
             <DatePicker
               selected={selectedDate}
               onChange={handleDateChange}
-              dateFormat="MM/dd/yyyy"
+              dateFormat="yyyy-MM-dd"
               className="border-2 w-[18rem] h-[3.5rem] rounded-md p-2 font-semibold text-lg"
               placeholderText={"Please select a date"}
+    
             />
             <div className="flex flex-col sm:flex-row gap-[2em] ">
               <div className="flex">

@@ -5,7 +5,7 @@ const interviewSchedule = apiSlice.injectEndpoints({
         interviewScheduleApi:builder.mutation<[],formDetails>({
             query:(formDetails)=>({
                 url:`/Interview/Schedule`,
-                transformResponse:console.log(formDetails),
+                transformResponse:console.log(formDetails,'formsdetails'),
                 headers:{
                     "Content-Type":"application/json"
                 },
