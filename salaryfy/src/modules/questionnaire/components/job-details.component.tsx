@@ -13,7 +13,7 @@ export default function UserJobDetails() {
   return (
     <>
     {/* This is For Webiste View Components */}
-      <div className='hidden md:block' >
+      <div className='hidden md:block z-[-1]' >
         <div className='bg-cover-container'>
           <img src={image} style={{ width: '100%' }} />
         </div>

@@ -58,16 +58,17 @@ export default function ScreeningQuestions() {
         if (postQuestionResponse.error) {
           toast.error("Error While Submitting Response");
         } else {
-          // toast.success("Form Submitted", {
-          //   position: "top-center",
-          //   autoClose: 1000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   draggable: true,
-          //   progress: undefined,
-          //   theme: "light",
-          // });
-          // seding data to backend
+          toast.success("Details Submitted Succesfully", {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+
+          // sending data to backend
           postQuestion(filteredResponses);
           console.log('data sent to backend is ', filteredResponses)
           navigate("/questionnaire/schedule-interview"); // Navigate to a Next page

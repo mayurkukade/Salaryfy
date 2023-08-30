@@ -9,7 +9,7 @@ export default function PlacementJobDetails({ jobDetails, onGetHiredClick }: { j
   return (
     <>
       <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
-        <div className='bg-cover-container'>
+        <div className='bg-cover-container z-[-1]'>
           <div className='w-[100%] h-[100%] absolute flex justify-end items-end z-[1] py-[1em] px-[2em]'>
 
             <div className='flex items-center gap-[1.5em]'>
@@ -30,7 +30,7 @@ export default function PlacementJobDetails({ jobDetails, onGetHiredClick }: { j
         <div className='flex' style={{ background: 'linear-gradient(rgba(254, 205, 8, 0.07), rgb(14, 95, 89, 0.09))' }}>
 
           {/* First */}
-          <div className='text-[1.8em] font-semibold text-[#0E5F59] px-[2em] flex items-center'>
+          <div className='z-[-1] text-[1.8em] font-semibold text-[#0E5F59] px-[2em] flex items-center'>
             <div className='relative min-w-[5em]'>
               <div className='absolute h-[5em] w-[5em] p-[0.5em] flex items-center justify-center rounded-md bg-[#D7E8F0] -translate-y-full overflow-hidden'>
                 <img src='src/assets/images/lenskart-icon.png'></img>
@@ -40,8 +40,8 @@ export default function PlacementJobDetails({ jobDetails, onGetHiredClick }: { j
           </div>
 
           {/* Second */}
-          <div className='px-[1em] py-[1em]'>
-            <div className='text-[2em] font-bold mb-[0.5em]'>{ jobDetails.postName }</div>
+          <div className='px-[1em] py-[1em] '>
+            <div className='text-[2em] font-bold mb-[0.5em] '>{ jobDetails.postName }</div>
             <div className='flex text-[1.4em] font-medium'>
               <div className='text-[#5B5B5B]'><span>Location:&nbsp;</span><span className='text-[#0E5F59]'>{ jobDetails.location }</span></div>
               <div className='mx-2 w-[1px] h-[1.4em] bg-[#0E5F594C]'></div>
