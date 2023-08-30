@@ -52,6 +52,8 @@ const stepOneCounterSlice = createSlice({
       console.log(actions.payload);
       console.log(state.resStepTwo);
     },
+    
+
   },
 });
 
