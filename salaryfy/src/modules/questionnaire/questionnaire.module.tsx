@@ -9,6 +9,9 @@ import StepsLayout from "../../components/stepsLayout/StepsLayout";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/app.store";
+import Roadmap from "../../pages/Roadmap";
+import SideBar from "./components/fresher-sidebar.component";
+
 export default function QuestionnaireModule() {
   const token = Cookies.get("jwtToken");
   const currentPath = useSelector(
@@ -28,13 +31,15 @@ export default function QuestionnaireModule() {
         <Route path="screening-questions" element={<ScreeningQuestions />} />
 
         <Route path="schedule-interview" element={<ScheduleInterviewPage />} />
-        <Route path="fresher-dashboard" element={<FresherDashboardPage />} />
+
+        <Route element={<SideBar />}>
+          <Route path="fresher-dashboard" element={<FresherDashboardPage />} />
+          <Route path="fresher-profile-upload" element={<FresherProfileUploadPage />} />
+          <Route path="fresher-roadmap" element={<Roadmap />} />
+        </Route>
+
       </Route>
-    
-      <Route
-        path="fresher-profile-upload"
-        element={<FresherProfileUploadPage />}
-      />
+
     </Routes>
   );
 }

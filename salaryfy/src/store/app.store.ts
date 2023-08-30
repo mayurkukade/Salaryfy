@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './app.reducer';
 import authSliceReducer from '../features/reducers/authReducers/auth-slice-reducer';
 import apiIntegrationSlice from '../features/api-integration/apiUserSlice/api-integration-user.slice'
@@ -8,7 +8,8 @@ import questionnaireRegisterFormSlice from '../features/reducers/questionnaire-r
 import currentRouteReducer from '../features/reducers/currentRouteReducers/current-route.reducer';
 import scheduleInterviewReducder from '../features/reducers/schedule-interview-form/schedule-interview.slice';
 import interviewSchedule from '../features/api-integration/interview-schedule/interview-schedule-slice';
-
+import upcomingInterviewSlice from '../features/api-integration/upcoming-interviews/upcoming-interviews.slice';
+import profileQualificationSlice from '../features/api-integration/profile-qualification/profile-qualification.slice';
 export interface AppStoreStateType {
   root: ReturnType<typeof rootReducer>,
   [apiIntegrationSlice.reducerPath]: ReturnType<typeof apiIntegrationSlice.reducer>
@@ -25,7 +26,9 @@ const appStore = configureStore({
 
     [apiIntegrationSlice.reducerPath]: apiIntegrationSlice.reducer,
     [screeningQuestionsSlice.reducerPath]:screeningQuestionsSlice.reducer,
-    [interviewSchedule.reducerPath]:interviewSchedule.reducer
+    [interviewSchedule.reducerPath]:interviewSchedule.reducer,
+    [upcomingInterviewSlice.reducerPath]: upcomingInterviewSlice.reducer,
+    [profileQualificationSlice.reducerPath]: profileQualificationSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiIntegrationSlice.middleware).concat(screeningQuestionsSlice.middleware)

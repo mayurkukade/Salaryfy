@@ -11,11 +11,12 @@ import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import { JobType } from "../../../features/reducers/jobs/jobs.interface";
 import { Button } from "@mui/material";
 
-export default function FilterComponent({ className, onSearchButtonClick }: { className?: string, onSearchButtonClick: () => void }) {
+export default function FilterComponent({ className, onSearchButtonClick, setAllJobs }: { className?: string, onSearchButtonClick: () => void, setAllJobs: (v: string) => void }) {
 
   const dispatch = useDispatch();
   const jobFilterValues = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS_FILTER]);
   const jobs = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]);
+  const selectedCity = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.SELECTED_CITY]);
   let once = false;
 
   useEffect(() => {
@@ -23,18 +24,25 @@ export default function FilterComponent({ className, onSearchButtonClick }: { cl
     once = true;
 
     const jobFilterValues$ = { locations: Array.from(new Set(jobs.map((job: JobType) => job.location))), jobTypes: Array.from(new Set(jobs.map((job: JobType) => job.jobType))), companyNames: Array.from(new Set(jobs.map((job: JobType) => job.companyName))) };
-    const jobFilterOptions = { locations: jobFilterValues$.locations.map((location: string) => ({ option: location, selected: false }) ), jobTypes: jobFilterValues$.jobTypes.map((jobType: string) => ({ option: jobType, selected: false }) ), companyNames: jobFilterValues$.companyNames.map((companyName: string) => ({ option: companyName, selected: false }) ) };
-    dispatch( setJobFilter( jobFilterOptions ) );
+    const jobFilterOptions = { locations: jobFilterValues$.locations.map((location: string) => ({ option: location, selected: false })), jobTypes: jobFilterValues$.jobTypes.map((jobType: string) => ({ option: jobType, selected: false })), companyNames: jobFilterValues$.companyNames.map((companyName: string) => ({ option: companyName, selected: false })) };
+    dispatch(setJobFilter(jobFilterOptions));
+    // setAllJobs('');
+
   }, []);
 
   useEffect(() => {
-    // Object.values(jobFilterValues).some((filterTypes: Array<OptionSelected>) => filterTypes.map((filterType: OptionSelected) => {
-    //   if (filterType.selected) console.log('selected option: ', filterType.option);
-    // }));
+    const jobFilterValues$ = { locations: Array.from(new Set(jobs.map((job: JobType) => job.location))), jobTypes: Array.from(new Set(jobs.map((job: JobType) => job.jobType))), companyNames: Array.from(new Set(jobs.map((job: JobType) => job.companyName))) };
+    const jobFilterOptions = { locations: jobFilterValues$.locations.map((location: string) => ({ option: location, selected: false })), jobTypes: jobFilterValues$.jobTypes.map((jobType: string) => ({ option: jobType, selected: false })), companyNames: jobFilterValues$.companyNames.map((companyName: string) => ({ option: companyName, selected: false })) };
+    jobFilterOptions.locations = jobFilterOptions.locations.map((location: OptionSelected) => {
+      if (location.option === selectedCity) {
+        console.log('filter dash: ', selectedCity);
+        return { option: selectedCity, selected: true }; 
+      }
+      return location;
+    });
+    dispatch(setJobFilter(jobFilterOptions));
 
-   
-
-  }, [jobFilterValues]);
+  }, [selectedCity]);
 
   function onFilterOptionSelect(type: 'add' | 'remove', filterName: 'locations' | 'jobTypes' | 'companyNames', locationOption: string) {
     const updatedOptions = jobFilterValues[filterName].map(value => {
