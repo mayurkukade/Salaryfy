@@ -9,7 +9,7 @@ const Testimonals = () => {
     //   <HomeCarousole2/>
     // </div>
 
-    <div className="bg-darkGreen h-[100vh] md:h-[100vh] mt-8 pt-10 lg:h-[auto]">
+    <div className="bg-darkGreen  mt-8 py-[70px]">
       <p className="text-center text-white   text-[2rem] font-bold font-Lexend ">
         Our <span className="text-yellow">speed</span> is your{" "}
         <span className="text-yellow">power</span>

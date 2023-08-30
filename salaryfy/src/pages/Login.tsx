@@ -2,38 +2,40 @@ import React, { useState } from "react";
 import eyelogo from "../../assets/Logos/eyelogo.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Cookies  from "js-cookie";
+import Cookies from "js-cookie";
 import { useLoginMutation } from "../features/api-integration/apiUserSlice/api-integration-user.slice";
-
-import {toast} from 'react-toastify'
-import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../features/reducers/authReducers/auth-slice-reducer";
-import { RootState } from "../store/app.store";
+const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import {
+  setToken,
+  clearToken,
+} from "../features/reducers/authReducers/auth-slice-reducer";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 export const Login = () => {
   const [userName, setUserName] = useState<string>("");
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [login,{isLoading,isError}] = useLoginMutation()
-  console.log(isLoading,isError)
-
+  const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
+  console.log(isLoading, isError);
 
   const [password, setpassword] = useState<string>("");
 const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
 
 
-console.log(currentRoute)
-  const LoginSubmitHandler = async(e:React.MouseEvent<HTMLButtonElement>)=>{
-    e.preventDefault()
+  const LoginSubmitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
 
     try {
-      const response =   await login({username:userName,password})
-      console.log(response)
+      const response = await login({ username: userName, password });
+      console.log(response);
       if (response?.data) {
         const token: string = response.data; // Access the actual token data
         console.log(token);
         dispatch(setToken(token));
-        Cookies.set('jwtToken', token);
+        Cookies.set("jwtToken", token);
 
         toast.success("Successfully logged in", {
           position: "top-center",
@@ -44,17 +46,12 @@ console.log(currentRoute)
           progress: undefined,
           theme: "light",
         });
-        if(token && currentRoute == 'questionnaire'){
-          navigate('/questionnaire/screening-questions')
-        }else{
-          navigate(`/${currentRoute}`); 
-        }
-        
+
+        navigate("/questionnaire/screening-questions"); // Make sure your routing is correctly set up
       } else {
-        
         console.error("Login error");
       }
-      if(response.error){
+      if (response.error) {
         toast.error("Unsuccesful login", {
           position: "top-center",
           autoClose: 2000,
@@ -68,10 +65,10 @@ console.log(currentRoute)
     } catch (error) {
       console.error("Unexpected error:", error);
     }
-  
-  }
+  };
 
-  
+  //  Hook for toggling Show and Hide password
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="bg-darkGreen min-h-[100vh] flex justify-center items-center">
@@ -94,20 +91,26 @@ console.log(currentRoute)
           />
 
           <h2 className="mt-5">Enter 4 Digit Password</h2>
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setpassword(e.target.value)}
+              placeholder="****"
+              className="w-[23rem] h-[3.40669rem]  border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder rounded-l-[0.3125rem] border-l"
+              style={{borderRight:"None"}}
+            />
 
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setpassword(e.target.value)}
-            placeholder="****"
-            className="w-[26.5rem] h-[3.40669rem] rounded-[0.3125rem] border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder"
-            style={{
-              backgroundImage: `url(${eyelogo})`,
-              backgroundPosition: "10px center", // Adjust the position as needed
-              backgroundRepeat: "no-repeat",
-              paddingLeft: "40px", // Adjust the padding to make space for the eye logo
-            }}
-          />
+            <button
+              onClick={() => {
+                setShowPassword(showPassword ? false : true);
+              }}
+              className="h-[3.40669rem] border-[1px] border-solid border-darkGreen bg-[#E8F0FE] pr-2  pl-4 absolute mt-[8px] rounded-r-[0.3125rem] border-r"
+              
+            >
+              {showPassword ? <VisibilityOffIcon style={{ fontSize: '30px' }}/> : <VisibilityIcon style={{ fontSize: '30px' }} />}
+            </button>
+
+
           <div className="text-[1.26544rem] w-[26.5rem] flex justify-end mt-4  text-darkGreen font-medium	 ">
             <Link to={"/"} className="border-b border-darkGreen ">
               {" "}
@@ -118,7 +121,7 @@ console.log(currentRoute)
           <button
             type="submit"
             className="mt-8 w-[26.5rem] h-[3.1875rem] bg-darkGreen text-[#fff] rounded-[0.81694rem]"
-              onClick={LoginSubmitHandler}
+            onClick={LoginSubmitHandler}
           >
             Login
           </button>
@@ -129,7 +132,6 @@ console.log(currentRoute)
             <Link
               to={"/signup"}
               className="border-b text-darkGreen border-darkGreen font-medium"
-            
             >
               Sign Up
             </Link>{" "}

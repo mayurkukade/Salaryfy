@@ -1,203 +1,257 @@
-import React from "react";
-import { AppRadioButton } from "../../../components/app-radio.button.component";
-import { useGetScreeningQuestionQuery } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
+import React, { useState,useEffect } from "react";
+import { useGetScreeningQuestionQuery,usePostScreeningQuestionSliceMutation } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
 import UserJobDetails from "../components/job-details.component";
-import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
 import SubSteps from "../components/sub-steps.component";
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
-// import { CommonUtilities } from "../../../utils/common.utilities";
-// import Typography from '@mui/material/Typography'
-// import { AppRadioButton } from "../../../components/app-radio.button.component";
-// import FormControl from '@mui/material/FormControl';
-// import FormLabel from '@mui/material/FormLabel';
-
-import { cureentSelector } from "../../../features/reducers/currentRouteReducers/current-route.reducer";
-import { useSelector } from "react-redux";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
 import { RootState } from "../../../store/app.store";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { AppStoreStateType } from '../../../store/app.store';
+import { SLICE_NAMES } from "../../../features/slice-names.enum";
+
 export default function ScreeningQuestions() {
+
+  // const cureentSelector = useSelector(
+  //   (state: RootState) => state.currentRoute.currentRoute
+  // );
+  // console.log(cureentSelector);
+
+ 
+   // selector hook to get all job details
+   const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
+   console.log( jobDetails?.jobId);
+   const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;
+  //  const id = jobDetails?.jobId;
+   console.log(id)
+  const navigate = useNavigate();
+  const [collectResponse, setCollectResponse] = useState([]);
+
+  //  RTK query hook to get all question related to job
   const {
     data: responseData,
     isError,
     isLoading,
-  } = useGetScreeningQuestionQuery();
-const cureentSelector = useSelector((state:RootState)=>state.currentRoute.currentRoute)
-console.log(cureentSelector)
-  console.log(responseData);
-  console.log(isError);
-  console.log(isLoading);
+  } = useGetScreeningQuestionQuery(id);
+   console.log("Get all quesation", responseData);
+  // used to post the question and answer
+  const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
+  // const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation(id);
 
-  // type QuestionType = Array<{ ques: string, type: 'Boolean' | 'Rating' | 'String', ans: string }>;
-  // const initQuestions: QuestionType = [
+  // Function to sent response to backend 
+  const submitResponse = async () => {
     
-  // ];
+    try {
+      const filteredResponses = removeDuplicateResponses(collectResponse);
+      console.log("filteredResponses length is", filteredResponses)
+      console.log("Response Data length is", responseData.response);
+      // applied validation to submit all question
+      if (filteredResponses.length === responseData?.response.length )  {
+        
+       
+        //  console.log("Submitted Data is", filteredResponses);
+        console.log('postQuestionResponse is ',postQuestionResponse)
+        if (postQuestionResponse.error) {
+          toast.error("Error While Submitting Response");
+        } else {
+          toast.success("Details Submitted Succesfully", {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
 
-  // const [questions, setQuestions] = React.useState<QuestionType>(initQuestions);
+          // sending data to backend
+          postQuestion(filteredResponses);
+          console.log('data sent to backend is ', filteredResponses)
+          navigate("/questionnaire/schedule-interview"); // Navigate to a Next page
+        }
+      } else {
+        
+        toast.error("Please complete all questions before submitting", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  return (
-    <div className="w-100 flex flex-col items-center h-[100%]">
-     
-      <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
-        <div className="text-[1.4em]">Job Details</div>
-        <UserJobDetails />
+  // Function to remove dupliacte response from ARRAY of object
+function removeDuplicateResponses(responses:any) {
+  const uniqueResponses: { [key: string]: { jobFairQ1Id: string } } = {};
 
-        {/* STEPS */}
-        <div className="py-[2em] px-[3em] h-[100%]">
-          <SubSteps />
+  for (const response of responses) {
+    uniqueResponses[response.jobFairQ1Id] = response;
+  }
 
-          {responseData && <Questions responseData={responseData} />}
+  const filteredResponses = Object.values(uniqueResponses);
 
-          {/* <BottomPageNavigationBar currentPageParent={setCurrentPage}/> */}
-
-          {/* <div className="flex justify-center mt-6">
-            <div className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]">
-              <span className="mr-[1em]">
-                <svg
-                  width="35"
-                  height="25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.12891 12.1289C0.647814 12.61 0.647813 13.39 1.12891 13.8711L8.96875 21.7109C9.44985 22.192 10.2299 22.192 10.7109 21.7109C11.192 21.2298 11.192 20.4498 10.7109 19.9688L3.74219 13L10.7109 6.03124C11.192 5.55015 11.192 4.77015 10.7109 4.28905C10.2299 3.80796 9.44985 3.80796 8.96876 4.28905L1.12891 12.1289ZM33 11.7681L2 11.7681L2 14.2319L33 14.2319L33 11.7681Z"
-                    fill="#5B5B5B"
-                  />
-                </svg>
-              </span>
-              <span className="text-[2em] text-[#5B5B5B] font-medium mr-[0.5em] cursor-pointer">
-                Back
-              </span>
-            </div>
-            <div className="flex items-center bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em]">
-              <button className="text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer">
-                Next
-              </button>
-              <span className="" style={{ transform: "scaleX(-1)" }}>
-                <svg
-                  width="35"
-                  height="25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.12891 12.1289C0.647814 12.61 0.647813 13.39 1.12891 13.8711L8.96875 21.7109C9.44985 22.192 10.2299 22.192 10.7109 21.7109C11.192 21.2298 11.192 20.4498 10.7109 19.9688L3.74219 13L10.7109 6.03124C11.192 5.55015 11.192 4.77015 10.7109 4.28905C10.2299 3.80796 9.44985 3.80796 8.96876 4.28905L1.12891 12.1289ZM33 11.7681L2 11.7681L2 14.2319L33 14.2319L33 11.7681Z"
-                    fill="#005F59"
-                  />
-                </svg>
-              </span>
-            </div>
-          </div> */}
-        </div>
-      </div>
-    </div>
-  );
+  return filteredResponses;
 }
 
+  // Early Return if Error Occur
+  if(isError) return <div><h1 className="text-[2rem] md:text-[5rem]">OOps Something went wrong</h1></div>
 
+return (
+  <>
+  {/* teneray opearator added if Loading is true then Loading show else Question show */}
+    {isLoading ? (
+      <div><h1 className="text-[2rem] md:text-[5rem]">Loading...</h1></div>
+    ) : (
+      <div className="w-100 flex flex-col items-center h-[100%]">
+        <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
+          <div className="text-[1.4em]">Job Details</div>
+          <UserJobDetails />
+          {/* STEPS */}
+          <div className="py-[2em] px-[3em] h-[100%]">
+            <SubSteps />
+            {responseData && (
+              <Questions
+                responseData={responseData}
+                setCollectResponse={setCollectResponse}
+              />
+            )}
+            <button
+              className="text-[2em] bg-[#FECD08] w-[100px] font-medium mr-[0.5em] text-[#005F59] cursor-pointer"
+              onClick={submitResponse}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+  </>
+);
+}
 
-function Questions({ responseData }: any) {
-  console.log("response for question is", responseData);
+// Main Question components
+function Questions({ responseData, setCollectResponse }: any) {
+  // console.log("response for question is", responseData);
   const { response } = responseData;
-  console.log("response for question is", response);
+  // console.log("response for question is", response);
 
-  function changedFor(qId: string, response: string) {
-    console.log({ qId, response });
+  // selector  hook to grab userID from redux state of user
+  const userId = useSelector((state: RootState) => state.authSlice.userId);
+  // console.log('user id is',userId);
+
+  // const [responseData1, setResponseData] = React.useState([{ question: '', response: '' }]);
+  const [responseData1, setResponseData] = React.useState([]);
+
+  function responseOfQuestion(question: string, ans: string) {
+    // console.log("Sent question is ", question, "response is ", ans);
+
+    setResponseData((prevData: any[]) => {
+      const updatedQuestion = {
+        ...question,
+        ans,
+        userId,
+      };
+      const updatedData = [...prevData, updatedQuestion];
+      return updatedData;
+    });
   }
+  // setCollectResponse(responseData1)
+  useEffect(() => {
+    setCollectResponse(responseData1);
+  }, [responseData1, setCollectResponse]);
+
+  // console.log("Updated reposne is ", responseData1);
 
   return (
     <>
       <div className="font-semibold text-[1.8em] text-[#5B5B5B] mb-[1em]">
         Fill the details below
       </div>
-      {response.map((question:any, index:number) => {
+      {response.map((question: any, index: number) => {
         if (question.questionType === "Boolean") {
           return (
-            <YesNoQuestionSet onResponseChange={(response: string) => changedFor(question.jobFairQ1Id, response)} question={question.question} key={index} />      
+            <YesNoQuestionSet
+              onResponseChange={(response: string) =>
+                responseOfQuestion(question, response)
+              }
+              question={question.question}
+              key={index}
+            />
           );
-        }else if(question.questionType === "Rating"){
-          return(
-              <RatingResponseSet onResponseChange={(response: string) => changedFor(question.jobFairQ1Id, response)} question={question.question} key={index}/>
-          )
+        } else if (question.questionType === "Rating") {
+          return (
+            <RatingResponseSet
+              onResponseChange={(response: string) =>
+                responseOfQuestion(question, response)
+              }
+              question={question.question}
+              key={index}
+            />
+          );
         }
         // return <></>
       })}
-
-      {/* <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <RatingResponse className="ml-[2em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <RatingResponse className="ml-[2em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <RatingResponse className="ml-[2em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" />
-
-      <Question question="Do you currently live in the city for which you want to apply the job for?" />
-      <RatingResponse className="ml-[2em] mb-[1em]" />
-      <QuestionSeparator className="mb-[2em]" /> */}
     </>
   );
 }
 
-//  this code is for boolen / Radio button
-function YesNoQuestionSet({question, onResponseChange }: any) {
-  const [response, setResponse] = React.useState("Yes");
+//  this code is for boolen / Radio button Question
+function YesNoQuestionSet({ question, onResponseChange }: any) {
+  
+  // Storing response of Question into this state variable
+  const [response, setResponse] = React.useState("");
 
-  const handleResponseChange = (selectedResponse:string)=>{
+  // Function to sent Response to parent component using Lifting the state Feature of Reactjs
+  const handleResponseChange = (selectedResponse: string) => {
     setResponse(selectedResponse);
     onResponseChange(selectedResponse);
-  }
+  };
   return (
-  <>
-    <Question question={question} />
-    {/* <YesNoResponse className="text-[1.5em] ml-[1.5em] mb-[1em]" /> */}
-    <RadioGroup
+    <>
+      <Question question={question} />
+      <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
         value={response}
-        onChange={(e)=>{
-          handleResponseChange(e.target.value)
+        onChange={(e) => {
+          handleResponseChange(e.target.value);
         }}
       >
         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
         <FormControlLabel value="No" control={<Radio />} label="No" />
       </RadioGroup>
-    <QuestionSeparator className="mb-[2em]" />
-  </>
+      <QuestionSeparator className="mb-[2em]" />
+    </>
   );
 }
 
-// this code is for Rating button
+// this code is for Rating button Question
 function RatingResponseSet({ question, onResponseChange }: any) {
-  const [value, setValue] = React.useState<number | null>(1);
+  // Storing response of Question into this state variable
+  const [value, setValue] = React.useState<number | null>(0);
 
+   // Function to sent Response to parent component using Lifting the state Feature of Reactjs
   const handleResponseChange = (newValue: number | null) => {
     setValue(newValue);
-    onResponseChange(newValue);
+    const numberToString = newValue !== null ? newValue.toString():null;
+    onResponseChange(numberToString);
   };
 
   return (
     <>
       <Question question={question} />
-      <Box sx={{ '& > legend': { mt: 2 } }}>
+      <Box sx={{ "& > legend": { mt: 2 } }}>
         <Rating
           name="simple-controlled"
           value={value}
@@ -209,37 +263,7 @@ function RatingResponseSet({ question, onResponseChange }: any) {
   );
 }
 
-
-// function RatingResponseSet({question, onResponseChange}: any) {
-//   const [value, setValue] = React.useState<number | null >(1);
-//   const handleResponseChange = (selectedResponse:Number)=>{
-//     setValue(selectedResponse);
-//     onResponseChange(selectedResponse);
-//   }
-//   return (
-//   <>
-//      <Question question={question}/>
-//       {/* <RatingResponse className="ml-[2em] mb-[1em]" /> */}
-//       <Box
-//       sx={{
-//         '& > legend': { mt: 2 },
-//       }}
-//     >
-     
-//       <Rating
-//         name="simple-controlled"
-//         value={value}
-//         onChange={(e, newValue) => {
-//           setValue(newValue);
-//           handleResponseChange(e.target.newValue)
-//         }}
-//       />
-//     </Box>
-//       <QuestionSeparator className="mb-[2em]" />
-//   </>
-//   );
-// }
-
+// Question components
 export function Question({ question }: { question: string }) {
   return (
     <div className="flex">
@@ -271,6 +295,7 @@ export function Question({ question }: { question: string }) {
   );
 }
 
+// Line to separate question 
 export function QuestionSeparator({ className }: { className?: string }) {
   return (
     <div
@@ -278,81 +303,3 @@ export function QuestionSeparator({ className }: { className?: string }) {
     ></div>
   );
 }
-
-// export function RatingResponse({ className }: { className?: string }) {
-//   function Star({
-//     className,
-//     active,
-//   }: {
-//     className?: string;
-//     active?: boolean;
-//   }) {
-//     return (
-//       <>
-//         {active && (
-//           <div className={className}>
-//             <svg
-//               width="19"
-//               height="18"
-//               viewBox="0 0 19 18"
-//               fill="none"
-//               xmlns="http://www.w3.org/2000/svg"
-//             >
-//               <path
-//                 d="M9.5 0L12.7945 4.96546L18.535 6.56434L14.8307 11.232L15.084 17.1857L9.5 15.105L3.91604 17.1857L4.16933 11.232L0.464963 6.56434L6.20546 4.96546L9.5 0Z"
-//                 fill="#FECD08"
-//               />
-//             </svg>
-//           </div>
-//         )}
-
-//         {!active && (
-//           <div className={className}>
-//             <svg
-//               width="19"
-//               height="18"
-//               viewBox="0 0 19 18"
-//               fill="none"
-//               xmlns="http://www.w3.org/2000/svg"
-//             >
-//               <path
-//                 d="M9.5 0L12.7945 4.96546L18.535 6.56434L14.8307 11.232L15.084 17.1857L9.5 15.105L3.91604 17.1857L4.16933 11.232L0.464963 6.56434L6.20546 4.96546L9.5 0Z"
-//                 fill="#D7E8F0"
-//               />
-//             </svg>
-//           </div>
-//         )}
-//       </>
-//     );
-//   }
-//   return (
-//     <div className={"flex " + className}>
-//       <Star className="mr-[1em]" active={true} />
-//       <Star className="mr-[1em]" active={true} />
-//       <Star className="mr-[1em]" active={true} />
-//       <Star className="mr-[1em]" active={true} />
-//       <Star className="" active={false} />
-//     </div>
-//   );
-// }
-
-
-
-// export function YesNoResponse({ className }: { className?: string }) {
-//   return (
-//     <div className={"flex " + className}>
-//       <div className="flex items-center mr-[0.5em]">
-//         <span className="mr-[0.5em]">
-//           <AppRadioButton active={true} />
-//         </span>
-//         <span>Yes</span>
-//       </div>
-//       <div className="flex items-center">
-//         <span className="mr-[0.5em]">
-//           <AppRadioButton active={false} />
-//         </span>
-//         <span>No</span>
-//       </div>
-//     </div>
-//   );
-// }
