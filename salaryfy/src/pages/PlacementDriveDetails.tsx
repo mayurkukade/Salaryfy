@@ -90,7 +90,7 @@ console.log(currentRoute)
           <p className="text-lg">Placement Drive Details</p>
         </div>
         <div className="app-box-shadow mb-[5em] rounded-[2em]">
-          <PlacementJobDetails onGetHiredClick={onGetHiredClick} jobDetails={jobDetails} />
+        <PlacementJobDetails onGetHiredClick={onGetHiredClick} jobDetails={jobDetails} />
           <div className="px-[5em] py-[0.5em]">
             <div className="flex justify-between items-center flex-col-reverse lg:flex-row mt-[2em]">
 
