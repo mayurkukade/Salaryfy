@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
 import DropdownMenu from "../../../components/DropdownMenu";
-import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
-import QuestionnaireTopBarStep from "../components/questionnaire-topbar-step.component";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { HavingDoubts } from "../components/having-doubts.component";
 import LenskartImage from "../../../assets/images/lenskart-icon.png";
