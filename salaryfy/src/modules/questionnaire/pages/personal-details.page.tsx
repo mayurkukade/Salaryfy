@@ -1,5 +1,5 @@
 import UserJobDetails from "../components/job-details.component";
-import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
+
 import SubSteps from "../components/sub-steps.component";
 import { useRef, useState, useEffect, CSSProperties } from "react";
 import OTPInput from "react-otp-input";
@@ -25,7 +25,7 @@ import {
   resSteptwoSelector,
 } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { registerFormQuestionnaire } from "../../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 
@@ -649,19 +649,36 @@ const PersonalDetails = (): JSX.Element => {
     !date ||
     !matchpassword;
 
-  const regiterDispatchHandler = () => {
-    dispatch(
-      registerFormQuestionnaire({
-        fullName,
-        mobile_no,
-        email,
-        password,
-        role,
-        userProfileType,
-        date,
-      })
-    );
-  };
+
+console.log(!contentDisabled)
+useEffect(()=>{
+  if(!contentDisabled){
+    console.log('dispatch')
+    dispatch(registerFormQuestionnaire({
+          fullName,
+          mobile_no,
+          email,
+          password,
+          role,
+          userProfileType,
+          date,
+        }))
+        dispatch(resSteptwoSelector(true))
+  }
+
+},[contentDisabled, dispatch, email, fullName, mobile_no, password])
+
+  // const regiterDispatchHandler= () =>{
+  //   dispatch(registerFormQuestionnaire({
+  //     fullName,
+  //     mobile_no,
+  //     email,
+  //     password,
+  //     role,
+  //     userProfileType,
+  //     date,
+  //   }))
+  // }
 
   const registerSubmitHanlder = async (
     e: React.MouseEvent<HTMLButtonElement>
@@ -753,33 +770,10 @@ const PersonalDetails = (): JSX.Element => {
     if (contentDisabled) {
       console.log(contentDisabled);
     }
-  }, [contentDisabled]);
-
-  useEffect(() => {
-    if (contentDisabled)
-      dispatch(
-        registerFormQuestionnaire({
-          fullName,
-          mobile_no,
-          email,
-          password,
-          role,
-          userProfileType,
-          date,
-        })
-      );
-  }, [
-    dispatch,
-    fullName,
-    mobile_no,
-    email,
-    password,
-    role,
-    userProfileType,
-    date,
-    contentDisabled,
-  ]);
-
+  },[contentDisabled])
+console.log(contentDisabled)
+  
+  
   console.log(validpassword);
   console.log(matchpassword);
   return (
@@ -841,7 +835,7 @@ const PersonalDetails = (): JSX.Element => {
           <UploadResumeComponent />
           <button
             className="bg-[#005F59] text-xl cursor-pointer h-[40px] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]   disabled:bg-gray-400 disabled:cursor-not-allowed "
-            onClick={regiterDispatchHandler}
+            // onClick={regiterDispatchHandler}
             disabled={contentDisabled}
           >
             Submit

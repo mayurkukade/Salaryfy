@@ -29,8 +29,8 @@ const Navbar = () => {
  
   const open = Boolean(anchorEl);
 console.log(window.location.href)
-  const registerData = window.location.href.slice(22)
-console.log(registerData)
+  const currentLocation = window.location.href.slice(22)
+console.log(currentLocation)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -67,8 +67,8 @@ console.log(registerData)
   };
 
 useEffect(()=>{
-dispatch(cureentSelector(registerData))
-},[dispatch,registerData])
+dispatch(cureentSelector(currentLocation))
+},[dispatch,currentLocation])
 
   return (
     <nav className="flex justify-between  items-center h-24  w-full p-10 ">
@@ -346,13 +346,13 @@ dispatch(cureentSelector(registerData))
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                     stroke="currentColor"
                     className="w-6 h-6 ml-1"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M19.5 8.25l-7.5 7.5-7.5-7.5"
                     />
                   </svg>

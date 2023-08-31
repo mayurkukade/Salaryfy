@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../store/app.store";
+import { resSteptwoSelector } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
+import { useRegisterMutation } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
 
 // // For Accepting Props
 // interface BottomPageNavigationBarProps {
@@ -10,48 +11,82 @@ import { useEffect } from "react";
 // }
 
 export default function BottomPageNavigationBar() {
+  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
+
   const registerFormData = useSelector(
     (state: RootState) => state.registerFormSlice.registerFormData
   );
+  console.log(registerFormData)
   const currentRoutee = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
+  const resSteptwoSelector = useSelector((state:RootState)=>state.mainStepsCounter.resStepTwo)
   console.log(currentRoutee);
-  console.log(registerFormData);
-
-  const registerData = window.location.href.slice(22);
-  console.log(registerData);
+  console.log(registerFormData[0]);
+console.log(resSteptwoSelector)
+  const currentRoute = window.location.href.slice(22);
+  console.log(currentRoute);
 
   const navigate = useNavigate();
 
-  const nextHandler = () => {
-    if (registerFormData) {
-      navigate("/questionnaire/screening-questions");
-    } else if (registerData === "questionnaire") {
-      console.log("done");
-    } else if (registerData == "questionnaire/screening-questions") {
-      console.log("ques");
-    } else {
-      toast.error("Please submit form", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+ 
+  const nextHandler = async(e:React.MouseEvent<HTMLButtonElement>) => {
+    if (currentRoute === "questionnaire") {
+      console.log(true)
+  e.preventDefault()
+      try {
+        const res = await register(registerFormData[0]);
+      console.log(res)
+  
+        if (res.data) {
+  
+  
+           toast.success("register success", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+  
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          navigate("/questionnaire/screening-questions");
+        } else {
+        
+          return toast.error("error", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+  
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+        
+      } catch (error) {
+        console.log(error);
+      }
+
+    } else if (currentRoute === "questionnaire/screening-questions") {
+      navigate("/questionnaire/schedule-interview");
     }
   };
-  const backHandler = () => {
-    navigate("/questionnaire");
-  };
 
-  useEffect(() => {}, []);
+  const backHandler = () => {
+    if (currentRoute === "questionnaire/screening-questions") {
+      navigate("/questionnaire");
+    } else if (currentRoute === "questionnaire/schedule-interview") {
+      navigate("/questionnaire/screening-questions");
+    }
+  };
 
   return (
     <div className="flex justify-center mt-6 mb-6">
-      <div className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]">
+  
+      <div className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]" onClick={backHandler}>
         <span className="mr-[1em]">
           <svg
             width="35"
@@ -69,13 +104,14 @@ export default function BottomPageNavigationBar() {
           Back
         </span>
       </div>
-      <div
-        className="flex items-center bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em]"
+      <button
+        className="flex items-center bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em] text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer  disabled:bg-gray-400 disabled:cursor-not-allowed "
         onClick={nextHandler}
+        disabled={!resSteptwoSelector}
       >
-        <button className="text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer">
+        
           Next
-        </button>
+     
         <span className="" style={{ transform: "scaleX(-1)" }}>
           <svg
             width="35"
@@ -89,7 +125,11 @@ export default function BottomPageNavigationBar() {
             />
           </svg>
         </span>
-      </div>
+      </button>
     </div>
   );
 }
+function dispatch(arg0: { payload: boolean; type: "mainStepsCounter/resSteptwoSelector"; }) {
+  throw new Error("Function not implemented.");
+}
+

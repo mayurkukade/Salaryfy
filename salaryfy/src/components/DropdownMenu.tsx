@@ -11,7 +11,7 @@ export default function DropdownMenu({ onOptionClick, options, className, label,
   };
 
   function optionClicked(option:string): void {
-    if(option && onOptionClick) onOptionClick(option);
+    if(option && onOptionClick) { onOptionClick(option) }
     handleClose();
   }
   const handleClose = () => {

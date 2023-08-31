@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import eyelogo from "../../assets/Logos/eyelogo.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
 import { useLoginMutation } from "../features/api-integration/apiUserSlice/api-integration-user.slice";
 const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setToken,
   clearToken,
@@ -22,6 +23,8 @@ export const Login = () => {
   console.log(isLoading, isError);
 
   const [password, setpassword] = useState<string>("");
+const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
+
 
   const LoginSubmitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
