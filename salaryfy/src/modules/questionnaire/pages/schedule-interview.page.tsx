@@ -49,14 +49,17 @@ export function ScheduleInterview() {
   const [selectMeridiem, setSelectMeridiem] = useState("");
   const [convertedTime, setConvertedTime] = useState('');
   const userId = useSelector((state: RootState) => state.authSlice.userId);
+  const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
+  console.log(jobDetails)
   console.log(selectedDate)
   const selectInterviewData = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
   console.log(selectInterviewData.interviewEndDate);
   const [interviewScheduleApi] = useInterviewScheduleApiMutation();
-
-const {data,isLoading,isError} = useGetInterviewScheduleQuery()
+const jobId:number = localStorage.getItem('jobId')
+console.log(jobId)
+const {data,isLoading,isError} = useGetInterviewScheduleQuery({userId,jobId})
  
 const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation()
 
@@ -276,16 +279,9 @@ console.log(dateFormat)
           </div>
         </div>
 
-        <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]">
-          <div style={{ whiteSpace: "nowrap" }}>Slot-3</div>
-          <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-          <div className="mr-[0.5em]">
-            Koremanagalam, On Satureday, 10 June 2023, 11:30 PM
-          </div>
-          <div>
-            <CancelIcon sx={{ color: "red" }} />
-          </div>
-        </div>
+        
+      </div> */}
+      
 
         <div className="flex items-center text-[1.6em] text-[#5B5B5B]">
           <div>
@@ -319,7 +315,6 @@ console.log(dateFormat)
           </div>
           <div>whatsapp number</div>
         </div>
-      </div> */}
     </div>
   );
 }

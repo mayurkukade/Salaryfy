@@ -833,13 +833,13 @@ console.log(contentDisabled)
             />
           </div>
           <UploadResumeComponent />
-          <button
+          {/* <button
             className="bg-[#005F59] text-xl cursor-pointer h-[40px] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]   disabled:bg-gray-400 disabled:cursor-not-allowed "
             // onClick={regiterDispatchHandler}
             disabled={contentDisabled}
           >
             Submit
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

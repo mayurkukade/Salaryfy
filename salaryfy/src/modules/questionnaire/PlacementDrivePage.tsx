@@ -60,9 +60,10 @@ export default function PlacementDrivePage() {
 
     const filterPropertiesUriEncoded = Object.entries(filterProperties).map(([key, value]: [string, string]) => [key, encodeURIComponent(value)].join('=') ).join('&');
     const { data: { list: jobsData } } = await lazyGetFilterJobs(filterPropertiesUriEncoded);
-
+  
     dispatch(setJobs(jobsData));
   }
+
 
   async function searchByKeyword() {
     const searchElement = searchFieldRef.current;

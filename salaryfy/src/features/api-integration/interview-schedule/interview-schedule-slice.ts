@@ -15,7 +15,11 @@ const interviewSchedule = apiSlice.injectEndpoints({
             invalidatesTags:["User"]
         }),
         getInterviewSchedule:builder.query({
-            query: () => `/Interview/getInterviewByUserIdJobId?userId=6&jobId=41`,
+            query: ({userId,jobId}) =>({
+                url: `/Interview/getInterviewByUserIdJobId?userId=${userId}&jobId=${jobId}`,
+                transformResponse:console.log(userId,jobId),
+            }),
+
             providesTags:['User']
 
         }),
