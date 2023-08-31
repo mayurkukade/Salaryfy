@@ -5,6 +5,78 @@ import SubStep from "./sub-step.component";
 import { RootState } from "../../../store/app.store";
 
 export default function SubSteps() {
+  const currentRoute = useSelector(
+    (state: RootState) => state.currentRoute.currentRoute
+  );
+  console.log(currentRoute);
+  let subStepContent;
+  if (currentRoute == "questionnaire/screening-questions") {
+    subStepContent = (
+      <>
+        <SubStep
+          status={SUB_STEP_STATUS.PENDING}
+          no={1}
+          title="Upload your Resume"
+        />
+        <SubStepArrow />
+        <SubStep
+          status={SUB_STEP_STATUS.COMPLETED}
+          no={2}
+          title="Screening Quesions"
+        />
+        <SubStepArrow />
+        <SubStep
+          status={SUB_STEP_STATUS.REMAINING}
+          no={3}
+          title="Confirming Interview Slot"
+        />
+      </>
+    );
+  }else if(currentRoute == "questionnaire/schedule-interview"){
+    subStepContent = (
+      <>
+        <SubStep
+          status={SUB_STEP_STATUS.PENDING}
+          no={1}
+          title="Upload your Resume"
+        />
+        <SubStepArrow />
+        <SubStep
+          status={SUB_STEP_STATUS.COMPLETED}
+          no={2}
+          title="Screening Quesions"
+        />
+        <SubStepArrow />
+        <SubStep
+          status={SUB_STEP_STATUS.REMAINING}
+          no={3}
+          title="Confirming Interview Slot"
+        />
+      </>
+    );
+  } else {
+    subStepContent = (
+      <>
+        <SubStep
+          status={SUB_STEP_STATUS.PENDING}
+          no={1}
+          title="Upload your Resume"
+        />
+        <SubStepArrow />
+        <SubStep
+          status={SUB_STEP_STATUS.REMAINING}
+          no={2}
+          title="Screening Quesions"
+        />
+        <SubStepArrow />
+        <SubStep
+          status={SUB_STEP_STATUS.REMAINING}
+          no={3}
+          title="Confirming Interview Slot"
+        />
+      </>
+    );
+  }
   return (
     <>
       <div className="hidden md:flex flex-col">
@@ -20,8 +92,17 @@ export default function SubSteps() {
         <div className="flex justify-between mb-[2em]">{subStepContent}</div>
       </div>
       <div className="flex justify-center">
-        <div className="flex md:hidden flex-col w-[max-content] rounded-[1.5em]" style={{ background: "linear-gradient(to bottom, #FECD08 1%, #fff 30%, #fff 50%, #fff 100%)" }}>
-          <div className="text-[#0E5F59] text-[1.4em] px-[1em] pt-[0.5em]"><span>3 Steps selection process for&nbsp;</span><span className="font-bold">Lenskart</span></div>
+        <div
+          className="flex md:hidden flex-col w-[max-content] rounded-[1.5em]"
+          style={{
+            background:
+              "linear-gradient(to bottom, #FECD08 1%, #fff 30%, #fff 50%, #fff 100%)",
+          }}
+        >
+          <div className="text-[#0E5F59] text-[1.4em] px-[1em] pt-[0.5em]">
+            <span>3 Steps selection process for&nbsp;</span>
+            <span className="font-bold">Lenskart</span>
+          </div>
           <div className="flex items-center gap-[0.5em] bg-[#0E5F59] p-[1em] rounded-[1.5em]">
             <div className="h-[4.5em] w-[4.5em] bg-[white] rounded-[50%]"></div>
             <div>
