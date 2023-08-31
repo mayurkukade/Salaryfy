@@ -29,13 +29,19 @@ export default function QuestionnaireTopBarStep() {
   );
   console.log(currentRoute);
   let stepTwoTotal: number;
+  let stepThreeTotal:number
   if (currentRoute == "questionnaire/screening-questions") {
     stepTwoTotal = 25;
   }else if(currentRoute == 'questionnaire/fresher-dashboard'){
     stepTwoTotal = 100;
+    stepThreeTotal = 40
   } else if(currentRoute == 'questionnaire/schedule-interview'){
     stepTwoTotal = 70;
-  } else {
+  }else if(currentRoute == 'questionnaire/fresher-profile-upload'){
+    stepTwoTotal = 100;
+    stepThreeTotal = 60
+  }
+   else {
     stepTwoTotal =
       phoneNumberCounterStep2 +
       passwordCounterStep2 +
@@ -64,7 +70,7 @@ export default function QuestionnaireTopBarStep() {
             no={2}
             title="Upload your Resume"
           />
-          <StepDesktop progress={0} active={false} no={3} title="Get hired!" />
+          <StepDesktop progress={stepThreeTotal} active={false} no={3} title="Get hired!" />
         </div>
       </Box>
 
