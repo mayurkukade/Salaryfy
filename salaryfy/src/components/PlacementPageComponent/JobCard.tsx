@@ -16,6 +16,8 @@ const JobCard = ({ details }: { details: JobType }) => {
   }
 
   function onGetHiredClick() {
+    
+    
     localStorage.setItem('jobId',details.jobId)
     if (token) {
       navigate('/questionnaire/screening-questions')
