@@ -2,6 +2,12 @@ import { Button, Chip, TextField } from "@mui/material";
 import DropdownMenu from "../../../components/DropdownMenu";
 import { HavingDoubts } from "../components/having-doubts.component";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { ChangeEvent, useRef } from "react";
+import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";
+import { useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/app.store";
+import { catchError, concatMap, from, of, throwError } from 'rxjs';
 // import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
 
 export default function FresherProfileUploadPage() {
@@ -18,11 +24,50 @@ export default function FresherProfileUploadPage() {
 }
 
 function FresherProfileUpload() {
+
+  const [fileUploadPost] = useUploadFileMutation();
+  const userId = useSelector((state: RootState) => state.authSlice.userId);
+
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async function onDocumentUploadEvent(documentType: FILE_UPLOAD_TYPES, documentFile: File) {
+    if (!userId) { return; }
+    const formData = new FormData()
+    formData.append('image', documentFile);
+    formData.append('documentType', documentType);
+    formData.append('userId', userId);
+
+    type ErrorType = { error: { data: null, status: number } }
+
+    from(fileUploadPost(formData))
+      .pipe(
+        concatMap((response$) => {
+          if ((response$ as ErrorType)?.error?.status >= 400 && (response$ as ErrorType)?.error?.status <= 499) { return throwError('Server error'); }
+          return of(response$);
+        }),
+        catchError(error => throwError(error))
+      ).subscribe(
+        (response) => {
+          console.log('File upload success: ', response);
+          alert('File ' + documentType + ' has been uploaded successfully');
+        },
+        (error: ErrorType) => {
+          console.error('Got An Error while upoading: ', error);
+        });
+
+
+
+  }
+
+  function unHandledEvent() {
+    console.log('event not handled');
+  }
+
   return (
     <>
       <div
         className="flex flex-col md:flex-row md:justify-between "
-        // style={{ border: "2px solid black" }}
+      // style={{ border: "2px solid black" }}
       >
         <div>
           <div>
@@ -36,7 +81,7 @@ function FresherProfileUpload() {
                 </div>
                 <div
                   className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center"
-                  // style={{ backgroundColor: "#FFFFFF" }}
+                // style={{ backgroundColor: "#FFFFFF" }}
                 >
                   Upload your Passport Photo
                 </div>
@@ -124,28 +169,21 @@ function FresherProfileUpload() {
               </div>
             </div>
 
-            {/* Upload Documents Section */}
+            { /* Upload Documents section */}
             <div className="my-[3em]">
-              <div className="text-[#005F59] text-[1.375rem] md:text-[3.2em] font-bold mb-[1em]">
-                Upload Documents
+              <div className="text-[#005F59] text-[1.375rem] md:text-[3.2em] font-bold mb-[1em]">Upload Documents</div>
+
+              { /*Identification documents section  */}
+              <div className="text-[#5B5B5B] text-[0.875rem] md:text-[2.4em] font-bold mb-[1em]">Identification documents*</div>
+              <div className="flex flex-col gap-[2em] md:grid md:grid-cols-[repeat(2,1fr)] md:gap-[2em] md:mb-[2em]">
+                <DocUploader onDocUpload={(file: File) => onDocumentUploadEvent(FILE_UPLOAD_TYPES.AADHAR_CARD, file)} label="Upload Aadhar" uploading={false} />
+                <DocUploader onDocUpload={(file: File) => onDocumentUploadEvent(FILE_UPLOAD_TYPES.PAN_CARD, file)} label="Upload PAN" uploading={false} />
+                <DocUploader onDocUpload={(file: File) => onDocumentUploadEvent(FILE_UPLOAD_TYPES.CANCELLED_CHEQUE, file)} label="Cancelled Cheque" uploading={false} />
+                <DocUploader onDocUpload={(file: File) => onDocumentUploadEvent(FILE_UPLOAD_TYPES.BANK_PASS_BOOK, file)} label="Front page of bank Passbook" uploading={false} />
               </div>
 
-              {/*Identification documents dection  */}
-              <div className="text-[#5B5B5B] text-[0.875rem] md:text-[2.4em] font-bold mb-[1em]">
-                Identification documents*
-              </div>
-              <div className="flex flex-col gap-[20px] md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:mb-[2em]">
-                <DocUploader label="Upload Aadhar" uploading={false} />
-                <DocUploader label="Upload PAN" uploading={false} />
-                <DocUploader label="Cancelled Cheque" uploading={false} />
-                <DocUploader
-                  label="Front page of bank Passbook"
-                  uploading={false}
-                />
-              </div>
+              {/* Education Section */}
 
-              {/* Education* Section */}
-              
               <div className="text-[#5B5B5B] text-[2.4em] font-bold my-[2em]">
                 Education*
               </div>
@@ -154,18 +192,20 @@ function FresherProfileUpload() {
                   label="12th_standard.png"
                   uploading={true}
                   progress={100}
+                  onDocUpload={unHandledEvent}
                 />
                 <DocUploader
                   label="graduate.png"
                   uploading={true}
                   progress={10}
+                  onDocUpload={unHandledEvent}
                 />
               </div>
               <div className="mt-[20px] md:mt-[0px]">
                 <Button variant="contained">Add</Button>
               </div>
 
-              {/*Skills/Certification* Section */}
+              { /*Skills/Certification Section */}
               <div className="text-[#5B5B5B] text-[2.4em] font-bold my-[2em]">
                 <h1>Skills/Certification*</h1>
                 <DocUploader
@@ -173,33 +213,18 @@ function FresherProfileUpload() {
                   className="w-full text-[0.5rem] md:w-[50%]"
                   uploading={true}
                   progress={100}
+                  onDocUpload={unHandledEvent}
                 />
                 <div>
                   {" "}
-                  <Button variant="contained" className="mt-[20px]" style={{marginTop:"20px"}}>
-                    Add
-                  </Button>
+                  <Button variant="contained" className="mt-[20px]" style={{ marginTop: "20px" }}>Add</Button>
                 </div>
               </div>
-              {/* <div className="grid grid-cols-[1fr,1fr] gap-[2em] mb-[2em]" >
-              </div> */}
             </div>
 
             <div className="flex gap-[2em] my-[2em] mt-[5em]">
-              <Button
-                style={{ minWidth: "10em" }}
-                size="large"
-                variant="outlined"
-              >
-                Cancel
-              </Button>
-              <Button
-                style={{ minWidth: "10em" }}
-                size="large"
-                variant="contained"
-              >
-                Save
-              </Button>
+              <Button style={{ minWidth: "10em" }} size="large" variant="outlined" >Cancel</Button>
+              <Button style={{ minWidth: "10em" }} size="large" variant="contained">Save</Button>
             </div>
           </div>
         </div>
@@ -212,20 +237,27 @@ function FresherProfileUpload() {
   );
 }
 
-function DocUploader({
-  className,
-  label,
-  uploading,
-  progress,
-}: {
-  className?: string;
-  label: string;
-  uploading?: boolean;
-  progress?: number;
-}) {
-  if (uploading) {
-    return (
-      <div
+function DocUploader({ className, label, uploading, progress, onDocUpload }: { className?: string; label: string; uploading?: boolean; progress?: number; onDocUpload: (file: File) => void }) {
+  const uploadFileRef = useRef<HTMLInputElement | null>(null);
+
+  function onClicked() {
+    console.log('clicked');
+    uploadFileRef.current?.click();
+  }
+
+  function onFileUploadEvent(event: ChangeEvent<HTMLInputElement>) {
+    const selectedFile = event.target.files && event.target.files[0];
+    if (selectedFile) {
+      onDocUpload(selectedFile);
+      if (uploadFileRef.current) {
+        uploadFileRef.current.value = '';
+      }
+    }
+  }
+
+  return (
+    <>
+      {uploading && <div
         className={
           "flex justify-between items-center shadow-lg px-[2em] py-[1.5em] rounded-[1em] " +
           (className || "")
@@ -233,27 +265,9 @@ function DocUploader({
       >
         <div className="flex items-center gap-[1em] flex-grow">
           <div>
-            <svg
-              width="39"
-              height="39"
-              viewBox="0 0 39 39"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75"
-                stroke="#005F59"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z"
-                stroke="#005F59"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+            <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg" >
+              <path d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
           <div className="flex flex-col gap-[0.25em] text-[#005F59] text-[2em] font-semibold flex-grow pr-[1em]">
@@ -269,68 +283,49 @@ function DocUploader({
           </div>
         </div>
         <div className="w-[max-content]">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" >
+            <path d="M16.0009 30.7206C24.1304 30.7206 30.7206 24.1304 30.7206 16.0009C30.7206 7.87147 24.1304 1.28125 16.0009 1.28125C7.87147 1.28125 1.28125 7.87147 1.28125 16.0009C1.28125 24.1304 7.87147 30.7206 16.0009 30.7206Z" fill="#005F59" />
+            <path d="M21.4025 19.3397C21.6054 19.5433 21.7434 19.8028 21.7989 20.0852C21.8545 20.3676 21.8251 20.6603 21.7144 20.9259C21.6038 21.1915 21.4169 21.4182 21.1776 21.5771C20.9382 21.736 20.6571 21.82 20.37 21.8185C19.992 21.8185 19.6284 21.6727 19.3376 21.3956L16.0076 18.0565L12.6776 21.3956C12.3868 21.6872 12.0233 21.8185 11.6452 21.8185C11.2671 21.8185 10.9036 21.6727 10.6128 21.3956C10.478 21.2607 10.371 21.1005 10.298 20.9241C10.2251 20.7477 10.1875 20.5586 10.1875 20.3676C10.1875 20.1767 10.2251 19.9876 10.298 19.8112C10.371 19.6348 10.478 19.4746 10.6128 19.3397L13.9427 16.0005L10.6128 12.6614C10.4781 12.5264 10.3713 12.3662 10.2985 12.1898C10.2256 12.0134 10.1881 11.8244 10.1881 11.6335C10.1881 11.4426 10.2256 11.2535 10.2985 11.0771C10.3713 10.9007 10.4781 10.7405 10.6128 10.6055C10.7474 10.4705 10.9072 10.3634 11.0831 10.2903C11.259 10.2173 11.4475 10.1797 11.6379 10.1797C11.8283 10.1797 12.0168 10.2173 12.1927 10.2903C12.3686 10.3634 12.5285 10.4705 12.6631 10.6055L15.9931 13.9446L19.3231 10.6055C19.4577 10.4705 19.6175 10.3634 19.7934 10.2903C19.9693 10.2173 20.1578 10.1797 20.3482 10.1797C20.5386 10.1797 20.7271 10.2173 20.903 10.2903C21.0789 10.3634 21.2388 10.4705 21.3734 10.6055C21.508 10.7405 21.6148 10.9007 21.6877 11.0771C21.7605 11.2535 21.798 11.4426 21.798 11.6335C21.798 11.8244 21.7605 12.0134 21.6877 12.1898C21.6148 12.3662 21.508 12.5264 21.3734 12.6614L18.0434 16.0005L21.3734 19.3397H21.4025Z" fill="white" stroke="#0E5F59" />
+          </svg>
+        </div>
+      </div>
+      }
+      {!uploading && <div onClick={onClicked} className={"cursor-pointer flex items-center gap-[1em] shadow-lg px-[2em] py-[1.5em] rounded-[1em] " + (className || "")}>
+        <div>
           <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
+            width="39"
+            height="39"
+            viewBox="0 0 39 39"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M16.0009 30.7206C24.1304 30.7206 30.7206 24.1304 30.7206 16.0009C30.7206 7.87147 24.1304 1.28125 16.0009 1.28125C7.87147 1.28125 1.28125 7.87147 1.28125 16.0009C1.28125 24.1304 7.87147 30.7206 16.0009 30.7206Z"
-              fill="#005F59"
+              d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125"
+              stroke="#005F59"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
-              d="M21.4025 19.3397C21.6054 19.5433 21.7434 19.8028 21.7989 20.0852C21.8545 20.3676 21.8251 20.6603 21.7144 20.9259C21.6038 21.1915 21.4169 21.4182 21.1776 21.5771C20.9382 21.736 20.6571 21.82 20.37 21.8185C19.992 21.8185 19.6284 21.6727 19.3376 21.3956L16.0076 18.0565L12.6776 21.3956C12.3868 21.6872 12.0233 21.8185 11.6452 21.8185C11.2671 21.8185 10.9036 21.6727 10.6128 21.3956C10.478 21.2607 10.371 21.1005 10.298 20.9241C10.2251 20.7477 10.1875 20.5586 10.1875 20.3676C10.1875 20.1767 10.2251 19.9876 10.298 19.8112C10.371 19.6348 10.478 19.4746 10.6128 19.3397L13.9427 16.0005L10.6128 12.6614C10.4781 12.5264 10.3713 12.3662 10.2985 12.1898C10.2256 12.0134 10.1881 11.8244 10.1881 11.6335C10.1881 11.4426 10.2256 11.2535 10.2985 11.0771C10.3713 10.9007 10.4781 10.7405 10.6128 10.6055C10.7474 10.4705 10.9072 10.3634 11.0831 10.2903C11.259 10.2173 11.4475 10.1797 11.6379 10.1797C11.8283 10.1797 12.0168 10.2173 12.1927 10.2903C12.3686 10.3634 12.5285 10.4705 12.6631 10.6055L15.9931 13.9446L19.3231 10.6055C19.4577 10.4705 19.6175 10.3634 19.7934 10.2903C19.9693 10.2173 20.1578 10.1797 20.3482 10.1797C20.5386 10.1797 20.7271 10.2173 20.903 10.2903C21.0789 10.3634 21.2388 10.4705 21.3734 10.6055C21.508 10.7405 21.6148 10.9007 21.6877 11.0771C21.7605 11.2535 21.798 11.4426 21.798 11.6335C21.798 11.8244 21.7605 12.0134 21.6877 12.1898C21.6148 12.3662 21.508 12.5264 21.3734 12.6614L18.0434 16.0005L21.3734 19.3397H21.4025Z"
-              fill="white"
-              stroke="#0E5F59"
+              d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75"
+              stroke="#005F59"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z"
+              stroke="#005F59"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>
+        <div className="text-[#005F59] text-[2em] font-semibold">{label}</div>
       </div>
-    );
-  }
-
-  return (
-    <div
-      className={
-        "flex items-center gap-[1em] shadow-lg px-[2em] py-[1.5em] rounded-[1em] " +
-        (className || "")
       }
-     
-    >
-      <div>
-        <svg
-          width="39"
-          height="39"
-          viewBox="0 0 39 39"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125"
-            stroke="#005F59"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75"
-            stroke="#005F59"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z"
-            stroke="#005F59"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-      <div className="text-[#005F59] text-[2em] font-semibold">{label}</div>
-    </div>
+      <input ref={uploadFileRef} onChange={onFileUploadEvent} accept="image/jpeg" type="file" className="hidden" />
+    </>
   );
 }
