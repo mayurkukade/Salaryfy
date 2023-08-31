@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  useGetScreeningQuestionQuery,
-  usePostScreeningQuestionSliceMutation,
-} from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
+import React, { useState,useEffect } from "react";
+import { useGetScreeningQuestionQuery,usePostScreeningQuestionSliceMutation } from "../../../features/api-integration/screeningQuestion/screeningQuestionStep2Slice";
 import UserJobDetails from "../components/job-details.component";
 import SubSteps from "../components/sub-steps.component";
 import Radio from "@mui/material/Radio";
@@ -13,24 +10,24 @@ import Rating from "@mui/material/Rating";
 import { RootState } from "../../../store/app.store";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { AppStoreStateType } from "../../../store/app.store";
+import { useSelector } from 'react-redux';
+import { AppStoreStateType } from '../../../store/app.store';
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
 
 export default function ScreeningQuestions() {
+
   // const cureentSelector = useSelector(
   //   (state: RootState) => state.currentRoute.currentRoute
   // );
   // console.log(cureentSelector);
 
-  // selector hook to get all job details
-  const jobDetails = useSelector(
-    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
-  );
-  console.log(jobDetails?.jobId);
-  const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;
+ 
+   // selector hook to get all job details
+   const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
+   console.log( jobDetails?.jobId);
+   const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;
   //  const id = jobDetails?.jobId;
-  console.log(id);
+   console.log(id)
   const navigate = useNavigate();
   const [collectResponse, setCollectResponse] = useState([]);
 
@@ -40,22 +37,24 @@ export default function ScreeningQuestions() {
     isError,
     isLoading,
   } = useGetScreeningQuestionQuery(id);
-  console.log("Get all quesation", responseData);
+   console.log("Get all quesation", responseData);
   // used to post the question and answer
-  const [postQuestion, postQuestionResponse] =
-    usePostScreeningQuestionSliceMutation();
+  const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
   // const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation(id);
 
-  // Function to sent response to backend
+  // Function to sent response to backend 
   const submitResponse = async () => {
+    
     try {
       const filteredResponses = removeDuplicateResponses(collectResponse);
-      console.log("filteredResponses length is", filteredResponses);
+      console.log("filteredResponses length is", filteredResponses)
       console.log("Response Data length is", responseData.response);
       // applied validation to submit all question
-      if (filteredResponses.length === responseData?.response.length) {
+      if (filteredResponses.length === responseData?.response.length )  {
+        
+       
         //  console.log("Submitted Data is", filteredResponses);
-        console.log("postQuestionResponse is ", postQuestionResponse);
+        console.log('postQuestionResponse is ',postQuestionResponse)
         if (postQuestionResponse.error) {
           toast.error("Error While Submitting Response");
         } else {
@@ -71,10 +70,11 @@ export default function ScreeningQuestions() {
 
           // sending data to backend
           postQuestion(filteredResponses);
-          console.log("data sent to backend is ", filteredResponses);
+          console.log('data sent to backend is ', filteredResponses)
           navigate("/questionnaire/schedule-interview"); // Navigate to a Next page
         }
       } else {
+        
         toast.error("Please complete all questions before submitting", {
           position: "top-center",
           autoClose: 1000,
@@ -91,61 +91,52 @@ export default function ScreeningQuestions() {
   };
 
   // Function to remove dupliacte response from ARRAY of object
-  function removeDuplicateResponses(responses: any) {
-    const uniqueResponses: { [key: string]: { jobFairQ1Id: string } } = {};
+function removeDuplicateResponses(responses:any) {
+  const uniqueResponses: { [key: string]: { jobFairQ1Id: string } } = {};
 
-    for (const response of responses) {
-      uniqueResponses[response.jobFairQ1Id] = response;
-    }
-
-    const filteredResponses = Object.values(uniqueResponses);
-
-    return filteredResponses;
+  for (const response of responses) {
+    uniqueResponses[response.jobFairQ1Id] = response;
   }
 
-  // Early Return if Error Occur
-  if (isError)
-    return (
-      <div>
-        <h1 className="text-[2rem] md:text-[5rem]">
-          OOps Something went wrong
-        </h1>
-      </div>
-    );
+  const filteredResponses = Object.values(uniqueResponses);
 
-  return (
-    <>
-      {/* teneray opearator added if Loading is true then Loading show else Question show */}
-      {isLoading ? (
-        <div>
-          <h1 className="text-[2rem] md:text-[5rem]">Loading...</h1>
-        </div>
-      ) : (
-        <div className="w-100 flex flex-col items-center h-[100%]">
-          <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
-            <div className="text-[1.4em]">Job Details</div>
-            <UserJobDetails />
-            {/* STEPS */}
-            <div className="py-[2em] px-[3em] h-[100%]">
-              <SubSteps />
-              {responseData && (
-                <Questions
-                  responseData={responseData}
-                  setCollectResponse={setCollectResponse}
-                />
-              )}
-              <button
-                className="text-[2em] bg-[#FECD08] w-[100px] font-medium mr-[0.5em] text-[#005F59] cursor-pointer mt-3"
-                onClick={submitResponse}
-              >
-                Submit
-              </button>
-            </div>
+  return filteredResponses;
+}
+
+  // Early Return if Error Occur
+  if(isError) return <div><h1 className="text-[2rem] md:text-[5rem]">OOps Something went wrong</h1></div>
+
+return (
+  <>
+  {/* teneray opearator added if Loading is true then Loading show else Question show */}
+    {isLoading ? (
+      <div><h1 className="text-[2rem] md:text-[5rem]">Loading...</h1></div>
+    ) : (
+      <div className="w-100 flex flex-col items-center h-[100%]">
+        <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
+          <div className="text-[1.4em]">Job Details</div>
+          <UserJobDetails />
+          {/* STEPS */}
+          <div className="py-[2em] px-[3em] h-[100%]">
+            <SubSteps />
+            {responseData && (
+              <Questions
+                responseData={responseData}
+                setCollectResponse={setCollectResponse}
+              />
+            )}
+            <button
+              className="text-[2em] bg-[#FECD08] w-[100px] font-medium mr-[0.5em] text-[#005F59] cursor-pointer"
+              onClick={submitResponse}
+            >
+              Submit
+            </button>
           </div>
         </div>
-      )}
-    </>
-  );
+      </div>
+    )}
+  </>
+);
 }
 
 // Main Question components
@@ -216,6 +207,7 @@ function Questions({ responseData, setCollectResponse }: any) {
 
 //  this code is for boolen / Radio button Question
 function YesNoQuestionSet({ question, onResponseChange }: any) {
+  
   // Storing response of Question into this state variable
   const [response, setResponse] = React.useState("");
 
@@ -236,20 +228,10 @@ function YesNoQuestionSet({ question, onResponseChange }: any) {
           handleResponseChange(e.target.value);
         }}
       >
-        <FormControlLabel
-          value="Yes"
-          control={<Radio />}
-          label="Yes"
-          className="z-[-1]"
-        />
-        <FormControlLabel
-          value="No"
-          control={<Radio />}
-          label="No"
-          className="z-[-1]"
-        />
+        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+        <FormControlLabel value="No" control={<Radio />} label="No" />
       </RadioGroup>
-      <QuestionSeparator className="mb-[2em] " />
+      <QuestionSeparator className="mb-[2em]" />
     </>
   );
 }
@@ -259,10 +241,10 @@ function RatingResponseSet({ question, onResponseChange }: any) {
   // Storing response of Question into this state variable
   const [value, setValue] = React.useState<number | null>(0);
 
-  // Function to sent Response to parent component using Lifting the state Feature of Reactjs
+   // Function to sent Response to parent component using Lifting the state Feature of Reactjs
   const handleResponseChange = (newValue: number | null) => {
     setValue(newValue);
-    const numberToString = newValue !== null ? newValue.toString() : null;
+    const numberToString = newValue !== null ? newValue.toString():null;
     onResponseChange(numberToString);
   };
 
@@ -313,11 +295,11 @@ export function Question({ question }: { question: string }) {
   );
 }
 
-// Line to separate question
+// Line to separate question 
 export function QuestionSeparator({ className }: { className?: string }) {
   return (
     <div
-      className={"bg-[#0E5F59] h-[1px] opacity-[0.2] w-[100%]" + className}
+      className={"bg-[#0E5F59] h-[1px] opacity-[0.2] w-[100%] " + className}
     ></div>
   );
 }
