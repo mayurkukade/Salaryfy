@@ -5,7 +5,7 @@ const interviewSchedule = apiSlice.injectEndpoints({
         interviewScheduleApi:builder.mutation<[],formDetails>({
             query:(formDetails)=>({
                 url:`/Interview/Schedule`,
-                transformResponse:console.log(formDetails),
+                transformResponse:console.log(formDetails,'formsdetails'),
                 headers:{
                     "Content-Type":"application/json"
                 },
@@ -13,10 +13,33 @@ const interviewSchedule = apiSlice.injectEndpoints({
                 body:formDetails
             }),
             invalidatesTags:["User"]
+        }),
+        getInterviewSchedule:builder.query({
+            query: ({userId,jobId}) =>({
+                url: `/Interview/getInterviewByUserIdJobId?userId=${userId}&jobId=${jobId}`,
+                transformResponse:console.log(userId,jobId),
+            }),
+
+            providesTags:['User']
+
+        }),
+        deleteInterviewSchedule:builder.mutation({
+            query:(interviewScheduleId)=>({
+              
+                transformResponse:console.log(interviewScheduleId,'formsdetails'),
+                url:`/Interview/DleteSchedule/${interviewScheduleId}`,
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                method:"DELETE",
+               
+
+            }),
+            invalidatesTags:['User']
         })
     })
 })
 
-export const {useInterviewScheduleApiMutation} = interviewSchedule
+export const {useInterviewScheduleApiMutation,useDeleteInterviewScheduleMutation,useGetInterviewScheduleQuery} = interviewSchedule
 
 export default interviewSchedule

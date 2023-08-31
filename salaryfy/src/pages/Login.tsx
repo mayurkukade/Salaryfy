@@ -23,7 +23,7 @@ export const Login = () => {
   console.log(isLoading, isError);
 
   const [password, setpassword] = useState<string>("");
-const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
+
 
 
   const LoginSubmitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {

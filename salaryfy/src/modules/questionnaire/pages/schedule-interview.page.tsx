@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 
 import UserJobDetails from "../components/job-details.component";
 
@@ -18,7 +18,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from "react-redux";
 import { AppStoreStateType, RootState } from "../../../store/app.store";
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
-import interviewSchedule, { useInterviewScheduleApiMutation } from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
+import  {
+
+  useDeleteInterviewScheduleMutation,
+  useGetInterviewScheduleQuery,
+  useInterviewScheduleApiMutation,
+} from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
 export default function ScheduleInterviewPage() {
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
@@ -41,15 +46,63 @@ export function ScheduleInterview() {
   const [selectedHour, setSelectedHour] = useState("");
   const [selectedMinute, setSelectedMinute] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectMeridiem,setSelectMeridiem] = useState('')
-  const userId = useSelector((state:RootState)=>state.authSlice.userId)
-  const selectInterviewData = useSelector((state: AppStoreStateType)=>state.root[SLICE_NAMES.JOB_DETAILS])
-  console.log(selectInterviewData.interviewEndDate)
-  const [interviewScheduleApi] = useInterviewScheduleApiMutation()
-  console.log(userId)
+  const [selectMeridiem, setSelectMeridiem] = useState("");
+  const [convertedTime, setConvertedTime] = useState('');
+  const userId = useSelector((state: RootState) => state.authSlice.userId);
+  const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
+  console.log(jobDetails)
+  console.log(selectedDate)
+  const selectInterviewData = useSelector(
+    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
+  );
+  console.log(selectInterviewData.interviewEndDate);
+  const [interviewScheduleApi] = useInterviewScheduleApiMutation();
+const jobId:number = localStorage.getItem('jobId')
+console.log(jobId)
+const {data,isLoading,isError} = useGetInterviewScheduleQuery({userId,jobId})
+ 
+const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation()
+
+
+console.log(data)
+if(isLoading){
+  return <p>Loading...</p>
+}
+const handleDelete = async (interviewScheduleId:number) => {
+  console.log(interviewScheduleId)
+  try {
+    console.log(interviewScheduleId)
+    await deleteInterviewSchedule(interviewScheduleId);
+    // You might want to refetch data after successful deletion
+  } catch (error) {
+    console.error('Error deleting interview schedule:', error);
+  }
+};
+
+const getDetails = data?.list.map((schedule,i)=>{
+  console.log(schedule.interviewScheduleId)
+  return(
+    <>
+   <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]">
+          <div style={{ whiteSpace: "nowrap" }}>Slot-{i+1}</div>
+          <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
+          <div className="mr-[0.5em]">
+         {schedule.location},  {schedule.date}, {schedule.time}
+          </div>
+          
+          <button onClick={() => handleDelete(schedule.interviewScheduleId)} >
+            <CancelIcon sx={{ color: "red" }} />
+          </button>
+        </div>
+    </>
+  )
+})
+
+  console.log(userId);
   const handleHourChange = (event) => {
-    setSelectedHour(event.target.value);
-  };
+    setSelectedHour(event.target.value)
+  
+  }
 
   const handleMinuteChange = (event) => {
     setSelectedMinute(event.target.value);
@@ -58,38 +111,51 @@ export function ScheduleInterview() {
     setLocation(event.target.value as string);
   };
 
-  const handleChangeMeridiem = (event:SelectChangeEvent) =>{
-    setSelectMeridiem(event.target.value)
-  }
+  const handleChangeMeridiem = (event: SelectChangeEvent) => {
+    setSelectMeridiem(event.target.value as string);
+  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
- 
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-   const AddSubmitHandler = async(e:React.MouseEvent)=>{
-e.preventDefault()
-console.log(location,selectedDate,selectedHour,selectedMinute,selectMeridiem)
 
-try {
-  const formDetails = {
-    "location": location,
-    "interviewDate":selectedDate,
-    "time": selectedMinute,
-    "date": "2023-08-01",
-    "userId": userId,
-    "jobId": 41,
-    "status": "Scheduled"
+  function formatTimeWithLeadingZeros(hour, minute) {
+    const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
+    const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
+    return `${formattedHour}:${formattedMinute}:00`;
   }
-  const res = await  interviewScheduleApi(formDetails).unwrap()
-  console.log(res)
-} catch (error) {
-  console.log(error)
-}
-   }
+console.log(convertedTime)
+
+  const AddSubmitHandler = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    const timeFormat = formatTimeWithLeadingZeros(selectedHour, selectedMinute);
+
+    const dateFormat =
+      selectedDate != null ? selectedDate.toISOString().split("T")[0] : "";
+   
+console.log(dateFormat)
+    try {
+      const formDetails = {
+        location: location,
+        interviewDate: "2023-08-10",
+        time:timeFormat,
+        date: dateFormat,
+        userId: userId,
+        jobId: 41,
+        status: "Scheduled",
+      };
+      const res = await interviewScheduleApi(formDetails).unwrap();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(convertedTime)
+  };
   return (
     <div className="h-[100%]">
       <div className="font-semibold text-[1.8em] text-[#000] mb-[1em]">
@@ -131,7 +197,7 @@ try {
             <DatePicker
               selected={selectedDate}
               onChange={handleDateChange}
-              dateFormat="MM/dd/yyyy"
+              dateFormat="yyyy-MM-dd"
               className="border-2 w-[18rem] h-[3.5rem] rounded-md p-2 font-semibold text-lg"
               placeholderText={"Please select a date"}
             />
@@ -148,7 +214,7 @@ try {
                   >
                     {Array.from({ length: 12 }, (_, i) => (
                       <MenuItem key={i} value={i}>
-                        {i + 1}
+                        {i}
                       </MenuItem>
                     ))}
                   </Select>
@@ -170,21 +236,20 @@ try {
                     ))}
                   </Select>
                 </FormControl>
-                <FormControl fullWidth>
-        <InputLabel id="Meridiem">Meridiem</InputLabel>
-        <Select
-          labelId="Meridiem"
-          id="Meridiem"
-          value={selectMeridiem}
-          label="Meridiem"
-          onChange={handleChangeMeridiem}
-          className="w-[5rem] bg-[white] h-[3.4rem] ml-1"
-        >
-          <MenuItem value={"AM"}>AM</MenuItem>
-          <MenuItem value={"PM"}>PM</MenuItem>
-     
-        </Select>
-      </FormControl>
+                {/* <FormControl fullWidth>
+                  <InputLabel id="Meridiem">Meridiem</InputLabel>
+                  <Select
+                    labelId="Meridiem"
+                    id="Meridiem"
+                    value={selectMeridiem}
+                    label="Meridiem"
+                    onChange={handleChangeMeridiem}
+                    className="w-[5rem] bg-[white] h-[3.4rem] ml-1"
+                  >
+                    <MenuItem value={"AM"}>AM</MenuItem>
+                    <MenuItem value={"PM"}>PM</MenuItem>
+                  </Select>
+                </FormControl> */}
               </div>
               <div className="flex justify-center h-[3.3rem]">
                 <Button
@@ -199,18 +264,9 @@ try {
           </div>
         </div>
       </div>
-
-      <div className="h-[100%] mb-[2em]">
-        <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]">
-          <div style={{ whiteSpace: "nowrap" }}>Slot-1</div>
-          <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-          <div className="mr-[0.5em]">
-            Deverabisanahalli, On Tueday, 06 June 2023, 4:00 PM
-          </div>
-          <div>
-            <CancelIcon sx={{ color: "red" }} />
-          </div>
-        </div>
+{getDetails}
+      {/* <div className="h-[100%] mb-[2em]">
+       
 
         <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]">
           <div style={{ whiteSpace: "nowrap" }}>Slot-2</div>
@@ -223,16 +279,9 @@ try {
           </div>
         </div>
 
-        <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]">
-          <div style={{ whiteSpace: "nowrap" }}>Slot-3</div>
-          <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-          <div className="mr-[0.5em]">
-            Koremanagalam, On Satureday, 10 June 2023, 11:30 PM
-          </div>
-          <div>
-            <CancelIcon sx={{ color: "red" }} />
-          </div>
-        </div>
+        
+      </div> */}
+      
 
         <div className="flex items-center text-[1.6em] text-[#5B5B5B]">
           <div>
@@ -266,7 +315,6 @@ try {
           </div>
           <div>whatsapp number</div>
         </div>
-      </div>
     </div>
   );
 }
