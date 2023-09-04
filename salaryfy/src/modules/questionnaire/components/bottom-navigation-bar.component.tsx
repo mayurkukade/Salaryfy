@@ -29,6 +29,7 @@ export default function BottomPageNavigationBar() {
   const currentRoute = window.location.href.slice(22);
   console.log(currentRoute);
 
+
   const navigate = useNavigate();
 
   const nextHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -105,7 +106,7 @@ export default function BottomPageNavigationBar() {
       <button
         className="flex items-center bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em] text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer  disabled:bg-gray-400 disabled:cursor-not-allowed "
         onClick={nextHandler}
-        disabled={!resSteptwoSelector}
+        disabled={currentRoute== 'questionnaire'?!resSteptwoSelector:null}
       >
         Next
         <span className="" style={{ transform: "scaleX(-1)" }}>
