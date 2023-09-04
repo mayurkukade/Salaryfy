@@ -1,13 +1,17 @@
-import { Button, Chip, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import DropdownMenu from "../../../components/DropdownMenu";
 import { HavingDoubts } from "../components/having-doubts.component";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";
-import { useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
+import { useLazyGetUserSkillsQuery, useSetUserSkillsMutation, useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { catchError, concatMap, from, of, throwError } from 'rxjs';
+import { ErrorType } from "../constants/app-error.type";
+import Chip from "../components/chip.component";
+import { QuestionnaireHttpClient } from "../services/questionnaire.service";
+import { CommonUtilities } from "../../../utils/common.utilities";
 // import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
 
 export default function FresherProfileUploadPage() {
@@ -25,11 +29,23 @@ export default function FresherProfileUploadPage() {
 
 function FresherProfileUpload() {
 
+  const skillTextFieldRef = useRef<HTMLInputElement | null>(null);
   const [fileUploadPost] = useUploadFileMutation();
+  const [getUserSkills] = useLazyGetUserSkillsQuery();
+  const [setUserSkills] = useSetUserSkillsMutation();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
+  const [skills, setSkills] = useState<Set<string>>(new Set([]));
+
+  const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
 
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  useEffect(() => {
+    if (!userId) { return; }
+    fetchUserSkills( userId );
+
+  }, [userId]);
+
+
   async function onDocumentUploadEvent(documentType: FILE_UPLOAD_TYPES, documentFile: File) {
     if (!userId) { return; }
     const formData = new FormData()
@@ -37,7 +53,6 @@ function FresherProfileUpload() {
     formData.append('documentType', documentType);
     formData.append('userId', userId);
 
-    type ErrorType = { error: { data: null, status: number } }
 
     from(fileUploadPost(formData))
       .pipe(
@@ -53,10 +68,40 @@ function FresherProfileUpload() {
         },
         (error: ErrorType) => {
           console.error('Got An Error while upoading: ', error);
-        });
+        }
+      );
 
 
 
+  }
+
+  function addSkillHandler() {
+    const skillValue = skillTextFieldRef.current?.value;
+    if (!skillValue || !skillValue.length || !userId) { return; }
+
+    updateSkills(JSON.stringify(Array.from(new Set( [ ...Array.from(skills), skillValue ] ))), userId);
+
+  }
+
+  function removeSkillHandler(skill: string) {
+    const updatedSkills = skills;
+    updatedSkills.delete(skill);
+    if (!userId) { return; }
+    updateSkills( JSON.stringify(Array.from(updatedSkills)), userId );
+  }
+
+  function updateSkills(userSkill: string, userId: string) {
+    httpClient.request( setUserSkills( { userSkill, userId } ) )
+      .subscribe(() => {
+        if (skillTextFieldRef && skillTextFieldRef?.current) { skillTextFieldRef.current.value = ''; }
+        fetchUserSkills(userId);
+      });
+  }
+
+  function fetchUserSkills(userId: string) {
+    httpClient.request(getUserSkills(userId))
+      .pipe(concatMap(async ({ data: { response: { userSkill } } }) => (JSON.parse(userSkill))))
+      .subscribe((skills) => {if (Array.isArray(skills)) setSkills(() => new Set(skills))}, (error) => console.error(error))
   }
 
   function unHandledEvent() {
@@ -103,22 +148,15 @@ function FresherProfileUpload() {
 
               <div className="flex md:w-[50em] mb-[2em]">
                 <div className="flex-grow flex flex-col pr-[2em]">
-                  <TextField size="small" />
+                  <TextField inputRef={skillTextFieldRef} size="small" />
                 </div>
                 <div className="flex">
-                  <Button variant="contained">Add</Button>
+                  <Button variant="contained" onClick={addSkillHandler} >Add</Button>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-[1em] mb-[3em]">
-                <Chip className="text-[1.5em]" label="Hadoop" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
+                { Array.from(skills).map(skill => <Chip onClick={() => removeSkillHandler(skill)} className="text-[1.5em]" key={CommonUtilities.generateRandomString(100)} label={skill} />) }
               </div>
             </div>
 
