@@ -26,7 +26,6 @@ import {
 } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 
 import { useSelector } from "react-redux";
-import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { registerFormQuestionnaire } from "../../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 import { useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
@@ -536,6 +535,7 @@ function UploadResumeComponent( { onResumeUpload }: { onResumeUpload: (i: File) 
           id="resume-upload"
           accept="application/pdf,application/vnd.ms-excel"
           style={{ display: "none" }}
+          onChange={onFileUpload} ref={uploadFileRef}
         />
       </div>
       <div>Upload Resume (PDF only)</div>
