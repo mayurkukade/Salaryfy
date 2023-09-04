@@ -274,7 +274,7 @@ const Universities = () => {
     //   </div>
     // </div>
 
-    <div className="container mx-auto font-Lexend my-[6rem]  h-[150vh]">
+    <div className="container mx-auto font-Lexend my-[6rem]  md:h-[60vh]">
       <p className="text-center text-darkGreen text-[2.5rem] md:text-[3.9375rem] font-semibold  mb-8">
         Students from <span className="text-yellow">Universities</span>
       </p>
