@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {questionnaireRegisterForm} from './questionnaire-register-form.interface'
 import { PayloadAction } from "@reduxjs/toolkit";
 
-const initialState:questionnaireRegisterForm ={
+    const initialState:questionnaireRegisterForm ={
     registerFormData : []
 }
 

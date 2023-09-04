@@ -71,6 +71,14 @@ console.log(resSteptwoSelector)
       }
 
     } else if (currentRoute === "questionnaire/screening-questions") {
+
+      // logic to validate and submit 
+      // if () {
+        
+      // }else{
+
+      // }
+
       navigate("/questionnaire/schedule-interview");
     }
   };
