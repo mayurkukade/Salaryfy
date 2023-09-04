@@ -25,7 +25,7 @@ import {
   resSteptwoSelector,
 } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { registerFormQuestionnaire } from "../../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 
@@ -371,7 +371,7 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
   return (
     <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[45%]">
       <div>Confirm Password</div>
-      <div className="flex w-full items-center" >
+      <div className="flex w-full items-center">
         <div className="flex gap-[1em] relative w-full">
           <input
             type={showPassword ? "text" : "password"}
@@ -390,10 +390,7 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
             {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
           </button>
         </div>
-        <div className="ml-1">
-          
-        {content}
-        </div>
+        <div className="ml-1">{content}</div>
       </div>
     </div>
   );
@@ -459,47 +456,58 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
 function UploadResumeComponent() {
   return (
     <div className="flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em]">
-      <div
-        className="flex flex-row items-center flex-grow h-[100%] px-[2em] py-[0.5em] justify-center rounded-[1em]"
-        style={{
-          boxShadow: "0 0 5px rgb(0, 0, 0, 0.2)",
-          backgroundColor: "white",
-        }}
-      >
-        <div className="mr-[0.5em]">
-          <svg
-            width="39"
-            height="39"
-            viewBox="0 0 39 39"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125"
-              stroke="#005F59"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75"
-              stroke="#005F59"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z"
-              stroke="#005F59"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        <div>Upload Resume</div>
-      </div>
+  <div
+    className="flex flex-row items-center flex-grow h-[100%] px-[2em] py-[0.5em] justify-center rounded-[1em]"
+    style={{
+      boxShadow: "0 0 5px rgb(0, 0, 0, 0.2)",
+      backgroundColor: "white",
+      cursor: "pointer", // Add cursor pointer for click interaction
+    }}
+    onClick={() => document.getElementById("resume-upload").click()}
+  >
+    <div className="mr-[0.5em]">
+      <label htmlFor="resume-upload">
+        <svg
+          width="39"
+          height="39"
+          viewBox="0 0 39 39"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125"
+            stroke="#005F59"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75"
+            stroke="#005F59"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z"
+            stroke="#005F59"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </label>
+      <input
+        type="file"
+        id="resume-upload"
+        accept="application/pdf,application/vnd.ms-excel"
+        style={{ display: "none" }}
+      />
     </div>
+    <div>Upload Resume (PDF only)</div>
+  </div>
+</div>
+
   );
 }
 
@@ -649,12 +657,12 @@ const PersonalDetails = (): JSX.Element => {
     !date ||
     !matchpassword;
 
-
-console.log(!contentDisabled)
-useEffect(()=>{
-  if(!contentDisabled){
-    console.log('dispatch')
-    dispatch(registerFormQuestionnaire({
+  console.log(!contentDisabled);
+  useEffect(() => {
+    if (!contentDisabled) {
+      console.log("dispatch");
+      dispatch(
+        registerFormQuestionnaire({
           fullName,
           mobile_no,
           email,
@@ -662,11 +670,11 @@ useEffect(()=>{
           role,
           userProfileType,
           date,
-        }))
-        dispatch(resSteptwoSelector(true))
-  }
-
-},[contentDisabled, dispatch, email, fullName, mobile_no, password])
+        })
+      );
+      dispatch(resSteptwoSelector(true));
+    }
+  }, [contentDisabled, dispatch, email, fullName, mobile_no, password]);
 
   // const regiterDispatchHandler= () =>{
   //   dispatch(registerFormQuestionnaire({
@@ -770,10 +778,9 @@ useEffect(()=>{
     if (contentDisabled) {
       console.log(contentDisabled);
     }
-  },[contentDisabled])
-console.log(contentDisabled)
-  
-  
+  }, [contentDisabled]);
+  console.log(contentDisabled);
+
   console.log(validpassword);
   console.log(matchpassword);
   return (
