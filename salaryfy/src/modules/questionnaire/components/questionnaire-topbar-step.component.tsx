@@ -76,7 +76,7 @@ export default function QuestionnaireTopBarStep() {
 
       {/* code for mobile and tablet  devices */}
       <Box
-        className="px-2 flex-grow justify-center w-[80%] h-[24vh]"
+        className="px-2 flex-grow justify-center w-[80%] h-[21.5vh]"
         sx={{ display: { xs: "flex", md: "flex", lg: "none" } }}
         // style={{ border: "2px solid black" }}
       >
