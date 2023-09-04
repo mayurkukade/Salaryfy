@@ -26,6 +26,7 @@ import {
 } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 
 import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { registerFormQuestionnaire } from "../../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 import { useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
@@ -386,7 +387,7 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
   return (
     <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[45%]">
       <div>Confirm Password</div>
-      <div className="flex w-full items-center" >
+      <div className="flex w-full items-center">
         <div className="flex gap-[1em] relative w-full">
           <input
             type={showPassword ? "text" : "password"}
@@ -405,10 +406,7 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
             {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
           </button>
         </div>
-        <div className="ml-1">
-
-          {content}
-        </div>
+        <div className="ml-1">{content}</div>
       </div>
     </div>
   );
@@ -491,15 +489,18 @@ function UploadResumeComponent( { onResumeUpload }: { onResumeUpload: (i: File) 
   }
 
   return (
-    <div onClick={onClicked} className="flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em] cursor-pointer">
-      <div
-        className="flex flex-row items-center flex-grow h-[100%] px-[2em] py-[0.5em] justify-center rounded-[1em]"
-        style={{
-          boxShadow: "0 0 5px rgb(0, 0, 0, 0.2)",
-          backgroundColor: "white",
-        }}
-      >
-        <div className="mr-[0.5em]">
+    <div className="flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em]">
+    <div
+      className="flex flex-row items-center flex-grow h-[100%] px-[2em] py-[0.5em] justify-center rounded-[1em]"
+      style={{
+        boxShadow: "0 0 5px rgb(0, 0, 0, 0.2)",
+        backgroundColor: "white",
+        cursor: "pointer", // Add cursor pointer for click interaction
+      }}
+      onClick={() => document.getElementById("resume-upload").click()}
+    >
+      <div className="mr-[0.5em]">
+        <label htmlFor="resume-upload">
           <svg
             width="39"
             height="39"
@@ -529,11 +530,18 @@ function UploadResumeComponent( { onResumeUpload }: { onResumeUpload: (i: File) 
               strokeLinejoin="round"
             />
           </svg>
-        </div>
-        <div>Upload Resume</div>
-        <input type="file" multiple={false} onChange={onFileUpload} ref={uploadFileRef} className="hidden" />
+        </label>
+        <input
+          type="file"
+          id="resume-upload"
+          accept="application/pdf,application/vnd.ms-excel"
+          style={{ display: "none" }}
+        />
       </div>
+      <div>Upload Resume (PDF only)</div>
     </div>
+  </div>
+
   );
 }
 
@@ -684,24 +692,24 @@ const PersonalDetails = ( { onResumeUpload } : { onResumeUpload: (i: File) => vo
     !date ||
     !matchpassword;
 
-
-  console.log(!contentDisabled)
+  console.log(!contentDisabled);
   useEffect(() => {
     if (!contentDisabled) {
-      console.log('dispatch')
-      dispatch(registerFormQuestionnaire({
-        fullName,
-        mobile_no,
-        email,
-        password,
-        role,
-        userProfileType,
-        date,
-      }))
-      dispatch(resSteptwoSelector(true))
+      console.log("dispatch");
+      dispatch(
+        registerFormQuestionnaire({
+          fullName,
+          mobile_no,
+          email,
+          password,
+          role,
+          userProfileType,
+          date,
+        })
+      );
+      dispatch(resSteptwoSelector(true));
     }
-
-  }, [contentDisabled, dispatch, email, fullName, mobile_no, password])
+  }, [contentDisabled, dispatch, email, fullName, mobile_no, password]);
 
   // const regiterDispatchHandler= () =>{
   //   dispatch(registerFormQuestionnaire({
@@ -805,9 +813,8 @@ const PersonalDetails = ( { onResumeUpload } : { onResumeUpload: (i: File) => vo
     if (contentDisabled) {
       console.log(contentDisabled);
     }
-  }, [contentDisabled])
-  console.log(contentDisabled)
-
+  }, [contentDisabled]);
+  console.log(contentDisabled);
 
   console.log(validpassword);
   console.log(matchpassword);
