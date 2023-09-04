@@ -5,12 +5,11 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
 import { useLoginMutation } from "../features/api-integration/apiUserSlice/api-integration-user.slice";
-const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setToken,
-  clearToken,
+
 } from "../features/reducers/authReducers/auth-slice-reducer";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
