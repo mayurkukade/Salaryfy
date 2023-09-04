@@ -41,7 +41,7 @@ export default function ScheduleInterviewPage() {
 }
 
 export function ScheduleInterview() {
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
   const [location, setLocation] = useState("");
   const [selectedHour, setSelectedHour] = useState("");
   const [selectedMinute, setSelectedMinute] = useState("");
