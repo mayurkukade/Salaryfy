@@ -1,7 +1,7 @@
 import UserJobDetails from "../components/job-details.component";
 
 import SubSteps from "../components/sub-steps.component";
-import { useRef, useState, useEffect, CSSProperties } from "react";
+import { useRef, useState, useEffect, CSSProperties, ChangeEvent } from "react";
 import OTPInput from "react-otp-input";
 import { toast } from "react-toastify";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -26,8 +26,11 @@ import {
 } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 
 import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { registerFormQuestionnaire } from "../../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
+import { useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
+import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";
 
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
@@ -46,6 +49,8 @@ type SubmitRegister = {
 };
 
 export default function QuestionnairePersonalDetails() {
+  const userId = useSelector((state:RootState)=>state.authSlice.userId)
+
   const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
     email: "",
     password: "",
@@ -57,6 +62,18 @@ export default function QuestionnairePersonalDetails() {
   });
   console.log(submitRegister);
 
+  const [imageUploadApi] = useUploadFileMutation();
+
+  function onResumeUpload(imageFile: File) {
+    if (!userId) { return; }
+    const formData = new FormData()
+    formData.append('image', imageFile);
+    formData.append('documentType', FILE_UPLOAD_TYPES.USER_RESUME);
+    formData.append('userId', userId);
+
+    imageUploadApi(formData);
+  }
+
   return (
     <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
       <div className="text-[1.4em]">Job Details</div>
@@ -64,8 +81,7 @@ export default function QuestionnairePersonalDetails() {
       {/* STEPS */}
       <div className="py-[2em] px-[3em] h-[100%]">
         <SubSteps />
-        <PersonalDetails setSubmitRegister={setSubmitRegister} />
-
+        <PersonalDetails onResumeUpload={onResumeUpload} setSubmitRegister={setSubmitRegister} />
         {/* <BottomPageNavigationBar /> */}
       </div>
     </div>
@@ -453,7 +469,25 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
 //   );
 // };
 
-function UploadResumeComponent() {
+function UploadResumeComponent( { onResumeUpload }: { onResumeUpload: (i: File) => void } ) {
+  const uploadFileRef = useRef<HTMLInputElement | null>(null);
+
+  function onClicked() {
+    console.log('clicked');
+    uploadFileRef.current?.click();
+  }
+
+  function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
+    
+    const selectedFile = event.target.files && event.target.files[0];
+    if (selectedFile) {
+      onResumeUpload(selectedFile);
+      if (uploadFileRef.current) {
+        uploadFileRef.current.value = '';
+      }
+    }
+  }
+
   return (
     <div className="flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em]">
     <div
@@ -605,7 +639,8 @@ const Verified = (props: PropT): JSX.Element => {
   );
 };
 
-const PersonalDetails = (): JSX.Element => {
+const PersonalDetails = ( { onResumeUpload } : { onResumeUpload: (i: File) => void } ): JSX.Element => {
+  
   const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
@@ -839,14 +874,16 @@ const PersonalDetails = (): JSX.Element => {
               confirmFocus={confirmFocus}
             />
           </div>
-          <UploadResumeComponent />
+          <UploadResumeComponent onResumeUpload={onResumeUpload} />
+          {/* <button
+          <UploadResumeComponent onResumeUpload={onResumeUpload} />
           <button
             className="bg-[#005F59] text-xl cursor-pointer h-[40px] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]   disabled:bg-gray-400 disabled:cursor-not-allowed "
             // onClick={regiterDispatchHandler}
             disabled={contentDisabled}
           >
             Submit
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import thunkMiddleware from 'redux-thunk';
 import rootReducer from './app.reducer';
 import authSliceReducer from '../features/reducers/authReducers/auth-slice-reducer';
 import apiIntegrationSlice from '../features/api-integration/apiUserSlice/api-integration-user.slice'
@@ -31,7 +32,7 @@ const appStore = configureStore({
     [profileQualificationSlice.reducerPath]: profileQualificationSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiIntegrationSlice.middleware).concat(screeningQuestionsSlice.middleware)
+    getDefaultMiddleware().concat(apiIntegrationSlice.middleware).concat(screeningQuestionsSlice.middleware).concat(thunkMiddleware)
 
 });
 export type RootState = ReturnType<typeof appStore.getState>

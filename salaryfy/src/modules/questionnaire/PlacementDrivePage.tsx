@@ -60,9 +60,10 @@ export default function PlacementDrivePage() {
 
     const filterPropertiesUriEncoded = Object.entries(filterProperties).map(([key, value]: [string, string]) => [key, encodeURIComponent(value)].join('=') ).join('&');
     const { data: { list: jobsData } } = await lazyGetFilterJobs(filterPropertiesUriEncoded);
-
+  
     dispatch(setJobs(jobsData));
   }
+
 
   async function searchByKeyword() {
     const searchElement = searchFieldRef.current;
@@ -102,6 +103,10 @@ export default function PlacementDrivePage() {
 
   }
 
+  function clearFilterHandler() {
+    console.log('clear button clicked');
+  }
+
   return (
     <div className="flex flex-col p-[2em]  " >
       <div className="flex justify-center" >
@@ -110,7 +115,7 @@ export default function PlacementDrivePage() {
       
       <div className="flex gap-[2em]">
         <Box className="text-[#0E5F59]" sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
-          <FilterComponent setAllJobs={setAllJobs} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[30em]" />
+          <FilterComponent onClearButtonClick={clearFilterHandler} setAllJobs={setAllJobs} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[30em]" />
         </Box>
         <div className="flex-grow p-3">
           <p className="text-[1.2rem] font-semibold text-darkGreen mb-2">Search</p>
@@ -128,7 +133,7 @@ export default function PlacementDrivePage() {
 
           <Box ref={expandableRef} id='expandable-element' className='w-[100%] my-[4em] relative' style={{ height: '0px', transition: '1000ms ease' }} sx={{ overflow: 'hidden', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
             <div className="aboslute">
-              <FilterComponent setAllJobs={setAllJobs} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[100%]" />
+              <FilterComponent onClearButtonClick={clearFilterHandler} setAllJobs={setAllJobs} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[100%]" />
             </div>
           </Box>
           {

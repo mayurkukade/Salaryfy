@@ -11,7 +11,7 @@ import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import { JobType } from "../../../features/reducers/jobs/jobs.interface";
 import { Button } from "@mui/material";
 
-export default function FilterComponent({ className, onSearchButtonClick, setAllJobs }: { className?: string, onSearchButtonClick: () => void, setAllJobs: (v: string) => void }) {
+export default function FilterComponent({ className, onSearchButtonClick, setAllJobs, onClearButtonClick }: { className?: string, onSearchButtonClick: () => void, setAllJobs: (v: string) => void, onClearButtonClick: () => void }) {
 
   const dispatch = useDispatch();
   const jobFilterValues = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS_FILTER]);
@@ -51,6 +51,16 @@ export default function FilterComponent({ className, onSearchButtonClick, setAll
     });
     const updatedJobFilter = { ...jobFilterValues, [filterName]: updatedOptions };
     dispatch(setJobFilter(updatedJobFilter));
+  }
+
+  function clearFilterHandler() {
+    const clearedFilters = Object.entries(jobFilterValues).map(([key, values]: [string, Array<OptionSelected>]) => {
+      const clearedValues = values.map((value: OptionSelected) => ({ ...value, selected: false }) )
+      return { [key]: clearedValues };
+    });
+    console.log('filter dash: ', clearedFilters);
+    console.log('filter dash: ', jobFilterValues);
+    onClearButtonClick();
   }
 
   return (
@@ -93,8 +103,9 @@ export default function FilterComponent({ className, onSearchButtonClick, setAll
               )
           }
         </div>
-        <div>
-          <Button variant='contained' onClick={onSearchButtonClick} >Filter Results</Button>
+        <div className="flex gap-[1em] justify-between">
+          <Button variant='contained' onClick={onSearchButtonClick}>Filter Results</Button>
+          <Button variant='outlined' onClick={clearFilterHandler}>Clear</Button>
         </div>
       </div>
 
