@@ -32,7 +32,7 @@ const apiIntegrationSlice = apiSlice.injectEndpoints({
     verifyOTP: builder.mutation<{}, email>({
       query: ({ otp, email }) => ({
         transformResponse: console.log(otp, email),
-        url: `/verifyOpt?otp=${otp}&email=${email}`,
+        url: `/verifyOpt?otp=${Number(otp) }&email=${email}`,
         headers: {
           "Content-Type": "application/json",
         },
