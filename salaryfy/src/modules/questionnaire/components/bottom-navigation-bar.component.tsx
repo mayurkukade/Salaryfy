@@ -75,6 +75,14 @@ console.log(!nextButtonDisabled)
         console.log(error);
       }
     } else if (currentRoute === "questionnaire/screening-questions") {
+
+      // logic to validate and submit 
+      // if () {
+        
+      // }else{
+
+      // }
+
       navigate("/questionnaire/schedule-interview");
     }else if(currentRoute === "questionnaire/schedule-interview"){
       navigate("/questionnaire/fresher-dashboard")

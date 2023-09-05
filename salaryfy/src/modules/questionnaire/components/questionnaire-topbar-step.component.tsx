@@ -76,7 +76,7 @@ export default function QuestionnaireTopBarStep() {
 
       {/* code for mobile and tablet  devices */}
       <Box
-        className="px-2 flex-grow justify-center w-[80%] "
+        className="px-2 flex-grow justify-center w-[80%] h-[21.5vh]"
         sx={{ display: { xs: "flex", md: "flex", lg: "none" } }}
         // style={{ border: "2px solid black" }}
       >
@@ -227,7 +227,7 @@ const CircularProgressBarSVG = ({
   return (
     <svg
       width="100%"
-      height="100%"
+      height="80%"
       viewBox="0 0 100 100"
       style={{
         transform: "rotate(0deg)",
