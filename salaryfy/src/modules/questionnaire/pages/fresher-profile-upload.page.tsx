@@ -12,6 +12,8 @@ import { ErrorType } from "../constants/app-error.type";
 import Chip from "../components/chip.component";
 import { QuestionnaireHttpClient } from "../services/questionnaire.service";
 import { CommonUtilities } from "../../../utils/common.utilities";
+import { EducationalSkillsType, FresherProfileUploadService, INITIAL_EDUCATIONAL_SKILLS } from "../services/fresher-profile-upload.service";
+import { BOARD_LIST, HIGHEST_EDUCATION, HIGHEST_EDUCATION_LIST, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
 // import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
 
 export default function FresherProfileUploadPage() {
@@ -29,21 +31,39 @@ export default function FresherProfileUploadPage() {
 
 function FresherProfileUpload() {
 
+  const [educationalSkills, setEducationalSkills] = useState<EducationalSkillsType>(INITIAL_EDUCATIONAL_SKILLS);
+  const fresherProfileUploadService = new FresherProfileUploadService();
+
   const skillTextFieldRef = useRef<HTMLInputElement | null>(null);
   const [fileUploadPost] = useUploadFileMutation();
   const [getUserSkills] = useLazyGetUserSkillsQuery();
   const [setUserSkills] = useSetUserSkillsMutation();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   const [skills, setSkills] = useState<Set<string>>(new Set([]));
-
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
 
 
   useEffect(() => {
     if (!userId) { return; }
-    fetchUserSkills( userId );
-
+    fetchUserSkills(userId);
   }, [userId]);
+
+  useEffect(() => {
+    const selectedHighestEducation = educationalSkills.highestEducationList.find(e => e.selected);
+    switch (selectedHighestEducation?.value) {
+
+      case HIGHEST_EDUCATION.MATRIC:
+        setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: BOARD_LIST.map(board => ({ ...board, selected: false })), streamList: [] })); break;
+
+      case HIGHEST_EDUCATION.INTER:
+        setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: BOARD_LIST.map(board => ({ ...board, selected: false })), streamList: STREAM_LIST.map(stream => ({ ...stream, selected: false })) })); break;
+
+      default:
+        setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: [], streamList: STREAM_NOBOARD_LIST.map(stream => ({ ...stream, selected: false })) })); break;
+
+    }
+
+  }, [educationalSkills.highestEducationList]);
 
 
   async function onDocumentUploadEvent(documentType: FILE_UPLOAD_TYPES, documentFile: File) {
@@ -70,16 +90,13 @@ function FresherProfileUpload() {
           console.error('Got An Error while upoading: ', error);
         }
       );
-
-
-
   }
 
   function addSkillHandler() {
     const skillValue = skillTextFieldRef.current?.value;
     if (!skillValue || !skillValue.length || !userId) { return; }
 
-    updateSkills(JSON.stringify(Array.from(new Set( [ ...Array.from(skills), skillValue ] ))), userId);
+    updateSkills(JSON.stringify(Array.from(new Set([...Array.from(skills), skillValue]))), userId);
 
   }
 
@@ -87,11 +104,11 @@ function FresherProfileUpload() {
     const updatedSkills = skills;
     updatedSkills.delete(skill);
     if (!userId) { return; }
-    updateSkills( JSON.stringify(Array.from(updatedSkills)), userId );
+    updateSkills(JSON.stringify(Array.from(updatedSkills)), userId);
   }
 
   function updateSkills(userSkill: string, userId: string) {
-    httpClient.request( setUserSkills( { userSkill, userId } ) )
+    httpClient.request(setUserSkills({ userSkill, userId }))
       .subscribe(() => {
         if (skillTextFieldRef && skillTextFieldRef?.current) { skillTextFieldRef.current.value = ''; }
         fetchUserSkills(userId);
@@ -101,11 +118,15 @@ function FresherProfileUpload() {
   function fetchUserSkills(userId: string) {
     httpClient.request(getUserSkills(userId))
       .pipe(concatMap(async ({ data: { response: { userSkill } } }) => (JSON.parse(userSkill))))
-      .subscribe((skills) => {if (Array.isArray(skills)) setSkills(() => new Set(skills))}, (error) => console.error(error))
+      .subscribe((skills) => { if (Array.isArray(skills)) setSkills(() => new Set(skills)) }, (error) => console.error(error))
   }
 
   function unHandledEvent() {
     console.log('event not handled');
+  }
+
+  function onHighestLevelEducationChangeHandler(value: string) {
+    setEducationalSkills((educationalSkills) => fresherProfileUploadService.onHighestLevelEducationChange(educationalSkills, value));
   }
 
   return (
@@ -124,39 +145,28 @@ function FresherProfileUpload() {
                     <rect height="1px" width="100%" y="50%" fill="#5B5B5B" />
                   </svg>
                 </div>
-                <div
-                  className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center"
-                // style={{ backgroundColor: "#FFFFFF" }}
-                >
-                  Upload your Passport Photo
-                </div>
+                <div className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center">Upload your Passport Photo</div>
               </div>
               <div className="p-5 md:pl-10">
-                <div className="font-bold text-[#005F59] text-[2rem] md:text-[4em]">
-                  Hi Rahul,
-                </div>
-                <div className="text-[#5B5B5B] text-[1.052rem]  pr-[0px] md:text-[2.4em] md:pr-[120px]">
-                  Please complete your profile and more subtext here
-                </div>
+                <div className="font-bold text-[#005F59] text-[2rem] md:text-[4em]">Hi Rahul,</div>
+                <div className="text-[#5B5B5B] text-[1.052rem]  pr-[0px] md:text-[2.4em] md:pr-[120px]">Please complete your profile and more subtext here</div>
               </div>
             </div>
 
             <div className=" w-full md:my-[3em]">
-              <div className="text-[#005F59] text-[1.3rem]  font-bold mb-[1em] md:text-[3.2em]">
-                Skills
-              </div>
+              <div className="text-[#005F59] text-[1.3rem]  font-bold mb-[1em] md:text-[3.2em]">Skills</div>
 
               <div className="flex md:w-[50em] mb-[2em]">
                 <div className="flex-grow flex flex-col pr-[2em]">
                   <TextField inputRef={skillTextFieldRef} size="small" />
                 </div>
                 <div className="flex">
-                  <Button variant="contained" onClick={addSkillHandler} >Add</Button>
+                  <Button variant="contained" onClick={addSkillHandler}>Add</Button>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-[1em] mb-[3em]">
-                { Array.from(skills).map(skill => <Chip onClick={() => removeSkillHandler(skill)} className="text-[1.5em]" key={CommonUtilities.generateRandomString(100)} label={skill} />) }
+                {Array.from(skills).map(skill => <Chip onClick={() => removeSkillHandler(skill)} className="text-[1.5em]" key={CommonUtilities.generateRandomString(100)} label={skill} />)}
               </div>
             </div>
 
@@ -167,8 +177,10 @@ function FresherProfileUpload() {
                 </div>
                 <div>
                   <DropdownMenu
-                    label="Select"
                     endIcon={<KeyboardArrowDownIcon />}
+                    label={educationalSkills?.highestEducationList?.find(e => e.selected)?.value || "Select"}
+                    options={educationalSkills.highestEducationList.map(e => e.value)}
+                    onOptionClick={onHighestLevelEducationChangeHandler}
                   />
                 </div>
               </div>
@@ -178,8 +190,9 @@ function FresherProfileUpload() {
                 </div>
                 <div>
                   <DropdownMenu
-                    label="Select"
                     endIcon={<KeyboardArrowDownIcon />}
+                    label={educationalSkills?.boardList?.find(e => e.selected)?.value || "Select"}
+                    options={educationalSkills.boardList.map(e => e.value)}
                   />
                 </div>
               </div>
@@ -189,8 +202,9 @@ function FresherProfileUpload() {
                 </div>
                 <div>
                   <DropdownMenu
-                    label="Select"
                     endIcon={<KeyboardArrowDownIcon />}
+                    label={educationalSkills?.streamList?.find(e => e.selected)?.value || "Select"}
+                    options={educationalSkills.streamList.map(e => e.value)}
                   />
                 </div>
               </div>
