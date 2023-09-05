@@ -1,13 +1,17 @@
 import UserJobDetails from "../components/job-details.component";
-
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 import SubSteps from "../components/sub-steps.component";
 import { useRef, useState, useEffect, CSSProperties, ChangeEvent } from "react";
 import OTPInput from "react-otp-input";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import "react-toastify/dist/ReactToastify.css";
+
 import {
+  useLoginMutation,
   useRegisterMutation,
   useSendEmailMutation,
   useVerifyOTPMutation,
@@ -23,13 +27,19 @@ import {
   phoneNumberStepsCounterDecrement,
   phoneNumberStepsCounterIncrement,
   resSteptwoSelector,
+  verifyEmailFlagSelector,
 } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { registerFormQuestionnaire } from "../../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 import { useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
 import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";
+import { Login } from "../../../pages/Login";
+import { setToken } from "../../../features/reducers/authReducers/auth-slice-reducer";
+import LoginSub from "./LoginSub";
+import { Button } from "@mui/material";
+import { isEmpty } from "rxjs";
 
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
@@ -48,7 +58,7 @@ type SubmitRegister = {
 };
 
 export default function QuestionnairePersonalDetails() {
-  const userId = useSelector((state:RootState)=>state.authSlice.userId)
+  const userId = useSelector((state: RootState) => state.authSlice.userId);
 
   const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
     email: "",
@@ -64,11 +74,13 @@ export default function QuestionnairePersonalDetails() {
   const [imageUploadApi] = useUploadFileMutation();
 
   function onResumeUpload(imageFile: File) {
-    if (!userId) { return; }
-    const formData = new FormData()
-    formData.append('image', imageFile);
-    formData.append('documentType', FILE_UPLOAD_TYPES.USER_RESUME);
-    formData.append('userId', userId);
+    if (!userId) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    formData.append("documentType", FILE_UPLOAD_TYPES.USER_RESUME);
+    formData.append("userId", userId);
 
     imageUploadApi(formData);
   }
@@ -80,7 +92,10 @@ export default function QuestionnairePersonalDetails() {
       {/* STEPS */}
       <div className="py-[2em] px-[3em] h-[100%]">
         <SubSteps />
-        <PersonalDetails onResumeUpload={onResumeUpload} setSubmitRegister={setSubmitRegister} />
+        <PersonalDetails
+          onResumeUpload={onResumeUpload}
+          setSubmitRegister={setSubmitRegister}
+        />
         {/* <BottomPageNavigationBar /> */}
       </div>
     </div>
@@ -91,11 +106,14 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
-
+console.log(props)
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]">
-        <div>Name</div>
+        <div className="flex">Name <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke={props.validName || props.fullName.length == ''  ? "currentColor" : "red"} className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+</svg>
+</div>
         <div>
           <input
             type="text"
@@ -113,7 +131,7 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
           />
         </div>
         {props.userFocus && props.fullName && !props.validName ? (
-          <p>
+          <p className="text-[#fe4a08]">
             4 to 24 characters.
             <br />
             Must begin with a letter.
@@ -129,6 +147,7 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
 };
 
 const PhoneComponent: React.FC<PersonDetails> = (props) => {
+  console.log(props)
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]">
@@ -179,6 +198,14 @@ const PhoneComponent: React.FC<PersonDetails> = (props) => {
             onBlur={() => props.setPhoneFocus(false)}
             className="w-[100%] px-[0.5em] border border-[#005F59] border-solid rounded-md outline-none"
           />
+            {props.phoneFocus &&  !props.validMobile ? (
+          <p className="text-[#fe4a08] ">
+            mobile number must be 10 characters
+           
+          </p>
+        ) : (
+          ""
+        )}
         </div>
       </div>
     </>
@@ -197,26 +224,41 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await email(props.email);
-      toast.success("otp is send to your email address", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
+      const res = await email(props.email);
 
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setLoading(false);
-      toggleContent();
+      if (res?.error) {
+        toast.error(`${res?.error.data.message}`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setLoading(false);
+      } else {
+        toast.success(`${res.data.message}`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setLoading(false);
+        toggleContent();
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   const content =
-    !props.validEmail && props.emailFocus && props.email ? (
+    !props.validEmail  && props.email ? (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="red"
@@ -257,6 +299,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
       </div>
 
       <div className="flex gap-[1em]">
+        <div className="flex-row">
         <input
           type="email"
           placeholder="Email"
@@ -267,12 +310,21 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
           autoComplete="off"
           className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
         />
+        {props.emailFocus &&  !props.validEmail ? (
+          <p className="text-[#fe4a08]  ">
+            fill email correctly
+           
+          </p>
+        ) :undefined}
+
+        </div>
+      
         <button
-          className="bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed "
+          className="bg-[#005F59]  text-[#FECD08]  rounded-md font-medium p-[0.25em]n h-[2rem] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed "
           disabled={!props.validEmail}
           onClick={handleSubmitEmail}
         >
-          Send OTP
+          <span className="p-2">Send OTP</span>
         </button>
         {loading ? (
           <div role="status">
@@ -294,9 +346,8 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
             </svg>
             <span className="sr-only">Loading...</span>
           </div>
-        ) : (
-          " "
-        )}
+        ) : undefined
+}
       </div>
     </div>
   );
@@ -352,7 +403,7 @@ const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
 const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const content =
-    props.matchpassword && props.confirmFocus ? (
+    props.matchpassword  ? (
       <svg
         xmlns="http:www.w3.org/2000/svg"
         fill="none"
@@ -411,137 +462,83 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
   );
 };
 
-// const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
-//   console.log(props.confirmpassword);
-//   console.log(props.matchpassword);
-//   const [showPassword,setShowPassword] = useState(false)
-//   const content =
-//     props.matchpassword && props.confirmFocus ? (
-//       <svg
-//         xmlns="http://www.w3.org/2000/svg"
-//         fill="none"
-//         viewBox="0 0 24 24"
-//         strokeWidth={1.5}
-//         stroke="currentColor"
-//         className="w-6 h-6"
-//       >
-//         <path
-//           strokeLinecap="round"
-//           strokeLinejoin="round"
-//           d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-//         />
-//       </svg>
-//     ) : (
-//       <svg
-//         xmlns="http://www.w3.org/2000/svg"
-//         fill="none"
-//         viewBox="0 0 24 24"
-//         strokeWidth={1.5}
-//         stroke="currentColor"
-//         className="w-6 h-6"
-//       >
-//         <path
-//           strokeLinecap="round"
-//           strokeLinejoin="round"
-//           d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-//         />
-//       </svg>
-//     );
-
-//   return (
-//     <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[50%]">
-//       <div>ConfirmPassword</div>
-//       <div className="flex gap-[1em]">
-//         <input
-//            type={showPassword ? "text" : "password"}
-//           onChange={(e) => props.setConfirmpassword(e.target.value)}
-//           value={props.confirmpassword}
-//           placeholder="confirmpassword"
-//           autoComplete="off"
-//           onFocus={() => props.setConfirmFocus(true)}
-//           onBlur={() => props.setConfirmFocus(false)}
-//           className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
-//         />
-//         {content}
-//       </div>
-//     </div>
-//   );
-// };
-
-function UploadResumeComponent( { onResumeUpload }: { onResumeUpload: (i: File) => void } ) {
+function UploadResumeComponent({
+  onResumeUpload,
+}: {
+  onResumeUpload: (i: File) => void;
+}) {
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
 
   function onClicked() {
-    console.log('clicked');
+    console.log("clicked");
     uploadFileRef.current?.click();
   }
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
-    
     const selectedFile = event.target.files && event.target.files[0];
     if (selectedFile) {
       onResumeUpload(selectedFile);
       if (uploadFileRef.current) {
-        uploadFileRef.current.value = '';
+        uploadFileRef.current.value = "";
       }
     }
   }
 
   return (
-    <div className="flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em]">
-    <div
-      className="flex flex-row items-center flex-grow h-[100%] px-[2em] py-[0.5em] justify-center rounded-[1em]"
-      style={{
-        boxShadow: "0 0 5px rgb(0, 0, 0, 0.2)",
-        backgroundColor: "white",
-        cursor: "pointer", // Add cursor pointer for click interaction
-      }}
-      onClick={() => document.getElementById("resume-upload").click()}
-    >
-      <div className="mr-[0.5em]">
-        <label htmlFor="resume-upload">
-          <svg
-            width="39"
-            height="39"
-            viewBox="0 0 39 39"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125"
-              stroke="#005F59"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75"
-              stroke="#005F59"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z"
-              stroke="#005F59"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </label>
-        <input
-          type="file"
-          id="resume-upload"
-          accept="application/pdf,application/vnd.ms-excel"
-          style={{ display: "none" }}
-          onChange={onFileUpload} ref={uploadFileRef}
-        />
+    <div className="flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em]  p-2 mt-5 mb-4">
+      <div
+        className="flex flex-row items-center flex-grow h-[100%] px-[2em] py-[0.5em] justify-center rounded-[1em]"
+        style={{
+          boxShadow: "0 0 5px rgb(0, 0, 0, 0.2)",
+          backgroundColor: "white",
+          cursor: "pointer", // Add cursor pointer for click interaction
+        }}
+        onClick={() => document.getElementById("resume-upload").click()}
+      >
+        <div className="mr-[0.5em]">
+          <label htmlFor="resume-upload">
+            <svg
+              width="39"
+              height="39"
+              viewBox="0 0 39 39"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125"
+                stroke="#005F59"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75"
+                stroke="#005F59"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z"
+                stroke="#005F59"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </label>
+          <input
+            type="file"
+            id="resume-upload"
+            accept="application/pdf,application/vnd.ms-excel"
+            style={{ display: "none" }}
+            onChange={onFileUpload}
+            ref={uploadFileRef}
+          />
+        </div>
+        <div>Upload Resume (PDF only)</div>
       </div>
-      <div>Upload Resume (PDF only)</div>
     </div>
-  </div>
-
   );
 }
 
@@ -551,6 +548,7 @@ const Verified = (props: PropT): JSX.Element => {
   const [otp, setOtp] = useState<string>("");
 
   const [verifyOTP] = useVerifyOTPMutation();
+  const dispatch = useDispatch();
   console.log(otp);
   console.log(props.email);
   const email = props.email;
@@ -562,17 +560,46 @@ const Verified = (props: PropT): JSX.Element => {
       const response = await verifyOTP({ otp, email });
       console.log(response);
       // Assuming the response structure doesn't have an "error" property
-      toast.success("OTP has been sent to your email address", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+
+      if (response) {
+        if (response?.error) {
+          dispatch(verifyEmailFlagSelector(false));
+          toast.error("OTP is not verified", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        } else if (response?.data) {
+          toast.success("otp verified successfully", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          dispatch(verifyEmailFlagSelector(true));
+        }
+      } else {
+        toast.error("OTP is not verified", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(verifyEmailFlagSelector(false));
+      }
     } catch (error) {
       console.log("API call error:", error);
+      dispatch(verifyEmailFlagSelector(false));
     }
   };
   const inputStyle: CSSProperties = {
@@ -606,21 +633,7 @@ const Verified = (props: PropT): JSX.Element => {
           />
           <div className="flex items-center">
             <div className="mr-[0.25em]">
-              {/* {
-                otp.length == 4 ?
-                <svg
-                width="15"
-                height="15"
-                viewBox="0 0 15 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.07296 12.2577L6.00837 12.1477C5.02183 10.4668 2.40024 6.89977 2.37375 6.86395L2.33594 6.81257L3.2291 5.92988L6.05637 7.90408C7.83649 5.59411 9.49723 4.00751 10.5805 3.081C11.7655 2.0675 12.5369 1.60091 12.5447 1.59644L12.5622 1.58594H14.0773L13.9326 1.71482C10.2106 5.03 6.17634 12.0761 6.13616 12.1469L6.07296 12.2577Z"
-                  fill="#005F59"
-                />
-              </svg> :""
-              } */}
+             
             </div>
             {otp.length == 4 ? (
               <button
@@ -639,13 +652,19 @@ const Verified = (props: PropT): JSX.Element => {
   );
 };
 
-const PersonalDetails = ( { onResumeUpload } : { onResumeUpload: (i: File) => void } ): JSX.Element => {
-  
+const PersonalDetails = ({
+  onResumeUpload,
+}: {
+  onResumeUpload: (i: File) => void;
+}): JSX.Element => {
   const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useAppDispatch();
+
+  const token = localStorage.getItem("userToken");
+  console.log(token);
 
   const [fullName, setfullName] = useState<string>("");
   const [validName, setValidName] = useState(false);
@@ -669,6 +688,7 @@ const PersonalDetails = ( { onResumeUpload } : { onResumeUpload: (i: File) => vo
   const [confirmFocus, setConfirmFocus] = useState(false);
 
   const [showVerifyedOTP, setShowVerifyedOTP] = useState(false);
+  const [toggleLoginRegister, setToggleLoginRegister] = useState(false);
   const role = "USER";
   const userProfileType = "fresher";
   const date = "2022-08-21";
@@ -711,63 +731,53 @@ const PersonalDetails = ( { onResumeUpload } : { onResumeUpload: (i: File) => vo
     }
   }, [contentDisabled, dispatch, email, fullName, mobile_no, password]);
 
-  // const regiterDispatchHandler= () =>{
-  //   dispatch(registerFormQuestionnaire({
-  //     fullName,
-  //     mobile_no,
-  //     email,
-  //     password,
-  //     role,
-  //     userProfileType,
-  //     date,
-  //   }))
-  // }
 
-  const registerSubmitHanlder = async (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.preventDefault();
-    try {
-      const res = await register({
-        fullName,
-        mobile_no,
-        email,
-        password,
-        role,
-        userProfileType,
-        date,
-      });
 
-      if (res?.data) {
-        dispatch(resSteptwoSelector(true));
+  // const registerSubmitHanlder = async (
+  //   e: React.MouseEvent<HTMLButtonElement>
+  // ) => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await register({
+  //       fullName,
+  //       mobile_no,
+  //       email,
+  //       password,
+  //       role,
+  //       userProfileType,
+  //       date,
+  //     });
 
-        return toast.success("register success", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
+  //     if (res?.data) {
+  //       dispatch(resSteptwoSelector(true));
 
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      } else {
-        dispatch(resSteptwoSelector(false));
-        return toast.error("error", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
+  //       return toast.success("register success", {
+  //         position: "top-center",
+  //         autoClose: 2000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
 
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //     } else {
+  //       dispatch(resSteptwoSelector(false));
+  //       return toast.error("error", {
+  //         position: "top-center",
+  //         autoClose: 2000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     setValidName(USER_REGEX.test(fullName));
@@ -818,15 +828,22 @@ const PersonalDetails = ( { onResumeUpload } : { onResumeUpload: (i: File) => vo
 
   console.log(validpassword);
   console.log(matchpassword);
+console.log(toggleLoginRegister)
   return (
     <div className="flex flex-col gap-[2em] md:px-[10em]">
       <div className="font-semibold text-[1.8em] text-[#5B5B5B]">
         Fill the details below
       </div>
 
-      <div className="">
-        <div className="bg-[#F3FAF9] rounded-md py-[3em] px-[2em] md:px-[7em] gap-[2em] flex flex-col">
-          <div className="flex flex-col md:flex-row gap-[2em]">
+      <div className="bg-[#F3FAF9] rounded-md py-[3em] px-[2em] md:px-[7em] gap-[2em]  flex flex-col">
+        <div className={toggleLoginRegister ? "hidden" : undefined}>
+          <LoginSub
+            setToggleLoginRegister={setToggleLoginRegister}
+            toggleLoginRegister={toggleLoginRegister}
+          />
+        </div>
+        <div className={!toggleLoginRegister ? "hidden" : undefined}>
+          <div className="flex flex-col md:flex-row gap-[2em] p-2">
             <NameComponent
               userRef={userRef}
               fullName={fullName}
@@ -844,7 +861,7 @@ const PersonalDetails = ( { onResumeUpload } : { onResumeUpload: (i: File) => vo
               setPhoneFocus={setPhoneFocus}
             />
           </div>
-          <div className="flex flex-col md:flex-row gap-[2em]">
+          <div className="flex flex-col md:flex-row gap-[2em] p-2">
             <EmailComponent
               email={email}
               setemail={setemail}
@@ -857,7 +874,7 @@ const PersonalDetails = ( { onResumeUpload } : { onResumeUpload: (i: File) => vo
             />
             {showVerifyedOTP && validEmail ? <Verified email={email} /> : ""}
           </div>
-          <div className="flex flex-col md:flex-row gap-[2em]">
+          <div className="flex flex-col md:flex-row gap-[2em] p-2">
             <PasswordComponent
               password={password}
               setpassword={setpassword}
@@ -875,15 +892,18 @@ const PersonalDetails = ( { onResumeUpload } : { onResumeUpload: (i: File) => vo
             />
           </div>
           <UploadResumeComponent onResumeUpload={onResumeUpload} />
-          {/* <button
-          <UploadResumeComponent onResumeUpload={onResumeUpload} />
-          <button
-            className="bg-[#005F59] text-xl cursor-pointer h-[40px] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em]   disabled:bg-gray-400 disabled:cursor-not-allowed "
-            // onClick={regiterDispatchHandler}
-            disabled={contentDisabled}
-          >
-            Submit
-          </button> */}
+          <div className="text-grey text-center mt-1  text-[1.2rem]">
+          <h2>
+            Didn’t signed up yet?{" "}
+            <Button
+            onClick={()=>setToggleLoginRegister(!toggleLoginRegister)}
+              className="border-b text-darkGreen border-darkGreen font-medium"
+            >
+              Log In
+            </Button>{" "}
+            now
+          </h2>
+        </div>
         </div>
       </div>
     </div>
