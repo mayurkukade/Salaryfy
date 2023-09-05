@@ -17,6 +17,18 @@ export default function BottomPageNavigationBar() {
     (state: RootState) => state.registerFormSlice.registerFormData
   );
   console.log(registerFormData);
+
+  // to read validation value from redux of screening question form
+  const screeningQuestionValidation = useSelector(
+    (state: RootState) => state.screeningQuestionSlice.screeningQuestionValue
+  );
+  //  to read the response from redux  and sent to backend using RTK query
+  const screeningQuestionResponse = useSelector(
+    (state: RootState) => state.screeningQuestionSlice.screeningQuestionResponse
+  );
+  console.log(`Secreen question validation is ${screeningQuestionValidation}`);
+  console.log("Secreen question Response is ", screeningQuestionResponse);
+
   const currentRoutee = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
@@ -71,7 +83,6 @@ console.log(!nextButtonDisabled)
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
-
             draggable: true,
             progress: undefined,
             theme: "light",
@@ -81,17 +92,15 @@ console.log(!nextButtonDisabled)
         console.log(error);
       }
     } else if (currentRoute === "questionnaire/screening-questions") {
+      // logic to validate and submit
+      if (screeningQuestionValidation) {
 
-      // logic to validate and submit 
-      // if () {
+        navigate("/questionnaire/schedule-interview");
+      } else {
         
-      // }else{
-
-      // }
-
-      navigate("/questionnaire/schedule-interview");
-    }else if(currentRoute === "questionnaire/schedule-interview"){
-      navigate("/questionnaire/fresher-dashboard")
+      }
+    } else if (currentRoute === "questionnaire/schedule-interview") {
+      navigate("/questionnaire/fresher-dashboard");
     }
   };
 
