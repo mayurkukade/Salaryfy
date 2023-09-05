@@ -1,3 +1,4 @@
-export interface screeningRegisterForm {
-    registerFormData:string[]
+export interface screeningQuestionInterface {
+    screeningQuestionValue:number,
+    screeningQuestionResponse:string[]
 }
