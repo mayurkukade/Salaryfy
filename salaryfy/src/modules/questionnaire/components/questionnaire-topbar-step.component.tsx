@@ -40,8 +40,11 @@ export default function QuestionnaireTopBarStep() {
   }else if(currentRoute == 'questionnaire/fresher-profile-upload'){
     stepTwoTotal = 100;
     stepThreeTotal = 60
+  }else if(currentRoute == 'questionnaire/fresher-roadmap'){
+    stepTwoTotal = 100;
+    stepThreeTotal = 100
   }
-   else {
+  else {
     stepTwoTotal =
       phoneNumberCounterStep2 +
       passwordCounterStep2 +
@@ -51,7 +54,7 @@ export default function QuestionnaireTopBarStep() {
   }
 
   return (
-    <div className="flex w-[100%] container p-[3em] sticky top-[0px] bg-[#fff] z-[100]">
+    <div className="flex w-[88.9%] container p-[3em] sticky top-[0px] bg-[#fff] z-[100]">
       {/* Code for Desktop view  */}
       <Box
         className="flex-grow justify-center w-[80%]  "
@@ -70,7 +73,7 @@ export default function QuestionnaireTopBarStep() {
             no={2}
             title="Upload your Resume"
           />
-          <StepDesktop progress={stepThreeTotal} active={false} no={3} title="Get hired!" />
+          <StepDesktop progress={stepThreeTotal} active={true} no={3} title="Get hired!" />
         </div>
       </Box>
 
@@ -168,7 +171,7 @@ function StepDesktop({
     (state: RootState) => state.currentRoute.currentRoute
   );
   console.log(currentRoute);
-  console.log(currentRoute == "questionnaire/fresher-dashboard");
+  console.log(currentRoute == "questionnaire/fresher-dashboard" || "questionnaire/fresher-profile-upload");
   return (
     <div className={"flex flex-grow " + (className || "")}>
       <div className="flex flex-col items-center mr-[1.5em]">
@@ -182,11 +185,11 @@ function StepDesktop({
           } flex justify-center items-center ${
             no == 3 ? "bg-[#9ca3af] text-black" : null
           } ${
-            no == 3 && currentRoute == "questionnaire/fresher-dashboard"
+            no == 3 && currentRoute == "questionnaire/fresher-dashboard" 
               ? "!bg-[#FECD08] text-black"
               : null
           } ${
-            no == 2 && currentRoute == "questionnaire/fresher-dashboard"
+            no == 2 && currentRoute == "questionnaire/fresher-dashboard" || currentRoute == "questionnaire/fresher-profile-upload"  || currentRoute == "questionnaire/fresher-roadmap"
               ? "!bg-[#005F59] text-white"
               : null
           } `}
