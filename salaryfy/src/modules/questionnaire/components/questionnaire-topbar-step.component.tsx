@@ -29,7 +29,7 @@ export default function QuestionnaireTopBarStep() {
   );
   console.log(currentRoute);
   let stepTwoTotal: number;
-  let stepThreeTotal:number
+  let stepThreeTotal:number;
   if (currentRoute == "questionnaire/screening-questions") {
     stepTwoTotal = 25;
   }else if(currentRoute == 'questionnaire/fresher-dashboard'){
@@ -90,14 +90,14 @@ export default function QuestionnaireTopBarStep() {
           />
           <StepMobile
             className="text-[0.5rem]"
-            progress={65}
+            progress={stepTwoTotal}
             active={true}
             no={2}
             title="Upload your Resume"
           />
           <StepMobile
             className="text-[0.5rem]"
-            progress={0}
+            progress={stepThreeTotal}
             active={false}
             no={3}
             title="Get hired!"
@@ -223,7 +223,10 @@ const CircularProgressBarSVG = ({
   const radius = 40; // Radius of the circle
   const circumference = 2 * Math.PI * radius;
   const progress = ((100 - value) * circumference) / 100;
-
+  const currentRoute = useSelector(
+    (state: RootState) => state.currentRoute.currentRoute
+  );
+  console.log(currentRoute);
   return (
     <svg
       width="100%"
