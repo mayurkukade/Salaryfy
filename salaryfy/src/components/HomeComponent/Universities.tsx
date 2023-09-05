@@ -13,7 +13,7 @@ const Universities = () => {
           <span className="text-yellow"> Universities</span>
         </p>
         {/* <marquee scrollamount="10"> */}
-        <div className="grid grid-cols-2 px-3 md:grid-cols-4 grid-rows-auto gap-4 md:gap-6 mb-10 ">
+        <div className="grid grid-cols-2 px-3 md:grid-cols-4 grid-rows-auto gap-4 md:gap-8 mb-10 ">
           <UniversitiesCard
             img={harvarduniversitylogo}
             university={"Harvard"}
@@ -69,7 +69,7 @@ const Universities = () => {
 
 const UniversitiesCard = ({ img, university }) => {
   return (
-    <div className="rounded-lg bg-gradient-to-br p-4 shadow-md w-full md:w-[17.6875rem] h-[5.95969rem] flex items-center ">
+    <div className="rounded-lg bg-gradient-to-br p-4 shadow-md w-full md:w-[19.6875rem] h-[5.95969rem] flex items-center ">
       <img src={img} className="max-h-full float-left" />
       <p className="items-center text-[0.65rem] md:text-[1.2rem] pl-[12px] color-[#005F59]">
         {university} <br /> University
