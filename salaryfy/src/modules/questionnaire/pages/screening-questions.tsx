@@ -30,7 +30,7 @@ export default function ScreeningQuestions() {
    console.log(id)
   const navigate = useNavigate();
   const [collectResponse, setCollectResponse] = useState([]);
-
+console.log(collectResponse)
   //  RTK query hook to get all question related to job
   const {
     data: responseData,

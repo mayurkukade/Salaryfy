@@ -29,12 +29,18 @@ export default function BottomPageNavigationBar() {
   console.log(currentRoutee);
   console.log(registerFormData[0]);
   console.log(resSteptwoSelector && verifyEmailFlagSelector);
+  console.log(resSteptwoSelector)
+  console.log(verifyEmailFlagSelector)
   const currentRoute = window.location.href.slice(22);
   console.log(currentRoute);
 
   let nextButtonDisabled
   if(currentRoute === 'questionnaire'){
     nextButtonDisabled = resSteptwoSelector && verifyEmailFlagSelector
+  }else if(currentRoute === 'questionnaire/screening-questions'){
+    nextButtonDisabled = true
+  }else if(currentRoute === 'questionnaire/schedule-interview'){
+    nextButtonDisabled = true
   }
 console.log(!nextButtonDisabled)
   const navigate = useNavigate();
@@ -94,13 +100,15 @@ console.log(!nextButtonDisabled)
       navigate("/questionnaire");
     } else if (currentRoute === "questionnaire/schedule-interview") {
       navigate("/questionnaire/screening-questions");
+    }else if(currentRoute === "questionnaire/fresher-dashboard"){
+      navigate("/questionnaire/schedule-interview")
     }
   };
 
   return (
     <div className="flex justify-center mt-6 mb-6">
       <div
-        className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]"
+        className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em] cursor-pointer"
         onClick={backHandler}
       >
         <span className="mr-[1em]">
@@ -116,12 +124,12 @@ console.log(!nextButtonDisabled)
             />
           </svg>
         </span>
-        <span className="text-[2em] text-[#5B5B5B] font-medium mr-[0.5em] cursor-pointer">
+        <span className="text-[2em] text-[#5B5B5B] font-medium mr-[0.5em] ">
           Back
         </span>
       </div>
       <button
-        className="flex items-center bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em] text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer  disabled:bg-gray-400 disabled:cursor-not-allowed "
+        className="flex items-center  bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em] text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer  disabled:bg-gray-400 disabled:cursor-not-allowed "
         onClick={nextHandler}
         disabled={!nextButtonDisabled}
       >
