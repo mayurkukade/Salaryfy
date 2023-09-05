@@ -39,6 +39,7 @@ import { Login } from "../../../pages/Login";
 import { setToken } from "../../../features/reducers/authReducers/auth-slice-reducer";
 import LoginSub from "./LoginSub";
 import { Button } from "@mui/material";
+import { isEmpty } from "rxjs";
 
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
@@ -105,11 +106,14 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
-
+console.log(props)
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]">
-        <div>Name</div>
+        <div className="flex">Name <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke={props.validName || props.fullName.length == ''  ? "currentColor" : "red"} className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+</svg>
+</div>
         <div>
           <input
             type="text"
@@ -143,6 +147,7 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
 };
 
 const PhoneComponent: React.FC<PersonDetails> = (props) => {
+  console.log(props)
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]">
@@ -193,6 +198,14 @@ const PhoneComponent: React.FC<PersonDetails> = (props) => {
             onBlur={() => props.setPhoneFocus(false)}
             className="w-[100%] px-[0.5em] border border-[#005F59] border-solid rounded-md outline-none"
           />
+            {props.phoneFocus &&  !props.validMobile ? (
+          <p className="text-[#fe4a08] ">
+            mobile number must be 10 characters
+           
+          </p>
+        ) : (
+          ""
+        )}
         </div>
       </div>
     </>
@@ -245,7 +258,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
   };
 
   const content =
-    !props.validEmail && props.emailFocus && props.email ? (
+    !props.validEmail  && props.email ? (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="red"
@@ -286,6 +299,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
       </div>
 
       <div className="flex gap-[1em]">
+        <div className="flex-row">
         <input
           type="email"
           placeholder="Email"
@@ -296,12 +310,21 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
           autoComplete="off"
           className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
         />
+        {props.emailFocus &&  !props.validEmail ? (
+          <p className="text-[#fe4a08]  ">
+            fill email correctly
+           
+          </p>
+        ) :undefined}
+
+        </div>
+      
         <button
-          className="bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed "
+          className="bg-[#005F59]  text-[#FECD08]  rounded-md font-medium p-[0.25em]n h-[2rem] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed "
           disabled={!props.validEmail}
           onClick={handleSubmitEmail}
         >
-          Send OTP
+          <span className="p-2">Send OTP</span>
         </button>
         {loading ? (
           <div role="status">
@@ -323,9 +346,8 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
             </svg>
             <span className="sr-only">Loading...</span>
           </div>
-        ) : (
-          " "
-        )}
+        ) : undefined
+}
       </div>
     </div>
   );
@@ -381,7 +403,7 @@ const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
 const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const content =
-    props.matchpassword && props.confirmFocus ? (
+    props.matchpassword  ? (
       <svg
         xmlns="http:www.w3.org/2000/svg"
         fill="none"
@@ -463,7 +485,7 @@ function UploadResumeComponent({
   }
 
   return (
-    <div className="flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em]">
+    <div className="flex items-center flex-grow text-[#005F59] font-semibold text-[1.8em]  p-2 mt-5 mb-4">
       <div
         className="flex flex-row items-center flex-grow h-[100%] px-[2em] py-[0.5em] justify-center rounded-[1em]"
         style={{
@@ -611,21 +633,7 @@ const Verified = (props: PropT): JSX.Element => {
           />
           <div className="flex items-center">
             <div className="mr-[0.25em]">
-              {/* {
-                otp.length == 4 ?
-                <svg
-                width="15"
-                height="15"
-                viewBox="0 0 15 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.07296 12.2577L6.00837 12.1477C5.02183 10.4668 2.40024 6.89977 2.37375 6.86395L2.33594 6.81257L3.2291 5.92988L6.05637 7.90408C7.83649 5.59411 9.49723 4.00751 10.5805 3.081C11.7655 2.0675 12.5369 1.60091 12.5447 1.59644L12.5622 1.58594H14.0773L13.9326 1.71482C10.2106 5.03 6.17634 12.0761 6.13616 12.1469L6.07296 12.2577Z"
-                  fill="#005F59"
-                />
-              </svg> :""
-              } */}
+             
             </div>
             {otp.length == 4 ? (
               <button
@@ -723,63 +731,53 @@ const PersonalDetails = ({
     }
   }, [contentDisabled, dispatch, email, fullName, mobile_no, password]);
 
-  // const regiterDispatchHandler= () =>{
-  //   dispatch(registerFormQuestionnaire({
-  //     fullName,
-  //     mobile_no,
-  //     email,
-  //     password,
-  //     role,
-  //     userProfileType,
-  //     date,
-  //   }))
-  // }
 
-  const registerSubmitHanlder = async (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.preventDefault();
-    try {
-      const res = await register({
-        fullName,
-        mobile_no,
-        email,
-        password,
-        role,
-        userProfileType,
-        date,
-      });
 
-      if (res?.data) {
-        dispatch(resSteptwoSelector(true));
+  // const registerSubmitHanlder = async (
+  //   e: React.MouseEvent<HTMLButtonElement>
+  // ) => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await register({
+  //       fullName,
+  //       mobile_no,
+  //       email,
+  //       password,
+  //       role,
+  //       userProfileType,
+  //       date,
+  //     });
 
-        return toast.success("register success", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
+  //     if (res?.data) {
+  //       dispatch(resSteptwoSelector(true));
 
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      } else {
-        dispatch(resSteptwoSelector(false));
-        return toast.error("error", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
+  //       return toast.success("register success", {
+  //         position: "top-center",
+  //         autoClose: 2000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
 
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //     } else {
+  //       dispatch(resSteptwoSelector(false));
+  //       return toast.error("error", {
+  //         position: "top-center",
+  //         autoClose: 2000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     setValidName(USER_REGEX.test(fullName));
@@ -837,7 +835,7 @@ console.log(toggleLoginRegister)
         Fill the details below
       </div>
 
-      <div className="bg-[#F3FAF9] rounded-md py-[3em] px-[2em] md:px-[7em] gap-[2em] flex flex-col">
+      <div className="bg-[#F3FAF9] rounded-md py-[3em] px-[2em] md:px-[7em] gap-[2em]  flex flex-col">
         <div className={toggleLoginRegister ? "hidden" : undefined}>
           <LoginSub
             setToggleLoginRegister={setToggleLoginRegister}
@@ -845,7 +843,7 @@ console.log(toggleLoginRegister)
           />
         </div>
         <div className={!toggleLoginRegister ? "hidden" : undefined}>
-          <div className="flex flex-col md:flex-row gap-[2em]">
+          <div className="flex flex-col md:flex-row gap-[2em] p-2">
             <NameComponent
               userRef={userRef}
               fullName={fullName}
@@ -863,7 +861,7 @@ console.log(toggleLoginRegister)
               setPhoneFocus={setPhoneFocus}
             />
           </div>
-          <div className="flex flex-col md:flex-row gap-[2em]">
+          <div className="flex flex-col md:flex-row gap-[2em] p-2">
             <EmailComponent
               email={email}
               setemail={setemail}
@@ -876,7 +874,7 @@ console.log(toggleLoginRegister)
             />
             {showVerifyedOTP && validEmail ? <Verified email={email} /> : ""}
           </div>
-          <div className="flex flex-col md:flex-row gap-[2em]">
+          <div className="flex flex-col md:flex-row gap-[2em] p-2">
             <PasswordComponent
               password={password}
               setpassword={setpassword}
