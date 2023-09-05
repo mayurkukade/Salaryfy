@@ -18,6 +18,10 @@ const interviewSchedule = apiSlice.injectEndpoints({
             query: ({userId,jobId}) =>({
                 url: `/Interview/getInterviewByUserIdJobId?userId=${userId}&jobId=${jobId}`,
                 transformResponse:console.log(userId,jobId),
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                method:"GET",
             }),
 
             providesTags:['User']
