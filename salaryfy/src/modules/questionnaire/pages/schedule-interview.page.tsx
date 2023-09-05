@@ -18,8 +18,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from "react-redux";
 import { AppStoreStateType, RootState } from "../../../store/app.store";
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
-import  {
-
+import {
   useDeleteInterviewScheduleMutation,
   useGetInterviewScheduleQuery,
   useInterviewScheduleApiMutation,
@@ -47,62 +46,65 @@ export function ScheduleInterview() {
   const [selectedMinute, setSelectedMinute] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectMeridiem, setSelectMeridiem] = useState("");
-  const [convertedTime, setConvertedTime] = useState('');
+  const [convertedTime, setConvertedTime] = useState("");
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-  const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
-  console.log(jobDetails)
-  console.log(selectedDate)
+  const jobDetails = useSelector(
+    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
+  );
+  console.log(jobDetails);
+  console.log(selectedDate);
   const selectInterviewData = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
   console.log(selectInterviewData.interviewEndDate);
   const [interviewScheduleApi] = useInterviewScheduleApiMutation();
-const jobId:number = localStorage.getItem('jobId')
-console.log(jobId)
-const {data,isLoading,isError} = useGetInterviewScheduleQuery({userId,jobId})
- 
-const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation()
+  const jobId: number = localStorage.getItem("jobId");
+  console.log(jobId);
+  const { data, isLoading, isError } = useGetInterviewScheduleQuery({
+    userId,
+    jobId,
+  });
 
+  const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation();
 
-console.log(data)
-if(isLoading){
-  return <p>Loading...</p>
-}
-const handleDelete = async (interviewScheduleId:number) => {
-  console.log(interviewScheduleId)
-  try {
-    console.log(interviewScheduleId)
-    await deleteInterviewSchedule(interviewScheduleId);
-    // You might want to refetch data after successful deletion
-  } catch (error) {
-    console.error('Error deleting interview schedule:', error);
+  console.log(data);
+  if (isLoading) {
+    return <p>Loading...</p>;
   }
-};
+  const handleDelete = async (interviewScheduleId: number) => {
+    console.log(interviewScheduleId);
+    try {
+      console.log(interviewScheduleId);
+      await deleteInterviewSchedule(interviewScheduleId);
+      // You might want to refetch data after successful deletion
+    } catch (error) {
+      console.error("Error deleting interview schedule:", error);
+    }
+  };
 
-const getDetails = data?.list.map((schedule,i)=>{
-  console.log(schedule.interviewScheduleId)
-  return(
-    <>
-   <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]">
-          <div style={{ whiteSpace: "nowrap" }}>Slot-{i+1}</div>
+  const getDetails = data?.list.map((schedule, i) => {
+    console.log(schedule.interviewScheduleId);
+    return (
+      <>
+        <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]">
+          <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
           <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
           <div className="mr-[0.5em]">
-         {schedule.location},  {schedule.date}, {schedule.time}
+            {schedule.location}, {schedule.date}, {schedule.time}
           </div>
-          
-          <button onClick={() => handleDelete(schedule.interviewScheduleId)} >
+
+          <button onClick={() => handleDelete(schedule.interviewScheduleId)}>
             <CancelIcon sx={{ color: "red" }} />
           </button>
         </div>
-    </>
-  )
-})
+      </>
+    );
+  });
 
   console.log(userId);
   const handleHourChange = (event) => {
-    setSelectedHour(event.target.value)
-  
-  }
+    setSelectedHour(event.target.value);
+  };
 
   const handleMinuteChange = (event) => {
     setSelectedMinute(event.target.value);
@@ -128,22 +130,22 @@ const getDetails = data?.list.map((schedule,i)=>{
     const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
     return `${formattedHour}:${formattedMinute}:00`;
   }
-console.log(convertedTime)
+  console.log(convertedTime);
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
-    
+
     const timeFormat = formatTimeWithLeadingZeros(selectedHour, selectedMinute);
 
     const dateFormat =
       selectedDate != null ? selectedDate.toISOString().split("T")[0] : "";
-   
-console.log(dateFormat)
+
+    console.log(dateFormat);
     try {
       const formDetails = {
         location: location,
         interviewDate: "2023-08-10",
-        time:timeFormat,
+        time: timeFormat,
         date: dateFormat,
         userId: userId,
         jobId: 41,
@@ -154,7 +156,7 @@ console.log(dateFormat)
     } catch (error) {
       console.log(error);
     }
-    console.log(convertedTime)
+    console.log(convertedTime);
   };
   return (
     <div className="h-[100%]">
@@ -227,29 +229,15 @@ console.log(dateFormat)
                     value={selectedMinute}
                     label="Minute"
                     onChange={handleMinuteChange}
-                    className="w-[5rem] bg-[white] h-[3.4rem]"
+                    className="w-[6rem] bg-[white] h-[3.4rem]"
                   >
-                    {Array.from({ length: 60 }, (_, i) => (
-                      <MenuItem key={i} value={i}>
-                        {i}
+                    {[0, 15, 30, 45].map((value) => (
+                      <MenuItem key={value} value={value}>
+                        {value == 0 ? "00" : value}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
-                {/* <FormControl fullWidth>
-                  <InputLabel id="Meridiem">Meridiem</InputLabel>
-                  <Select
-                    labelId="Meridiem"
-                    id="Meridiem"
-                    value={selectMeridiem}
-                    label="Meridiem"
-                    onChange={handleChangeMeridiem}
-                    className="w-[5rem] bg-[white] h-[3.4rem] ml-1"
-                  >
-                    <MenuItem value={"AM"}>AM</MenuItem>
-                    <MenuItem value={"PM"}>PM</MenuItem>
-                  </Select>
-                </FormControl> */}
               </div>
               <div className="flex justify-center h-[3.3rem]">
                 <Button
@@ -264,57 +252,40 @@ console.log(dateFormat)
           </div>
         </div>
       </div>
-{getDetails}
-      {/* <div className="h-[100%] mb-[2em]">
-       
+      {getDetails}
 
-        <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]">
-          <div style={{ whiteSpace: "nowrap" }}>Slot-2</div>
-          <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-          <div className="mr-[0.5em]">
-            Kalubisanahalli, On Thursday, 08 June 2023, 10:00 PM
-          </div>
-          <div>
-            <CancelIcon sx={{ color: "red" }} />
-          </div>
+      <div className="flex items-center text-[1.6em] text-[#5B5B5B]">
+        <div>
+          <Checkbox checked={checked} onChange={handleChange} />
         </div>
-
-        
-      </div> */}
-      
-
-        <div className="flex items-center text-[1.6em] text-[#5B5B5B]">
-          <div>
-            <Checkbox checked={checked} onChange={handleChange} />
-          </div>
-          <div>I want to get the job description on my </div>
-          <div className="mx-[0.5em]">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clipPath="url(#clip0_205_11107)">
-                <path
-                  d="M9.00225 0H8.99775C4.03538 0 0 4.0365 0 9C0 10.9688 0.6345 12.7935 1.71337 14.2751L0.59175 17.6186L4.05113 16.5128C5.47425 17.4555 7.17188 18 9.00225 18C13.9646 18 18 13.9624 18 9C18 4.03763 13.9646 0 9.00225 0Z"
-                  fill="#4CAF50"
-                />
-                <path
-                  d="M14.2416 12.708C14.0244 13.3211 13.1627 13.8296 12.4753 13.9781C12.0051 14.0782 11.3908 14.1581 9.32306 13.3009C6.67819 12.2051 4.97494 9.51748 4.84219 9.34311C4.71506 9.16873 3.77344 7.91998 3.77344 6.62848C3.77344 5.33698 4.42931 4.70811 4.69369 4.43811C4.91081 4.21648 5.26969 4.11523 5.61394 4.11523C5.72531 4.11523 5.82544 4.12086 5.91544 4.12536C6.17981 4.13661 6.31256 4.15236 6.48694 4.56973C6.70406 5.09286 7.23281 6.38436 7.29581 6.51711C7.35994 6.64986 7.42406 6.82986 7.33406 7.00423C7.24969 7.18423 7.17544 7.26411 7.04269 7.41711C6.90994 7.57011 6.78394 7.68711 6.65119 7.85136C6.52969 7.99423 6.39244 8.14723 6.54544 8.41161C6.69844 8.67036 7.22719 9.53323 8.00569 10.2262C9.01031 11.1206 9.82481 11.4064 10.1162 11.5279C10.3333 11.6179 10.5921 11.5965 10.7507 11.4277C10.9521 11.2106 11.2007 10.8506 11.4538 10.4962C11.6338 10.242 11.8611 10.2105 12.0996 10.3005C12.3426 10.3849 13.6284 11.0205 13.8928 11.1521C14.1572 11.2849 14.3316 11.3479 14.3957 11.4592C14.4587 11.5706 14.4587 12.0937 14.2416 12.708Z"
-                  fill="#FAFAFA"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_205_11107">
-                  <rect width="18" height="18" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-          <div>whatsapp number</div>
+        <div>I want to get the job description on my </div>
+        <div className="mx-[0.5em]">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clipPath="url(#clip0_205_11107)">
+              <path
+                d="M9.00225 0H8.99775C4.03538 0 0 4.0365 0 9C0 10.9688 0.6345 12.7935 1.71337 14.2751L0.59175 17.6186L4.05113 16.5128C5.47425 17.4555 7.17188 18 9.00225 18C13.9646 18 18 13.9624 18 9C18 4.03763 13.9646 0 9.00225 0Z"
+                fill="#4CAF50"
+              />
+              <path
+                d="M14.2416 12.708C14.0244 13.3211 13.1627 13.8296 12.4753 13.9781C12.0051 14.0782 11.3908 14.1581 9.32306 13.3009C6.67819 12.2051 4.97494 9.51748 4.84219 9.34311C4.71506 9.16873 3.77344 7.91998 3.77344 6.62848C3.77344 5.33698 4.42931 4.70811 4.69369 4.43811C4.91081 4.21648 5.26969 4.11523 5.61394 4.11523C5.72531 4.11523 5.82544 4.12086 5.91544 4.12536C6.17981 4.13661 6.31256 4.15236 6.48694 4.56973C6.70406 5.09286 7.23281 6.38436 7.29581 6.51711C7.35994 6.64986 7.42406 6.82986 7.33406 7.00423C7.24969 7.18423 7.17544 7.26411 7.04269 7.41711C6.90994 7.57011 6.78394 7.68711 6.65119 7.85136C6.52969 7.99423 6.39244 8.14723 6.54544 8.41161C6.69844 8.67036 7.22719 9.53323 8.00569 10.2262C9.01031 11.1206 9.82481 11.4064 10.1162 11.5279C10.3333 11.6179 10.5921 11.5965 10.7507 11.4277C10.9521 11.2106 11.2007 10.8506 11.4538 10.4962C11.6338 10.242 11.8611 10.2105 12.0996 10.3005C12.3426 10.3849 13.6284 11.0205 13.8928 11.1521C14.1572 11.2849 14.3316 11.3479 14.3957 11.4592C14.4587 11.5706 14.4587 12.0937 14.2416 12.708Z"
+                fill="#FAFAFA"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_205_11107">
+                <rect width="18" height="18" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
         </div>
+        <div>whatsapp number</div>
+      </div>
     </div>
   );
 }

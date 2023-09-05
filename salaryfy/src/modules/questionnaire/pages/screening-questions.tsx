@@ -32,7 +32,7 @@ export default function ScreeningQuestions() {
   // disptach hook
   const dispatch = useDispatch();
   const [collectResponse, setCollectResponse] = useState([]);
-
+console.log(collectResponse)
   //  RTK query hook to get all question related to job
   const {
     data: responseData,

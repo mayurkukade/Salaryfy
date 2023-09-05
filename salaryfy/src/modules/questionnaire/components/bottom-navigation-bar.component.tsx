@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../store/app.store";
-import { resSteptwoSelector } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
+
 import { toast } from "react-toastify";
 import { useRegisterMutation } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
-
+import { verifyEmailFlagSelector } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 // // For Accepting Props
 // interface BottomPageNavigationBarProps {
 //   currentPage
@@ -35,12 +35,26 @@ export default function BottomPageNavigationBar() {
   const resSteptwoSelector = useSelector(
     (state: RootState) => state.mainStepsCounter.resStepTwo
   );
+
+  const verifyEmailFlagSelector = useSelector((state:RootState)=>state.mainStepsCounter.verifyemailFlag)
+  console.log(!verifyEmailFlagSelector)
   console.log(currentRoutee);
   console.log(registerFormData[0]);
-  console.log(resSteptwoSelector);
+  console.log(resSteptwoSelector && verifyEmailFlagSelector);
+  console.log(resSteptwoSelector)
+  console.log(verifyEmailFlagSelector)
   const currentRoute = window.location.href.slice(22);
   console.log(currentRoute);
 
+  let nextButtonDisabled
+  if(currentRoute === 'questionnaire'){
+    nextButtonDisabled = resSteptwoSelector && verifyEmailFlagSelector
+  }else if(currentRoute === 'questionnaire/screening-questions'){
+    nextButtonDisabled = true
+  }else if(currentRoute === 'questionnaire/schedule-interview'){
+    nextButtonDisabled = true
+  }
+console.log(!nextButtonDisabled)
   const navigate = useNavigate();
 
   const nextHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -95,13 +109,15 @@ export default function BottomPageNavigationBar() {
       navigate("/questionnaire");
     } else if (currentRoute === "questionnaire/schedule-interview") {
       navigate("/questionnaire/screening-questions");
+    }else if(currentRoute === "questionnaire/fresher-dashboard"){
+      navigate("/questionnaire/schedule-interview")
     }
   };
 
   return (
     <div className="flex justify-center mt-6 mb-6">
       <div
-        className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]"
+        className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em] cursor-pointer"
         onClick={backHandler}
       >
         <span className="mr-[1em]">
@@ -117,16 +133,14 @@ export default function BottomPageNavigationBar() {
             />
           </svg>
         </span>
-        <span className="text-[2em] text-[#5B5B5B] font-medium mr-[0.5em] cursor-pointer">
+        <span className="text-[2em] text-[#5B5B5B] font-medium mr-[0.5em] ">
           Back
         </span>
       </div>
       <button
-        className="flex items-center bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em] text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer  disabled:bg-gray-400 disabled:cursor-not-allowed "
+        className="flex items-center  bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em] text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer  disabled:bg-gray-400 disabled:cursor-not-allowed "
         onClick={nextHandler}
-        disabled={
-          currentRoute == "questionnaire" ? !resSteptwoSelector : undefined
-        }
+        disabled={!nextButtonDisabled}
       >
         Next
         <span className="" style={{ transform: "scaleX(-1)" }}>
@@ -145,10 +159,4 @@ export default function BottomPageNavigationBar() {
       </button>
     </div>
   );
-}
-function dispatch(arg0: {
-  payload: boolean;
-  type: "mainStepsCounter/resSteptwoSelector";
-}) {
-  throw new Error("Function not implemented.");
 }
