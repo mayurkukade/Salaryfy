@@ -17,6 +17,18 @@ export default function BottomPageNavigationBar() {
     (state: RootState) => state.registerFormSlice.registerFormData
   );
   console.log(registerFormData);
+
+  // to read validation value from redux of screening question form
+  const screeningQuestionValidation = useSelector(
+    (state: RootState) => state.screeningQuestionSlice.screeningQuestionValue
+  );
+  //  to read the response from redux  and sent to backend using RTK query
+  const screeningQuestionResponse = useSelector(
+    (state: RootState) => state.screeningQuestionSlice.screeningQuestionResponse
+  );
+  console.log(`Secreen question validation is ${screeningQuestionValidation}`);
+  console.log("Secreen question Response is ", screeningQuestionResponse);
+
   const currentRoutee = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
@@ -28,7 +40,6 @@ export default function BottomPageNavigationBar() {
   console.log(resSteptwoSelector);
   const currentRoute = window.location.href.slice(22);
   console.log(currentRoute);
-
 
   const navigate = useNavigate();
 
@@ -58,7 +69,6 @@ export default function BottomPageNavigationBar() {
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
-
             draggable: true,
             progress: undefined,
             theme: "light",
@@ -68,17 +78,15 @@ export default function BottomPageNavigationBar() {
         console.log(error);
       }
     } else if (currentRoute === "questionnaire/screening-questions") {
+      // logic to validate and submit
+      if (screeningQuestionValidation) {
 
-      // logic to validate and submit 
-      // if () {
+        navigate("/questionnaire/schedule-interview");
+      } else {
         
-      // }else{
-
-      // }
-
-      navigate("/questionnaire/schedule-interview");
-    }else if(currentRoute === "questionnaire/schedule-interview"){
-      navigate("/questionnaire/fresher-dashboard")
+      }
+    } else if (currentRoute === "questionnaire/schedule-interview") {
+      navigate("/questionnaire/fresher-dashboard");
     }
   };
 
@@ -116,7 +124,9 @@ export default function BottomPageNavigationBar() {
       <button
         className="flex items-center bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em] text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer  disabled:bg-gray-400 disabled:cursor-not-allowed "
         onClick={nextHandler}
-        disabled={currentRoute== 'questionnaire'?!resSteptwoSelector:undefined}
+        disabled={
+          currentRoute == "questionnaire" ? !resSteptwoSelector : undefined
+        }
       >
         Next
         <span className="" style={{ transform: "scaleX(-1)" }}>

@@ -10,7 +10,7 @@ import Rating from "@mui/material/Rating";
 import { RootState } from "../../../store/app.store";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppStoreStateType } from '../../../store/app.store';
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
 
@@ -29,6 +29,8 @@ export default function ScreeningQuestions() {
   //  const id = jobDetails?.jobId;
    console.log(id)
   const navigate = useNavigate();
+  // disptach hook
+  const dispatch = useDispatch();
   const [collectResponse, setCollectResponse] = useState([]);
 
   //  RTK query hook to get all question related to job
@@ -44,15 +46,12 @@ export default function ScreeningQuestions() {
 
   // Function to sent response to backend 
   const submitResponse = async () => {
-    
     try {
       const filteredResponses = removeDuplicateResponses(collectResponse);
       console.log("filteredResponses length is", filteredResponses)
       console.log("Response Data length is", responseData.response);
       // applied validation to submit all question
       if (filteredResponses.length === responseData?.response.length )  {
-        
-       
         //  console.log("Submitted Data is", filteredResponses);
         console.log('postQuestionResponse is ',postQuestionResponse)
         if (postQuestionResponse.error) {
@@ -67,14 +66,12 @@ export default function ScreeningQuestions() {
             progress: undefined,
             theme: "light",
           });
-
-          // sending data to backend
+        // sending data to backend
           postQuestion(filteredResponses);
           console.log('data sent to backend is ', filteredResponses)
           navigate("/questionnaire/schedule-interview"); // Navigate to a Next page
         }
       } else {
-        
         toast.error("Please complete all questions before submitting", {
           position: "top-center",
           autoClose: 1000,
@@ -90,7 +87,7 @@ export default function ScreeningQuestions() {
     }
   };
 
-  // Function to remove dupliacte response from ARRAY of object
+  // Function to remove duplicate response from ARRAY of object
 function removeDuplicateResponses(responses:any) {
   const uniqueResponses: { [key: string]: { jobFairQ1Id: string } } = {};
 
@@ -104,7 +101,7 @@ function removeDuplicateResponses(responses:any) {
 }
 
   // Early Return if Error Occur
-  if(isError) return <div><h1 className="text-[2rem] md:text-[5rem]">OOps Something went wrong</h1></div>
+  if(isError) return <div><h1 className="text-[2rem] md:text-[5rem]">Oops Something went wrong!</h1></div>
 
 return (
   <>
