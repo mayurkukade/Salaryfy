@@ -61,7 +61,7 @@ export function ScheduleInterview() {
   const [interviewScheduleApi] = useInterviewScheduleApiMutation();
   const jobId: number = localStorage.getItem("jobId");
   console.log(jobId);
-  const { data, isLoading, isError } = useGetInterviewScheduleQuery({
+  const { data,refetch , isLoading, isError } = useGetInterviewScheduleQuery({
     userId,
     jobId,
   });
@@ -77,7 +77,7 @@ export function ScheduleInterview() {
     try {
       console.log(interviewScheduleId);
       await deleteInterviewSchedule(interviewScheduleId);
-  
+  refetch()
     } catch (error) {
       console.error("Error deleting interview schedule:", error);
     }
