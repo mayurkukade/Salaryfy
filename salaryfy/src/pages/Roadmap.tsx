@@ -10,27 +10,25 @@ const Roadmap = () => {
   return (
     <>
       {/*Main Roadmap Div  */}
-     
 
-      <div className="bg-offwhite " >
+      <div className="bg-offwhite ">
         <div className="container   text-darkGreen flex flex-col  md:flex-row ">
-          <div className=" w-[70%] pt-10 pb-10   text-[1.2rem] flex flex-col  md:text-[1.5rem] " >
-            <h1 className="text-[1.5rem] font-bold md:text-[2.3rem] ml-[18rem] pb-5">
+          <div className=" w-[70%] pt-10 pb-10   text-[1.2rem] flex flex-col  md:text-[1.5rem] ml-[50px]">
+            <h1 className="text-[1.5rem] font-bold md:text-[2.3rem]  pb-5 md:ml-[18rem]">
               Your Roadmap
             </h1>
-
-            <Timeline >
-              <TimelineItem >
+            <Timeline>
+              <TimelineItem>
                 <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
-                  <TimelineDot color="primary"  />
+                  <TimelineDot color="primary" />
                   <TimelineConnector color="primary" />
                 </TimelineSeparator>
-                <TimelineContent >
+                <TimelineContent>
                   <h2 className="list-item ">
                     <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
                     Create Your Profile <br />
                     <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-                      Build a strong and complete profile with accurate <br />{" "}
+                      Build a strong and complete profile with accurate <br />
                       details to get noticed by top companies.
                     </p>
                   </h2>
@@ -38,7 +36,7 @@ const Roadmap = () => {
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
-                  <TimelineDot color="primary"/>
+                  <TimelineDot color="primary" />
                   <TimelineConnector color="primary" />
                 </TimelineSeparator>
                 <TimelineContent>
@@ -46,7 +44,7 @@ const Roadmap = () => {
                     <span className="relative inline-block rounded md:text-[2rem]"></span>{" "}
                     Connect with the Placement Manager <br />
                     <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-                      Reach out to the placement manager for guidance and <br />{" "}
+                      Reach out to the placement manager for guidance and <br />
                       assistance throughout the placement process.
                     </p>
                   </h2>
@@ -54,7 +52,7 @@ const Roadmap = () => {
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
-                  <TimelineDot color="primary"/>
+                  <TimelineDot color="primary" />
                   <TimelineConnector color="primary" />
                 </TimelineSeparator>
                 <TimelineContent>
@@ -64,14 +62,15 @@ const Roadmap = () => {
                     <br />
                     <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
                       Upload all necessary documents such as your resume,
-                      <br /> certificates, and identity proof for verification.
+                      <br />
+                      certificates, and identity proof for verification.
                     </p>
                   </h2>
                 </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
-                  <TimelineDot color="primary"/>
+                  <TimelineDot color="primary" />
                   <TimelineConnector color="primary" />
                 </TimelineSeparator>
                 <TimelineContent>
@@ -88,8 +87,8 @@ const Roadmap = () => {
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
-                  <TimelineDot color="primary"/>
-                  <TimelineConnector color="primary"/>
+                  <TimelineDot color="primary" />
+                  <TimelineConnector color="primary" />
                 </TimelineSeparator>
                 <TimelineContent>
                   <h2 className="list-item ">
@@ -97,15 +96,16 @@ const Roadmap = () => {
                     Recruitment in Progress <br />
                     <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
                       Stay updated on the recruitment status to be prepared{" "}
-                      <br /> for the next step.
+                      <br />
+                      for the next step.
                     </p>
                   </h2>
                 </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
-                  <TimelineDot color="primary"/>
-                  <TimelineConnector color="primary"/>
+                  <TimelineDot color="primary" />
+                  <TimelineConnector color="primary" />
                 </TimelineSeparator>
                 <TimelineContent>
                   <h2 className="list-item ">
@@ -114,14 +114,15 @@ const Roadmap = () => {
                     <br />
                     <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
                       Impress the recruiters with your skills and secure the{" "}
-                      <br /> position.
+                      <br />
+                      position.
                     </p>
                   </h2>
                 </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
-                  <TimelineDot color="primary"/>
+                  <TimelineDot color="primary" />
                   <TimelineConnector color="primary" />
                 </TimelineSeparator>
                 <TimelineContent>
@@ -137,47 +138,62 @@ const Roadmap = () => {
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
-                  <TimelineDot color="primary"/>
+                  <TimelineDot color="primary" />
                   <TimelineConnector color="primary" />
                 </TimelineSeparator>
                 <TimelineContent>
-                <h2 className="list-item ">
-              <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
-              Offer Letter Accepted
-              <br />
-              <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-                Confirm your acceptance of the offer letter to secure <br />{" "}
-                your position.
-              </p>
-            </h2>
+                  <h2 className="list-item ">
+                    <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
+                    Offer Letter Accepted
+                    <br />
+                    <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
+                      Confirm your acceptance of the offer letter to secure{" "}
+                      <br />
+                      your position.
+                    </p>
+                  </h2>
                 </TimelineContent>
               </TimelineItem>
               <TimelineItem>
                 <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
-                  <TimelineDot color="primary"/>
-                 
-                </TimelineSeparator >
+                  <TimelineDot color="primary" />
+                  <TimelineConnector color="primary" />
+                </TimelineSeparator>
                 <TimelineContent>
-                <h2 className="list-item ">
-              <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
-              Pay 1% of CTC
-              <br />
-              <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
-                Pay the agreed 1% of the CTC as service fee <br />
-                for Salaryfy.
-              </p>
-            </h2>
+                  <h2 className="list-item ">
+                    <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
+                    Pay 1% of CTC
+                    <br />
+                    <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
+                      Pay the agreed 1% of the CTC as service fee <br />
+                      for Salaryfy.
+                    </p>
+                  </h2>
                 </TimelineContent>
               </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
+                  <TimelineDot color="primary" />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <h2 className="list-item ">
+                    <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
+                    Appointment Letter Shared
+                    <br />
+                    <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
+                    Get ready to join the company and receive your appointment <br /> letter with details about your role and benefits.
+                    </p>
+                  </h2>
+                </TimelineContent>
+              </TimelineItem>
+              
+              
             </Timeline>
-
-           
-          
           </div>
 
           {/* Having Doubts  */}
           <div
-            className=" w-[90%] mx-auto  md:h-[23.75rem] md:mt-[70px] sm:w-[60%] md:w-[30%] "
+            className=" w-[90%] mx-auto  md:h-[23.75rem] md:mt-[70px] sm:w-[60%] md:w-[30%] pb-6 "
             // style={{border:"2px solid black"}}
           >
             <h3 className="text-[1.5rem] font-bold text-center md:text-[2rem]">
@@ -287,7 +303,7 @@ const Roadmap = () => {
                         </filter>
                       </defs>
                     </svg>
-                    <button className="w-[15rem] ml-5 h-[2.5rem] bg-darkGreen rounded-full text-white text-[1rem] md:w-[20rem]">
+                    <button className="w-[15rem] ml-[11%] md:ml-[8%] h-[2.5rem] bg-darkGreen rounded-full text-white text-[1rem] md:w-[20rem]">
                       contact@salaryfy.com
                     </button>
                   </div>
