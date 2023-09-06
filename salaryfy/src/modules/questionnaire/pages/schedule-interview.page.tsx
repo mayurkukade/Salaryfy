@@ -48,6 +48,7 @@ export function ScheduleInterview() {
   const [selectMeridiem, setSelectMeridiem] = useState("");
   const [convertedTime, setConvertedTime] = useState("");
   const userId = useSelector((state: RootState) => state.authSlice.userId);
+
   const jobDetails = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
@@ -76,7 +77,7 @@ export function ScheduleInterview() {
     try {
       console.log(interviewScheduleId);
       await deleteInterviewSchedule(interviewScheduleId);
-      // You might want to refetch data after successful deletion
+  
     } catch (error) {
       console.error("Error deleting interview schedule:", error);
     }
@@ -89,7 +90,7 @@ export function ScheduleInterview() {
         <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]">
           <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
           <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-          <div className="mr-[0.5em]">
+          <div className="mr-[0.5em]" key={i}>
             {schedule.location}, {schedule.date}, {schedule.time}
           </div>
 

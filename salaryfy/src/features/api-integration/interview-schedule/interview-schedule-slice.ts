@@ -12,34 +12,30 @@ const interviewSchedule = apiSlice.injectEndpoints({
                 method:"POST",
                 body:formDetails
             }),
-            invalidatesTags:["User"]
+            invalidatesTags:["interview-schedule"]
         }),
         getInterviewSchedule:builder.query({
             query: ({userId,jobId}) =>({
                 url: `/Interview/getInterviewByUserIdJobId?userId=${userId}&jobId=${jobId}`,
                 transformResponse:console.log(userId,jobId),
-                headers:{
-                    "Content-Type":"application/json"
-                },
+               
                 method:"GET",
             }),
-
-            providesTags:['User']
+            
+            providesTags:['interview-schedule']
 
         }),
         deleteInterviewSchedule:builder.mutation({
             query:(interviewScheduleId)=>({
               
-                transformResponse:console.log(interviewScheduleId,'formsdetails'),
+                transformResponse:console.log(interviewScheduleId),
                 url:`/Interview/DleteSchedule/${interviewScheduleId}`,
-                headers:{
-                    "Content-Type":"application/json"
-                },
+             
                 method:"DELETE",
                
 
             }),
-            invalidatesTags:['User']
+            invalidatesTags:['interview-schedule']
         })
     })
 })
