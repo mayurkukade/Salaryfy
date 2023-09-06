@@ -125,6 +125,8 @@ export function ScheduleInterview() {
     setSelectedDate(date);
   };
 
+
+  console.log(jobId)
   function formatTimeWithLeadingZeros(hour, minute) {
     const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
     const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
@@ -148,7 +150,7 @@ export function ScheduleInterview() {
         time: timeFormat,
         date: dateFormat,
         userId: userId,
-        jobId: 41,
+        jobId: jobId,
         status: "Scheduled",
       };
       const res = await interviewScheduleApi(formDetails).unwrap();
