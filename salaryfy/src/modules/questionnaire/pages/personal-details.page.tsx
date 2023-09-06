@@ -153,7 +153,7 @@ const PhoneComponent: React.FC<PersonDetails> = (props) => {
       <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]">
         <div className="flex">
           <div>Phone number</div>
-          {props.phoneFocus && props.mobile_no && !props.validMobile ? (
+          {props.mobile_no && !props.validMobile ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="red"
@@ -725,6 +725,7 @@ const PersonalDetails = ({
           role,
           userProfileType,
           date,
+
         })
       );
       dispatch(resSteptwoSelector(true));
@@ -807,7 +808,11 @@ const PersonalDetails = ({
   }, [email, validEmail, dispatch]);
 
   useEffect(() => {
-    setMatchpassword(password === confirmpassword);
+    if (password === "") {
+      setMatchpassword(password ==! confirmpassword);
+    } else {
+      setMatchpassword(password === confirmpassword);
+    }
   }, [password, confirmpassword]);
 
   useEffect(() => {

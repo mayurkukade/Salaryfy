@@ -154,7 +154,15 @@ export function ScheduleInterview() {
         status: "Scheduled",
       };
       const res = await interviewScheduleApi(formDetails).unwrap();
+
       console.log(res);
+      
+      setLocation("");
+      setSelectedHour("");
+      setSelectedMinute("");
+      setSelectedDate(null);
+      setSelectMeridiem("");
+      setChecked(false);
     } catch (error) {
       console.log(error);
     }

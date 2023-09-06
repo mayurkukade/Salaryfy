@@ -49,6 +49,7 @@ export default function PlacementDrivePage() {
   const dispatch = useDispatch();
   const searchFieldRef = useRef<HTMLInputElement | null>(null);
 
+
   let once = false;
 
   async function searchByFilterComponent() {
