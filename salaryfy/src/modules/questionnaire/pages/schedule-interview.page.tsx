@@ -48,7 +48,7 @@ export function ScheduleInterview() {
   const [selectMeridiem, setSelectMeridiem] = useState("");
   const [convertedTime, setConvertedTime] = useState("");
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-
+  console.log(userId);
   const jobDetails = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
@@ -61,7 +61,7 @@ export function ScheduleInterview() {
   const [interviewScheduleApi] = useInterviewScheduleApiMutation();
   const jobId: number = localStorage.getItem("jobId");
   console.log(jobId);
-  const { data,refetch , isLoading, isError } = useGetInterviewScheduleQuery({
+  const { data, isLoading, isError } = useGetInterviewScheduleQuery({
     userId,
     jobId,
   });
@@ -77,7 +77,6 @@ export function ScheduleInterview() {
     try {
       console.log(interviewScheduleId);
       await deleteInterviewSchedule(interviewScheduleId);
-  refetch()
     } catch (error) {
       console.error("Error deleting interview schedule:", error);
     }
@@ -85,15 +84,26 @@ export function ScheduleInterview() {
 
   const getDetails = data?.list.map((schedule, i) => {
     console.log(schedule.interviewScheduleId);
+    let content;
+    if (isLoading) {
+      content = <p>Loading...</p>;
+    } else if (isError) {
+      return;
+    } else if (data) {
+      content = (
+        <div className="mr-[0.5em]" key={i}>
+          {schedule.location}, {schedule.date}, {schedule.time}
+        </div>
+      );
+    }
     return (
       <>
+      
         <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em]">
           <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
           <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-          <div className="mr-[0.5em]" key={i}>
-            {schedule.location}, {schedule.date}, {schedule.time}
-          </div>
 
+          {content}
           <button onClick={() => handleDelete(schedule.interviewScheduleId)}>
             <CancelIcon sx={{ color: "red" }} />
           </button>
@@ -126,8 +136,7 @@ export function ScheduleInterview() {
     setSelectedDate(date);
   };
 
-
-  console.log(jobId)
+  console.log(jobId);
   function formatTimeWithLeadingZeros(hour, minute) {
     const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
     const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
@@ -157,7 +166,7 @@ export function ScheduleInterview() {
       const res = await interviewScheduleApi(formDetails).unwrap();
 
       console.log(res);
-      
+
       setLocation("");
       setSelectedHour("");
       setSelectedMinute("");
