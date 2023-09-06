@@ -25,11 +25,12 @@ type EducationalSkillsType = {
   highestEducationList: Array<SkillType>,
   boardList: Array<SkillType>,
   streamList: Array<SkillType>
+  percentage: number
 }
 
 
 /** INITIAL VALUES**/
-const INITIAL_EDUCATIONAL_SKILLS: EducationalSkillsType = { highestEducationList: HIGHEST_EDUCATION_LIST.map(e => ({ ...e, selected: false  })), boardList: [], streamList: [] }
+const INITIAL_EDUCATIONAL_SKILLS: EducationalSkillsType = { highestEducationList: HIGHEST_EDUCATION_LIST.map(e => ({ ...e, selected: false  })), boardList: [], streamList: [], percentage: NaN }
 
 
 /** EXPORTS **/

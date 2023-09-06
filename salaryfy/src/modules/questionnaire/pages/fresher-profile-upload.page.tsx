@@ -144,16 +144,29 @@ function FresherProfileUpload() {
     if (value) setEducationalSkills((educationalSkills) => fresherProfileUploadService.onHighestLevelEducationChange(educationalSkills, value));
   }
 
+  function onBoardUniversityChangeHandler(value: string | null) {
+    if (value) setEducationalSkills((educationalSkills) => fresherProfileUploadService.onBoardListChange(educationalSkills, value));
+  }
+
+  function onStreamChangeHandler(value: string | null) {
+    if (value) setEducationalSkills((educationalSkills) => fresherProfileUploadService.onStreamListChange(educationalSkills, value));
+  }
+
+  function onPercentageChangeHandler({ target: { value } }: ChangeEvent<HTMLInputElement>) {
+    if (!/^[0-9]{0,3}$/gi.test(value)) { return; }
+    setEducationalSkills((educationalSkills) => ({ ...educationalSkills, percentage: Number(value) }))
+  }
+
   async function onSaveFresherInfo() {
-    type UserEducationSkill = { highestEducation: string | undefined, board: string | undefined, stream: string | undefined }
+    type UserEducationSkill = { highestEducation: string | undefined, board: string | undefined, stream: string | undefined, percentage: number }
 
     const payload: UserEducationSkill = {
       highestEducation: educationalSkills.highestEducationList.find((entity) => entity.selected)?.value,
       board: educationalSkills.boardList.find((entity) => entity.selected)?.value,
       stream: educationalSkills.streamList.find((entity) => entity.selected)?.value,
+      percentage: educationalSkills.percentage
     }
 
-    console.log(educationalSkills);
     if ( Object.values(payload).includes(undefined) ) { return; }
 
 
@@ -220,13 +233,12 @@ function FresherProfileUpload() {
                 </div>
               </div>
               <div>
-                <div className="text-[#005F59] text-[1.8em] font-semibold">
-                  Board/University/Open University
-                </div>
+                <div className="text-[#005F59] text-[1.8em] font-semibold">Board/University/Open University</div>
                 <div>
                   <TextFieldDropDown
                     options={educationalSkills.boardList.map(e => e.value)}
                     onTextInput={onBoardUniversityFieldInput}
+                    onOptionClick={onBoardUniversityChangeHandler}
                   />
                 </div>
               </div>
@@ -237,6 +249,7 @@ function FresherProfileUpload() {
                 <div>
                   <TextFieldDropDown
                     options={educationalSkills.streamList.map(e => e.value)}
+                    onOptionClick={onStreamChangeHandler}
                   />
                 </div>
               </div>
@@ -245,7 +258,7 @@ function FresherProfileUpload() {
                   Percentage
                 </div>
                 <div className="flex flex-col">
-                  <TextField size="small" />
+                  <TextField value={educationalSkills.percentage || ''} onChange={onPercentageChangeHandler} size="small" />
                 </div>
               </div>
             </div>
