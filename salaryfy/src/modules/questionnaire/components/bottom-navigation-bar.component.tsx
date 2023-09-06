@@ -36,25 +36,27 @@ export default function BottomPageNavigationBar() {
     (state: RootState) => state.mainStepsCounter.resStepTwo
   );
 
-  const verifyEmailFlagSelector = useSelector((state:RootState)=>state.mainStepsCounter.verifyemailFlag)
-  console.log(!verifyEmailFlagSelector)
+  const verifyEmailFlagSelector = useSelector(
+    (state: RootState) => state.mainStepsCounter.verifyemailFlag
+  );
+  console.log(!verifyEmailFlagSelector);
   console.log(currentRoutee);
   console.log(registerFormData[0]);
   console.log(resSteptwoSelector && verifyEmailFlagSelector);
-  console.log(resSteptwoSelector)
-  console.log(verifyEmailFlagSelector)
+  console.log(resSteptwoSelector);
+  console.log(verifyEmailFlagSelector);
   const currentRoute = window.location.href.slice(22);
   console.log(currentRoute);
 
-  let nextButtonDisabled
-  if(currentRoute === 'questionnaire'){
-    nextButtonDisabled = resSteptwoSelector && verifyEmailFlagSelector
-  }else if(currentRoute === 'questionnaire/screening-questions'){
-    nextButtonDisabled = true
-  }else if(currentRoute === 'questionnaire/schedule-interview'){
-    nextButtonDisabled = true
+  let nextButtonDisabled;
+  if (currentRoute === "questionnaire") {
+    nextButtonDisabled = resSteptwoSelector && verifyEmailFlagSelector;
+  } else if (currentRoute === "questionnaire/screening-questions") {
+    nextButtonDisabled = true;
+  } else if (currentRoute === "questionnaire/schedule-interview") {
+    nextButtonDisabled = true;
   }
-console.log(!nextButtonDisabled)
+  console.log(!nextButtonDisabled);
   const navigate = useNavigate();
 
   const nextHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -66,7 +68,7 @@ console.log(!nextButtonDisabled)
         console.log(res);
 
         if (res.data) {
-          toast.success("register success", {
+          toast.success("register successfully please login", {
             position: "top-center",
             autoClose: 2000,
             hideProgressBar: false,
@@ -76,7 +78,8 @@ console.log(!nextButtonDisabled)
             progress: undefined,
             theme: "light",
           });
-          navigate("/questionnaire/screening-questions");
+          // navigate("/questionnaire/screening-questions");
+          navigate("/login");
         } else {
           return toast.error("error", {
             position: "top-center",
@@ -94,10 +97,7 @@ console.log(!nextButtonDisabled)
     } else if (currentRoute === "questionnaire/screening-questions") {
       // logic to validate and submit
       if (screeningQuestionValidation) {
-
         navigate("/questionnaire/schedule-interview");
-      } else {
-        
       }
     } else if (currentRoute === "questionnaire/schedule-interview") {
       navigate("/questionnaire/fresher-dashboard");
@@ -109,13 +109,21 @@ console.log(!nextButtonDisabled)
       navigate("/questionnaire");
     } else if (currentRoute === "questionnaire/schedule-interview") {
       navigate("/questionnaire/screening-questions");
-    }else if(currentRoute === "questionnaire/fresher-dashboard"){
-      navigate("/questionnaire/schedule-interview")
+    } else if (currentRoute === "questionnaire/fresher-dashboard") {
+      navigate("/questionnaire/schedule-interview");
     }
   };
 
   return (
-    <div className="flex justify-center mt-6 mb-6">
+    <div
+      className={`flex justify-center mt-6 mb-6 ${
+        currentRoute == "questionnaire/fresher-dashboard" ||
+        currentRoute == "questionnaire/fresher-profile-upload" ||
+        currentRoute == "questionnaire/fresher-roadmap"
+          ? "hidden"
+          : ""
+      } `}
+    >
       <div
         className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em] cursor-pointer"
         onClick={backHandler}

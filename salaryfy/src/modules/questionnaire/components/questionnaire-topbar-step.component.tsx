@@ -37,6 +37,7 @@ export default function QuestionnaireTopBarStep() {
     stepThreeTotal = 40
   } else if(currentRoute == 'questionnaire/schedule-interview'){
     stepTwoTotal = 70;
+    stepThreeTotal = 0
   }else if(currentRoute == 'questionnaire/fresher-profile-upload'){
     stepTwoTotal = 100;
     stepThreeTotal = 60
@@ -54,7 +55,7 @@ export default function QuestionnaireTopBarStep() {
   }
 
   return (
-    <div className="flex w-[88.9%] container p-[3em] sticky top-[0px] bg-[#fff] z-[100]">
+    <div className={ "flex w-[88.9%] container p-[3em] sticky top-[0px] bg-[#fff] z-[100]"}>
       {/* Code for Desktop view  */}
       <Box
         className="flex-grow justify-center w-[80%]  "
