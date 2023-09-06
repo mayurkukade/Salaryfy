@@ -13,7 +13,7 @@ import Chip from "../components/chip.component";
 import { QuestionnaireHttpClient } from "../services/questionnaire.service";
 import { CommonUtilities } from "../../../utils/common.utilities";
 import { EducationalSkillsType, FresherProfileUploadService, INITIAL_EDUCATIONAL_SKILLS } from "../services/fresher-profile-upload.service";
-import { BOARD_LIST, HIGHEST_EDUCATION, HIGHEST_EDUCATION_LIST, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
+import { BOARD_LIST, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
 import { useLazyUniversitySuggestionsQuery } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 // import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
 
@@ -71,17 +71,15 @@ function FresherProfileUpload() {
     const selectedHighestEducation = educationalSkills.highestEducationList.find(e => e.selected);
     if (selectedHighestEducation?.value !== HIGHEST_EDUCATION.MATRIC && selectedHighestEducation?.value !== HIGHEST_EDUCATION.INTER) {
 
-      httpClient.request( getUniversities(value) )
+      httpClient.request(getUniversities(value))
         .pipe(
-          concatMap(async ({ data: { list: response } }) => response)
+          concatMap(async ({ data: { list: response } }) => (response?.map((entity: Record<string, string>) => entity.board_University) || [])),
         )
         .subscribe(
-          (response) => console.log(response),
-          (error) => console.log(error)
+          (universitiesList: string[]) => setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: universitiesList.map((university: string) => ({ code: university, value: university, selected: false })) }))
         )
     }
   }
-
 
   async function onDocumentUploadEvent(documentType: FILE_UPLOAD_TYPES, documentFile: File) {
     if (!userId) { return; }
@@ -144,6 +142,31 @@ function FresherProfileUpload() {
 
   function onHighestLevelEducationChangeHandler(value: string | null) {
     if (value) setEducationalSkills((educationalSkills) => fresherProfileUploadService.onHighestLevelEducationChange(educationalSkills, value));
+  }
+
+  async function onSaveFresherInfo() {
+    type UserEducationSkill = { highestEducation: string | undefined, board: string | undefined, stream: string | undefined }
+
+    const payload: UserEducationSkill = {
+      highestEducation: educationalSkills.highestEducationList.find((entity) => entity.selected)?.value,
+      board: educationalSkills.boardList.find((entity) => entity.selected)?.value,
+      stream: educationalSkills.streamList.find((entity) => entity.selected)?.value,
+    }
+
+    console.log(educationalSkills);
+    if ( Object.values(payload).includes(undefined) ) { return; }
+
+
+    // const payload = {
+    //   highestLevelOfEdu: "10Th",
+    //   board: "Nagpur",
+    //   stream: "ENTC",
+    //   percentage: profileLevelPayload.percentage,
+    //   UserId: userId,
+    // }
+
+    // console.log(highestLevelEducation);
+
   }
 
   return (
@@ -212,9 +235,7 @@ function FresherProfileUpload() {
                   Stream
                 </div>
                 <div>
-                  <DropdownMenu
-                    endIcon={<KeyboardArrowDownIcon />}
-                    label={educationalSkills?.streamList?.find(e => e.selected)?.value || "Select"}
+                  <TextFieldDropDown
                     options={educationalSkills.streamList.map(e => e.value)}
                   />
                 </div>
@@ -224,16 +245,7 @@ function FresherProfileUpload() {
                   Percentage
                 </div>
                 <div className="flex flex-col">
-                  <TextField
-                    inputProps={{ style: { height: "100%" } }}
-                    size="small"
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="text-[#005F59] text-[1.8em] font-semibold">University/Open University</div>
-                <div className="flex flex-col">
-                  {/* <TextFieldDropDown /> */}
+                  <TextField size="small" />
                 </div>
               </div>
             </div>
@@ -293,7 +305,7 @@ function FresherProfileUpload() {
 
             <div className="flex gap-[2em] my-[2em] mt-[5em]">
               <Button style={{ minWidth: "10em" }} size="large" variant="outlined" >Cancel</Button>
-              <Button style={{ minWidth: "10em" }} size="large" variant="contained">Save</Button>
+              <Button style={{ minWidth: "10em" }} size="large" variant="contained" onClick={onSaveFresherInfo} >Save</Button>
             </div>
           </div>
         </div>
