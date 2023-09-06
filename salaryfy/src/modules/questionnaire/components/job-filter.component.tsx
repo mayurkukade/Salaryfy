@@ -3,7 +3,7 @@ import { AppStoreStateType } from "../../../store/app.store";
 import { useEffect } from "react";
 import { setJobFilter } from "../../../features/reducers/job-filter/jobs-filter.slice";
 import DropdownMenu from "../../../components/DropdownMenu";
-import { OptionSelected } from "../../../features/reducers/job-filter/jobs-filter.interface";
+import { JobsFilterType, OptionSelected } from "../../../features/reducers/job-filter/jobs-filter.interface";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Chip from "./chip.component";
 import { CommonUtilities } from "../../../utils/common.utilities";
@@ -36,7 +36,7 @@ export default function FilterComponent({ className, onSearchButtonClick, setAll
     jobFilterOptions.locations = jobFilterOptions.locations.map((location: OptionSelected) => {
       if (location.option === selectedCity) {
         console.log('filter dash: ', selectedCity);
-        return { option: selectedCity, selected: true }; 
+        return { option: selectedCity, selected: true };
       }
       return location;
     });
@@ -54,12 +54,11 @@ export default function FilterComponent({ className, onSearchButtonClick, setAll
   }
 
   function clearFilterHandler() {
-    const clearedFilters = Object.entries(jobFilterValues).map(([key, values]: [string, Array<OptionSelected>]) => {
-      const clearedValues = values.map((value: OptionSelected) => ({ ...value, selected: false }) )
-      return { [key]: clearedValues };
-    });
-    console.log('filter dash: ', clearedFilters);
-    console.log('filter dash: ', jobFilterValues);
+    dispatch( setJobFilter(
+      Object.entries(jobFilterValues)
+        .map(([key, values]: [string, Array<OptionSelected>]) => ({ [key]: values.map((value: OptionSelected) => ({ ...value, selected: false })) }))
+        .reduce((result, currentObj) => ({ ...result, ...Object.entries(currentObj).map(([key, value]: [string, Array<OptionSelected>]) => ({ [key]: value })).reduce(v => v) }), {}) as unknown as JobsFilterType
+    ) );
     onClearButtonClick();
   }
 

@@ -14,11 +14,15 @@ const profileQualificationSlice = apiSlice.injectEndpoints({
         body: payload
       }),
       invalidatesTags: ['get-profile-qualiication']
+    }),
+    universitySuggestions: builder.query({
+      query: (userInput: string) => `/ESuggest/get-suggestions?userInput=${encodeURIComponent(userInput)}&education=Graduation`,
+      providesTags: ['get-universities']
     })
   }),
 });
 
-export const { useLazyGetProfileQuery, useSaveProfileMutation } = profileQualificationSlice;
+export const { useLazyGetProfileQuery, useSaveProfileMutation, useLazyUniversitySuggestionsQuery } = profileQualificationSlice;
 
 export default profileQualificationSlice;
 

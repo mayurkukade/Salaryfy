@@ -18,11 +18,23 @@ const userProfileApiSlice = apiSlice.injectEndpoints({
       query: (id: string) => `/uploadFile/getByUserId?userId=${id}`,
       providesTags: ['user-files']
     }),
+    getUserSkills: builder.query({
+      query: (id: string) => `userSkill/getByUserId?UserId=${id}`,
+      providesTags: ['get-user-skills']
+    }),
+    setUserSkills: builder.mutation({
+      query: (userSkills: { userSkill: string, userId: string }) => ({
+        url: `userSkill/add`,
+        method: 'POST',
+        body: userSkills
+      }),
+      invalidatesTags: ['set-user-skills']
+    })
 
   }),
 });
 
-export const { useLazyGetUserByIdQuery, useUploadFileMutation, useLazyGetUploadedFilesQuery } = userProfileApiSlice;
+export const { useLazyGetUserByIdQuery, useUploadFileMutation, useLazyGetUploadedFilesQuery, useLazyGetUserSkillsQuery, useSetUserSkillsMutation } = userProfileApiSlice;
 
 export default userProfileApiSlice.reducerPath;
 

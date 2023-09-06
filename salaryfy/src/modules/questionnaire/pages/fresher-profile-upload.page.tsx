@@ -1,13 +1,20 @@
-import { Button, Chip, TextField } from "@mui/material";
+import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, Button, Menu, MenuItem, TextField } from "@mui/material";
 import DropdownMenu from "../../../components/DropdownMenu";
 import { HavingDoubts } from "../components/having-doubts.component";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";
-import { useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
+import { useLazyGetUserSkillsQuery, useSetUserSkillsMutation, useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { catchError, concatMap, from, of, throwError } from 'rxjs';
+import { ErrorType } from "../constants/app-error.type";
+import Chip from "../components/chip.component";
+import { QuestionnaireHttpClient } from "../services/questionnaire.service";
+import { CommonUtilities } from "../../../utils/common.utilities";
+import { EducationalSkillsType, FresherProfileUploadService, INITIAL_EDUCATIONAL_SKILLS } from "../services/fresher-profile-upload.service";
+import { BOARD_LIST, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
+import { useLazyUniversitySuggestionsQuery } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 // import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
 
 export default function FresherProfileUploadPage() {
@@ -25,11 +32,55 @@ export default function FresherProfileUploadPage() {
 
 function FresherProfileUpload() {
 
+  const [educationalSkills, setEducationalSkills] = useState<EducationalSkillsType>(INITIAL_EDUCATIONAL_SKILLS);
+  const fresherProfileUploadService = new FresherProfileUploadService();
+
+  const skillTextFieldRef = useRef<HTMLInputElement | null>(null);
   const [fileUploadPost] = useUploadFileMutation();
+  const [getUserSkills] = useLazyGetUserSkillsQuery();
+  const [setUserSkills] = useSetUserSkillsMutation();
+  const [getUniversities] = useLazyUniversitySuggestionsQuery();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
+  const [skills, setSkills] = useState<Set<string>>(new Set([]));
+  const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
 
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  useEffect(() => {
+    if (!userId) { return; }
+    fetchUserSkills(userId);
+  }, [userId]);
+
+  useEffect(() => {
+    const selectedHighestEducation = educationalSkills.highestEducationList.find(e => e.selected);
+    switch (selectedHighestEducation?.value) {
+
+      case HIGHEST_EDUCATION.MATRIC:
+        setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: BOARD_LIST.map(board => ({ ...board, selected: false })), streamList: [] })); break;
+
+      case HIGHEST_EDUCATION.INTER:
+        setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: BOARD_LIST.map(board => ({ ...board, selected: false })), streamList: STREAM_LIST.map(stream => ({ ...stream, selected: false })) })); break;
+
+      default:
+        setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: [], streamList: STREAM_NOBOARD_LIST.map(stream => ({ ...stream, selected: false })) })); break;
+
+    }
+
+  }, [educationalSkills.highestEducationList]);
+
+  function onBoardUniversityFieldInput(value: string) {
+    const selectedHighestEducation = educationalSkills.highestEducationList.find(e => e.selected);
+    if (selectedHighestEducation?.value !== HIGHEST_EDUCATION.MATRIC && selectedHighestEducation?.value !== HIGHEST_EDUCATION.INTER) {
+
+      httpClient.request(getUniversities(value))
+        .pipe(
+          concatMap(async ({ data: { list: response } }) => (response?.map((entity: Record<string, string>) => entity.board_University) || [])),
+        )
+        .subscribe(
+          (universitiesList: string[]) => setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: universitiesList.map((university: string) => ({ code: university, value: university, selected: false })) }))
+        )
+    }
+  }
+
   async function onDocumentUploadEvent(documentType: FILE_UPLOAD_TYPES, documentFile: File) {
     if (!userId) { return; }
     const formData = new FormData()
@@ -37,7 +88,6 @@ function FresherProfileUpload() {
     formData.append('documentType', documentType);
     formData.append('userId', userId);
 
-    type ErrorType = { error: { data: null, status: number } }
 
     from(fileUploadPost(formData))
       .pipe(
@@ -53,22 +103,75 @@ function FresherProfileUpload() {
         },
         (error: ErrorType) => {
           console.error('Got An Error while upoading: ', error);
-        });
+        }
+      );
+  }
 
+  function addSkillHandler() {
+    const skillValue = skillTextFieldRef.current?.value;
+    if (!skillValue || !skillValue.length || !userId) { return; }
 
+    updateSkills(JSON.stringify(Array.from(new Set([...Array.from(skills), skillValue]))), userId);
 
+  }
+
+  function removeSkillHandler(skill: string) {
+    const updatedSkills = skills;
+    updatedSkills.delete(skill);
+    if (!userId) { return; }
+    updateSkills(JSON.stringify(Array.from(updatedSkills)), userId);
+  }
+
+  function updateSkills(userSkill: string, userId: string) {
+    httpClient.request(setUserSkills({ userSkill, userId }))
+      .subscribe(() => {
+        if (skillTextFieldRef && skillTextFieldRef?.current) { skillTextFieldRef.current.value = ''; }
+        fetchUserSkills(userId);
+      });
+  }
+
+  function fetchUserSkills(userId: string) {
+    httpClient.request(getUserSkills(userId))
+      .pipe(concatMap(async ({ data: { response: { userSkill } } }) => (JSON.parse(userSkill))))
+      .subscribe((skills) => { if (Array.isArray(skills)) setSkills(() => new Set(skills)) }, (error) => console.error(error))
   }
 
   function unHandledEvent() {
     console.log('event not handled');
   }
 
+  function onHighestLevelEducationChangeHandler(value: string | null) {
+    if (value) setEducationalSkills((educationalSkills) => fresherProfileUploadService.onHighestLevelEducationChange(educationalSkills, value));
+  }
+
+  async function onSaveFresherInfo() {
+    type UserEducationSkill = { highestEducation: string | undefined, board: string | undefined, stream: string | undefined }
+
+    const payload: UserEducationSkill = {
+      highestEducation: educationalSkills.highestEducationList.find((entity) => entity.selected)?.value,
+      board: educationalSkills.boardList.find((entity) => entity.selected)?.value,
+      stream: educationalSkills.streamList.find((entity) => entity.selected)?.value,
+    }
+
+    console.log(educationalSkills);
+    if ( Object.values(payload).includes(undefined) ) { return; }
+
+
+    // const payload = {
+    //   highestLevelOfEdu: "10Th",
+    //   board: "Nagpur",
+    //   stream: "ENTC",
+    //   percentage: profileLevelPayload.percentage,
+    //   UserId: userId,
+    // }
+
+    // console.log(highestLevelEducation);
+
+  }
+
   return (
     <>
-      <div
-        className="flex flex-col md:flex-row md:justify-between "
-      // style={{ border: "2px solid black" }}
-      >
+      <div className="flex flex-col md:flex-row md:justify-between">
         <div>
           <div>
             <div className="flex mb-[2em]">
@@ -79,46 +182,28 @@ function FresherProfileUpload() {
                     <rect height="1px" width="100%" y="50%" fill="#5B5B5B" />
                   </svg>
                 </div>
-                <div
-                  className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center"
-                // style={{ backgroundColor: "#FFFFFF" }}
-                >
-                  Upload your Passport Photo
-                </div>
+                <div className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center">Upload your Passport Photo</div>
               </div>
               <div className="p-5 md:pl-10">
-                <div className="font-bold text-[#005F59] text-[2rem] md:text-[4em]">
-                  Hi Rahul,
-                </div>
-                <div className="text-[#5B5B5B] text-[1.052rem]  pr-[0px] md:text-[2.4em] md:pr-[120px]">
-                  Please complete your profile and more subtext here
-                </div>
+                <div className="font-bold text-[#005F59] text-[2rem] md:text-[4em]">Hi Rahul,</div>
+                <div className="text-[#5B5B5B] text-[1.052rem]  pr-[0px] md:text-[2.4em] md:pr-[120px]">Please complete your profile and more subtext here</div>
               </div>
             </div>
 
             <div className=" w-full md:my-[3em]">
-              <div className="text-[#005F59] text-[1.3rem]  font-bold mb-[1em] md:text-[3.2em]">
-                Skills
-              </div>
+              <div className="text-[#005F59] text-[1.3rem]  font-bold mb-[1em] md:text-[3.2em]">Skills</div>
 
               <div className="flex md:w-[50em] mb-[2em]">
                 <div className="flex-grow flex flex-col pr-[2em]">
-                  <TextField size="small" />
+                  <TextField inputRef={skillTextFieldRef} size="small" />
                 </div>
                 <div className="flex">
-                  <Button variant="contained">Add</Button>
+                  <Button variant="contained" onClick={addSkillHandler}>Add</Button>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-[1em] mb-[3em]">
-                <Chip className="text-[1.5em]" label="Hadoop" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
-                <Chip className="text-[1.5em]" label="Other Skill" />
+                {Array.from(skills).map(skill => <Chip onClick={() => removeSkillHandler(skill)} className="text-[1.5em]" key={CommonUtilities.generateRandomString(100)} label={skill} />)}
               </div>
             </div>
 
@@ -128,9 +213,9 @@ function FresherProfileUpload() {
                   Highest level of education
                 </div>
                 <div>
-                  <DropdownMenu
-                    label="Select"
-                    endIcon={<KeyboardArrowDownIcon />}
+                  <TextFieldDropDown
+                    options={educationalSkills.highestEducationList.map(e => e.value)}
+                    onOptionClick={onHighestLevelEducationChangeHandler}
                   />
                 </div>
               </div>
@@ -139,9 +224,9 @@ function FresherProfileUpload() {
                   Board/University/Open University
                 </div>
                 <div>
-                  <DropdownMenu
-                    label="Select"
-                    endIcon={<KeyboardArrowDownIcon />}
+                  <TextFieldDropDown
+                    options={educationalSkills.boardList.map(e => e.value)}
+                    onTextInput={onBoardUniversityFieldInput}
                   />
                 </div>
               </div>
@@ -150,9 +235,8 @@ function FresherProfileUpload() {
                   Stream
                 </div>
                 <div>
-                  <DropdownMenu
-                    label="Select"
-                    endIcon={<KeyboardArrowDownIcon />}
+                  <TextFieldDropDown
+                    options={educationalSkills.streamList.map(e => e.value)}
                   />
                 </div>
               </div>
@@ -161,10 +245,7 @@ function FresherProfileUpload() {
                   Percentage
                 </div>
                 <div className="flex flex-col">
-                  <TextField
-                    inputProps={{ style: { height: "100%" } }}
-                    size="small"
-                  />
+                  <TextField size="small" />
                 </div>
               </div>
             </div>
@@ -224,7 +305,7 @@ function FresherProfileUpload() {
 
             <div className="flex gap-[2em] my-[2em] mt-[5em]">
               <Button style={{ minWidth: "10em" }} size="large" variant="outlined" >Cancel</Button>
-              <Button style={{ minWidth: "10em" }} size="large" variant="contained">Save</Button>
+              <Button style={{ minWidth: "10em" }} size="large" variant="contained" onClick={onSaveFresherInfo} >Save</Button>
             </div>
           </div>
         </div>
@@ -234,6 +315,18 @@ function FresherProfileUpload() {
         </div>
       </div>
     </>
+  );
+}
+
+function TextFieldDropDown({ options, onOptionClick, onTextInput }: { options: Array<string>, onOptionClick?: (v: string | null) => void, onTextInput?: (v: string) => void }) {
+  function onTextInput$(event: ChangeEvent<HTMLInputElement>) {
+    if (onTextInput) { onTextInput(event.currentTarget.value); }
+  }
+  function onFieldChange(_event: React.ChangeEvent<object>, newValue: string | null): void {
+    if (onOptionClick) { onOptionClick(newValue); }
+  }
+  return (
+    <Autocomplete options={options} onChange={onFieldChange} size="small" renderInput={(params) => <TextField onChange={onTextInput$} {...params} />} />
   );
 }
 
