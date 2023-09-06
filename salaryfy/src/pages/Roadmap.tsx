@@ -157,6 +157,7 @@ const Roadmap = () => {
               <TimelineItem>
                 <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
                   <TimelineDot color="primary" />
+                  <TimelineConnector color="primary" />
                 </TimelineSeparator>
                 <TimelineContent>
                   <h2 className="list-item ">
@@ -170,6 +171,22 @@ const Roadmap = () => {
                   </h2>
                 </TimelineContent>
               </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator className="ml-[-250px] md:ml-[-600px]">
+                  <TimelineDot color="primary" />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <h2 className="list-item ">
+                    <span className="relative inline-block content-[] w-[rounded-[]"></span>{" "}
+                    Appointment Letter Shared
+                    <br />
+                    <p className="px-2 text-[0.6rem] md:text-[0.9rem] text-[lightgrey] ">
+                    Get ready to join the company and receive your appointment <br /> letter with details about your role and benefits.
+                    </p>
+                  </h2>
+                </TimelineContent>
+              </TimelineItem>
+              
               
             </Timeline>
           </div>
