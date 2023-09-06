@@ -1,8 +1,8 @@
-import { Button, TextField } from "@mui/material";
+import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, Button, Menu, MenuItem, TextField } from "@mui/material";
 import DropdownMenu from "../../../components/DropdownMenu";
 import { HavingDoubts } from "../components/having-doubts.component";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";
 import { useLazyGetUserSkillsQuery, useSetUserSkillsMutation, useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
 import { useSelector } from "react-redux";
@@ -14,6 +14,7 @@ import { QuestionnaireHttpClient } from "../services/questionnaire.service";
 import { CommonUtilities } from "../../../utils/common.utilities";
 import { EducationalSkillsType, FresherProfileUploadService, INITIAL_EDUCATIONAL_SKILLS } from "../services/fresher-profile-upload.service";
 import { BOARD_LIST, HIGHEST_EDUCATION, HIGHEST_EDUCATION_LIST, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
+import { useLazyUniversitySuggestionsQuery } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 // import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
 
 export default function FresherProfileUploadPage() {
@@ -38,6 +39,7 @@ function FresherProfileUpload() {
   const [fileUploadPost] = useUploadFileMutation();
   const [getUserSkills] = useLazyGetUserSkillsQuery();
   const [setUserSkills] = useSetUserSkillsMutation();
+  const [getUniversities] = useLazyUniversitySuggestionsQuery();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   const [skills, setSkills] = useState<Set<string>>(new Set([]));
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
@@ -64,6 +66,21 @@ function FresherProfileUpload() {
     }
 
   }, [educationalSkills.highestEducationList]);
+
+  function onBoardUniversityFieldInput(value: string) {
+    const selectedHighestEducation = educationalSkills.highestEducationList.find(e => e.selected);
+    if (selectedHighestEducation?.value !== HIGHEST_EDUCATION.MATRIC && selectedHighestEducation?.value !== HIGHEST_EDUCATION.INTER) {
+
+      httpClient.request( getUniversities(value) )
+        .pipe(
+          concatMap(async ({ data: { list: response } }) => response)
+        )
+        .subscribe(
+          (response) => console.log(response),
+          (error) => console.log(error)
+        )
+    }
+  }
 
 
   async function onDocumentUploadEvent(documentType: FILE_UPLOAD_TYPES, documentFile: File) {
@@ -125,16 +142,13 @@ function FresherProfileUpload() {
     console.log('event not handled');
   }
 
-  function onHighestLevelEducationChangeHandler(value: string) {
-    setEducationalSkills((educationalSkills) => fresherProfileUploadService.onHighestLevelEducationChange(educationalSkills, value));
+  function onHighestLevelEducationChangeHandler(value: string | null) {
+    if (value) setEducationalSkills((educationalSkills) => fresherProfileUploadService.onHighestLevelEducationChange(educationalSkills, value));
   }
 
   return (
     <>
-      <div
-        className="flex flex-col md:flex-row md:justify-between "
-      // style={{ border: "2px solid black" }}
-      >
+      <div className="flex flex-col md:flex-row md:justify-between">
         <div>
           <div>
             <div className="flex mb-[2em]">
@@ -176,9 +190,7 @@ function FresherProfileUpload() {
                   Highest level of education
                 </div>
                 <div>
-                  <DropdownMenu
-                    endIcon={<KeyboardArrowDownIcon />}
-                    label={educationalSkills?.highestEducationList?.find(e => e.selected)?.value || "Select"}
+                  <TextFieldDropDown
                     options={educationalSkills.highestEducationList.map(e => e.value)}
                     onOptionClick={onHighestLevelEducationChangeHandler}
                   />
@@ -189,10 +201,9 @@ function FresherProfileUpload() {
                   Board/University/Open University
                 </div>
                 <div>
-                  <DropdownMenu
-                    endIcon={<KeyboardArrowDownIcon />}
-                    label={educationalSkills?.boardList?.find(e => e.selected)?.value || "Select"}
+                  <TextFieldDropDown
                     options={educationalSkills.boardList.map(e => e.value)}
+                    onTextInput={onBoardUniversityFieldInput}
                   />
                 </div>
               </div>
@@ -217,6 +228,12 @@ function FresherProfileUpload() {
                     inputProps={{ style: { height: "100%" } }}
                     size="small"
                   />
+                </div>
+              </div>
+              <div>
+                <div className="text-[#005F59] text-[1.8em] font-semibold">University/Open University</div>
+                <div className="flex flex-col">
+                  {/* <TextFieldDropDown /> */}
                 </div>
               </div>
             </div>
@@ -286,6 +303,18 @@ function FresherProfileUpload() {
         </div>
       </div>
     </>
+  );
+}
+
+function TextFieldDropDown({ options, onOptionClick, onTextInput }: { options: Array<string>, onOptionClick?: (v: string | null) => void, onTextInput?: (v: string) => void }) {
+  function onTextInput$(event: ChangeEvent<HTMLInputElement>) {
+    if (onTextInput) { onTextInput(event.currentTarget.value); }
+  }
+  function onFieldChange(_event: React.ChangeEvent<object>, newValue: string | null): void {
+    if (onOptionClick) { onOptionClick(newValue); }
+  }
+  return (
+    <Autocomplete options={options} onChange={onFieldChange} size="small" renderInput={(params) => <TextField onChange={onTextInput$} {...params} />} />
   );
 }
 
