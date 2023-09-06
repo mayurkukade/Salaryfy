@@ -69,9 +69,9 @@ const Universities = () => {
 
 const UniversitiesCard = ({ img, university }) => {
   return (
-    <div className="rounded-lg bg-gradient-to-br p-4 shadow-md w-full md:w-[19.6875rem] h-[5.95969rem] flex items-center ">
+    <div className="rounded-lg bg-gradient-to-br p-4 shadow-md w-full md:w-[100%] h-[5.95969rem] flex items-center ">
       <img src={img} className="max-h-full float-left" />
-      <p className="items-center text-[0.65rem] md:text-[1.2rem] pl-[12px] color-[#005F59]">
+      <p className="items-center text-[0.65rem] md:text-[1.1rem] pl-[12px] color-[#005F59]">
         {university} <br /> University
       </p>
     </div>
