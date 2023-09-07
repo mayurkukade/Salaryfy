@@ -1,8 +1,6 @@
-import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, Button, Menu, MenuItem, TextField } from "@mui/material";
-import DropdownMenu from "../../../components/DropdownMenu";
+import { Autocomplete, Button, TextField } from "@mui/material";
 import { HavingDoubts } from "../components/having-doubts.component";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";
 import { useLazyGetUserSkillsQuery, useSetUserSkillsMutation, useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
 import { useSelector } from "react-redux";
@@ -14,8 +12,8 @@ import { QuestionnaireHttpClient } from "../services/questionnaire.service";
 import { CommonUtilities } from "../../../utils/common.utilities";
 import { EducationalSkillsType, FresherProfileUploadService, INITIAL_EDUCATIONAL_SKILLS } from "../services/fresher-profile-upload.service";
 import { BOARD_LIST, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
-import { useLazyUniversitySuggestionsQuery } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
-// import BottomPageNavigationBar from "../components/bottom-navigation-bar.component";
+import { useLazyGetProfileQuery, useLazyUniversitySuggestionsQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
+import _ from 'lodash';
 
 export default function FresherProfileUploadPage() {
   return (
@@ -40,14 +38,22 @@ function FresherProfileUpload() {
   const [getUserSkills] = useLazyGetUserSkillsQuery();
   const [setUserSkills] = useSetUserSkillsMutation();
   const [getUniversities] = useLazyUniversitySuggestionsQuery();
+  const [saveProfile] = useSaveProfileMutation();
+  const[getProfileEducationalSkills] = useLazyGetProfileQuery();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   const [skills, setSkills] = useState<Set<string>>(new Set([]));
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
 
+  const educationalSkillsKey = {
+    highestLevelEducation: useState<string>(CommonUtilities.generateRandomString(20)),
+    board: useState<string>(CommonUtilities.generateRandomString(20)),
+    stream: useState<string>(CommonUtilities.generateRandomString(20)),
+  }
 
   useEffect(() => {
     if (!userId) { return; }
     fetchUserSkills(userId);
+    fetchEducationalSkills(userId);
   }, [userId]);
 
   useEffect(() => {
@@ -61,12 +67,35 @@ function FresherProfileUpload() {
         setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: BOARD_LIST.map(board => ({ ...board, selected: false })), streamList: STREAM_LIST.map(stream => ({ ...stream, selected: false })) })); break;
 
       default:
+        educationalSkillsKey.board[1](() => CommonUtilities.generateRandomString(20));
         setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: [], streamList: STREAM_NOBOARD_LIST.map(stream => ({ ...stream, selected: false })) })); break;
 
     }
 
   }, [educationalSkills.highestEducationList]);
 
+  useEffect(() => {
+    const payload = {
+      highestEducation: educationalSkills.highestEducationList.find((entity) => entity.selected)?.value,
+      board: educationalSkills.boardList.find((entity) => entity.selected)?.value,
+      stream: educationalSkills.streamList.find((entity) => entity.selected)?.value,
+      percentage: educationalSkills.percentage
+    }
+    
+    if (!payload.highestEducation) { educationalSkillsKey.highestLevelEducation[1](() => CommonUtilities.generateRandomString(20)); }
+    if (!payload.board) { educationalSkillsKey.board[1](() => CommonUtilities.generateRandomString(20)); }
+    if (!payload.stream) { educationalSkillsKey.stream[1](() => CommonUtilities.generateRandomString(20)); }
+
+  }, [educationalSkills.highestEducationList.find((entity) => entity.selected)?.value, educationalSkills.boardList.find((entity) => entity.selected)?.value, educationalSkills.streamList.find((entity) => entity.selected)?.value, educationalSkills.percentage]);
+
+  function fetchEducationalSkills(userId: string) {
+    httpClient.request( getProfileEducationalSkills(userId) )
+      .pipe(
+        concatMap(async ({ data: { response } }) => response)
+      )
+      .subscribe((response) => console.log(response))
+  }
+  
   function onBoardUniversityFieldInput(value: string) {
     const selectedHighestEducation = educationalSkills.highestEducationList.find(e => e.selected);
     if (selectedHighestEducation?.value !== HIGHEST_EDUCATION.MATRIC && selectedHighestEducation?.value !== HIGHEST_EDUCATION.INTER) {
@@ -158,27 +187,24 @@ function FresherProfileUpload() {
   }
 
   async function onSaveFresherInfo() {
-    type UserEducationSkill = { highestEducation: string | undefined, board: string | undefined, stream: string | undefined, percentage: number }
+    type UserEducationSkill = { highestLevelOfEdu: string | undefined, board: string | undefined, stream: string | undefined, percentage: number | undefined, UserId: string | undefined | null }
 
     const payload: UserEducationSkill = {
-      highestEducation: educationalSkills.highestEducationList.find((entity) => entity.selected)?.value,
+      highestLevelOfEdu: educationalSkills.highestEducationList.find((entity) => entity.selected)?.value,
       board: educationalSkills.boardList.find((entity) => entity.selected)?.value,
       stream: educationalSkills.streamList.find((entity) => entity.selected)?.value,
-      percentage: educationalSkills.percentage
+      percentage: (_.inRange(educationalSkills.percentage, 0, 101)) ? educationalSkills.percentage : undefined,
+      UserId: userId
     }
 
-    if ( Object.values(payload).includes(undefined) ) { return; }
+    console.log(payload);
+
+    if (payload.highestLevelOfEdu === HIGHEST_EDUCATION.MATRIC) { delete payload.stream; }
+    if (Object.values(payload).includes(undefined)) { return; }
 
 
-    // const payload = {
-    //   highestLevelOfEdu: "10Th",
-    //   board: "Nagpur",
-    //   stream: "ENTC",
-    //   percentage: profileLevelPayload.percentage,
-    //   UserId: userId,
-    // }
-
-    // console.log(highestLevelEducation);
+    httpClient.request( saveProfile(payload) )
+      .subscribe((response) => console.log({response}))
 
   }
 
@@ -227,6 +253,7 @@ function FresherProfileUpload() {
                 </div>
                 <div>
                   <TextFieldDropDown
+                    key={educationalSkillsKey.highestLevelEducation[0]}
                     options={educationalSkills.highestEducationList.map(e => e.value)}
                     onOptionClick={onHighestLevelEducationChangeHandler}
                   />
@@ -236,6 +263,7 @@ function FresherProfileUpload() {
                 <div className="text-[#005F59] text-[1.8em] font-semibold">Board/University/Open University</div>
                 <div>
                   <TextFieldDropDown
+                    key={educationalSkillsKey.board[0]}
                     options={educationalSkills.boardList.map(e => e.value)}
                     onTextInput={onBoardUniversityFieldInput}
                     onOptionClick={onBoardUniversityChangeHandler}
@@ -248,6 +276,7 @@ function FresherProfileUpload() {
                 </div>
                 <div>
                   <TextFieldDropDown
+                    key={educationalSkillsKey.stream[0]}
                     options={educationalSkills.streamList.map(e => e.value)}
                     onOptionClick={onStreamChangeHandler}
                   />
