@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import UserJobDetails from "../components/job-details.component";
 
@@ -15,7 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppStoreStateType, RootState } from "../../../store/app.store";
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import {
@@ -23,6 +23,7 @@ import {
   useGetInterviewScheduleQuery,
   useInterviewScheduleApiMutation,
 } from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
+import { nextButtonFlag } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 export default function ScheduleInterviewPage() {
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
@@ -47,6 +48,12 @@ export function ScheduleInterview() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectMeridiem, setSelectMeridiem] = useState("");
   const [convertedTime, setConvertedTime] = useState("");
+  const dispatch = useDispatch()
+  
+
+  const isOpenselector = useSelector((state:RootState)=>state.scheduleInterviewForm.isOpen)
+  console.log(isOpenselector)
+
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   console.log(userId);
   const jobDetails = useSelector(
@@ -65,7 +72,7 @@ export function ScheduleInterview() {
     userId,
     jobId,
   });
-
+console.log(isError)
   const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation();
 
   console.log(data);
@@ -96,6 +103,7 @@ export function ScheduleInterview() {
         </div>
       );
     }
+
     return (
       <>
       

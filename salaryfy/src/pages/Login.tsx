@@ -23,6 +23,7 @@ export const Login = () => {
 
   const [password, setpassword] = useState<string>("");
 
+  const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
 
 
   const LoginSubmitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -47,7 +48,11 @@ export const Login = () => {
           theme: "light",
         });
 
-        navigate("/questionnaire/screening-questions"); // Make sure your routing is correctly set up
+        if(token && currentRoute == 'questionnaire'){
+          navigate('/questionnaire/screening-questions')
+        }else{
+          navigate(`/${currentRoute}`); 
+        }
       } else {
         console.error("Login error");
       }
