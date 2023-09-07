@@ -14,7 +14,7 @@ const Roadmap = () => {
       <div className="bg-offwhite ">
         <div className="container   text-darkGreen flex flex-col  md:flex-row ">
           <div className=" w-[70%] pt-10 pb-10   text-[1.2rem] flex flex-col  md:text-[1.5rem] ml-[50px]">
-            <h1 className="text-[1.5rem] font-bold md:text-[2.3rem]  pb-5 md:mr-[18rem]" style={{border:"2px solid black"}}>
+            <h1 className="text-[1.5rem] font-bold md:text-[2.3rem]  pb-5 md:mr-[18rem]" >
               Your Roadmap
             </h1>
             <Timeline>
