@@ -124,7 +124,7 @@ console.log(open)
         navigate("/questionnaire/schedule-interview");
       }
     } else if (currentRoute === "questionnaire/schedule-interview") {
-      // navigate("/questionnaire/fresher-dashboard");
+      navigate("/questionnaire/fresher-dashboard");
        handleClickOpen()
      
     }
