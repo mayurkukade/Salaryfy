@@ -30,7 +30,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-import { closeModel, openModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
+import {
+  closeModel,
+  openModel,
+} from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 
 export default function ScheduleInterviewPage() {
   return (
@@ -56,11 +59,12 @@ export function ScheduleInterview() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectMeridiem, setSelectMeridiem] = useState("");
   const [convertedTime, setConvertedTime] = useState("");
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
 
-  const isOpenselector = useSelector((state:RootState)=>state.scheduleInterviewForm.isOpen)
-  console.log(isOpenselector)
+  const isOpenselector = useSelector(
+    (state: RootState) => state.scheduleInterviewForm.isOpen
+  );
+  console.log(isOpenselector);
 
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   console.log(userId);
@@ -80,7 +84,7 @@ export function ScheduleInterview() {
     userId,
     jobId,
   });
-console.log(isError)
+  console.log(isError);
   const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation();
 
   console.log(data);
@@ -115,7 +119,6 @@ console.log(isError)
 
     return (
       <>
-      
         <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em] items-center">
           <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
           <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
@@ -146,7 +149,6 @@ console.log(isError)
 
     return (
       <>
-      
         <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em] items-center">
           <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
           <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
@@ -194,12 +196,12 @@ console.log(isError)
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
-console.log(selectedHour)
-  
+    console.log(selectedHour);
+
     const dateFormat =
       selectedDate != null ? selectedDate.toISOString().split("T")[0] : "";
-const hourFormat = `${selectedHour}:00`
-console.log(hourFormat)
+    const hourFormat = `${selectedHour}:00`;
+    console.log(hourFormat);
     console.log(dateFormat);
     try {
       const formDetails = {
@@ -227,12 +229,16 @@ console.log(hourFormat)
     console.log(convertedTime);
   };
   return (
-    <div className="h-[100%]">
+    <div className="h-[100%] ">
       <div className="font-semibold text-[1.8em] text-[#000] mb-[1em]">
         You can select multiple locations with date and time
       </div>
 
-      <div className="bg-[#0E5F5910] p-[1.5em] rounded-[1.5em] flex mb-[2em] flex-col md:flex-row">
+      <div
+        className="bg-[#0E5F5910]  p-[1.5em] rounded-[1.5em] flex  mb-[2em] flex-col md:flex-row "
+   
+      >
+        
         <div className="flex flex-col mr-[2em]">
           <div className="text-[1.6em] text-[#5B5B5B] mb-[1em]">
             Please confirm your location for interview
@@ -282,17 +288,17 @@ console.log(hourFormat)
                     onChange={handleHourChange}
                     className="w-[5rem] bg-[white] h-[3.4rem]"
                   >
-                  {Array.from({ length: 25 }, (_, i) => {
-          // Generate time in half-hour increments from 9:00 to 21:00
-          const hour = Math.floor(i / 2) + 9;
-          const minute = i % 2 === 0 ? "00" : "30";
-          const time = `${hour}:${minute}`;
-          return (
-            <MenuItem key={time} value={time}>
-              {time}
-            </MenuItem>
-          );
-        })}
+                    {Array.from({ length: 25 }, (_, i) => {
+                      // Generate time in half-hour increments from 9:00 to 21:00
+                      const hour = Math.floor(i / 2) + 9;
+                      const minute = i % 2 === 0 ? "00" : "30";
+                      const time = `${hour}:${minute}`;
+                      return (
+                        <MenuItem key={time} value={time}>
+                          {time}
+                        </MenuItem>
+                      );
+                    })}
                   </Select>
                 </FormControl>
                 {/* <div className="mx-[1em] text-[1.5em] flex items-center">:</div> */}
@@ -361,33 +367,32 @@ console.log(hourFormat)
         </div>
         <div>whatsapp number</div>
       </div>
-      <Modal getDetails={getDetailsModule}/>
+      <Modal getDetails={getDetailsModule} />
     </div>
   );
 }
 
-const Modal = ({getDetails}) => {
-
+const Modal = ({ getDetails }) => {
   const theme = useTheme();
 
-  const openModelSelector = useSelector((state:RootState)=>state.scheduleInterviewForm.isOpen)
-  console.log(openModelSelector)
-  const dispatch = useDispatch()
+  const openModelSelector = useSelector(
+    (state: RootState) => state.scheduleInterviewForm.isOpen
+  );
+  console.log(openModelSelector);
+  const dispatch = useDispatch();
 
-const handleCLose = ()=>{
-  dispatch(closeModel())
-}
+  const handleCLose = () => {
+    dispatch(closeModel());
+  };
 
   return (
     <div>
-      
       <Dialog
         // fullScreen={fullScreen}
         open={openModelSelector}
         onClose={handleCLose}
         aria-labelledby="responsive-dialog-title"
         style={{ border: "2px solid black" }}
-      
       >
         {/* <DialogTitle id="responsive-dialog-title">
           {"Use Google's location service?"}
@@ -427,9 +432,11 @@ const handleCLose = ()=>{
                 </div>
 
                 <div className="flex justify-center pt-5">
-                  <div className="flex flex-col justify-center items-center w-[max-content] text-[0.8rem] md:text-[1em]   " style={{minHeight:"30vh"}}>
+                  <div
+                    className="flex flex-col justify-center items-center w-[max-content] text-[0.8rem] md:text-[1em]   "
+                    style={{ minHeight: "30vh" }}
+                  >
                     {getDetails}
-                   
                   </div>
                 </div>
                 <div className="flex justify-center">
@@ -468,7 +475,6 @@ const handleCLose = ()=>{
             </div>
           </DialogContentText>
         </DialogContent>
-      
       </Dialog>
     </div>
   );
