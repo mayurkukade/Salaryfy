@@ -55,7 +55,7 @@ export default function QuestionnaireTopBarStep() {
   }
 
   return (
-    <div className={ "flex w-[100%] md:w-[88.9%] container p-[3em] sticky top-[0px] bg-[#fff] z-[100]"}>
+    <div className={ "flex w-[100%] md:w-[88.9%] container p-[3em] "}>
       {/* Code for Desktop view  */}
       <Box
         className="flex-grow justify-center w-[80%]  "
