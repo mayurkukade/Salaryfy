@@ -6,17 +6,7 @@ import { toast } from "react-toastify";
 import { useRegisterMutation } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
 import { useGetInterviewScheduleQuery } from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
 import { useState } from "react";
-// // For Accepting Props
-// interface BottomPageNavigationBarProps {
-//   currentPage
-// }
 
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { openModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 export default function BottomPageNavigationBar() {
   const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
