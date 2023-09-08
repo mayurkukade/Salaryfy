@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ChangeEvent, useState } from "react";
 
 import UserJobDetails from "../components/job-details.component";
 
@@ -27,13 +28,14 @@ import {
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
+
+
 import { Link } from "react-router-dom";
 import {
   closeModel,
-  openModel,
+  
 } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
+import { JSX } from "react/jsx-runtime";
 
 export default function ScheduleInterviewPage() {
   return (
@@ -55,11 +57,11 @@ export function ScheduleInterview() {
   const [checked, setChecked] = useState(false);
   const [location, setLocation] = useState("");
   const [selectedHour, setSelectedHour] = useState("");
-  const [selectedMinute, setSelectedMinute] = useState("");
+
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectMeridiem, setSelectMeridiem] = useState("");
-  const [convertedTime, setConvertedTime] = useState("");
-  const dispatch = useDispatch();
+
+
+
 
   const isOpenselector = useSelector(
     (state: RootState) => state.scheduleInterviewForm.isOpen
@@ -78,7 +80,8 @@ export function ScheduleInterview() {
   );
   console.log(selectInterviewData.interviewEndDate);
   const [interviewScheduleApi] = useInterviewScheduleApiMutation();
-  const jobId: number = localStorage.getItem("jobId");
+  const jobIdFormLocal:string = localStorage.getItem("jobId");
+  const jobId:number = Number(jobIdFormLocal)
   console.log(jobId);
   const { data, isLoading, isError } = useGetInterviewScheduleQuery({
     userId,
@@ -102,9 +105,9 @@ export function ScheduleInterview() {
   };
 
   //  slot details function
-  const getDetailsModule = data?.list.map((schedule, i) => {
-    console.log(schedule.interviewScheduleId);
-    let content;
+  const getDetailsModule = data?.list.map((schedule: { location: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; date: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; time: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; }, i: React.Key) => {
+    
+    let content: string | number | boolean | JSX.Element | Iterable<React.ReactNode>;
     if (isLoading) {
       content = <p>Loading...</p>;
     } else if (isError) {
@@ -132,9 +135,9 @@ export function ScheduleInterview() {
     );
   });
 
-  const getDetails = data?.list.map((schedule, i) => {
+  const getDetails = data?.list.map((schedule: { interviewScheduleId: number; location: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; date: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; time: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; }, i: React.Key) => {
     console.log(schedule.interviewScheduleId);
-    let content;
+    let content: string | number | boolean | JSX.Element | Iterable<React.ReactNode>;
     if (isLoading) {
       content = <p>Loading...</p>;
     } else if (isError) {
@@ -163,36 +166,26 @@ export function ScheduleInterview() {
   });
 
   console.log(userId);
-  const handleHourChange = (event) => {
+  const handleHourChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setSelectedHour(event.target.value);
   };
 
-  const handleMinuteChange = (event) => {
-    setSelectedMinute(event.target.value);
-  };
+ 
   const handleChangeLocation = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
   };
 
-  const handleChangeMeridiem = (event: SelectChangeEvent) => {
-    setSelectMeridiem(event.target.value as string);
-  };
+ 
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
 
-  const handleDateChange = (date) => {
+  const handleDateChange = (date: any) => {
     setSelectedDate(date);
   };
 
-  console.log(jobId);
-  // function formatTimeWithLeadingZeros(hour, minute) {
-  //   const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
-  //   const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
-  //   return `${formattedHour}:${formattedMinute}:00`;
-  // }
-  console.log(convertedTime);
+
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -219,14 +212,14 @@ export function ScheduleInterview() {
 
       setLocation("");
       setSelectedHour("");
-      setSelectedMinute("");
+      
       setSelectedDate(null);
-      setSelectMeridiem("");
+     
       setChecked(false);
     } catch (error) {
       console.log(error);
     }
-    console.log(convertedTime);
+
   };
   return (
     <div className="h-[100%] ">
@@ -373,7 +366,7 @@ export function ScheduleInterview() {
 }
 
 const Modal = ({ getDetails }) => {
-  const theme = useTheme();
+
 
   const openModelSelector = useSelector(
     (state: RootState) => state.scheduleInterviewForm.isOpen
@@ -394,9 +387,7 @@ const Modal = ({ getDetails }) => {
         aria-labelledby="responsive-dialog-title"
         style={{ border: "2px solid black" }}
       >
-        {/* <DialogTitle id="responsive-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle> */}
+      
         <DialogContent className="w-full md:w-full h-[44.5rem] rounded-3xl bg-white shadow-md text-black">
           <DialogContentText>
             <div>
