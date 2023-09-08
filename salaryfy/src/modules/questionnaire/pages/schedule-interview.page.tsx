@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import UserJobDetails from "../components/job-details.component";
 
@@ -15,7 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppStoreStateType, RootState } from "../../../store/app.store";
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import {
@@ -30,6 +30,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import {
+  closeModel,
+  openModel,
+} from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 
 export default function ScheduleInterviewPage() {
   return (
@@ -55,7 +59,15 @@ export function ScheduleInterview() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectMeridiem, setSelectMeridiem] = useState("");
   const [convertedTime, setConvertedTime] = useState("");
+  const dispatch = useDispatch();
+
+  const isOpenselector = useSelector(
+    (state: RootState) => state.scheduleInterviewForm.isOpen
+  );
+  console.log(isOpenselector);
+
   const userId = useSelector((state: RootState) => state.authSlice.userId);
+  console.log(userId);
   const jobDetails = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
@@ -72,7 +84,7 @@ export function ScheduleInterview() {
     userId,
     jobId,
   });
-
+  console.log(isError);
   const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation();
 
   console.log(data);
@@ -84,7 +96,6 @@ export function ScheduleInterview() {
     try {
       console.log(interviewScheduleId);
       await deleteInterviewSchedule(interviewScheduleId);
-      // You might want to refetch data after successful deletion
     } catch (error) {
       console.error("Error deleting interview schedule:", error);
     }
@@ -108,7 +119,6 @@ export function ScheduleInterview() {
 
     return (
       <>
-      
         <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em] items-center">
           <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
           <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
@@ -139,7 +149,6 @@ export function ScheduleInterview() {
 
     return (
       <>
-      
         <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em] items-center">
           <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
           <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
@@ -178,27 +187,27 @@ export function ScheduleInterview() {
   };
 
   console.log(jobId);
-  function formatTimeWithLeadingZeros(hour, minute) {
-    const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
-    const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
-    return `${formattedHour}:${formattedMinute}:00`;
-  }
+  // function formatTimeWithLeadingZeros(hour, minute) {
+  //   const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
+  //   const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
+  //   return `${formattedHour}:${formattedMinute}:00`;
+  // }
   console.log(convertedTime);
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
-
-    const timeFormat = formatTimeWithLeadingZeros(selectedHour, selectedMinute);
+    console.log(selectedHour);
 
     const dateFormat =
       selectedDate != null ? selectedDate.toISOString().split("T")[0] : "";
-
+    const hourFormat = `${selectedHour}:00`;
+    console.log(hourFormat);
     console.log(dateFormat);
     try {
       const formDetails = {
         location: location,
         interviewDate: "2023-08-10",
-        time: timeFormat,
+        time: hourFormat,
         date: dateFormat,
         userId: userId,
         jobId: jobId,
@@ -220,12 +229,16 @@ export function ScheduleInterview() {
     console.log(convertedTime);
   };
   return (
-    <div className="h-[100%]">
+    <div className="h-[100%] ">
       <div className="font-semibold text-[1.8em] text-[#000] mb-[1em]">
         You can select multiple locations with date and time
       </div>
 
-      <div className="bg-[#0E5F5910] p-[1.5em] rounded-[1.5em] flex mb-[2em] flex-col md:flex-row">
+      <div
+        className="bg-[#0E5F5910]  p-[1.5em] rounded-[1.5em] flex  mb-[2em] flex-col md:flex-row "
+   
+      >
+        
         <div className="flex flex-col mr-[2em]">
           <div className="text-[1.6em] text-[#5B5B5B] mb-[1em]">
             Please confirm your location for interview
@@ -275,15 +288,21 @@ export function ScheduleInterview() {
                     onChange={handleHourChange}
                     className="w-[5rem] bg-[white] h-[3.4rem]"
                   >
-                    {Array.from({ length: 12 }, (_, i) => (
-                      <MenuItem key={i} value={i}>
-                        {i}
-                      </MenuItem>
-                    ))}
+                    {Array.from({ length: 25 }, (_, i) => {
+                      // Generate time in half-hour increments from 9:00 to 21:00
+                      const hour = Math.floor(i / 2) + 9;
+                      const minute = i % 2 === 0 ? "00" : "30";
+                      const time = `${hour}:${minute}`;
+                      return (
+                        <MenuItem key={time} value={time}>
+                          {time}
+                        </MenuItem>
+                      );
+                    })}
                   </Select>
                 </FormControl>
-                <div className="mx-[1em] text-[1.5em] flex items-center">:</div>
-                <FormControl fullWidth>
+                {/* <div className="mx-[1em] text-[1.5em] flex items-center">:</div> */}
+                {/* <FormControl fullWidth>
                   <InputLabel id="minute-label">Minute</InputLabel>
                   <Select
                     labelId="minute-label"
@@ -298,7 +317,7 @@ export function ScheduleInterview() {
                       </MenuItem>
                     ))}
                   </Select>
-                </FormControl>
+                </FormControl> */}
               </div>
               <div className="flex justify-center h-[3.3rem]">
                 <Button
@@ -348,36 +367,32 @@ export function ScheduleInterview() {
         </div>
         <div>whatsapp number</div>
       </div>
-      <Modal getDetails={getDetailsModule}/>
+      <Modal getDetails={getDetailsModule} />
     </div>
   );
 }
 
-const Modal = ({getDetails}) => {
-  const [open, setOpen] = React.useState(false);
+const Modal = ({ getDetails }) => {
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const openModelSelector = useSelector(
+    (state: RootState) => state.scheduleInterviewForm.isOpen
+  );
+  console.log(openModelSelector);
+  const dispatch = useDispatch();
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCLose = () => {
+    dispatch(closeModel());
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open responsive dialog
-      </Button>
       <Dialog
         // fullScreen={fullScreen}
-        open={open}
-        onClose={handleClose}
+        open={openModelSelector}
+        onClose={handleCLose}
         aria-labelledby="responsive-dialog-title"
         style={{ border: "2px solid black" }}
-      
       >
         {/* <DialogTitle id="responsive-dialog-title">
           {"Use Google's location service?"}
@@ -417,9 +432,11 @@ const Modal = ({getDetails}) => {
                 </div>
 
                 <div className="flex justify-center pt-5">
-                  <div className="flex flex-col justify-center items-center w-[max-content] text-[0.8rem] md:text-[1em]   " style={{minHeight:"30vh"}}>
+                  <div
+                    className="flex flex-col justify-center items-center w-[max-content] text-[0.8rem] md:text-[1em]   "
+                    style={{ minHeight: "30vh" }}
+                  >
                     {getDetails}
-                   
                   </div>
                 </div>
                 <div className="flex justify-center">
@@ -458,14 +475,6 @@ const Modal = ({getDetails}) => {
             </div>
           </DialogContentText>
         </DialogContent>
-        {/* <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Disagree
-          </Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions> */}
       </Dialog>
     </div>
   );

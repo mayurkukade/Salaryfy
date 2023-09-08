@@ -1,18 +1,25 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../store/app.store";
 
 import { toast } from "react-toastify";
 import { useRegisterMutation } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
-import { verifyEmailFlagSelector } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
-// // For Accepting Props
-// interface BottomPageNavigationBarProps {
-//   currentPage
-// }
+import { useGetInterviewScheduleQuery } from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
+import { useState } from "react";
 
+import { openModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 export default function BottomPageNavigationBar() {
   const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
-
+  const [open , setOpen] = useState(false)
+  const userId = useSelector((state: RootState) => state.authSlice.userId);
+  const dispatch = useDispatch()
+  const jobId: number = localStorage.getItem("jobId");
+  console.log(jobId);
+  const { isError:isScheduleInterviewError } = useGetInterviewScheduleQuery({
+    userId,
+    jobId,
+  });
+  console.log(isScheduleInterviewError)
   const registerFormData = useSelector(
     (state: RootState) => state.registerFormSlice.registerFormData
   );
@@ -39,6 +46,12 @@ export default function BottomPageNavigationBar() {
   const verifyEmailFlagSelector = useSelector(
     (state: RootState) => state.mainStepsCounter.verifyemailFlag
   );
+
+  
+console.log(open)
+  const handleClickOpen = () => {
+    dispatch(openModel())
+  };
   console.log(!verifyEmailFlagSelector);
   console.log(currentRoutee);
   console.log(registerFormData[0]);
@@ -54,10 +67,11 @@ export default function BottomPageNavigationBar() {
   } else if (currentRoute === "questionnaire/screening-questions") {
     nextButtonDisabled = true;
   } else if (currentRoute === "questionnaire/schedule-interview") {
-    nextButtonDisabled = true;
+    nextButtonDisabled = !isScheduleInterviewError;
   }
   console.log(!nextButtonDisabled);
   const navigate = useNavigate();
+ 
 
   const nextHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (currentRoute === "questionnaire") {
@@ -100,7 +114,9 @@ export default function BottomPageNavigationBar() {
         navigate("/questionnaire/schedule-interview");
       }
     } else if (currentRoute === "questionnaire/schedule-interview") {
-      navigate("/questionnaire/fresher-dashboard");
+      // navigate("/questionnaire/fresher-dashboard");
+       handleClickOpen()
+     
     }
   };
 
@@ -108,13 +124,40 @@ export default function BottomPageNavigationBar() {
     if (currentRoute === "questionnaire/screening-questions") {
       navigate("/questionnaire");
     } else if (currentRoute === "questionnaire/schedule-interview") {
+
       navigate("/questionnaire/screening-questions");
     } else if (currentRoute === "questionnaire/fresher-dashboard") {
       navigate("/questionnaire/schedule-interview");
     }
   };
-
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
   return (
+    <>
+     {/* <Dialog
+        open={false}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Let Google help apps determine location. This means sending anonymous
+            location data to Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleClose} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog> */}
+  
     <div
       className={`flex justify-center mt-6 mb-6 ${
         currentRoute == "questionnaire/fresher-dashboard" ||
@@ -150,7 +193,7 @@ export default function BottomPageNavigationBar() {
         onClick={nextHandler}
         disabled={!nextButtonDisabled}
       >
-        Next
+       {currentRoute == "questionnaire/schedule-interview" ? "confirm" : "Next" }
         <span className="" style={{ transform: "scaleX(-1)" }}>
           <svg
             width="35"
@@ -166,5 +209,8 @@ export default function BottomPageNavigationBar() {
         </span>
       </button>
     </div>
+    </>
   );
 }
+
+

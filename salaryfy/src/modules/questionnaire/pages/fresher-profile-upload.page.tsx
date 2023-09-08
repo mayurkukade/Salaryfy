@@ -167,6 +167,7 @@ function FresherProfileUpload() {
       percentage: educationalSkills.percentage
     }
 
+    console.log(payload);
     if ( Object.values(payload).includes(undefined) ) { return; }
 
 
