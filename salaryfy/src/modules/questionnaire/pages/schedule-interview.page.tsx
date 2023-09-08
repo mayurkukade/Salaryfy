@@ -185,27 +185,27 @@ console.log(isError)
   };
 
   console.log(jobId);
-  function formatTimeWithLeadingZeros(hour, minute) {
-    const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
-    const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
-    return `${formattedHour}:${formattedMinute}:00`;
-  }
+  // function formatTimeWithLeadingZeros(hour, minute) {
+  //   const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
+  //   const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
+  //   return `${formattedHour}:${formattedMinute}:00`;
+  // }
   console.log(convertedTime);
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
-
-    const timeFormat = formatTimeWithLeadingZeros(selectedHour, selectedMinute);
-
+console.log(selectedHour)
+  
     const dateFormat =
       selectedDate != null ? selectedDate.toISOString().split("T")[0] : "";
-
+const hourFormat = `${selectedHour}:00`
+console.log(hourFormat)
     console.log(dateFormat);
     try {
       const formDetails = {
         location: location,
         interviewDate: "2023-08-10",
-        time: timeFormat,
+        time: hourFormat,
         date: dateFormat,
         userId: userId,
         jobId: jobId,
@@ -282,15 +282,21 @@ console.log(isError)
                     onChange={handleHourChange}
                     className="w-[5rem] bg-[white] h-[3.4rem]"
                   >
-                    {Array.from({ length: 12 }, (_, i) => (
-                      <MenuItem key={i} value={i}>
-                        {i}
-                      </MenuItem>
-                    ))}
+                  {Array.from({ length: 25 }, (_, i) => {
+          // Generate time in half-hour increments from 9:00 to 21:00
+          const hour = Math.floor(i / 2) + 9;
+          const minute = i % 2 === 0 ? "00" : "30";
+          const time = `${hour}:${minute}`;
+          return (
+            <MenuItem key={time} value={time}>
+              {time}
+            </MenuItem>
+          );
+        })}
                   </Select>
                 </FormControl>
-                <div className="mx-[1em] text-[1.5em] flex items-center">:</div>
-                <FormControl fullWidth>
+                {/* <div className="mx-[1em] text-[1.5em] flex items-center">:</div> */}
+                {/* <FormControl fullWidth>
                   <InputLabel id="minute-label">Minute</InputLabel>
                   <Select
                     labelId="minute-label"
@@ -305,7 +311,7 @@ console.log(isError)
                       </MenuItem>
                     ))}
                   </Select>
-                </FormControl>
+                </FormControl> */}
               </div>
               <div className="flex justify-center h-[3.3rem]">
                 <Button
