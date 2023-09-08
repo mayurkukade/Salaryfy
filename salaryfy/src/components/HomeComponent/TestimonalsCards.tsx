@@ -3,8 +3,8 @@ import Google from "../../../assets/Homepage/Google.png";
 import "./testimonals.css";
 const TestimonalsCards = ({testimonals, name, course}) => {
   return (
-    <div className="container mx-auto mb-9" >
-      <div className="bubble speech w-auto min-h-[40vh]"  >
+    <div className="container mx-auto mb-9"  >
+      <div className="bubble speech w-auto md:min-h-[40vh]  ">
        {testimonals}
         {/* <hr /> */}
         {/* <div className="flex justify-around">
