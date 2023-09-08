@@ -22,15 +22,17 @@ interface TokenPayload {
   userId: string;
 }
 
+import navlogo from "../../../assets/Logos/navbar-logo.png";
+
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
- 
+
   const open = Boolean(anchorEl);
-console.log(window.location.href)
-  const currentLocation = window.location.href.slice(22)
-console.log(currentLocation)
+  console.log(window.location.href);
+  const currentLocation = window.location.href.slice(22);
+  console.log(currentLocation);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -66,15 +68,15 @@ console.log(currentLocation)
     setNav(!nav);
   };
 
-useEffect(()=>{
-dispatch(cureentSelector(currentLocation))
-},[dispatch,currentLocation])
+  useEffect(() => {
+    dispatch(cureentSelector(currentLocation));
+  }, [dispatch, currentLocation]);
 
   return (
     <nav className="flex justify-between  items-center h-24  w-full p-10 sticky top-[0px] bg-[#fff] z-[100]">
-      <Link to="/">
-        <div className="w-[329px] h-[63.126px] shrink-0 flex">
-          <div className="w-[63.475px] h-[55.154px] shrink-0 ">
+      <Link to="/" className="ml-[-30px]">
+        {/* <div className="w-[200px] md:w-[329px] h-[63.126px] shrink-0 flex">
+          <div className=" md:w-[63.475px] md:h-[55.154px] shrink-0 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="64"
@@ -309,7 +311,12 @@ dispatch(cureentSelector(currentLocation))
               </svg>
             </div>
           </div>
-        </div>
+        </div> */}
+        <img
+          className="w-[95%] md:w-[70%] bg-[#fff] "
+          src={navlogo}
+          alt="logo"
+        />
       </Link>
 
       <ul className="hidden md:flex space-x-2 ">
@@ -384,21 +391,44 @@ dispatch(cureentSelector(currentLocation))
         </li>
       </ul>
       <div onClick={handleNav} className="block md:hidden">
-        {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+        {nav ? <AiOutlineClose size={40} /> : <AiOutlineMenu size={40} />}
       </div>
       <ul
         className={
           nav
-            ? "fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500"
+            ? "fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-[#005F59] ease-in-out duration-500 text-[1.5rem] text-[#FDCC07] p-6 "
             : "ease-in-out duration-500 fixed left-[-100%]"
         }
       >
-        <h1 className="w-full text-3xl font-bold text-[#00df9a] m-4">REACT.</h1>
-        <li className="p-4 border-b border-gray-600">Home</li>
-        <li className="p-4 border-b border-gray-600">Company</li>
-        <li className="p-4 border-b border-gray-600">Resources</li>
-        <li className="p-4 border-b border-gray-600">About</li>
-        <li className="p-4">Contact</li>
+        {/* <h1 className="w-full text-3xl font-bold text-[#00df9a] m-4">REACT.</h1> */}
+        <li>
+          <Link to="/" className="p-4 border-b border-gray-600  ">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/fresher-dashboard"
+            className="p-4 border-b border-gray-600 "
+          >
+            Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link to="/contact" className="p-4 border-b border-gray-600 ">
+            Contact
+          </Link>
+        </li>
+        <li>
+          <Link to="/aboutus" className="p-4 border-b border-gray-600 ">
+            About Us
+          </Link>
+        </li>
+        <li>
+          <Link to="/signup" className="p-4">
+            Sign In
+          </Link>
+        </li>
       </ul>
     </nav>
   );
