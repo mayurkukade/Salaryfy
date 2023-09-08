@@ -44,9 +44,9 @@ const HeroSection2 = () => {
             <span className="text-yellow">Job Change</span> <br />
             <span className="text-darkGreen">solution for You</span>
             <p className="font-Lexend text-[20px] mt-[2rem]  ">
-              6874+ people have got their dream job through Salaryfy. When 
+              6874+ people have got their dream job through Salaryfy.
             </p>
-            <p className="font-Lexend text-[20px] ">are you getting yours?</p>
+            <p className="font-Lexend text-[20px] "> When are you getting yours?</p>
             <div className=" mt-[56px] h-[50px] flex relative justify-center md:justify-start">
               <p className="font-Lexend text-[20px] text-darkGreen font-semibold flex relative align-text-top">
                 Select your City

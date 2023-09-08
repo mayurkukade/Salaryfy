@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     // <div className="flex justify-center">
@@ -487,22 +487,22 @@ const Footer = () => {
                   Placement
                 </p>
 
-                <ul className="mt-6 space-y-4 text-sm leading-[30%]">
+                <ul className="mt-6 space-y-4 text-sm ">
                   <li>
-                    <a
+                    <Link
                       href="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Freshers
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="text-white transition hover:opacity-75"
+                    <Link
+                      href="/"
+                      className="text-white transition hover:opacity-75 "
                     >
                       Working Professional
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -514,54 +514,54 @@ const Footer = () => {
 
                 <ul className="mt-6 space-y-4 text-sm leading-[30%]">
                   <li>
-                    <a
+                    <Link
                       href="#"
                       className="text-white transition hover:opacity-75"
                     >
                       About Us
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a
+                    <Link
                       href="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Blogs
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a
+                    <Link
                       href="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Parent Company
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       href="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Term of use
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       href="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Privacy policy
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       href="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Contact us
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

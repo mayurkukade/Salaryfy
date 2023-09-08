@@ -13,53 +13,55 @@ const Universities = () => {
           <span className="text-yellow"> Universities</span>
         </p>
         {/* <marquee scrollamount="10"> */}
-        <div className="grid grid-cols-2 px-3 md:grid-cols-4 grid-rows-auto gap-4 md:gap-8 mb-10 ">
-          <UniversitiesCard
-            img={harvarduniversitylogo}
-            university={"Harvard"}
-          />
-          <UniversitiesCard
-            img={psuniversity}
-            university={"Pennsylvania State"}
-          />
-          <UniversitiesCard
-            img={psuniversity}
-            university={"Pennsylvania State"}
-          />
-          <UniversitiesCard
-            img={psuniversity}
-            university={"Pennsylvania State"}
-          />
-          <UniversitiesCard
-            img={americanuniversitylogo}
-            university={"American"}
-          />
-          <UniversitiesCard
-            img={standforduniversity}
-            university={"Standford"}
-          />
-          <UniversitiesCard
-            img={standforduniversity}
-            university={"Standford"}
-          />
-          <UniversitiesCard
-            img={standforduniversity}
-            university={"Standford"}
-          />
-          <UniversitiesCard img={universityllogo} university={"Texas"} />
+        <div className="max-h-[400px] overflow-y-auto">
+          <div className="grid grid-cols-2 px-3 md:grid-cols-4 grid-rows-auto gap-4 md:gap-8 mb-10 ">
+            <UniversitiesCard
+              img={harvarduniversitylogo}
+              university={"Harvard"}
+            />
+            <UniversitiesCard
+              img={psuniversity}
+              university={"Pennsylvania State"}
+            />
+            <UniversitiesCard
+              img={psuniversity}
+              university={"Pennsylvania State"}
+            />
+            <UniversitiesCard
+              img={psuniversity}
+              university={"Pennsylvania State"}
+            />
+            <UniversitiesCard
+              img={americanuniversitylogo}
+              university={"American"}
+            />
+            <UniversitiesCard
+              img={standforduniversity}
+              university={"Standford"}
+            />
+            <UniversitiesCard
+              img={standforduniversity}
+              university={"Standford"}
+            />
+            <UniversitiesCard
+              img={standforduniversity}
+              university={"Standford"}
+            />
+            <UniversitiesCard img={universityllogo} university={"Texas"} />
 
-          <UniversitiesCard
-            img={harvarduniversitylogo}
-            university={"Harvard"}
-          />
-          <UniversitiesCard
-            img={harvarduniversitylogo}
-            university={"Harvard"}
-          />
-          <UniversitiesCard
-            img={harvarduniversitylogo}
-            university={"Harvard"}
-          />
+            <UniversitiesCard
+              img={harvarduniversitylogo}
+              university={"Harvard"}
+            />
+            <UniversitiesCard
+              img={harvarduniversitylogo}
+              university={"Harvard"}
+            />
+            <UniversitiesCard
+              img={harvarduniversitylogo}
+              university={"Harvard"}
+            />
+          </div>
         </div>
         {/* </marquee> */}
       </div>
