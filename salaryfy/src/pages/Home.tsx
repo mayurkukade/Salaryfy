@@ -9,7 +9,7 @@ import Universities from "../components/HomeComponent/Universities";
 const Home = () => {
   return (
     <>
-      <div className="w-full block">
+      <div className="w-full block ">
         <HeroSection2 />
         <YellowWidth />
         <OurStats />
