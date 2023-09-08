@@ -32,73 +32,53 @@ export default function PlacementCarousel() {
           }}
           modules={[FreeMode, Pagination]}
           className="mySwiper"
-          // Responsive settings
-          breakpoints={{
-            // When the screen width is 640px or larger
-            // 340: {
-            //   slidesPerView: 1, // Show 2 slides per view
-            // },
-            640: {
-              slidesPerView: 2, // Show 2 slides per view
-            },
-            // When the screen width is 768px or larger
-            768: {
-              slidesPerView: 2, // Show 3 slides per view
-            },
-            // When the screen width is 1024px or larger
-            1024: {
-              slidesPerView: 3, // Show 4 slides per view
-            },
-          }}
         >
-          <SwiperSlide>
-            <div className="mb-9 ">
-              <p className="text-darkGreen font-Lexend text-[14px] font-normal leading-5">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam
-                eos blanditiis qui ipsa sapiente eveniet odit harum quos optio
-                sunt. Suscipit dolor voluptas labore, cupiditate dolorum sequi
-                fugit dolore ducimus optio quisquam commodi recusandae enim.
-                Rerum molestias ipsum, ducimus, dolorem obcaecati accusamus
-                aspernatur eos iusto velit numquam, culpa est. Quibusdam esse
-                voluptas optio. Numquam natus debitis architecto ad ipsum
-                explicabo eos sed libero! Molestiae, placeat quisquam sequi
-                harum debitis culpa ducimus esse ab? Neque excepturi repellendus
-                sunt natus quo nostrum labore, possimus adipisci repudiandae
-                provident blanditiis mollitia ab incidunt ex cumque officia,
-                soluta iure, dignissimos aliquid illo. Facilis, odit iste.
-              </p>
-              <div className="flex justify-around p-2 mt-4">
-                <img
-                  alt="logo"
-                  src={pallvaiavtar}
-                  style={{
-                    borderRadius: " 3.125rem 3.125rem 0.1875rem 3.125rem",
-                    background: "yellow",
-                  }}
-                />
-                <div>
-                  <p className="text-darkGreen text-[1.5rem] font-bold">
-                    Pallavi Rastogi
-                  </p>
-                  <span className="text-grey text-[1rem] font-medium">
-                    Software Engineer
-                  </span>
-                </div>
+          <SwiperSlide className="mb-9 ">
+            <p className="text-darkGreen font-Lexend text-[14px] font-normal leading-5">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam eos
+              blanditiis qui ipsa sapiente eveniet odit harum quos optio sunt.
+              Suscipit dolor voluptas labore, cupiditate dolorum sequi fugit
+              dolore ducimus optio quisquam commodi recusandae enim. Rerum
+              molestias ipsum, ducimus, dolorem obcaecati accusamus aspernatur
+              eos iusto velit numquam, culpa est. Quibusdam esse voluptas optio.
+              Numquam natus debitis architecto ad ipsum explicabo eos sed
+              libero! Molestiae, placeat quisquam sequi harum debitis culpa
+              ducimus esse ab? Neque excepturi repellendus sunt natus quo
+              nostrum labore, possimus adipisci repudiandae provident blanditiis
+              mollitia ab incidunt ex cumque officia, soluta iure, dignissimos
+              aliquid illo. Facilis, odit iste.
+            </p>
+            <div className="flex justify-around p-2 mt-4">
+              <img
+                alt="logo"
+                src={pallvaiavtar}
+                style={{
+                  borderRadius: " 3.125rem 3.125rem 0.1875rem 3.125rem",
+                  background: "yellow",
+                }}
+              />
+              <div>
+                <p className="text-darkGreen text-[1.5rem] font-bold">
+                  Pallavi Rastogi
+                </p>
+                <span className="text-grey text-[1rem] font-medium">
+                  Software Engineer
+                </span>
               </div>
-              <div className="flex p-2 justify-around text-darkGreen font-Lexend">
-                <div>
-                  <p>Placed in</p>
-                  <p className="text-[1.5rem] font-bold">Wipro</p>
-                </div>
-                <div>
-                  <p>Job Switched in</p>
-                  <p className="text-[1.5rem] font-bold">10Days</p>
-                </div>
-                <div className="relative flex justify-center items-center text-[1rem] font-semibold">
-                  <p className="absolute text-center">25% Hike</p>
+            </div>
+            <div className="flex p-2 justify-around text-darkGreen font-Lexend">
+              <div>
+                <p>Placed in</p>
+                <p className="text-[1.5rem] font-bold">Wipro</p>
+              </div>
+              <div>
+                <p>Job Switched in</p>
+                <p className="text-[1.5rem] font-bold">10Days</p>
+              </div>
+              <div className="relative flex justify-center items-center text-[1rem] font-semibold">
+                <p className="absolute text-center">25% Hike</p>
 
-                  <img src={star} alt="star" />
-                </div>
+                <img src={star} alt="star" />
               </div>
             </div>
           </SwiperSlide>
