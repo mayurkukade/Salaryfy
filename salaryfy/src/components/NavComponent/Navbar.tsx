@@ -71,7 +71,7 @@ dispatch(cureentSelector(currentLocation))
 },[dispatch,currentLocation])
 
   return (
-    <nav className="flex justify-between  items-center h-24  w-full p-10 ">
+    <nav className="flex justify-between  items-center h-24  w-full p-10 sticky top-[0px] bg-[#fff] z-[100]">
       <Link to="/">
         <div className="w-[329px] h-[63.126px] shrink-0 flex">
           <div className="w-[63.475px] h-[55.154px] shrink-0 ">
