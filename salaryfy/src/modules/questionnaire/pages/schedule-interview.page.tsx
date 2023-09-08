@@ -30,6 +30,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { closeModel, openModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 
 export default function ScheduleInterviewPage() {
   return (
@@ -360,27 +361,24 @@ console.log(isError)
 }
 
 const Modal = ({getDetails}) => {
-  const [open, setOpen] = React.useState(false);
+
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const openModelSelector = useSelector((state:RootState)=>state.scheduleInterviewForm.isOpen)
+  console.log(openModelSelector)
+  const dispatch = useDispatch()
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+const handleCLose = ()=>{
+  dispatch(closeModel())
+}
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open responsive dialog
-      </Button>
+      
       <Dialog
         // fullScreen={fullScreen}
-        open={open}
-        onClose={handleClose}
+        open={openModelSelector}
+        onClose={handleCLose}
         aria-labelledby="responsive-dialog-title"
         style={{ border: "2px solid black" }}
       
@@ -464,14 +462,7 @@ const Modal = ({getDetails}) => {
             </div>
           </DialogContentText>
         </DialogContent>
-        {/* <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Disagree
-          </Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions> */}
+      
       </Dialog>
     </div>
   );

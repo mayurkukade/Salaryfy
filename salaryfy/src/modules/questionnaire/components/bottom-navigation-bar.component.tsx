@@ -114,7 +114,7 @@ console.log(open)
         navigate("/questionnaire/schedule-interview");
       }
     } else if (currentRoute === "questionnaire/schedule-interview") {
-      navigate("/questionnaire/fresher-dashboard");
+      // navigate("/questionnaire/fresher-dashboard");
        handleClickOpen()
      
     }
@@ -193,7 +193,7 @@ console.log(open)
         onClick={nextHandler}
         disabled={!nextButtonDisabled}
       >
-       {currentRoute == "questionnaire/schedule-interview" ? "Go to dashboard" : "Next" }
+       {currentRoute == "questionnaire/schedule-interview" ? "confirm" : "Next" }
         <span className="" style={{ transform: "scaleX(-1)" }}>
           <svg
             width="35"
