@@ -489,16 +489,14 @@ const Footer = () => {
 
                 <ul className="mt-6 space-y-4 text-sm ">
                   <li>
-                    <Link
-                      href="#"
+                    <Link to="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Freshers
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      href="/"
+                    <Link to="/"
                       className="text-white transition hover:opacity-75 "
                     >
                       Working Professional
@@ -514,8 +512,7 @@ const Footer = () => {
 
                 <ul className="mt-6 space-y-4 text-sm leading-[30%]">
                   <li>
-                    <Link
-                      href="#"
+                    <Link to="#"
                       className="text-white transition hover:opacity-75"
                     >
                       About Us
@@ -523,8 +520,7 @@ const Footer = () => {
                   </li>
 
                   <li>
-                    <Link
-                      href="#"
+                    <Link to="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Blogs
@@ -532,32 +528,28 @@ const Footer = () => {
                   </li>
 
                   <li>
-                    <Link
-                      href="#"
+                    <Link to="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Parent Company
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      href="#"
+                    <Link to="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Term of use
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      href="#"
+                    <Link to="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Privacy policy
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      href="#"
+                    <Link to="#"
                       className="text-white transition hover:opacity-75"
                     >
                       Contact us

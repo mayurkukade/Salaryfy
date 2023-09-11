@@ -5,22 +5,22 @@ import { RootState } from "../../../store/app.store";
 import { toast } from "react-toastify";
 import { useRegisterMutation } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
 import { useGetInterviewScheduleQuery } from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
-import { useState } from "react";
+
 
 import { openModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 export default function BottomPageNavigationBar() {
-  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
-  const [open , setOpen] = useState(false)
+  const [register] = useRegisterMutation();
+
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   const dispatch = useDispatch()
-  const jobId: number = localStorage.getItem("jobId");
+  const jobId:string = localStorage.getItem("jobId");
   console.log(jobId);
   const { isError:isScheduleInterviewError } = useGetInterviewScheduleQuery({
     userId,
     jobId,
   });
   console.log(isScheduleInterviewError)
-  const registerFormData = useSelector(
+  const registerFormData:string[] = useSelector(
     (state: RootState) => state.registerFormSlice.registerFormData
   );
   console.log(registerFormData);
@@ -48,7 +48,7 @@ export default function BottomPageNavigationBar() {
   );
 
   
-console.log(open)
+
   const handleClickOpen = () => {
     dispatch(openModel())
   };
@@ -61,7 +61,7 @@ console.log(open)
   const currentRoute = window.location.href.slice(22);
   console.log(currentRoute);
 
-  let nextButtonDisabled;
+  let nextButtonDisabled: boolean;
   if (currentRoute === "questionnaire") {
     nextButtonDisabled = resSteptwoSelector && verifyEmailFlagSelector;
   } else if (currentRoute === "questionnaire/screening-questions") {
@@ -130,33 +130,10 @@ console.log(open)
       navigate("/questionnaire/schedule-interview");
     }
   };
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
+
   return (
     <>
-     {/* <Dialog
-        open={false}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog> */}
+    
   
     <div
       className={`flex justify-center mt-6 mb-6 ${
