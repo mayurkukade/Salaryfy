@@ -7,10 +7,7 @@ import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
 import { useLoginMutation } from "../features/api-integration/apiUserSlice/api-integration-user.slice";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setToken,
-
-} from "../features/reducers/authReducers/auth-slice-reducer";
+import { setToken } from "../features/reducers/authReducers/auth-slice-reducer";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 export const Login = () => {
@@ -23,8 +20,9 @@ export const Login = () => {
 
   const [password, setpassword] = useState<string>("");
 
-  const currentRoute = useSelector((state:RootState)=>state.currentRoute.currentRoute)
-
+  const currentRoute = useSelector(
+    (state: RootState) => state.currentRoute.currentRoute
+  );
 
   const LoginSubmitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -48,10 +46,10 @@ export const Login = () => {
           theme: "light",
         });
 
-        if(token && currentRoute == 'questionnaire'){
-          navigate('/questionnaire/screening-questions')
-        }else{
-          navigate(`/${currentRoute}`); 
+        if (token && currentRoute == "questionnaire") {
+          navigate("/questionnaire/screening-questions");
+        } else {
+          navigate(`/${currentRoute}`);
         }
       } else {
         console.error("Login error");
@@ -76,47 +74,48 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="bg-darkGreen min-h-[100vh] flex justify-center items-center">
-      <div className="w-[35.5rem] h-[37.625rem] rounded-3xl bg-[#fff] shadow-[7px 16px 56px 1px rgba(0, 0, 0, 0.10)] text-darkGreen">
-        <h1 className=" text-center text-[3.0rem] font-[700] mt-10 font-Lexend">
+    <div className="bg-darkGreen min-h-screen flex flex-col justify-center items-center p-4">
+      <div className="w-full max-w-md rounded-3xl bg-white shadow-md text-darkGreen">
+        <h1 className="text-center text-3xl font-bold mt-10 font-Lexend">
           Login
         </h1>
-        <div className="text-[1.25rem] font-[400] mt-3 text-center text-grey">
-          <h2 className="">Please log in first to explore jobs</h2>
-          {/* <h2 className="">send OTP to you</h2> */}
+        <div className="text-lg font-normal mt-3 text-center text-grey">
+          <h2>Please log in first to explore jobs</h2>
         </div>
-        <div className="text-[1.25rem] font-[400] mt-5 ml-[5rem] ">
+        <div className="text-lg font-normal px-8 py-2 md:py-5">
           <h2>Enter Email Id</h2>
           <input
             type="email"
             onChange={(e) => setUserName(e.target.value)}
             value={userName}
             placeholder="gm@example.com"
-            className="w-[26.5rem] h-[3.40669rem] rounded-[0.3125rem] border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder"
+            className="w-full h-12 rounded border border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder"
           />
 
-          <h2 className="mt-5">Enter 4 Digit Password</h2>
+          <h2 className="mt-5">Enter Password</h2>
+          <div className="relative rounded border border-solid border-darkGreen mt-2">
             <input
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setpassword(e.target.value)}
               placeholder="****"
-              className="w-[23rem] h-[3.40669rem]  border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder rounded-l-[0.3125rem] border-l"
-              style={{borderRight:"None"}}
+              className="w-full h-12 pl-4 pr-12 placeholder-green-500::placeholder rounded-l"
             />
-
             <button
               onClick={() => {
-                setShowPassword(showPassword ? false : true);
+                setShowPassword(!showPassword);
               }}
-              className="h-[3.40669rem] border-[1px] border-solid border-darkGreen bg-[#E8F0FE] pr-2  pl-4 absolute mt-[8px] rounded-r-[0.3125rem] border-r"
-              
+              className="absolute inset-y-0 right-0 h-full bg-[#E8F0FE] p-2 rounded-r flex items-center"
             >
-              {showPassword ? <VisibilityOffIcon style={{ fontSize: '30px' }}/> : <VisibilityIcon style={{ fontSize: '30px' }} />}
+              {showPassword ? (
+                <VisibilityOffIcon style={{ fontSize: "24px" }} />
+              ) : (
+                <VisibilityIcon style={{ fontSize: "24px" }} />
+              )}
             </button>
+          </div>
 
-
-          <div className="text-[1.26544rem] w-[26.5rem] flex justify-end mt-4  text-darkGreen font-medium	 ">
+          <div className="text-lg w-full flex justify-end mt-4 text-darkGreen font-medium">
             <Link to={"/"} className="border-b border-darkGreen ">
               {" "}
               Forgot Password?
@@ -125,15 +124,16 @@ export const Login = () => {
 
           <button
             type="submit"
-            className="mt-8 w-[26.5rem] h-[3.1875rem] bg-darkGreen text-[#fff] rounded-[0.81694rem]"
+            className="mt-6 w-full h-14 bg-darkGreen text-white rounded"
             onClick={LoginSubmitHandler}
           >
             Login
           </button>
         </div>
-        <div className="text-grey text-center mt-6  text-[1.2rem]">
+
+        <div className="text-grey text-center py-6 text-lg">
           <h2>
-            Didn’t signed up yet?{" "}
+            Didn't sign up yet?{" "}
             <Link
               to={"/signup"}
               className="border-b text-darkGreen border-darkGreen font-medium"
