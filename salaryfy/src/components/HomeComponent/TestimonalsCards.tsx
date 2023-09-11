@@ -1,14 +1,11 @@
 import avtarlogo from "../../../assets/Homepage/feedbackimg.png";
-import Google from "../../../assets/Homepage/Google.png";
+
 import "./testimonals.css";
 const TestimonalsCards = ({testimonals, name, course}) => {
   return (
     <div className="container mx-auto mb-9"  >
-      <div className="bubble speech w-auto h-auto  ">
-        <div className="h-[50vh] md:h-[50vh]">
-
+      <div className="bubble speech w-auto md:min-h-[40vh]  ">
        {testimonals}
-        </div>
         {/* <hr /> */}
         {/* <div className="flex justify-around">
           <div className="text-[0.5rem]">
@@ -32,7 +29,7 @@ const TestimonalsCards = ({testimonals, name, course}) => {
           </div>
         </div>
 
-        <div className="flex-col  self-center p-5 ">
+        <div className="flex-col  self-center p-5 leading-8 ">
           <p className="text-white font-Lexend text-[24px]">{name}</p>
           <span className="text-slate-400 text-[0.8rem]">
            {course}{" "}

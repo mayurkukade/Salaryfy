@@ -2,8 +2,8 @@ import { ChangeEvent, useState } from "react";
 import herowave from "../../../assets/Homepage/Vector 30.jpg";
 import herosection from "../../../assets/Homepage/herosection.png";
 import { useNavigate } from "react-router-dom";
-// import React from 'react';
-import { Link } from "react-router-dom";
+
+
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCity } from "../../features/reducers/selected-city/selected-city.slice";
 import { AppStoreStateType } from "../../store/app.store";
