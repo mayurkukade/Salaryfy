@@ -4,7 +4,9 @@ import "./testimonals.css";
 const TestimonalsCards = ({testimonals, name, course}) => {
   return (
     <div className="container mx-auto mb-9"  >
-      <div className="bubble speech w-auto md:min-h-[40vh]  ">
+      <div className="bubble speech w-auto h-auto  ">
+        <div className="h-[50vh] md:h-[50vh]">
+
        {testimonals}
         
       </div>
@@ -16,7 +18,7 @@ const TestimonalsCards = ({testimonals, name, course}) => {
           </div>
         </div>
 
-        <div className="flex-col  self-center p-5 leading-8 ">
+        <div className="flex-col  self-center p-5 ">
           <p className="text-white font-Lexend text-[24px]">{name}</p>
           <span className="text-slate-400 text-[0.8rem]">
            {course}{" "}
