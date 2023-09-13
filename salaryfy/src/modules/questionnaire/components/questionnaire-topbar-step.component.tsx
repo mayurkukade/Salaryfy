@@ -52,6 +52,7 @@ export default function QuestionnaireTopBarStep() {
       emailCounterStep2 +
       nameCounterStep2 +
       confirmPasswordCounterStep2;
+      stepThreeTotal = 0
   }
 
   return (
