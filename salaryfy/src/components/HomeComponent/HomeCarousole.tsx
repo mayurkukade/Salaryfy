@@ -21,7 +21,7 @@ export default function HomeCarousole2() {
           clickable: true,
         }}
         modules={[FreeMode, Pagination]}
-        className="mySwiper "
+        className="mySwiper"
         // Responsive settings
         breakpoints={{
           // When the screen width is 640px or larger
@@ -43,48 +43,59 @@ export default function HomeCarousole2() {
       >
         <SwiperSlide>
           <TestimonalsCards
-           testimonals={"The course was comprehensive and well structured, and what added to the major USPs of the course was the fact that there were live classes. These live sessions were really productive and interactive. The program helped me elevate my knowledge and skill levels and opened a lot of opportunities for me. " } 
-           name={"Ritesh Sharma "}
-           course={"Course–Data Science and Data Analytics Program"}
-           />
+            testimonals={
+              "My overall journey at Data Folkz has been great because my mentor has been super supportive and guided me throughout my journey at Data Folkz. The curriculum was thorough, was easy to follow.  "
+            }
+            name={"Saksham Choudhary   "}
+            course={"Course–Data Science and Data Analytics Program"}
+          />
         </SwiperSlide>
         <SwiperSlide>
           <TestimonalsCards
-           testimonals={"The Business Analytics for Management I took was really comprehensive and detailed. It was interesting to learn under the guidance of experts and experienced trainers. It was overall a motivational and knowledgeable program that encouraged me to pursue a career in this highly rewarding field." } 
-           name={"Riya Sharma"}
-           course={"Course- Business Analytics for Management"}
-           />
+            testimonals={
+              "I enjoyed this Data Science program thoroughly and got to learn about Data Engineering, Python, and other big data tools associated with Data Science.  The platform designed by Data Folkz assists with the coordination of practical as well as theoretical knowledge."
+            }
+            name={"Arpita Belwal "}
+            course={"Course- Business Analytics for Management"}
+          />
         </SwiperSlide>
 
         <SwiperSlide>
           <TestimonalsCards
-           testimonals={"For anyone who is looking forward to starting their career as a Data Scientist, this is the best program. The program covers the introduction of the basic concepts associated with the field of Data Scientist. Moreover, and the was well paced and accessible." } 
-           name={"Kanchan Ahuja"}
-           course={"Course- Business Analytics for Management"}
-           />
+            testimonals={
+              "I was working as a Business Analyst in a firm. With the professional Data Science course offered by Data Folkz, I was able to see a bigger picture of what my career could be if I could grab some crucial skills and knowledge.  "
+            }
+            name={"Megha Raha"}
+            course={"Course- Business Analytics for Management"}
+          />
         </SwiperSlide>
         <SwiperSlide>
           <TestimonalsCards
-           testimonals={"The instructor was very eloquent, and he was very feature-rich. Also, I liked the idea of answering open-ended questions about data. Every beginner looking forward to starting a career in this field must know that this is the best program for him/her." } 
-           name={"Pooja Bijlani "}
-           course={"Course–Data Science and Data Analytics Program"}
-           />
+            testimonals={
+              "The course was comprehensive and well structured, and what added to the major USPs of the course was the fact that there were live classes. These live sessions were really productive and interactive.  "
+            }
+            name={"Ritesh Sharma  "}
+            course={"Course–Data Science and Data Analytics Program"}
+          />
         </SwiperSlide>
         <SwiperSlide>
           <TestimonalsCards
-           testimonals={"The instructor of the course was really supportive and helpful and helped me with the feature-rich. Moreover, I liked the idea of answering open-ended questions related to data. Everyone is looking forward to beginning a career in the field of Business Analytics"}
-           name={"Simran Sahani"}
-           course={"Course- Business Analytics for Management"}
-           />
+            testimonals={
+              "For anyone who is looking forward to starting their career as a Data Scientist, this is the best program. The program covers the introduction of the basic concepts associated with the field of Data Scientist. Moreover, and the was well paced and accessible.   "
+            }
+            name={"Kanchan Ahuja "}
+            course={"Course- Business Analytics for Management"}
+          />
         </SwiperSlide>
         <SwiperSlide>
           <TestimonalsCards
-           testimonals={"For anyone who is looking forward to beginning their career in the field of Business Analytics, this program is certainly the best one. The program is so comprehensive that it covers the introduction of all the basic concepts that are associated with the field of Business Analytics. "}
-           name={"Devansh Dixit"}
-           course={"Course- Business Analytics for Management"}
-           />
+            testimonals={
+              "The instructor was very eloquent, and he was very feature-rich. Also, I liked the idea of answering open-ended questions about data. Every beginner looking forward to starting a career in this field must know that this is the best program for him/her.   "
+            }
+            name={"Pooja Bijlani "}
+            course={"Course- Business Analytics for Management "}
+          />
         </SwiperSlide>
-        
       </Swiper>
     </div>
   );
