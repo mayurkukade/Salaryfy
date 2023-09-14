@@ -281,8 +281,7 @@ function FresherProfileUpload() {
     setEducationalSkills((educationalSkills) => ({ ...educationalSkills, percentage: Number(value) }))
   }
 
-  async function onSaveFresherInfo() {
-
+  async function saveEducationalProfile() {
     const payload: UserEducationSkill = {
       highestLevelOfEdu: educationalSkillsKey.highestLevelEducation[0] || undefined,
       board: educationalSkillsKey.board[0] || undefined,
@@ -298,6 +297,20 @@ function FresherProfileUpload() {
 
     httpClient.request(saveProfile(payload)).subscribe((response) => console.log({ response }))
   }
+
+  async function uploadUserEducationSkillCertificate(){
+    console.log(educationDocs);
+    educationDocs.map(({ docType, file }) => {
+      onDocumentUploadEvent(docType, file);
+    })
+  }
+
+  async function onSaveFresherInfo() {
+    saveEducationalProfile();
+    uploadUserEducationSkillCertificate();    
+  }
+
+
 
   return (
     <>
