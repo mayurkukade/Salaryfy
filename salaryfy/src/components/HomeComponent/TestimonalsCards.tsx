@@ -1,4 +1,5 @@
-import avtarlogo from "../../../assets/Homepage/feedbackimg.png";
+// import avtarlogo from "../../../assets/Homepage/feedbackimg.png";
+import avatar from '../../assets/images/avatar.png'
 
 import "./testimonals.css";
 const TestimonalsCards = ({ testimonals, name, course }) => {
@@ -12,7 +13,7 @@ const TestimonalsCards = ({ testimonals, name, course }) => {
       <div className="flex content-center  ">
         <div className="mt-5 ">
           <div className="border-4 border-yellow rounded-full w-fit content-center ">
-            <img src={avtarlogo} className="border rounded-full" />
+            <img src={avatar} className="border rounded-full w-[7.5rem] h-[7.5rem]" />
           </div>
         </div>
 

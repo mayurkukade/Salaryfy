@@ -535,7 +535,7 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="#"
+                    <Link to="/termofuse"
                       className="text-white transition hover:opacity-75"
                     >
                       Term of use

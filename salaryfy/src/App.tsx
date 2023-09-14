@@ -26,6 +26,7 @@ import JobDescription from "./pages/JobDescription";
 import Roadmap from "./pages/Roadmap";
 import FresherSkillPlacementModule from "./modules/freshers-skill-placement/freshers-skill-placement.module";
 import TestComponent from "./pages/test.component";
+import TermOfUse from "./pages/TermOfUse";
 
 function App() {
   return (
@@ -44,6 +45,11 @@ function App() {
             path="/placementdetails/:jobId"
             element={<PlacementDriveDetails />}
           />
+          <Route 
+          path="/termofuse"
+          element={<TermOfUse/>}
+          />
+
         </Route>
 
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
