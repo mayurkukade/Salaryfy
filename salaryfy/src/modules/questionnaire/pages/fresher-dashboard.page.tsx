@@ -18,7 +18,7 @@ import { JobsDetailsType } from "../../../features/reducers/job-details/job-deta
 import { useLazyGetProfileQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 import React from "react";
 import { QuestionnaireHttpClient } from "../services/questionnaire.service";
-import { concatMap, mergeMap, startWith, switchMap, tap } from "rxjs";
+import { concatMap } from "rxjs";
 
 interface UpcomingInterviewType {
   date: string,
@@ -79,7 +79,7 @@ export function FresherDashboard() {
   const [recommendJobsState, setRecommendJobsState] = useState<Array<JobsDetailsType>>([]);
 
   function handlePercentageChange(value: string) {
-    const percentageElement = percentageTextfieldRef.current;
+    // const percentageElement = percentageTextfieldRef.current;
     // percentageElement
     profileLevelPayload.percentage = value;
   }

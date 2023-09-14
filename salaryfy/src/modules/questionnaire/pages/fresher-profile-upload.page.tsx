@@ -11,12 +11,13 @@ import Chip from "../components/chip.component";
 import { QuestionnaireHttpClient } from "../services/questionnaire.service";
 import { CommonUtilities } from "../../../utils/common.utilities";
 import { EducationalSkillsType, FresherProfileUploadService, INITIAL_EDUCATIONAL_SKILLS } from "../services/fresher-profile-upload.service";
-import { BOARD_LIST, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
+import { BOARD_LIST, CHANGED_BY, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
 import { useLazyGetProfileQuery, useLazyUniversitySuggestionsQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 import _ from 'lodash';
+import { EducationalInfoComponent } from "../components/educational-info.component";
+import { EducationalSkillsKey } from "../constants/fresher.type";
 
 type UserEducationSkill = { highestLevelOfEdu: string | undefined, board: string | undefined, stream: string | undefined, percentage: number | undefined, UserId: string | undefined | null }
-enum CHANGED_BY { SERVER = 'server', USER = 'user' }
 const initialValue: { value: CHANGED_BY } = {
   value: CHANGED_BY.SERVER
 };
@@ -56,13 +57,13 @@ function FresherProfileUpload() {
   const [skills, setSkills] = useState<Set<string>>(new Set([]));
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
 
-  const educationalSkillsKey = {
+  const educationalSkillsKey: EducationalSkillsKey = {
     highestLevelEducation: useState<string | null>(null),
     board: useState<string | null>(null),
     stream: useState<string | null>(null),
   }
 
-  const payloadEducationalSkills = {
+  const payloadEducationalSkills: EducationalSkillsKey = {
     highestLevelEducation: useState<string | null>(null),
     board: useState<string | null>(null),
     stream: useState<string | null>(null),
@@ -337,45 +338,7 @@ function FresherProfileUpload() {
               </div>
             </div>
 
-            <div className=" flex flex-col gap-3   md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:my-[2em] bg-[red]">
-              <div>
-                <div className="text-[#005F59] text-[1.8em] font-semibold">Highest level of education</div>
-                <div>
-                  <TextFieldDropDown
-                    value={educationalSkillsKey.highestLevelEducation[0]}
-                    options={educationalSkills.highestEducationList.map(e => e.value)}
-                    onOptionClick={(value) => onHighestLevelEducationChangeHandler(value, CHANGED_BY.USER)}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="text-[#005F59] text-[1.8em] font-semibold">Board/University/Open University</div>
-                <div>
-                  <TextFieldDropDown
-                    value={educationalSkillsKey.board[0]}
-                    options={educationalSkills.boardList.map(e => e.value)}
-                    onTextInput={onBoardUniversityFieldInput}
-                    onOptionClick={onBoardUniversityChangeHandler}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="text-[#005F59] text-[1.8em] font-semibold">Stream</div>
-                <div>
-                  <TextFieldDropDown
-                    value={educationalSkillsKey.stream[0]}
-                    options={educationalSkills.streamList.map(e => e.value)}
-                    onOptionClick={onStreamChangeHandler}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="text-[#005F59] text-[1.8em] font-semibold">Percentage</div>
-                <div className="flex flex-col">
-                  <TextField value={educationalSkills.percentage || ''} onChange={onPercentageChangeHandler} size="small" />
-                </div>
-              </div>
-            </div>
+            <EducationalInfoComponent educationalSkills={educationalSkills} educationalSkillsKey={educationalSkillsKey} onHighestLevelEducationChangeHandler={onHighestLevelEducationChangeHandler} onBoardUniversityFieldInput={onBoardUniversityFieldInput} onBoardUniversityChangeHandler={onBoardUniversityChangeHandler} onStreamChangeHandler={onStreamChangeHandler} onPercentageChangeHandler={onPercentageChangeHandler} />
 
             { /* Upload Documents section */}
             <div className="my-[3em]">
@@ -444,18 +407,6 @@ function FresherProfileUpload() {
         <input className="hidden" ref={userDocSkillUploadFileRef} onChange={onUserUploadSkillDoc} type="file" />
       </div>
     </>
-  );
-}
-
-function TextFieldDropDown({ options, onOptionClick, onTextInput, value }: { options: Array<string>, onOptionClick?: (v: string | null) => void, onTextInput?: (v: string) => void, value: string | null }) {
-  function onTextInput$(event: ChangeEvent<HTMLInputElement>) {
-    if (onTextInput) { onTextInput(event.currentTarget.value); }
-  }
-  function onFieldChange(_event: React.ChangeEvent<object>, newValue: string | null): void {
-    if (onOptionClick) { onOptionClick(newValue); }
-  }
-  return (
-    <Autocomplete options={options} value={value?.length ? value : null} onChange={onFieldChange} size="small" renderInput={(params) => <TextField onChange={onTextInput$} {...params} />} />
   );
 }
 

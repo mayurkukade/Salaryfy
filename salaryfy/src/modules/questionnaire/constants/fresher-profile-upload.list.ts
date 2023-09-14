@@ -39,5 +39,6 @@ enum STREAM_NOBOARD {
 
 const STREAM_NOBOARD_LIST: Array<Omit<SkillType, 'selected'>> = Object.keys(STREAM_NOBOARD).map(code => ({ code, value: STREAM_NOBOARD[code as keyof typeof STREAM_NOBOARD] }));
 
+export enum CHANGED_BY { SERVER = 'server', USER = 'user' }
 
 export { HIGHEST_EDUCATION, HIGHEST_EDUCATION_LIST, BOARD, BOARD_LIST, STREAM, STREAM_LIST, STREAM_NOBOARD, STREAM_NOBOARD_LIST }
