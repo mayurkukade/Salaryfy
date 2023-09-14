@@ -15,9 +15,8 @@ import { BOARD_LIST, CHANGED_BY, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_
 import { useLazyGetProfileQuery, useLazyUniversitySuggestionsQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 import _ from 'lodash';
 import { EducationalInfoComponent } from "../components/educational-info.component";
-import { EducationalSkillsKey } from "../constants/fresher.type";
+import { EducationalSkillsKey, UserEducationSkill } from "../constants/fresher.type";
 
-type UserEducationSkill = { highestLevelOfEdu: string | undefined, board: string | undefined, stream: string | undefined, percentage: number | undefined, UserId: string | undefined | null }
 const initialValue: { value: CHANGED_BY } = {
   value: CHANGED_BY.SERVER
 };
