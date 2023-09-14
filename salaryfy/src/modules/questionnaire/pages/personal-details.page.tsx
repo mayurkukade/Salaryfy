@@ -536,7 +536,7 @@ function UploadResumeComponent({
             ref={uploadFileRef}
           />
         </div>
-        <div>Upload Resume (PDF only)</div>
+        <div><p className="text-[#f87171]">Upload Resume (PDF only)*</p></div>
       </div>
     </div>
   );

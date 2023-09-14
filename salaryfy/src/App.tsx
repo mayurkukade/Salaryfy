@@ -28,10 +28,12 @@ import FresherSkillPlacementModule from "./modules/freshers-skill-placement/fres
 import TestComponent from "./pages/test.component";
 import TermOfUse from "./pages/TermOfUse";
 
+
 function App() {
   return (
     <>
       <Routes>
+    
         {/* <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/questionnaire/*" element={<QuestionnaireModule />} />

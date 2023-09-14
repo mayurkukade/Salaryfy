@@ -1,8 +1,19 @@
-import harvarduniversitylogo from "../../../assets/Logos/harvarduniversity.png";
-import psuniversity from "../../../assets/Logos/psuniversity.png";
-import americanuniversitylogo from "../../../assets/Logos/americanuniversity.png";
-import standforduniversity from "../../../assets/Logos/stanforduniversity.png";
-import universityllogo from "../../../assets/Logos/texasuniversity.png";
+import AhmedabadUniversitylogo  from "../../../assets/Universities/Ahmedabad-University-logo.png";
+import DibrugarhUniversitylogo from "../../../assets/Universities/Dibrugarh-University-logo.png";
+import AKSUniversitylogo from "../../../assets/Universities/AKS-University-logo.png";
+import AshokaUniversitylogo from "../../../assets/Universities/Ashoka-University-logo.png"; 
+import BangaloreUniversitylogo from "../../../assets/Universities/Bangalore-University-logo.png"
+import BharatiVidyapeethlogo from "../../../assets/Universities/Bharati-Vidyapeeth-logo.png"
+import IILMUniversitylogo from "../../../assets/Universities/IILM-University-logo.png";
+import ITMUniversitylogo from "../../../assets/Universities/ITM-University-logo.png";
+import JaiPrakashVishwavidyalayalogo from "../../../assets/Universities/Jai-Prakash-Vishwavidyalaya-logo.png"
+import KannurUniversitylogo from "../../../assets/Universities/Kannur-University-logo.png";
+import KrishnaUniversitylogo from "../../../assets/Universities/Krishna-University-logo.png";
+import MahatmaGandhiCentralUniversitylogo from "../../../assets/Universities/Mahatma-Gandhi-Central-University-logo.png";
+
+
+
+
 
 const Universities = () => {
   return (
@@ -16,50 +27,51 @@ const Universities = () => {
         <div className="max-h-[400px] overflow-y-auto">
           <div className="grid grid-cols-2 px-3 md:grid-cols-4 grid-rows-auto gap-4 md:gap-8 mb-10 ">
             <UniversitiesCard
-              img={harvarduniversitylogo}
-              university={"Harvard"}
+              img={AhmedabadUniversitylogo}
+              university={"Ahmedabad"}
+              
             />
             <UniversitiesCard
-              img={psuniversity}
-              university={"Pennsylvania State"}
+              img={DibrugarhUniversitylogo}
+              university={"Dibrugarh"}
             />
             <UniversitiesCard
-              img={psuniversity}
-              university={"Pennsylvania State"}
+              img={AKSUniversitylogo}
+              university={"A.K.S"}
             />
             <UniversitiesCard
-              img={psuniversity}
-              university={"Pennsylvania State"}
+              img={AshokaUniversitylogo}
+              university={"Ashoka"}
             />
             <UniversitiesCard
-              img={americanuniversitylogo}
-              university={"American"}
+              img={BangaloreUniversitylogo}
+              university={"Bangalore"}
             />
             <UniversitiesCard
-              img={standforduniversity}
-              university={"Standford"}
+              img={BharatiVidyapeethlogo}
+              university={"Bharati Vidyapeeth"}
             />
             <UniversitiesCard
-              img={standforduniversity}
-              university={"Standford"}
+              img={IILMUniversitylogo}
+              university={"IILM"}
             />
             <UniversitiesCard
-              img={standforduniversity}
-              university={"Standford"}
+              img={ITMUniversitylogo}
+              university={"ITM"}
             />
-            <UniversitiesCard img={universityllogo} university={"Texas"} />
+            <UniversitiesCard img={JaiPrakashVishwavidyalayalogo} university={"JaiPrakash Vishwavidyalaya"} />
 
             <UniversitiesCard
-              img={harvarduniversitylogo}
-              university={"Harvard"}
+              img={KannurUniversitylogo}
+              university={"Kannur"}
             />
             <UniversitiesCard
-              img={harvarduniversitylogo}
-              university={"Harvard"}
+              img={KrishnaUniversitylogo}
+              university={"Krishna"}
             />
             <UniversitiesCard
-              img={harvarduniversitylogo}
-              university={"Harvard"}
+              img={MahatmaGandhiCentralUniversitylogo}
+              university={"Mahatma Gandhi Central"}
             />
           </div>
         </div>
@@ -69,11 +81,23 @@ const Universities = () => {
   );
 };
 
-const UniversitiesCard = ({ img, university }) => {
+// const UniversitiesCard = ({ img, university }) => {
+//   return (
+//     <div className="rounded-lg bg-gradient-to-br p-4 shadow-md w-full md:w-[100%] h-[5.95969rem] flex items-center ">
+//       <img src={img} className="max-h-full float-left" />
+//       <p className="items-center text-[0.65rem] md:text-[1.1rem] pl-[12px] color-[#005F59]">
+//         {university} <br /> University
+//       </p>
+//     </div>
+//   );
+// };
+
+
+const UniversitiesCard = ({ img, university }: { img: string; university: string }) => {
   return (
     <div className="rounded-lg bg-gradient-to-br p-4 shadow-md w-full md:w-[100%] h-[5.95969rem] flex items-center ">
-      <img src={img} className="max-h-full float-left" />
-      <p className="items-center text-[0.65rem] md:text-[1.1rem] pl-[12px] color-[#005F59]">
+      <img src={img} alt={`${university} University`} className="max-h-full float-left" />
+      <p className="items-center break-all text-[0.65rem] md:text-[1.1rem]  pl-[12px] color-[#005F59]">
         {university} <br /> University
       </p>
     </div>
