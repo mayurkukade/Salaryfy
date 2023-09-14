@@ -17,6 +17,8 @@ import { useLazyGetJobByIdQuery, useLazyGetRecommendedJobsQuery } from "../../..
 import { JobsDetailsType } from "../../../features/reducers/job-details/job-details.interface";
 import { useLazyGetProfileQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 import React from "react";
+import { QuestionnaireHttpClient } from "../services/questionnaire.service";
+import { concatMap, mergeMap, startWith, switchMap, tap } from "rxjs";
 
 interface UpcomingInterviewType {
   date: string,
@@ -42,12 +44,12 @@ export default function FresherDashboardPage() {
   return (
     <div className="container mx-auto">
       <div className="p-4 flex flex-col items-center ">
-     
+
         <div className="w-[100%] mb-[2em] flex flex-col h-[100%]">
           {/* STEPS */}
           <div className=" md:py-[2em] md:px-[3em] md:h-[100%]">
             <FresherDashboard />
-          
+
           </div>
         </div>
       </div>
@@ -69,6 +71,8 @@ export function FresherDashboard() {
   const [getRecommendedJobs] = useLazyGetRecommendedJobsQuery();
   const dispatch = useDispatch();
 
+  const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
+
   const profileLevelPayload: ProfileLevelType = React.useMemo(() => ({ board: [], highestLevelOfEdu: [], percentage: "", stream: [] }), []);
 
   const [listUpcomingInterviews, setListUpcomingInterviews] = useState<Array<UpcomingInterviewType>>([]);
@@ -86,36 +90,46 @@ export function FresherDashboard() {
     const { data: { response: responseData } } = await getLazyUserProfile(userId.toString());
     const userProfile = responseData as UserDetailsType;
 
+    console.log(userProfile);
     if (userProfile) {
       dispatch(setUserDetails(userProfile));
 
-      const { data: { list: responseData } } = await getLazyUpcomingInterviews(userId);
-      const listUpcomingInterviewsResponse = responseData as Array<UpcomingInterviewType>;
-      console.log(listUpcomingInterviews);
-      setListUpcomingInterviews(() => listUpcomingInterviewsResponse);
+      // const { data: { list: responseData } } = await getLazyUpcomingInterviews(userId);
+
+      httpClient.request(getLazyUpcomingInterviews(userId))
+        .pipe(concatMap(async ({ data: { list: response } }) => response))
+        .subscribe((response) => {
+          const listUpcomingInterviewsResponse = response as Array<UpcomingInterviewType>;
+          setListUpcomingInterviews(() => listUpcomingInterviewsResponse);
+        });
     }
 
-    const { data: { response: profileResponseData } } = await getLazyProfile(userId);
+    // const { data: { response: profileResponseData } } = await getLazyProfile(userId);
 
-    console.log({ profileResponseData });
+    httpClient.request(getLazyProfile(userId))
+      .pipe( concatMap(async ({ data: { response } }) => response) )
+      .subscribe((profileResponseData) => {
 
-    const updatedProfileLevel = { ...profileLevel };
-    updatedProfileLevel.board.push(profileResponseData.board);
-    updatedProfileLevel.highestLevelOfEdu.push(profileResponseData.highestLevelOfEdu);
-    updatedProfileLevel.stream.push(profileResponseData.stream);
-    updatedProfileLevel.percentage = profileResponseData.percentage;
+        const updatedProfileLevel = { ...profileLevel };
+        updatedProfileLevel.board.push(profileResponseData.board);
+        updatedProfileLevel.highestLevelOfEdu.push(profileResponseData.highestLevelOfEdu);
+        updatedProfileLevel.stream.push(profileResponseData.stream);
+        updatedProfileLevel.percentage = profileResponseData.percentage;
+    
+        setProfileLevel(() => updatedProfileLevel);
+        if (percentageTextfieldRef?.current) {
+          percentageTextfieldRef.current.value = profileResponseData.percentage;
+          profileLevelPayload.percentage = profileResponseData.percentage;
+          console.log(profileLevelPayload);
+        }
+      })
 
-    setProfileLevel(() => updatedProfileLevel);
+    // const { data: { list: responseRecommendJobs } } = await getRecommendedJobs('');
 
-    if (percentageTextfieldRef?.current) {
-      percentageTextfieldRef.current.value = profileResponseData.percentage;
-      profileLevelPayload.percentage = profileResponseData.percentage;
-      console.log(profileLevelPayload);
-    }
+    httpClient.request(getRecommendedJobs(''))
+      .pipe( concatMap(async ({ data: { list: response } }) => response) )
+      .subscribe((response)=> setRecommendJobsState(() => response))
 
-    const { data: { list: responseRecommendJobs } } = await getRecommendedJobs('');
-
-    setRecommendJobsState(() => responseRecommendJobs);
   }
 
   async function onUpdate() {
@@ -173,7 +187,7 @@ export function FresherDashboard() {
             <div>Plan Opted</div>
             <div>Rapid Placement</div>
             <div>Sign Up Date</div>
-            <div>{CommonUtilities.date.formatDate(userProfile.date)}</div>
+            <div>{userProfile?.date && CommonUtilities.date.formatDate(userProfile?.date)}</div>
             <div>Payment Method</div>
             <div>Card</div>
           </div>
@@ -268,10 +282,10 @@ function RecommendJobsCard({ details }: { details: JobsDetailsType }) {
         </div>
         <div className="flex flex-col justify-center flex-grow px-[1em]">
           <div className="text-[2em] font-semibold text-[#005F59]">
-            { details.postName }
+            {details.postName}
           </div>
           <div className="text-[1.8em] font-semibold text-[#5b5b5b]">
-            { details.companyName }
+            {details.companyName}
           </div>
         </div>
         <div className="text-[#5B5B5B] flex">
@@ -283,14 +297,14 @@ function RecommendJobsCard({ details }: { details: JobsDetailsType }) {
       </div>
       <div className="mb-[0.5em] text-[1.6em] flex">
         <div className="mr-[0.5em] text-[#5B5B5B]">Location:</div>
-        <div className="text-[#005F59]">{ details.location }</div>
+        <div className="text-[#005F59]">{details.location}</div>
       </div>
       <div className="text-[1.6em] flex flex-row">
         <div className="mr-[0.5em] text-[#5B5B5B]">Job-Type:</div>
-        <div className="text-[#005F59]">{ details.jobType }</div>
+        <div className="text-[#005F59]">{details.jobType}</div>
         <div className="bg-[#00595F4C] mx-[2em] flex-grow max-w-[1px]"></div>
         <div className="mr-[0.5em] text-[#5B5B5B]">No of Posts:</div>
-        <div className="text-[#005F59]">{ details.noOfPosts }</div>
+        <div className="text-[#005F59]">{details.noOfPosts}</div>
       </div>
     </div>
   );
@@ -339,7 +353,7 @@ function UpcomingInterviewCard({ className, details }: { className?: string, det
             <div className="text-[1.4em] flex mb-[1em]">
               <div className="mr-[0.5em] whitespace-nowrap">Interview on:</div>
               <div className="bg-[#0E5F59] text-[#FECD08] px-[1em] rounded-[2em] whitespace-nowrap">
-                {CommonUtilities.date.formatDate(details.interviewDate)}
+                {details?.interviewDate && CommonUtilities.date.formatDate(details.interviewDate)}
               </div>
             </div>
             <div className="text-[1.4em] flex mb-[1em]">

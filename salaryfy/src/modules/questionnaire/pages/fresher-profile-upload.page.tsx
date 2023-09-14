@@ -15,6 +15,12 @@ import { BOARD_LIST, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_LIST } from 
 import { useLazyGetProfileQuery, useLazyUniversitySuggestionsQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 import _ from 'lodash';
 
+type UserEducationSkill = { highestLevelOfEdu: string | undefined, board: string | undefined, stream: string | undefined, percentage: number | undefined, UserId: string | undefined | null }
+enum CHANGED_BY { SERVER = 'server', USER = 'user' }
+const initialValue: { value: CHANGED_BY } = {
+  value: CHANGED_BY.SERVER
+};
+
 export default function FresherProfileUploadPage() {
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
@@ -30,6 +36,12 @@ export default function FresherProfileUploadPage() {
 
 function FresherProfileUpload() {
 
+  const userDocEduUploadFileRef = useRef<HTMLInputElement | null>(null);
+  const userDocSkillUploadFileRef = useRef<HTMLInputElement | null>(null);
+
+  const [educationDocs, setEducationDocs] = useState<Array<{  docType: FILE_UPLOAD_TYPES.EDUCATION | FILE_UPLOAD_TYPES.SKILL_CERTIFICATION, file: File }>>([]);
+
+  const educationalSkillsChangedByRef = useRef(initialValue);
   const [educationalSkills, setEducationalSkills] = useState<EducationalSkillsType>(INITIAL_EDUCATIONAL_SKILLS);
   const fresherProfileUploadService = new FresherProfileUploadService();
 
@@ -39,15 +51,21 @@ function FresherProfileUpload() {
   const [setUserSkills] = useSetUserSkillsMutation();
   const [getUniversities] = useLazyUniversitySuggestionsQuery();
   const [saveProfile] = useSaveProfileMutation();
-  const[getProfileEducationalSkills] = useLazyGetProfileQuery();
+  const [getProfileEducationalSkills] = useLazyGetProfileQuery();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   const [skills, setSkills] = useState<Set<string>>(new Set([]));
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
 
   const educationalSkillsKey = {
-    highestLevelEducation: useState<string>(CommonUtilities.generateRandomString(20)),
-    board: useState<string>(CommonUtilities.generateRandomString(20)),
-    stream: useState<string>(CommonUtilities.generateRandomString(20)),
+    highestLevelEducation: useState<string | null>(null),
+    board: useState<string | null>(null),
+    stream: useState<string | null>(null),
+  }
+
+  const payloadEducationalSkills = {
+    highestLevelEducation: useState<string | null>(null),
+    board: useState<string | null>(null),
+    stream: useState<string | null>(null),
   }
 
   useEffect(() => {
@@ -57,19 +75,24 @@ function FresherProfileUpload() {
   }, [userId]);
 
   useEffect(() => {
-    const selectedHighestEducation = educationalSkills.highestEducationList.find(e => e.selected);
-    switch (selectedHighestEducation?.value) {
+    if (educationalSkillsChangedByRef.current.value === CHANGED_BY.USER) {
+      const selectedHighestEducation = educationalSkills.highestEducationList.find(e => e.selected);
+      switch (selectedHighestEducation?.value) {
 
-      case HIGHEST_EDUCATION.MATRIC:
-        setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: BOARD_LIST.map(board => ({ ...board, selected: false })), streamList: [] })); break;
+        case HIGHEST_EDUCATION.MATRIC:
+          educationalSkillsKey.stream[1](() => null);
+          educationalSkillsKey.board[1](() => null);
+          setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: BOARD_LIST.map(board => ({ ...board, selected: false })), streamList: [] })); break;
 
-      case HIGHEST_EDUCATION.INTER:
-        setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: BOARD_LIST.map(board => ({ ...board, selected: false })), streamList: STREAM_LIST.map(stream => ({ ...stream, selected: false })) })); break;
+        case HIGHEST_EDUCATION.INTER:
+          educationalSkillsKey.stream[1](() => null);
+          educationalSkillsKey.board[1](() => null);
+          setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: BOARD_LIST.map(board => ({ ...board, selected: false })), streamList: STREAM_LIST.map(stream => ({ ...stream, selected: false })) })); break;
 
-      default:
-        educationalSkillsKey.board[1](() => CommonUtilities.generateRandomString(20));
-        setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: [], streamList: STREAM_NOBOARD_LIST.map(stream => ({ ...stream, selected: false })) })); break;
+        default:
+          setEducationalSkills((educationalSkills) => ({ ...educationalSkills, boardList: [], streamList: STREAM_NOBOARD_LIST.map(stream => ({ ...stream, selected: false })) })); break;
 
+      }
     }
 
   }, [educationalSkills.highestEducationList]);
@@ -81,21 +104,74 @@ function FresherProfileUpload() {
       stream: educationalSkills.streamList.find((entity) => entity.selected)?.value,
       percentage: educationalSkills.percentage
     }
-    
-    if (!payload.highestEducation) { educationalSkillsKey.highestLevelEducation[1](() => CommonUtilities.generateRandomString(20)); }
-    if (!payload.board) { educationalSkillsKey.board[1](() => CommonUtilities.generateRandomString(20)); }
-    if (!payload.stream) { educationalSkillsKey.stream[1](() => CommonUtilities.generateRandomString(20)); }
+
+    if (!payload.highestEducation) { /** **/ }
+    if (!payload.board) { /** **/ }
+    if (!payload.stream) { /** **/ }
 
   }, [educationalSkills.highestEducationList.find((entity) => entity.selected)?.value, educationalSkills.boardList.find((entity) => entity.selected)?.value, educationalSkills.streamList.find((entity) => entity.selected)?.value, educationalSkills.percentage]);
 
+  function onUserUploadEduDoc(event: ChangeEvent<HTMLInputElement>) {
+    if (!event?.target.files && !event?.target.files?.length) { return }
+    const file = event?.target?.files[0];
+    setEducationDocs((eduDocs) => [ ...eduDocs, { docType: FILE_UPLOAD_TYPES.EDUCATION, file }]);
+    event.target.value = '';
+  }
+
+  function onUserUploadSkillDoc(event: ChangeEvent<HTMLInputElement>) {
+    if (!event?.target.files && !event?.target.files?.length) { return }
+    const file = event?.target?.files[0];
+    setEducationDocs((eduDocs) => [ ...eduDocs, { docType: FILE_UPLOAD_TYPES.SKILL_CERTIFICATION, file }]);
+    event.target.value = '';
+  }
+
+  function addUserEducationDoc(docType: FILE_UPLOAD_TYPES) {
+    if (docType === FILE_UPLOAD_TYPES.EDUCATION) {
+      userDocEduUploadFileRef?.current?.click();
+    }
+    else if (docType === FILE_UPLOAD_TYPES.SKILL_CERTIFICATION) {
+      userDocSkillUploadFileRef?.current?.click();
+    }
+
+    else {
+      console.log('unhandled')
+    }
+  }
+
   function fetchEducationalSkills(userId: string) {
-    httpClient.request( getProfileEducationalSkills(userId) )
+    httpClient.request(getProfileEducationalSkills(userId))
       .pipe(
         concatMap(async ({ data: { response } }) => response)
       )
-      .subscribe((response) => console.log(response))
+      .subscribe((response: UserEducationSkill) => {
+        educationalSkillsChangedByRef.current.value = CHANGED_BY.SERVER;
+        if (response?.highestLevelOfEdu) {
+          onHighestLevelEducationChangeHandler(response.highestLevelOfEdu, CHANGED_BY.SERVER);
+
+
+          educationalSkillsKey.highestLevelEducation[1](() => response.highestLevelOfEdu || null);
+          payloadEducationalSkills.highestLevelEducation[1](() => response.highestLevelOfEdu || null);
+        }
+        if (response?.board) {
+          onBoardUniversityChangeHandler(response.board)
+          educationalSkillsKey.board[1](() => response.board || null);
+          payloadEducationalSkills.board[1](() => response.board || null);
+        }
+
+        if (response?.stream) {
+          onStreamChangeHandler(response.stream);
+          educationalSkillsKey.stream[1](() => response.stream || null);
+          payloadEducationalSkills.stream[1](() => response.stream || null);
+        }
+
+        if (response?.percentage) {
+          onPercentageChangeHandler$(response.percentage.toString());
+        }
+
+        console.log(response);
+      })
   }
-  
+
   function onBoardUniversityFieldInput(value: string) {
     const selectedHighestEducation = educationalSkills.highestEducationList.find(e => e.selected);
     if (selectedHighestEducation?.value !== HIGHEST_EDUCATION.MATRIC && selectedHighestEducation?.value !== HIGHEST_EDUCATION.INTER) {
@@ -169,43 +245,58 @@ function FresherProfileUpload() {
     console.log('event not handled');
   }
 
-  function onHighestLevelEducationChangeHandler(value: string | null) {
-    if (value) setEducationalSkills((educationalSkills) => fresherProfileUploadService.onHighestLevelEducationChange(educationalSkills, value));
+  function onHighestLevelEducationChangeHandler(value: string | null, changedBy: CHANGED_BY) {
+    educationalSkillsChangedByRef.current.value = changedBy;
+    if (value) {
+      educationalSkillsKey.highestLevelEducation[1](() => value);
+      payloadEducationalSkills.highestLevelEducation[1](() => value);
+      setEducationalSkills((educationalSkills) => fresherProfileUploadService.onHighestLevelEducationChange(educationalSkills, value));
+    }
+
   }
 
   function onBoardUniversityChangeHandler(value: string | null) {
-    if (value) setEducationalSkills((educationalSkills) => fresherProfileUploadService.onBoardListChange(educationalSkills, value));
+    if (value) {
+      educationalSkillsKey.board[1](() => value);
+      payloadEducationalSkills.board[1](() => value);
+      setEducationalSkills((educationalSkills) => fresherProfileUploadService.onBoardListChange(educationalSkills, value));
+    }
   }
 
   function onStreamChangeHandler(value: string | null) {
-    if (value) setEducationalSkills((educationalSkills) => fresherProfileUploadService.onStreamListChange(educationalSkills, value));
+    if (value) {
+      educationalSkillsKey.stream[1](() => value);
+      payloadEducationalSkills.stream[1](() => value);
+      setEducationalSkills((educationalSkills) => fresherProfileUploadService.onStreamListChange(educationalSkills, value));
+    }
   }
 
   function onPercentageChangeHandler({ target: { value } }: ChangeEvent<HTMLInputElement>) {
     if (!/^[0-9]{0,3}$/gi.test(value)) { return; }
+    onPercentageChangeHandler$(value)
+    setEducationalSkills((educationalSkills) => ({ ...educationalSkills, percentage: Number(value) }))
+  }
+
+  function onPercentageChangeHandler$(value: string) {
     setEducationalSkills((educationalSkills) => ({ ...educationalSkills, percentage: Number(value) }))
   }
 
   async function onSaveFresherInfo() {
-    type UserEducationSkill = { highestLevelOfEdu: string | undefined, board: string | undefined, stream: string | undefined, percentage: number | undefined, UserId: string | undefined | null }
 
     const payload: UserEducationSkill = {
-      highestLevelOfEdu: educationalSkills.highestEducationList.find((entity) => entity.selected)?.value,
-      board: educationalSkills.boardList.find((entity) => entity.selected)?.value,
-      stream: educationalSkills.streamList.find((entity) => entity.selected)?.value,
+      highestLevelOfEdu: educationalSkillsKey.highestLevelEducation[0] || undefined,
+      board: educationalSkillsKey.board[0] || undefined,
+      stream: educationalSkillsKey.stream[0] || undefined,
       percentage: (_.inRange(educationalSkills.percentage, 0, 101)) ? educationalSkills.percentage : undefined,
       UserId: userId
     }
 
+    if (payload.highestLevelOfEdu === HIGHEST_EDUCATION.MATRIC) { payload.stream = null; }
+    else { if (Object.values(payload).includes(undefined)) { return; } }
+
     console.log(payload);
 
-    if (payload.highestLevelOfEdu === HIGHEST_EDUCATION.MATRIC) { delete payload.stream; }
-    if (Object.values(payload).includes(undefined)) { return; }
-
-
-    httpClient.request( saveProfile(payload) )
-      .subscribe((response) => console.log({response}))
-
+    httpClient.request(saveProfile(payload)).subscribe((response) => console.log({ response }))
   }
 
   return (
@@ -246,16 +337,14 @@ function FresherProfileUpload() {
               </div>
             </div>
 
-            <div className=" flex flex-col gap-3   md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:my-[2em]">
+            <div className=" flex flex-col gap-3   md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:my-[2em] bg-[red]">
               <div>
-                <div className="text-[#005F59] text-[1.8em] font-semibold">
-                  Highest level of education
-                </div>
+                <div className="text-[#005F59] text-[1.8em] font-semibold">Highest level of education</div>
                 <div>
                   <TextFieldDropDown
-                    key={educationalSkillsKey.highestLevelEducation[0]}
+                    value={educationalSkillsKey.highestLevelEducation[0]}
                     options={educationalSkills.highestEducationList.map(e => e.value)}
-                    onOptionClick={onHighestLevelEducationChangeHandler}
+                    onOptionClick={(value) => onHighestLevelEducationChangeHandler(value, CHANGED_BY.USER)}
                   />
                 </div>
               </div>
@@ -263,7 +352,7 @@ function FresherProfileUpload() {
                 <div className="text-[#005F59] text-[1.8em] font-semibold">Board/University/Open University</div>
                 <div>
                   <TextFieldDropDown
-                    key={educationalSkillsKey.board[0]}
+                    value={educationalSkillsKey.board[0]}
                     options={educationalSkills.boardList.map(e => e.value)}
                     onTextInput={onBoardUniversityFieldInput}
                     onOptionClick={onBoardUniversityChangeHandler}
@@ -271,21 +360,17 @@ function FresherProfileUpload() {
                 </div>
               </div>
               <div>
-                <div className="text-[#005F59] text-[1.8em] font-semibold">
-                  Stream
-                </div>
+                <div className="text-[#005F59] text-[1.8em] font-semibold">Stream</div>
                 <div>
                   <TextFieldDropDown
-                    key={educationalSkillsKey.stream[0]}
+                    value={educationalSkillsKey.stream[0]}
                     options={educationalSkills.streamList.map(e => e.value)}
                     onOptionClick={onStreamChangeHandler}
                   />
                 </div>
               </div>
               <div>
-                <div className="text-[#005F59] text-[1.8em] font-semibold">
-                  Percentage
-                </div>
+                <div className="text-[#005F59] text-[1.8em] font-semibold">Percentage</div>
                 <div className="flex flex-col">
                   <TextField value={educationalSkills.percentage || ''} onChange={onPercentageChangeHandler} size="small" />
                 </div>
@@ -311,7 +396,7 @@ function FresherProfileUpload() {
                 Education*
               </div>
               <div className=" flex  flex-col gap-5 md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:mb-[2em]">
-                <DocUploader
+                { /* <DocUploader
                   label="12th_standard.png"
                   uploading={true}
                   progress={100}
@@ -322,25 +407,25 @@ function FresherProfileUpload() {
                   uploading={true}
                   progress={10}
                   onDocUpload={unHandledEvent}
-                />
+                /> */ }
+                {
+                  educationDocs.filter((doc) => doc.docType === FILE_UPLOAD_TYPES.EDUCATION).map(({ file: educationDoc}) => <DocUploader label={educationDoc.name} uploading={true} progress={100} onDocUpload={unHandledEvent} key={CommonUtilities.generateRandomString(10)} />)
+                }
               </div>
               <div className="mt-[20px] md:mt-[0px]">
-                <Button variant="contained">Add</Button>
+                <Button variant="contained" onClick={() => addUserEducationDoc(FILE_UPLOAD_TYPES.EDUCATION)}>Add</Button>
               </div>
 
               { /*Skills/Certification Section */}
               <div className="text-[#5B5B5B] text-[2.4em] font-bold my-[2em]">
                 <h1>Skills/Certification*</h1>
-                <DocUploader
-                  label="MERN stack course.p..."
-                  className="w-full text-[0.5rem] md:w-[50%]"
-                  uploading={true}
-                  progress={100}
-                  onDocUpload={unHandledEvent}
-                />
+                {/* <DocUploader label="MERN stack course.p..." className="w-full text-[0.5rem] md:w-[50%]" uploading={true} progress={100} onDocUpload={unHandledEvent} /> */}
+                {
+                  educationDocs.filter((doc) => doc.docType === FILE_UPLOAD_TYPES.SKILL_CERTIFICATION).map(({ file: educationDoc}) => <DocUploader label={educationDoc.name} className="w-full text-[0.5rem] md:w-[50%]" uploading={true} progress={100} onDocUpload={unHandledEvent} key={CommonUtilities.generateRandomString(20)} />)
+                }
                 <div>
                   {" "}
-                  <Button variant="contained" className="mt-[20px]" style={{ marginTop: "20px" }}>Add</Button>
+                  <Button variant="contained" className="mt-[20px]" onClick={() => addUserEducationDoc(FILE_UPLOAD_TYPES.SKILL_CERTIFICATION)} style={{ marginTop: "20px" }}>Add</Button>
                 </div>
               </div>
             </div>
@@ -355,12 +440,14 @@ function FresherProfileUpload() {
         <div >
           <HavingDoubts />
         </div>
+        <input className="hidden" ref={userDocEduUploadFileRef} onChange={onUserUploadEduDoc} type="file" />
+        <input className="hidden" ref={userDocSkillUploadFileRef} onChange={onUserUploadSkillDoc} type="file" />
       </div>
     </>
   );
 }
 
-function TextFieldDropDown({ options, onOptionClick, onTextInput }: { options: Array<string>, onOptionClick?: (v: string | null) => void, onTextInput?: (v: string) => void }) {
+function TextFieldDropDown({ options, onOptionClick, onTextInput, value }: { options: Array<string>, onOptionClick?: (v: string | null) => void, onTextInput?: (v: string) => void, value: string | null }) {
   function onTextInput$(event: ChangeEvent<HTMLInputElement>) {
     if (onTextInput) { onTextInput(event.currentTarget.value); }
   }
@@ -368,7 +455,7 @@ function TextFieldDropDown({ options, onOptionClick, onTextInput }: { options: A
     if (onOptionClick) { onOptionClick(newValue); }
   }
   return (
-    <Autocomplete options={options} onChange={onFieldChange} size="small" renderInput={(params) => <TextField onChange={onTextInput$} {...params} />} />
+    <Autocomplete options={options} value={value?.length ? value : null} onChange={onFieldChange} size="small" renderInput={(params) => <TextField onChange={onTextInput$} {...params} />} />
   );
 }
 
@@ -392,12 +479,7 @@ function DocUploader({ className, label, uploading, progress, onDocUpload }: { c
 
   return (
     <>
-      {uploading && <div
-        className={
-          "flex justify-between items-center shadow-lg px-[2em] py-[1.5em] rounded-[1em] " +
-          (className || "")
-        }
-      >
+      {uploading && <div className={"flex justify-between items-center shadow-lg px-[2em] py-[1.5em] rounded-[1em] " + (className || "")} >
         <div className="flex items-center gap-[1em] flex-grow">
           <div>
             <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg" >
@@ -409,10 +491,7 @@ function DocUploader({ className, label, uploading, progress, onDocUpload }: { c
             <div>{label}</div>
             {progress !== 100 && (
               <div className="h-[4px] w-[100%] bg-[#D9D9D9] relative">
-                <div
-                  className="absolute h-[4px] bg-[#0E5F59]"
-                  style={{ width: (progress?.toString() || 0) + "%" }}
-                ></div>
+                <div className="absolute h-[4px] bg-[#0E5F59]" style={{ width: (progress?.toString() || 0) + "%" }}></div>
               </div>
             )}
           </div>
@@ -427,34 +506,10 @@ function DocUploader({ className, label, uploading, progress, onDocUpload }: { c
       }
       {!uploading && <div onClick={onClicked} className={"cursor-pointer flex items-center gap-[1em] shadow-lg px-[2em] py-[1.5em] rounded-[1em] " + (className || "")}>
         <div>
-          <svg
-            width="39"
-            height="39"
-            viewBox="0 0 39 39"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125"
-              stroke="#005F59"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75"
-              stroke="#005F59"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z"
-              stroke="#005F59"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+          <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.625 27.625V17.875L11.375 21.125M14.625 17.875L17.875 21.125" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M35.75 16.25V24.375C35.75 32.5 32.5 35.75 24.375 35.75H14.625C6.5 35.75 3.25 32.5 3.25 24.375V14.625C3.25 6.5 6.5 3.25 14.625 3.25H22.75" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
         <div className="text-[#005F59] text-[2em] font-semibold">{label}</div>
