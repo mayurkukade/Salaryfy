@@ -53,6 +53,7 @@ export default function PlacementDrivePage() {
   const [jobSortOptions, setJobSortOptions] = useState(SortOptions);
 
   const selectedOption = Object.values(jobSortOptions).filter(({ selected }) => selected).map(e => e.label)[0]
+
   let once = false;
 
   async function searchByFilterComponent() {

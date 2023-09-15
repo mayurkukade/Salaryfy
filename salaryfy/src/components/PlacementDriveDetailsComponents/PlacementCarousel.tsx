@@ -13,7 +13,7 @@ import { FreeMode, Pagination } from "swiper/modules";
 
 export default function PlacementCarousel() {
   return (
-    <div className="relative z-[-1]">
+    <div className="relative ">
       <img alt="frame" src={Frame} className="absolute mt-[-1rem] ml-4" />
       <div
         className="container mx-auto p-8 text-justify "

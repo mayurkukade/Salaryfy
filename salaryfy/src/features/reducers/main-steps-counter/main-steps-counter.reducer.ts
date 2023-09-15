@@ -11,6 +11,7 @@ const initialState: Counter = {
   mainStepsCounter: 0,
   stepTwo: 0,
   resStepTwo: false,
+  verifyemailFlag:false
 };
 
 const stepOneCounterSlice = createSlice({
@@ -52,6 +53,9 @@ const stepOneCounterSlice = createSlice({
       console.log(actions.payload);
       console.log(state.resStepTwo);
     },
+    verifyEmailFlagSelector:(state,actions:PayloadAction<boolean>) =>{
+      state.verifyemailFlag = actions.payload
+    }
     
 
   },
@@ -68,6 +72,7 @@ export const {
   emailStepsCounterDecrement,
   confirmStepsCounterDecrement,
   resSteptwoSelector,
+  verifyEmailFlagSelector
 } = stepOneCounterSlice.actions;
 export const phoneNumberCounterSelector = (state: RootState) =>
   state.mainStepsCounter.phoneNumberCounter;

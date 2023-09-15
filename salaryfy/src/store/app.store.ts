@@ -11,6 +11,8 @@ import scheduleInterviewReducder from '../features/reducers/schedule-interview-f
 import interviewSchedule from '../features/api-integration/interview-schedule/interview-schedule-slice';
 import upcomingInterviewSlice from '../features/api-integration/upcoming-interviews/upcoming-interviews.slice';
 import profileQualificationSlice from '../features/api-integration/profile-qualification/profile-qualification.slice';
+import screeningQuestionFormSlice from '../features/reducers/screening-question/screening-question.slice'
+
 export interface AppStoreStateType {
   root: ReturnType<typeof rootReducer>,
   [apiIntegrationSlice.reducerPath]: ReturnType<typeof apiIntegrationSlice.reducer>
@@ -24,6 +26,8 @@ const appStore = configureStore({
     registerFormSlice:questionnaireRegisterFormSlice,
     currentRoute:currentRouteReducer,
     scheduleInterviewForm:scheduleInterviewReducder,
+    // Screening question slice
+    screeningQuestionSlice:screeningQuestionFormSlice,
 
     [apiIntegrationSlice.reducerPath]: apiIntegrationSlice.reducer,
     [screeningQuestionsSlice.reducerPath]:screeningQuestionsSlice.reducer,

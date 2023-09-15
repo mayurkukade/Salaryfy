@@ -1,77 +1,122 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../store/app.store";
-import { resSteptwoSelector } from "../../../features/reducers/main-steps-counter/main-steps-counter.reducer";
+
 import { toast } from "react-toastify";
 import { useRegisterMutation } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
+import { useGetInterviewScheduleQuery } from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
 
-// // For Accepting Props
-// interface BottomPageNavigationBarProps {
-//   currentPage
-// }
 
+import { openModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 export default function BottomPageNavigationBar() {
-  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
-  const registerFormData = useSelector(
+  const userId = useSelector((state: RootState) => state.authSlice.userId);
+  const dispatch = useDispatch()
+  const jobId:string = localStorage.getItem("jobId");
+  console.log(jobId);
+  const { isError:isScheduleInterviewError } = useGetInterviewScheduleQuery({
+    userId,
+    jobId,
+  });
+  console.log(isScheduleInterviewError)
+  const registerFormData:string[] = useSelector(
     (state: RootState) => state.registerFormSlice.registerFormData
   );
-  console.log(registerFormData)
+  console.log(registerFormData);
+
+  // to read validation value from redux of screening question form
+  const screeningQuestionValidation = useSelector(
+    (state: RootState) => state.screeningQuestionSlice.screeningQuestionValue
+  );
+  //  to read the response from redux  and sent to backend using RTK query
+  const screeningQuestionResponse = useSelector(
+    (state: RootState) => state.screeningQuestionSlice.screeningQuestionResponse
+  );
+  console.log(`Secreen question validation is ${screeningQuestionValidation}`);
+  console.log("Secreen question Response is ", screeningQuestionResponse);
+
   const currentRoutee = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-  const resSteptwoSelector = useSelector((state:RootState)=>state.mainStepsCounter.resStepTwo)
+  const resSteptwoSelector = useSelector(
+    (state: RootState) => state.mainStepsCounter.resStepTwo
+  );
+
+  const verifyEmailFlagSelector = useSelector(
+    (state: RootState) => state.mainStepsCounter.verifyemailFlag
+  );
+
+  
+
+  const handleClickOpen = () => {
+    dispatch(openModel())
+  };
+  console.log(!verifyEmailFlagSelector);
   console.log(currentRoutee);
   console.log(registerFormData[0]);
-console.log(resSteptwoSelector)
+  console.log(resSteptwoSelector && verifyEmailFlagSelector);
+  console.log(resSteptwoSelector);
+  console.log(verifyEmailFlagSelector);
   const currentRoute = window.location.href.slice(22);
   console.log(currentRoute);
 
+  let nextButtonDisabled: boolean;
+  if (currentRoute === "questionnaire") {
+    nextButtonDisabled = resSteptwoSelector && verifyEmailFlagSelector;
+  } else if (currentRoute === "questionnaire/screening-questions") {
+    nextButtonDisabled = true;
+  } else if (currentRoute === "questionnaire/schedule-interview") {
+    nextButtonDisabled = !isScheduleInterviewError;
+  }
+  console.log(!nextButtonDisabled);
   const navigate = useNavigate();
-
  
-  const nextHandler = async(e:React.MouseEvent<HTMLButtonElement>) => {
+
+  const nextHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (currentRoute === "questionnaire") {
-      console.log(true)
-  e.preventDefault()
+      console.log(true);
+      e.preventDefault();
       try {
         const res = await register(registerFormData[0]);
-      console.log(res)
-  
+        console.log(res);
+
         if (res.data) {
-  
-  
-           toast.success("register success", {
+          toast.success("register successfully please login", {
             position: "top-center",
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
-  
+
             draggable: true,
             progress: undefined,
             theme: "light",
           });
-          navigate("/questionnaire/screening-questions");
+          // navigate("/questionnaire/screening-questions");
+          navigate("/login");
         } else {
-        
           return toast.error("error", {
             position: "top-center",
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
-  
             draggable: true,
             progress: undefined,
             theme: "light",
           });
         }
-        
       } catch (error) {
         console.log(error);
       }
-
     } else if (currentRoute === "questionnaire/screening-questions") {
-      navigate("/questionnaire/schedule-interview");
+      // logic to validate and submit
+      if (screeningQuestionValidation) {
+        navigate("/questionnaire/schedule-interview");
+      }
+    } else if (currentRoute === "questionnaire/schedule-interview") {
+      // navigate("/questionnaire/fresher-dashboard");
+       handleClickOpen()
+     
     }
   };
 
@@ -79,14 +124,30 @@ console.log(resSteptwoSelector)
     if (currentRoute === "questionnaire/screening-questions") {
       navigate("/questionnaire");
     } else if (currentRoute === "questionnaire/schedule-interview") {
+
       navigate("/questionnaire/screening-questions");
+    } else if (currentRoute === "questionnaire/fresher-dashboard") {
+      navigate("/questionnaire/schedule-interview");
     }
   };
 
   return (
-    <div className="flex justify-center mt-6 mb-6">
+    <>
+    
   
-      <div className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em]" onClick={backHandler}>
+    <div
+      className={`flex justify-center mt-6 mb-6 ${
+        currentRoute == "questionnaire/fresher-dashboard" ||
+        currentRoute == "questionnaire/fresher-profile-upload" ||
+        currentRoute == "questionnaire/fresher-roadmap"
+          ? "hidden"
+          : ""
+      } `}
+    >
+      <div
+        className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#B3B3B3] mx-[1em] cursor-pointer"
+        onClick={backHandler}
+      >
         <span className="mr-[1em]">
           <svg
             width="35"
@@ -100,18 +161,16 @@ console.log(resSteptwoSelector)
             />
           </svg>
         </span>
-        <span className="text-[2em] text-[#5B5B5B] font-medium mr-[0.5em] cursor-pointer">
+        <span className="text-[2em] text-[#5B5B5B] font-medium mr-[0.5em] ">
           Back
         </span>
       </div>
       <button
-        className="flex items-center bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em] text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer  disabled:bg-gray-400 disabled:cursor-not-allowed "
+        className="flex items-center  bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em] text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer  disabled:bg-gray-400 disabled:cursor-not-allowed "
         onClick={nextHandler}
-        disabled={!resSteptwoSelector}
+        disabled={!nextButtonDisabled}
       >
-        
-          Next
-     
+       {currentRoute == "questionnaire/schedule-interview" ? "confirm" : "Next" }
         <span className="" style={{ transform: "scaleX(-1)" }}>
           <svg
             width="35"
@@ -127,9 +186,8 @@ console.log(resSteptwoSelector)
         </span>
       </button>
     </div>
+    </>
   );
 }
-function dispatch(arg0: { payload: boolean; type: "mainStepsCounter/resSteptwoSelector"; }) {
-  throw new Error("Function not implemented.");
-}
+
 

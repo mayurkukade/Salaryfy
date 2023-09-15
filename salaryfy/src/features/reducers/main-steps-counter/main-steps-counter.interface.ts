@@ -7,6 +7,7 @@
     mainStepsCounter:number
     stepTwo:number
     resStepTwo:boolean
+    verifyemailFlag:boolean
     
 }
 

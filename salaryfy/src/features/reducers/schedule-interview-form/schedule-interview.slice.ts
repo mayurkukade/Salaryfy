@@ -2,7 +2,9 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { interviewSchedule } from "./schedule-interview.interface";
 const initialState: interviewSchedule = {
-    scheduleInterviewForms:[]
+    scheduleInterviewForms:[],
+    nextButtonFlag:undefined,
+    isOpen:false
 };
 
 
@@ -14,9 +16,18 @@ const scheduleInterviewFormSlice = createSlice({
             arrayFormScheduleInterview:(state,action:PayloadAction<string>)=>{
                 state.scheduleInterviewForms.push(action.payload)
                 console.log(action.payload)
+        },
+        nextButtonFlag:(state,action:PayloadAction<undefined>)=>{
+                state.nextButtonFlag = action.payload
+        },
+        openModel:(state)=>{
+            state.isOpen = true
+        },
+        closeModel:(state)=>{
+            state.isOpen = false
         }
     }
 })
 
-export const {arrayFormScheduleInterview} = scheduleInterviewFormSlice.actions
+export const {arrayFormScheduleInterview,nextButtonFlag,openModel,closeModel} = scheduleInterviewFormSlice.actions
 export default scheduleInterviewFormSlice.reducer

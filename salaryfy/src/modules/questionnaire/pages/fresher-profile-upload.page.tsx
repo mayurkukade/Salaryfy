@@ -301,8 +301,6 @@ function FresherProfileUpload() {
     if (payload.highestLevelOfEdu === HIGHEST_EDUCATION.MATRIC) { payload.stream = null; }
     else { if (Object.values(payload).includes(undefined)) { return; } }
 
-    console.log(payload);
-
     httpClient.request(saveProfile(payload)).subscribe((response) => console.log({ response }))
   }
 
