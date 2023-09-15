@@ -336,12 +336,12 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
           onClick={handleSubmitEmail}
           className="w-full md:w-auto"
         >
-          <span className="bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] h-[2rem] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed block md:inline-block w-full md:w-auto">
+          <span className="bg-[#005F59] text-[#FECD08] cursor-pointer rounded-md font-medium p-[0.25em] h-[2rem] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed block md:inline-block w-full md:w-auto">
             Send OTP
           </span>
         </button>
 
-        {loading ? (
+        {/* {loading ? (
           <div role="status">
             <svg
               aria-hidden="true"
@@ -350,11 +350,11 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* Your SVG path data */}
+           
             </svg>
             <span className="sr-only">Loading...</span>
           </div>
-        ) : null}
+        ) : null} */}
       </div>
     </div>
   );
