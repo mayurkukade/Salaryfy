@@ -14,6 +14,8 @@ import { EducationalSkillsType, FresherProfileUploadService, INITIAL_EDUCATIONAL
 import { BOARD_LIST, CHANGED_BY, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
 import { useLazyGetProfileQuery, useLazyUniversitySuggestionsQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 import _ from 'lodash';
+import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode";
 import { EducationalInfoComponent } from "../components/educational-info.component";
 import { EducationalSkillsKey, UserEducationSkill } from "../constants/fresher.type";
 
@@ -36,6 +38,7 @@ export default function FresherProfileUploadPage() {
 
 function FresherProfileUpload() {
 
+  const [userFullName, setUserFullName] = useState<string>('No Name');
   const userDocEduUploadFileRef = useRef<HTMLInputElement | null>(null);
   const userDocSkillUploadFileRef = useRef<HTMLInputElement | null>(null);
 
@@ -72,6 +75,12 @@ function FresherProfileUpload() {
     if (!userId) { return; }
     fetchUserSkills(userId);
     fetchEducationalSkills(userId);
+    const token = Cookies.get("jwtToken");
+    if (token) {
+
+      const userDetails = jwt_decode(token) as unknown as { fullName: string };
+      setUserFullName((userFullName) => userDetails.fullName || userFullName);
+    }
   }, [userId]);
 
   useEffect(() => {
@@ -328,7 +337,7 @@ function FresherProfileUpload() {
                 <div className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center">Upload your Passport Photo</div>
               </div>
               <div className="p-5 md:pl-10">
-                <div className="font-bold text-[#005F59] text-[2rem] md:text-[4em]">Hi Rahul,</div>
+                <div className="font-bold text-[#005F59] text-[2rem] md:text-[4em]">Hi {userFullName},</div>
                 <div className="text-[#5B5B5B] text-[1.052rem]  pr-[0px] md:text-[2.4em] md:pr-[120px]">Please complete your profile and more subtext here</div>
               </div>
             </div>
@@ -482,3 +491,4 @@ function DocUploader({ className, label, uploading, progress, onDocUpload }: { c
     </>
   );
 }
+
