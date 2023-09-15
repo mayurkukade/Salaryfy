@@ -75,82 +75,82 @@ const LoginSub: React.FC<LoginSubProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   return (
     <>
-      <h1 className="fkex justify-center align-middle text-center text-sm">
-       <span className="text-red-500"> Note*: </span> 
-       <span className="text">If you are not registered, please register first </span> 
-      </h1>
-      <div className="bg-[#F3FAF9] p-5 flex justify-center items-center">
-        <div className="w-[35.5rem] h-auto p-5 rounded-3xl bg-[#fff] shadow-[7px 16px 56px 1px rgba(0, 0, 0, 0.10)] text-darkGreen">
-          <h1 className=" text-center text-[1.5rem] font-[700] font-Lexend">
-            Login
-          </h1>
-          <div className="text-[0.85rem] font-[400] mt-3 text-center text-grey">
-            <h2 className="">Please log in first to explore jobs</h2>
-            {/* <h2 className="">send OTP to you</h2> */}
-          </div>
-          <div className="text-[1rem] font-[400] mt-5 ml-[5rem] ">
-            <h2>Enter Email Id</h2>
-            <input
-              type="email"
-              onChange={(e) => setUserName(e.target.value)}
-              value={userName}
-              placeholder="gm@example.com"
-              className="w-[26.5rem] h-[2rem] rounded-[0.3125rem] border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder"
-            />
-
-            <h2 className="mt-5 text-[1]">Enter 4 Digit Password</h2>
+    
+    <h1 className="text-center text-sm">
+      <span className="text-red-500"> Note*: </span> 
+      <span className="text">If you are not registered, please register first</span> 
+    </h1>
+    <div className="bg-[#F3FAF9] p-5 flex justify-center items-center">
+      <div className="w-full md:w-[35.5rem] h-auto p-5 rounded-3xl bg-[#fff] shadow-[7px 16px 56px 1px rgba(0, 0, 0, 0.10)] text-darkGreen">
+        <h1 className="text-center text-[1.5rem] font-[700] font-Lexend">
+          Sign In
+        </h1>
+        <div className="text-[0.85rem] font-[400] mt-3 text-center text-grey">
+          <h2>Please log in first to explore jobs</h2>
+        </div>
+        <div className="text-[1rem] font-[400] mt-5">
+          <h2>Enter Email Id</h2>
+          <input
+            type="email"
+            onChange={(e) => setUserName(e.target.value)}
+            value={userName}
+            placeholder="gm@example.com"
+            className="w-full h-[2rem] rounded-[0.3125rem] border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder"
+          />
+  
+          <h2 className="mt-5 text-[1]">Enter 4 Digit Password</h2>
+          <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setpassword(e.target.value)}
               placeholder="****"
-              className="w-[23rem] h-[2rem]  border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder rounded-l-[0.3125rem] border-l"
-              style={{ borderRight: "None" }}
+              className="w-full h-[2rem] border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder rounded-l-[0.3125rem] border-l"
             />
-
             <button
               onClick={() => {
-                setShowPassword(showPassword ? false : true);
+                setShowPassword(!showPassword);
               }}
-              className="h-auto border-[1px] border-solid border-darkGreen bg-[#E8F0FE] pr-2  pl-4 absolute mt-[8px] rounded-r-[0.3125rem] border-r"
+              className="h-[2rem] border-[1px] border-solid border-darkGreen bg-[#E8F0FE] pr-2 pl-4 absolute mt-[8px] rounded-r-[0.3125rem] border-r right-0 top-0"
             >
               {showPassword ? (
-                <VisibilityOffIcon style={{ fontSize: "30px" }} />
+                <VisibilityOffIcon style={{ fontSize: "1rem" }} />
               ) : (
-                <VisibilityIcon style={{ fontSize: "30px" }} />
+                <VisibilityIcon style={{ fontSize: "1rem" }} />
               )}
             </button>
-
-            <div className="text-[1.26544rem] w-[26.5rem] flex justify-end mt-4  text-darkGreen font-medium	 ">
-              <Link to={"/"} className="border-b border-darkGreen ">
-                {" "}
-                Forgot Password?
-              </Link>
-            </div>
-
-            <button
-              type="submit"
-              className="mt-4 w-[26.5rem] h-[2.5rem] bg-darkGreen text-[#fff] rounded-[0.81694rem]"
-              onClick={LoginSubmitHandler}
+          </div>
+  
+          <div className="text-[1.26544rem] w-full flex justify-end mt-4 text-darkGreen font-medium	">
+            <Link to={"/"} className="border-b border-darkGreen">
+              Forgot Password?
+            </Link>
+          </div>
+  
+          <button
+            type="submit"
+            className="mt-4 w-full h-[2.5rem] bg-darkGreen text-[#fff] rounded-[0.81694rem]"
+            onClick={LoginSubmitHandler}
+          >
+            Sign In
+          </button>
+        </div>
+        <div className="text-grey text-center mt-1 flex justify-center text-[1.2rem] ">
+          <h2>
+            Didn’t sign up yet?{" "}
+            <span
+              onClick={() => setToggleLoginRegister(!toggleLoginRegister)}
+              className="border-b text-darkGreen border-darkGreen font-medium m-1 cursor-pointer"
             >
-              Login
-            </button>
-          </div>
-          <div className="text-grey text-center mt-1  text-[1.2rem]">
-            <h2>
-              Didn’t signed up yet?{" "}
-              <Button
-                onClick={() => setToggleLoginRegister(!toggleLoginRegister)}
-                className="border-b text-darkGreen border-darkGreen font-medium"
-              >
-                Sign Up
-              </Button>{" "}
-              now
-            </h2>
-          </div>
+              Sign Up
+            </span>
+            now
+          </h2>
         </div>
       </div>
-    </>
+    </div>
+  </>
+  
   );
 };
 
