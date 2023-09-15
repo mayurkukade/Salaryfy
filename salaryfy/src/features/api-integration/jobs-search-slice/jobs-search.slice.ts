@@ -1,11 +1,14 @@
 
 import { apiSlice } from '../../apiSlice';
 const jobSearchSlice = apiSlice.injectEndpoints({
- 
+
   endpoints: (builder) => ({
     getJobsSearch: builder.query({
-      query: (searchInput: string) => `jobs/searchBarFilter?searchBarInput=${searchInput}`,
-      providesTags: ['Jobs']
+      query: ({ searchInput = '', sortField = 'companyName' }: { searchInput?: string, sortField?: string }) => {
+        console.log('placement: ', { searchInput, sortField });
+        return `jobs/searchBarFilter?searchBarInput=${searchInput}&sortField=${sortField}&sortDirection=asc`
+      },
+      providesTags: ['jobs-keyword-search']
     }),
     getJobsFilter: builder.query({
       query: (properties: string) => `jobs/mainFilter?${properties}`,
@@ -18,7 +21,7 @@ const jobSearchSlice = apiSlice.injectEndpoints({
     getRecommendedJobs: builder.query({
       query: (postName: string = '', location: string = '') => `/jobs/jobSuggest?postName=${postName}&location=${location}`,
       providesTags: ['jobs-recommended']
-    })
+    }),
   }),
 });
 

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setJobs } from "../../features/reducers/jobs/jobs.slice";
 import { JobType } from "../../features/reducers/jobs/jobs.interface";
 import { OptionSelected } from "../../features/reducers/job-filter/jobs-filter.interface";
+import { SORT_OPTIONS, SortOptions } from "../../contants/job-sort-options.enum";
 function FilterSVGIcon() {
   return (
     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,6 +50,9 @@ export default function PlacementDrivePage() {
   const dispatch = useDispatch();
   const searchFieldRef = useRef<HTMLInputElement | null>(null);
 
+  const [jobSortOptions, setJobSortOptions] = useState(SortOptions);
+
+  const selectedOption = Object.values(jobSortOptions).filter(({ selected }) => selected).map(e => e.label)[0]
   let once = false;
 
   async function searchByFilterComponent() {
@@ -58,25 +62,24 @@ export default function PlacementDrivePage() {
       location: jobFilterValues.locations.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(',')
     }
 
-    const filterPropertiesUriEncoded = Object.entries(filterProperties).map(([key, value]: [string, string]) => [key, encodeURIComponent(value)].join('=') ).join('&');
+    const filterPropertiesUriEncoded = Object.entries(filterProperties).map(([key, value]: [string, string]) => [key, encodeURIComponent(value)].join('=')).join('&');
     const { data: { list: jobsData } } = await lazyGetFilterJobs(filterPropertiesUriEncoded);
-  
+
     dispatch(setJobs(jobsData));
   }
 
 
   async function searchByKeyword() {
     const searchElement = searchFieldRef.current;
-    if (searchElement){
+    if (searchElement) {
       setAllJobs(searchElement.value)
     }
 
   }
 
-  async function setAllJobs(searchKeywords: string) {
-    const { data: { list: fetchedJobs } } = await lazyGetSearchJobs(searchKeywords);
-
-    console.log(fetchedJobs);
+  async function setAllJobs(searchInput: string) {
+    const sortField = Object.values(jobSortOptions).find(e => e.selected)?.value;
+    const { data: { list: fetchedJobs } } = await lazyGetSearchJobs({ searchInput, sortField });
 
     dispatch(setJobs(fetchedJobs));
     setFilterKey(() => CommonUtilities.generateRandomString(10));
@@ -98,7 +101,7 @@ export default function PlacementDrivePage() {
 
     if (element && element?.style.height !== '0px') {
       element.style.height = '0px';
-      return
+      return;
     }
 
   }
@@ -107,12 +110,21 @@ export default function PlacementDrivePage() {
     console.log('clear button clicked');
   }
 
+  function onSortOptionChange(option: string) {
+    console.log('placement: ', option);
+    setJobSortOptions((jobSortOptions) => {
+      const updated = Object.entries(jobSortOptions)
+        .map(([key, value]) => ([key, { ...value, selected: value.label === option }]));
+      return Object.fromEntries(updated);
+    })
+  }
+
   return (
     <div className="flex flex-col p-[2em]  " >
       <div className="flex justify-center" >
-      <QuestionnaireTopBarStep />
+        <QuestionnaireTopBarStep />
       </div>
-      
+
       <div className="flex gap-[2em]">
         <Box className="text-[#0E5F59]" sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
           <FilterComponent onClearButtonClick={clearFilterHandler} setAllJobs={setAllJobs} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[30em]" />
@@ -124,7 +136,9 @@ export default function PlacementDrivePage() {
             <Button variant="contained" onClick={searchByKeyword} >Search</Button>
 
             {/* Desktop View */}
-            <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}><DropdownMenu variant='contained' endIcon={<KeyboardArrowDownIcon />} label="Sort" /></Box>
+            <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
+              <DropdownMenu onOptionClick={onSortOptionChange} options={Object.values(jobSortOptions).map(e => (e.label))} label={selectedOption || 'Select'} endIcon={<KeyboardArrowDownIcon />} />
+            </Box>
 
             {/* Mobile View */}
             <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}><Button className="h-[100%]" variant='contained' onClick={toggleFilter} ><FilterSVGIcon /></Button></Box>

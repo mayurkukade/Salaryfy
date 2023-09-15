@@ -77,7 +77,6 @@ function FresherProfileUpload() {
     fetchEducationalSkills(userId);
     const token = Cookies.get("jwtToken");
     if (token) {
-
       const userDetails = jwt_decode(token) as unknown as { fullName: string };
       setUserFullName((userFullName) => userDetails.fullName || userFullName);
     }
