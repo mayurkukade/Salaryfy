@@ -327,7 +327,7 @@ const Navbar = () => {
           Contact
         </li>
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">
-          About us
+         <Link to={"/aboutus"}>About us</Link> 
         </li>
 
         <li>

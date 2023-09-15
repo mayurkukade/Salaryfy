@@ -16,13 +16,17 @@ function GreenHeading({ label }: { label: string }) {
     </p>
   );
 }
+
+function onGetHiredClick() {
+  debugger
+}
 const JobDescription = () => {
   return (
      
     <div className="bg-darkGreen min-h-screen flex flex-col justify-center items-center py-10 px-4 md:px-0">
       <div className="w-full md:w-[60.1875rem] h-[43.7rem] rounded-3xl bg-white shadow-md text-darkGreen">
         <div className="app-box-shadow mb-[5em] rounded-[2em]">
-          <PlacementJobDetails />
+          <PlacementJobDetails onGetHiredClick={onGetHiredClick} />
           <div className='p-[1em] app-scrollbar h-[50em]'>
           <div className="px-[5em] py-[0.5em]">
             <div className="flex justify-between items-center">

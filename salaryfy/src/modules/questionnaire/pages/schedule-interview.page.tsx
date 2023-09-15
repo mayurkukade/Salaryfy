@@ -367,7 +367,8 @@ export function ScheduleInterview() {
 
 const Modal = ({ getDetails }) => {
 
-
+  const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
+  console.log(jobDetails);
   const openModelSelector = useSelector(
     (state: RootState) => state.scheduleInterviewForm.isOpen
   );
@@ -412,7 +413,7 @@ const Modal = ({ getDetails }) => {
                 </h2>
                 <div className=" flex justify-center items-center py-3">
                   <img
-                    src="../../assets/Logos/lenskartlogo.png"
+                    src={jobDetails.logo}
                     className=" w-[4.625rem] h[4.625rem]"
                   />
                 </div>

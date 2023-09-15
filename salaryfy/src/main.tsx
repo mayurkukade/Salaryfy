@@ -8,16 +8,21 @@ import { Provider } from "react-redux";
 import { appTheme } from "./theme/app.theme.ts";
 import appStore from "./store/app.store.ts";
 import {ToastContainer} from 'react-toastify'
+import Wrapper from "./pages/Wrapper.tsx";
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
    
       <BrowserRouter>
-        <ThemeProvider theme={appTheme}>
+      <Wrapper>
+      <ThemeProvider theme={appTheme}>
         <Provider store={appStore}>
           <App />
           <ToastContainer/>
           </Provider>
         </ThemeProvider>
+      </Wrapper>
+        
       </BrowserRouter>
 
   </React.StrictMode>
