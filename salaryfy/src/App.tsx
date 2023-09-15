@@ -29,6 +29,7 @@ import TestComponent from "./pages/test.component";
 import TermOfUse from "./pages/TermOfUse";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Faq from "./pages/Faq";
+import AboutUs from "./pages/AboutUs";
 
 
 function App() {
@@ -57,6 +58,11 @@ function App() {
           <Route
           path="/faq"
           element={<Faq/>}
+          />
+
+          <Route
+          path="/aboutus"
+          element={<AboutUs/>}
           />
 
         </Route>

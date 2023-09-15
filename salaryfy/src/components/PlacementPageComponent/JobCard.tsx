@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { CommonUtilities } from "../../utils/common.utilities";
 import Cookies from "js-cookie";
 const JobCard = ({ details }: { details: JobType }) => {
+  console.log(details)
   const navigate = useNavigate();
   const token = Cookies.get("jwtToken");
   function onDetailsClick() {
@@ -37,7 +38,7 @@ const JobCard = ({ details }: { details: JobType }) => {
       <div className="flex gap-[2em] mb-[1em] flex-col md:flex-row">
         <div className="flex flex-row flex-grow gap-[2em]">
           <div className="rounded-[1em] p-[1em] flex items-center justify-center h-[7em] w-[7em] bg-gradient-to-br from-[#F1FAFB] to-[#D7E8F0]">
-            <img src={lenscartlogo} />
+            <img src={details.logo} />
           </div>
           <div className="flex-grow flex-row">
             <div className="text-[#005F59] text-[2em] font-semibold">
