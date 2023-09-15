@@ -24,7 +24,7 @@ export default function UserJobDetails() {
           <div className='text-[1.8em] font-semibold text-[#0E5F59] px-[2em] flex items-center'>
             <div className='relative min-w-[5em]'>
               <div className='absolute h-[5em] w-[5em] p-[0.5em] flex items-center justify-center rounded-md bg-[#D7E8F0] -translate-y-full overflow-hidden'>
-                <img src='/src/assets/images/lenskart-icon.png'></img>
+                <img src={jobDetails.logo}></img>
               </div>
               <div className='relative text-center'>{jobDetails?.companyName}</div>
             </div>

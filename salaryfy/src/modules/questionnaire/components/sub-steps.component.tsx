@@ -99,7 +99,7 @@ export default function SubSteps() {
               "linear-gradient(to bottom, #FECD08 1%, #fff 30%, #fff 50%, #fff 100%)",
           }}
         >
-          <div className="text-[#0E5F59] text-[1.4em] px-[1em] pt-[0.5em]">
+          <div className="text-[#0E5F59] text-[1.4em] px-[1em] pt-[0.5em] mb-2">
             <span>3 Steps selection process for&nbsp;</span>
             <span className="font-bold">Lenskart</span>
           </div>

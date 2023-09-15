@@ -1,39 +1,26 @@
-import avtarlogo from "../../../assets/Homepage/feedbackimg.png";
+// import avtarlogo from "../../../assets/Homepage/feedbackimg.png";
+import avatar from '../../assets/images/avatar.png'
 
 import "./testimonals.css";
-const TestimonalsCards = ({testimonals, name, course}) => {
+const TestimonalsCards = ({ testimonals, name, company,testimonalsImg }) => {
   return (
-    <div className="container mx-auto mb-9"  >
-      <div className="bubble speech w-auto md:min-h-[40vh]  ">
-       {testimonals}
-        {/* <hr /> */}
-        {/* <div className="flex justify-around">
-          <div className="text-[0.5rem]">
-            <span>Placed by Data Folkz at</span>
-            <img src={Google} alt="google logo" className="h-[1rem]" />
-          </div>
-
-          <div className="text-[0.5rem] leading-5 mt-1">
-            <span className="block">Placed in</span>
-            <span className="border rounded-xl  bg-yellow text-darkGreen p-[5px] ">
-              5 Days
-            </span>
-          </div>
-        </div> */}
+    <div className="container mx-auto mb-9">
+      <div className="bubble speech w-auto h-[20rem] ">
+        <p>{testimonals}</p>
+     
       </div>
 
       <div className="flex content-center  ">
         <div className="mt-5 ">
           <div className="border-4 border-yellow rounded-full w-fit content-center ">
-            <img src={avtarlogo} className="border rounded-full" />
+            <img src={testimonalsImg} className="border rounded-full w-[7.5rem] h-[7.5rem]" />
           </div>
         </div>
 
-        <div className="flex-col  self-center p-5 leading-8 ">
-          <p className="text-white font-Lexend text-[24px]">{name}</p>
-          <span className="text-slate-400 text-[0.8rem]">
-           {course}{" "}
-          </span>
+        <div className="flex-col  self-center mt-3 p-3 leading-7 ">
+          <p className="text-white text-xl font-Lexend ">{name}</p>
+          <p className='text-yellow text-[1rem] '>Placed by Data Folkz at</p>
+          <span className="text-white text-[1.2rem]">{company} </span>
           {/* <div className="flex bg-yellow text-darkGreen  w-[12rem] h-auto rounded-xl  justify-center items-center relative">
             <button className="  text-[20.247px] font-medium ">Linkedin</button>
             <svg

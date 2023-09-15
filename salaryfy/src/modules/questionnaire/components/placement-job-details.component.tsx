@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import image from '../../../assets/images/job-details-bg.png';
 import CalendarVector from './calendar-vector';
 import SideArrow from './side-arrow.icon';
@@ -6,22 +6,26 @@ import { JobsDetailsType } from '../../../features/reducers/job-details/job-deta
 import { CommonUtilities } from '../../../utils/common.utilities';
 
 export default function PlacementJobDetails({ jobDetails, onGetHiredClick }: { jobDetails: JobsDetailsType, onGetHiredClick: () => void }) {
+  console.log(jobDetails)
+ 
   return (
-    <>
+    <>        
       <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
         <div className='bg-cover-container'>
           <div className='w-[100%] h-[100%] absolute flex justify-end items-end z-[1] py-[1em] px-[2em]'>
-
-            <div className='flex items-center gap-[1.5em]'>
+  
+            <div className='flex items-center gap-[1.5em] '>
               <div className='w-[fit-content] h-[fit-content] bg-white flex items-center border border-[#0E5F59] border-solid py-[0.5em] px-[1em] rounded-[2em]'>
                 <CalendarVector />
                 <div className='ml-[0.5em] text-[1.3em] text-[#0E5F59] font-medium'>Interview on: {CommonUtilities.date.formatDate( jobDetails.interviewStartDate )} </div>
               </div>
 
-              <div onClick={onGetHiredClick} className="cursor-pointer select-none flex bg-yellow text-[#0E5F59] px-[1em] py-[0.5em] rounded-lg  justify-center items-center w-[max-content] h-[max-content]">
-                <span className="text-[2em] font-medium">Get Hired</span>
-                <SideArrow />
-              </div>
+            
+              <div onClick={onGetHiredClick} className=" cursor-pointer select-none flex bg-yellow text-[#0E5F59] px-[1em] py-[0.5em] rounded-lg  justify-center items-center w-[max-content] h-[max-content]">
+              <span className="text-[2em] font-[600]">Get Hired</span>
+              <SideArrow />
+            </div>
+       
             </div>
           </div>
           <img src={image} style={{ width: '100%' }} />
@@ -33,7 +37,7 @@ export default function PlacementJobDetails({ jobDetails, onGetHiredClick }: { j
           <div className='text-[1.8em] font-semibold text-[#0E5F59] px-[2em] flex items-center'>
             <div className='relative min-w-[5em]'>
               <div className='absolute h-[5em] w-[5em] p-[0.5em] flex items-center justify-center rounded-md bg-[#D7E8F0] -translate-y-full overflow-hidden'>
-                <img src='src/assets/images/lenskart-icon.png'></img>
+                <img src={jobDetails.logo}></img>
               </div>
               <div className='relative text-center'>{ jobDetails.companyName }</div>
             </div>
@@ -71,15 +75,15 @@ export default function PlacementJobDetails({ jobDetails, onGetHiredClick }: { j
           <div className='text-[1.8em] font-semibold text-[#0E5F59] px-[2em] flex items-center'>
             <div className='relative min-w-[5em] mt-[1em]'>
               <div className='absolute h-[5em] w-[5em] p-[0.5em] flex items-center justify-center rounded-md bg-[#D7E8F0] -translate-y-full overflow-hidden'>
-                <img src='src/assets/images/lenskart-icon.png'></img>
+                <img src={jobDetails.logo}></img>
               </div>
-              <div className='relative text-center'>Lenskart</div>
+              <div className='relative text-center'>{jobDetails.companyName}</div>
             </div>
           </div>
 
           {/* Second */}
           <div className='w-[100%] flex flex-col gap-[1em]'>
-            <div className='text-[1.8em] font-[700]'>Sales Associates (Frontend Sales)</div>
+            <div className='text-[1.8em] font-[700]'>{jobDetails.postName}</div>
             <div className='flex bg-white text-[1.1em] gap-[0.5em] text-[#0E5F59] w-[max-content] border border-solid rounded-[2em] px-[1em] py-[0.5em]'>
               <span>
                 {/* <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
