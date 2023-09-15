@@ -132,18 +132,22 @@ export default function PlacementDrivePage() {
         </Box>
         <div className="flex-grow p-3">
           <p className="text-[1.2rem] font-semibold text-darkGreen mb-2">Search</p>
-          <div className="flex gap-[2.5em] h-[4em]">
-            <TextField inputRef={searchFieldRef} className="flex-grow" placeholder="Enter Keyword" size="small" />
-            <Button variant="contained" onClick={searchByKeyword} >Search</Button>
+          <div className="flex gap-[2.5em] h-[4em] flex-col">
+            <div className="flex-grow flex">
+              <TextField inputRef={searchFieldRef} className="flex-grow" placeholder="Enter Keyword" size="small" />
+            </div>
+            <div className="flex gap-[2.5em] h-[4em] flex" style={{ justifyContent: 'space-between' }}>
+              <Button variant="contained" onClick={searchByKeyword} >Search</Button>
 
-            {/* Desktop View */}
-            <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
-              <DropdownMenu onOptionClick={onSortOptionChange} options={Object.values(jobSortOptions).map(e => (e.label))} label={selectedOption || 'Select'} endIcon={<KeyboardArrowDownIcon />} />
-            </Box>
+              {/* Desktop View */}
+              <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
+                <DropdownMenu onOptionClick={onSortOptionChange} options={Object.values(jobSortOptions).map(e => (e.label))} label={selectedOption || 'Select'} endIcon={<KeyboardArrowDownIcon />} />
+              </Box>
 
-            {/* Mobile View */}
-            <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}><Button className="h-[100%]" variant='contained' onClick={toggleFilter} ><FilterSVGIcon /></Button></Box>
-            <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}><Button className="h-[100%]" variant='contained'><SortSVGIcon /></Button></Box>
+              {/* Mobile View */}
+              <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}><Button className="h-[100%]" variant='contained' onClick={toggleFilter} ><FilterSVGIcon /></Button></Box>
+              <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}><Button className="h-[100%]" variant='contained'><SortSVGIcon /></Button></Box>
+            </div>
           </div>
 
           <Box ref={expandableRef} id='expandable-element' className='w-[100%] my-[4em] relative' style={{ height: '0px', transition: '1000ms ease' }} sx={{ overflow: 'hidden', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
