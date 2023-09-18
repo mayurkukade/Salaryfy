@@ -3,42 +3,35 @@ import herowave from "../../../assets/Homepage/Vector 30.jpg";
 import herosection from "../../../assets/Homepage/herosection.png";
 import { useNavigate } from "react-router-dom";
 
-
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCity } from "../../features/reducers/selected-city/selected-city.slice";
 import { AppStoreStateType } from "../../store/app.store";
 import { SLICE_NAMES } from "../../features/slice-names.enum";
 
 const HeroSection2 = () => {
-  const [selectedCityState, setSelectedCityState] = useState<string>('');
+  const [selectedCityState, setSelectedCityState] = useState<string>("");
   const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const jobs = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]);
-  console.log(jobs)
-  const goHandler = ()=>{
-    dispatch( setSelectedCity(selectedCityState) );
+  const navigate = useNavigate();
+  const jobs = useSelector(
+    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]
+  );
+  console.log(jobs);
+  const goHandler = () => {
+    dispatch(setSelectedCity(selectedCityState));
     console.log({ selectedCityState });
-    navigate('/placementdrive');
-  }
+    navigate("/placementdrive");
+  };
 
   function cityChange(cityChangeEvent: ChangeEvent<HTMLSelectElement>) {
     setSelectedCityState(() => cityChangeEvent.target.value);
   }
   return (
-   
-
     <div>
       <div className="absolute z-[-1] " style={{ width: "100%" }}>
         <img alt="img wave" src={herowave} style={{ width: "100%" }} />
       </div>
-      <div
-        className="container p-2 mx-auto md:flex md:flex-row md:justify-center md:gap-[20px] "
-     
-      >
-        <div
-          className="text-center leading-none text-[3rem] mt-[2.5rem] font-semibold md:p-5  md:w-[60%] md:text-left md:text-[3.5rem] md:mt-[5rem]"
-      
-        >
+      <div className="container p-2 mx-auto md:flex md:flex-row md:justify-center md:gap-[20px] ">
+        <div className="text-center leading-none text-[4rem] mt-[2.5rem] font-semibold md:p-5  md:w-[60%] md:text-left md:text-[4.25rem] md:mt-[5rem]">
           <p className="text-darkGreen font-Lexend  ">End to end</p>
           <div className=" font-Lexend text-darkGreen  ">
             <span className="text-yellow">Job Change</span> <br />
@@ -46,7 +39,10 @@ const HeroSection2 = () => {
             <p className="font-Lexend text-[20px] mt-[2rem]  ">
               6874+ people have got their dream job through Salaryfy.
             </p>
-            <p className="font-Lexend text-[20px] "> When are you getting yours?</p>
+            <p className="font-Lexend text-[20px] ">
+              {" "}
+              When are you getting yours?
+            </p>
             <div className=" mt-[56px] h-[50px] flex relative justify-center md:justify-start">
               <p className="font-Lexend text-[20px] text-darkGreen font-semibold flex relative align-text-top">
                 Select your City
@@ -81,7 +77,10 @@ const HeroSection2 = () => {
               className="px-5 md:px-0 flex justify-center md:justify-start"
               // style={{border:"2px solid black"}}
             >
-              <select onChange={cityChange} className="border-2 border-darkGreen-600 h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base ">
+              <select
+                onChange={cityChange}
+                className="border-2 border-darkGreen-600 h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base "
+              >
                 <option></option>
                 <option>Jabalpur</option>
                 <option>Gwalior</option>
@@ -92,23 +91,25 @@ const HeroSection2 = () => {
                 <option>Banglore</option>
               </select>
               <div className="flex bg-yellow text-darkGreen ml-3 w-[123px] h-[43px] rounded-md  justify-center items-center relative ">
-           
-           <button className="  text-[20.247px] font-medium flex" onClick={goHandler}>Go 
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="33"
-                  height="19"
-                  viewBox="0 0 33 19"
-                  fill="none"
-                  className="align-middle ml-3 mt-1 cursor-pointer "
-                 
+                <button
+                  className="  text-[20.247px] font-medium flex"
+                  onClick={goHandler}
                 >
-                  <path
-                    d="M31.8711 10.375C32.3522 9.89391 32.3522 9.1139 31.8711 8.63281L24.0312 0.792963C23.5502 0.311871 22.7701 0.311871 22.2891 0.792963C21.808 1.27405 21.808 2.05406 22.2891 2.53515L29.2578 9.50391L22.2891 16.4727C21.808 16.9538 21.808 17.7338 22.2891 18.2148C22.7701 18.6959 23.5502 18.6959 24.0312 18.2148L31.8711 10.375ZM0 10.7358H31V8.27199H0V10.7358Z"
-                    fill="#005F59"
-                  />
-                </svg>
-                </button>  
+                  Go
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="33"
+                    height="19"
+                    viewBox="0 0 33 19"
+                    fill="none"
+                    className="align-middle ml-3 mt-1 cursor-pointer "
+                  >
+                    <path
+                      d="M31.8711 10.375C32.3522 9.89391 32.3522 9.1139 31.8711 8.63281L24.0312 0.792963C23.5502 0.311871 22.7701 0.311871 22.2891 0.792963C21.808 1.27405 21.808 2.05406 22.2891 2.53515L29.2578 9.50391L22.2891 16.4727C21.808 16.9538 21.808 17.7338 22.2891 18.2148C22.7701 18.6959 23.5502 18.6959 24.0312 18.2148L31.8711 10.375ZM0 10.7358H31V8.27199H0V10.7358Z"
+                      fill="#005F59"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>

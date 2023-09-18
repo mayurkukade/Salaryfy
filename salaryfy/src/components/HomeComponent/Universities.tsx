@@ -17,9 +17,9 @@ const Universities = () => {
   return (
     <div className="w-full font-Lexend">
       <div className="container mx-auto">
-        <p className="text-center mt-8 md:mt-16 mb-6 md:mb-15 text-2xl md:text-4xl font-semibold">
-          <span className="text-darkGreen">Students from </span>
-          <span className="text-yellow">Universities</span>
+        <p className="text-center  mt-8 md:mt-16 mb-6 md:mb-15 text-2xl md:text-4xl font-semibold">
+          <span className="text-darkGreen text-[3.9375rem]">Students from </span>
+          <span className="text-yellow text-[3.9375rem]">Universities</span>
         </p>
         <div className="max-h-[400px] overflow-y-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-10 ">
