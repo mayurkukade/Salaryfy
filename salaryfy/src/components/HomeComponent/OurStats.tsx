@@ -9,7 +9,7 @@ const OurStats = () => {
       >
         {/* Column 1 */}
         <div className="w-[50%] md:w-[25%] mb-8 ">
-          <p className="text-[2rem] font-semibold">
+          <p className="text-[3rem] font-semibold">
             <span className="text-yellow">Our</span>{" "}
             <span className="">Stats</span>{" "}
           </p>

@@ -512,7 +512,7 @@ const Footer = () => {
 
                 <ul className="mt-6 space-y-4 text-sm leading-[30%]">
                   <li>
-                    <Link to="#"
+                    <Link to="/aboutus"
                       className="text-white transition hover:opacity-75"
                     >
                       About Us

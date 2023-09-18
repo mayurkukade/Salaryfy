@@ -36,7 +36,7 @@ const HeroSection2 = () => {
      
       >
         <div
-          className="text-center leading-none text-[3rem] mt-[2.5rem] font-semibold md:p-5  md:w-[60%] md:text-left md:text-[5rem] md:mt-[5rem]"
+          className="text-center leading-none text-[3rem] mt-[2.5rem] font-semibold md:p-5  md:w-[60%] md:text-left md:text-[3.5rem] md:mt-[5rem]"
       
         >
           <p className="text-darkGreen font-Lexend  ">End to end</p>
