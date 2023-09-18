@@ -40,7 +40,7 @@ const HeroSection2 = () => {
               6874+ people have got their dream job through Salaryfy.When are you getting yours?
             </p>
         
-            <div className=" lg:mt-[3.2rem] mt-[2.44rem] h-[50px] flex relative text-start ml-5 lg:ml-0">
+            <div className=" lg:mt-[3.2rem] mt-[2.44rem]  flex relative text-start ml-5 lg:ml-0">
               <p className="font-Lexend lg:text-start text-[20px] text-darkGreen font-semibold flex relative align-text-top ">
                 Select your City
               </p>
@@ -71,12 +71,12 @@ const HeroSection2 = () => {
               </svg>
             </div>
             <div
-              className="px-5 md:px-0 flex justify-center md:justify-start"
+              className="px-5  md:px-0 flex justify-center md:justify-start"
               // style={{border:"2px solid black"}}
             >
               <select
                 onChange={cityChange}
-                className="border-2 border-darkGreen-600 h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base "
+                className="border-2 border-darkGreen-600  h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base "
               >
                 <option></option>
                 <option>Jabalpur</option>
