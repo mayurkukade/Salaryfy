@@ -1,8 +1,8 @@
 const OurStats = () => {
   return (
-    <div className="bg-lightBlue">
+    <div className="bg-lightBlue h-[8rem]">
       <div
-        className="container mx-auto h-[18rem] text-[4rem] flex flex-wrap items-center  justify-center md:justify-between px-4 md:px-8 text-center text-darkGreen md:h-[10rem] "
+        className="container mx-auto h-[16rem] text-[4rem] flex flex-wrap items-center  justify-center md:justify-between px-4 md:px-8 text-center text-darkGreen md:h-[10rem] "
         // style={{border:"2px solid black"}}
       >
         {/* Column 1 */}

@@ -78,7 +78,7 @@ console.log(currentRoute)
     <div className="flex gap-[5em] px-[4em] py-[4em] flex-col-reverse md:flex-row">
       <div className="flex justify-center">
         <div className="max-w-[36em] flex flex-col gap-[2em]">
-          <div className="text-[#0E5F59] text-[2.8em] font-bold mb-5">Our candidates placements</div>
+          <div className="text-[#0E5F59] text-[2.8em] font-medium mb-5">Our candidates placements</div>
           <div>
             <PlacementCarousel />
           </div>

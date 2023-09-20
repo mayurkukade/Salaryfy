@@ -172,7 +172,7 @@ function Questions({ responseData, setCollectResponse }: any) {
   return (
     <>
       <div className="font-semibold text-[1.8em] text-[#5B5B5B] mb-[1em]">
-        Fill the details below
+      <p className="text-[1.1rem] font-normal leading-[27px]">Fill the details below</p>  
       </div>
       {response.map((question: any, index: number) => {
         if (question.questionType === "Boolean") {

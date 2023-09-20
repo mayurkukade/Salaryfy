@@ -36,8 +36,9 @@ const HeroSection2 = () => {
           <div className=" font-Lexend text-darkGreen  ">
             <span className="text-yellow">Job Change</span> <br />
             <span className="text-darkGreen">solution for You</span>
-            <p className="font-Lexend text-[0.8125rem] mt-[2rem] text-[#5B5B5B] leading-5  lg:m-0 lg:mt-[1.25rem] lg:text-[1.25rem] m-5">
-              6874+ people have got their dream job through Salaryfy.When are you getting yours?
+            <p className="font-Lexend text-[0.8127rem] mt-[2rem] text-[#5B5B5B] leading-5  lg:m-0 lg:mt-[1.25rem] lg:text-[1.25rem] m-5">
+              6874+ people have got their dream job through Salaryfy.
+              When are you getting yours?
             </p>
         
             <div className=" lg:mt-[3.2rem] mt-[2.44rem]  flex relative text-start ml-5 lg:ml-0">

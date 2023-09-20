@@ -67,7 +67,7 @@ export default function QuestionnaireTopBarStep() {
       >
         <div className="flex flex-grow w-[100%]    mb-[2em] gap-[2em]">
           <StepDesktop
-            progress={100}
+            progress={currentRoute === "placementdrive" ? 50 :100 }
             active={false}
             no={1}
             title="Select the job"

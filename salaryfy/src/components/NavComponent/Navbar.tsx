@@ -84,16 +84,16 @@ const Navbar = () => {
       </Link>
 
       <ul className="hidden md:flex space-x-2 ">
-        <Link to={'/questionnaire/fresher-dashboard'}>
-        <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">
-          Dashboard
+        
+        <li className="p-1  w-[125px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
+        <Link to={'/questionnaire/fresher-dashboard'}> Dashboard     </Link>
         </li>
-        </Link>
+    
        
-        <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">
-          Contact
+        <li className="p-1  w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
+         <Link to="">Contact</Link> 
         </li>
-        <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[16px] font-medium ">
+        <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
          <Link to={"/aboutus"}>About us</Link> 
         </li>
 

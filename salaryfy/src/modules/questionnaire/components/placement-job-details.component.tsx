@@ -34,12 +34,12 @@ export default function PlacementJobDetails({ jobDetails, onGetHiredClick }: { j
         <div className='flex' style={{ background: 'linear-gradient(rgba(254, 205, 8, 0.07), rgb(14, 95, 89, 0.09))' }}>
 
           {/* First */}
-          <div className='z-[-1] text-[1.8em] font-semibold text-[#0E5F59] px-[2em] flex items-center'>
+          <div className='z-[-1] text-[1.8em] font-medium text-[#0E5F59] px-[2em] flex items-center'>
             <div className='relative min-w-[5em]'>
               <div className='absolute h-[5em] w-[5em] p-[0.5em] flex items-center justify-center rounded-md bg-[#D7E8F0] -translate-y-full overflow-hidden'>
                 <img src={jobDetails.logo}></img>
               </div>
-              <div className='relative text-center'>{ jobDetails.companyName }</div>
+              <div className='relative text-center  '><p className='font-bold'>{ jobDetails.companyName }</p></div>
             </div>
           </div>
 

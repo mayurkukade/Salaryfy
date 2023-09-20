@@ -109,7 +109,7 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
   console.log(props);
   return (
     <>
-      <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]">
+      <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
         <div className="flex gap-2">
           Name{" "}
           <svg
@@ -167,7 +167,7 @@ const PhoneComponent: React.FC<PersonDetails> = (props) => {
   console.log(props);
   return (
     <>
-      <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em]">
+      <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
         <div className="flex gap-2">
           <div>Phone number</div>
           {props.mobile_no && !props.validMobile ? (
@@ -307,7 +307,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
     );
 
   return (
-    <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[50%]">
+    <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em] md:max-w-[50%]">
       <div className="flex gap-2">
         <div>Email</div>
 
@@ -336,7 +336,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
           onClick={handleSubmitEmail}
           className="w-full md:w-auto"
         >
-          <span className="bg-[#005F59] text-[#FECD08] cursor-pointer rounded-md font-medium p-[0.25em] h-[2rem] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed block md:inline-block w-full md:w-auto">
+          <span className="bg-[#005F59] text-[#FECD08]  rounded-md font-medium p-[0.25em] h-[2rem] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed block md:inline-block w-full md:w-auto">
             Send OTP
           </span>
         </button>
@@ -364,7 +364,7 @@ const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[45%]">
+    <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em] md:max-w-[45%]">
       <div>Password</div>
       <div className="flex gap-[1em] relative">
         <input
@@ -441,7 +441,7 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
     </svg>
   );
   return (
-    <div className="flex flex-col flex-grow text-[#005F59] font-semibold text-[1.8em] md:max-w-[45%]">
+    <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em] md:max-w-[45%]">
       <div>Confirm Password</div>
       <div className="flex w-full items-center">
         <div className="flex gap-[1em] relative w-full">
@@ -543,7 +543,7 @@ function UploadResumeComponent({
           />
         </div>
         <div>
-          <p className="text-[#f87171] text-[1rem] font-light">
+          <p className=" text-[#005F59] font-semibold">
             Upload Resume (PDF only)*
           </p>
         </div>
@@ -797,7 +797,7 @@ const PersonalDetails = ({
   console.log(toggleLoginRegister);
   return (
     <div className="flex flex-col gap-[2em] md:px-[10em]">
-      <div className="font-semibold text-[1.8em] text-[#5B5B5B] mt-3">
+      <div className="font-medium text-[1.8em] text-[#5B5B5B] mt-3">
         Fill the details below
       </div>
 
@@ -860,7 +860,7 @@ const PersonalDetails = ({
           <UploadResumeComponent onResumeUpload={onResumeUpload} />
           <div className="text-grey text-center mt-1  text-[1.2rem]">
             <div className="flex text-center justify-center align-middle gap-2">
-              <h2 className="ml-1">Already User?</h2>
+              <h2 className="ml-1 font-medium">Already User?</h2>
               <span
                
                 
@@ -869,7 +869,7 @@ const PersonalDetails = ({
               >
                 Sign In
               </span>
-              <h2>Now</h2>
+              <h2 className="font-medium">Now</h2>
             </div>
        
           </div>

@@ -86,7 +86,7 @@ export default function SubStep({
       </div>
       <div className="">
         {status !== SUB_STEP_STATUS.REMAINING && (
-          <div className="font-medium text-[white] text-[1.3em]">Step-{no}</div>
+          <div className=" text-[white] text-[15px] leading-[23px] font-normal">Step-{no}</div>
         )}
         <div className={`text-[1.8em] font-medium ${titleColor}`}>{title}</div>
       </div>

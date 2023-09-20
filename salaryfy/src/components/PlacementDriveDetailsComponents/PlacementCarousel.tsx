@@ -61,22 +61,22 @@ export default function PlacementCarousel() {
                 }}
               />
               <div>
-                <p className="text-darkGreen text-[1.5rem] font-bold">
+                <p className="text-darkGreen text-[1.1rem] font-medium leading-[27px]">
                   Himanshu Rawat
                 </p>
-                <span className="text-grey text-[1rem] font-medium">
+                <span className="text-grey text-[1rem] font-normal leading-[27px] ">
                   Software Engineer
                 </span>
               </div>
             </div>
             <div className="flex p-2 justify-around text-darkGreen font-Lexend">
               <div>
-                <p>Placed in</p>
-                <p className="text-[1.5rem] font-bold">Wipro</p>
+                <p className="font-normal text-[12px] leading-[1.1rem]">Placed in</p>
+                <p className="text-[1.1rem] font-medium leading-[1.7rem]">Wipro</p>
               </div>
               <div>
-                <p>Job Switched in</p>
-                <p className="text-[1.5rem] font-bold">10Days</p>
+                <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
+                <p className="text-[1.1rem] font-medium leading-[1.7rem]">10Days</p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">
                 <p className="absolute text-center">25% Hike</p>
