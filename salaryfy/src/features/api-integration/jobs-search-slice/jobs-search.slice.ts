@@ -6,7 +6,7 @@ const jobSearchSlice = apiSlice.injectEndpoints({
     getJobsSearch: builder.query({
       query: ({ searchInput = '', sortField = 'companyName' }: { searchInput?: string, sortField?: string }) => {
         console.log('placement: ', { searchInput, sortField });
-        return `jobs/searchBarFilter?searchBarInput=${searchInput}&sortField=${sortField}&sortDirection=asc`
+        return `jobs/searchBarFilterSort?searchBarInput=${searchInput}&sortField=${sortField}&sortDirection=asc`
       },
       providesTags: ['jobs-keyword-search']
     }),
