@@ -10,6 +10,10 @@ import { CommonUtilities } from "../../../utils/common.utilities";
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import { JobType } from "../../../features/reducers/jobs/jobs.interface";
 import { Button } from "@mui/material";
+import { useLazyGetAllLocationsJobtypesCompanynamesQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
+import { QuestionnaireHttpClient } from "../services/questionnaire.service";
+import { concatMap, mergeMap, switchMap, tap } from "rxjs";
+import { setSelectedCity } from "../../../features/reducers/selected-city/selected-city.slice";
 
 export default function FilterComponent({ className, onSearchButtonClick, setAllJobs, onClearButtonClick }: { className?: string, onSearchButtonClick: () => void, setAllJobs: (v: string) => void, onClearButtonClick: () => void }) {
 
@@ -18,33 +22,25 @@ export default function FilterComponent({ className, onSearchButtonClick, setAll
   const jobs = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]);
   const selectedCity = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.SELECTED_CITY]);
   let once = false;
+  const [getLnJtCn] = useLazyGetAllLocationsJobtypesCompanynamesQuery();
+  const httpClient = new QuestionnaireHttpClient();
 
   useEffect(() => {
-    if (once) return;
-    once = true;
+    if (once){ return; } once = true;
+    
+    httpClient.request(getLnJtCn({}))
+      .pipe(
+        concatMap(async ({ data: response }) => response as { locations: Array<string>, jobTypes: Array<string>, companyNames: Array<string> }),
+        mergeMap(async (response) => Object.entries(response).map(([key, value]) => ([key, value.map((option) => ({ option, selected: selectedCity === option }))]))),
+        switchMap(async (response) => Object.fromEntries(response))
+      )
+      .subscribe(async (response) => dispatch( setJobFilter(response) ));
 
-    const jobFilterValues$ = { locations: Array.from(new Set(jobs.map((job: JobType) => job.location))), jobTypes: Array.from(new Set(jobs.map((job: JobType) => job.jobType))), companyNames: Array.from(new Set(jobs.map((job: JobType) => job.companyName))) };
-    const jobFilterOptions = { locations: jobFilterValues$.locations.map((location: string) => ({ option: location, selected: false })), jobTypes: jobFilterValues$.jobTypes.map((jobType: string) => ({ option: jobType, selected: false })), companyNames: jobFilterValues$.companyNames.map((companyName: string) => ({ option: companyName, selected: false })) };
-    dispatch(setJobFilter(jobFilterOptions));
-    // setAllJobs('');
+  }, [jobs]);
 
-  }, []);
-
-  useEffect(() => {
-    const jobFilterValues$ = { locations: Array.from(new Set(jobs.map((job: JobType) => job.location))), jobTypes: Array.from(new Set(jobs.map((job: JobType) => job.jobType))), companyNames: Array.from(new Set(jobs.map((job: JobType) => job.companyName))) };
-    const jobFilterOptions = { locations: jobFilterValues$.locations.map((location: string) => ({ option: location, selected: false })), jobTypes: jobFilterValues$.jobTypes.map((jobType: string) => ({ option: jobType, selected: false })), companyNames: jobFilterValues$.companyNames.map((companyName: string) => ({ option: companyName, selected: false })) };
-    jobFilterOptions.locations = jobFilterOptions.locations.map((location: OptionSelected) => {
-      if (location.option === selectedCity) {
-        console.log('filter dash: ', selectedCity);
-        return { option: selectedCity, selected: true };
-      }
-      return location;
-    });
-    dispatch(setJobFilter(jobFilterOptions));
-
-  }, [selectedCity]);
 
   function onFilterOptionSelect(type: 'add' | 'remove', filterName: 'locations' | 'jobTypes' | 'companyNames', locationOption: string) {
+    if (selectedCity === locationOption && type === 'remove' && filterName === 'locations') { setSelectedCity('') }
     const updatedOptions = jobFilterValues[filterName].map(value => {
       if (value.option === locationOption) return { ...value, selected: type === 'add' ? (value.option === locationOption) : !(value.option === locationOption) }
       return { ...value };
@@ -54,11 +50,6 @@ export default function FilterComponent({ className, onSearchButtonClick, setAll
   }
 
   function clearFilterHandler() {
-    dispatch( setJobFilter(
-      Object.entries(jobFilterValues)
-        .map(([key, values]: [string, Array<OptionSelected>]) => ({ [key]: values.map((value: OptionSelected) => ({ ...value, selected: false })) }))
-        .reduce((result, currentObj) => ({ ...result, ...Object.entries(currentObj).map(([key, value]: [string, Array<OptionSelected>]) => ({ [key]: value })).reduce(v => v) }), {}) as unknown as JobsFilterType
-    ) );
     onClearButtonClick();
   }
 

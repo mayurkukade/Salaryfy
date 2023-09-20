@@ -12,8 +12,10 @@ import { SLICE_NAMES } from "../../features/slice-names.enum";
 import { useDispatch, useSelector } from "react-redux";
 import { setJobs } from "../../features/reducers/jobs/jobs.slice";
 import { JobType } from "../../features/reducers/jobs/jobs.interface";
-import { OptionSelected } from "../../features/reducers/job-filter/jobs-filter.interface";
+import { JobsFilterType, OptionSelected } from "../../features/reducers/job-filter/jobs-filter.interface";
 import { SORT_OPTIONS, SortOptions } from "../../contants/job-sort-options.enum";
+import { setJobFilter } from "../../features/reducers/job-filter/jobs-filter.slice";
+import { setSelectedCity } from "../../features/reducers/selected-city/selected-city.slice";
 function FilterSVGIcon() {
   return (
     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,6 +56,8 @@ export default function PlacementDrivePage() {
 
   const selectedOption = Object.values(jobSortOptions).filter(({ selected }) => selected).map(e => e.label)[0]
 
+  const selectedCity = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.SELECTED_CITY]);
+
   let once = false;
 
   async function searchByFilterComponent() {
@@ -66,16 +70,16 @@ export default function PlacementDrivePage() {
     const filterPropertiesUriEncoded = Object.entries(filterProperties).map(([key, value]: [string, string]) => [key, encodeURIComponent(value)].join('=')).join('&');
     const { data: { list: jobsData } } = await lazyGetFilterJobs(filterPropertiesUriEncoded);
 
-    dispatch(setJobs(jobsData));
+    // dispatch(setJobs(jobsData));
+
+    // setFilterKey(() => CommonUtilities.generateRandomString(10));
   }
 
 
   async function searchByKeyword() {
     const searchElement = searchFieldRef.current;
-    if (searchElement) {
-      setAllJobs(searchElement.value)
-    }
-
+    if (searchElement) { setAllJobs(searchElement.value) }
+    clearFilterHandler();
   }
 
   async function setAllJobs(searchInput: string) {
@@ -108,7 +112,9 @@ export default function PlacementDrivePage() {
   }
 
   function clearFilterHandler() {
-    console.log('clear button clicked');
+    if (selectedCity !== '') { dispatch( setSelectedCity('') ); }
+    const clearedFilterValues = Object.fromEntries(Object.entries(jobFilterValues).map(([key, value]) => [key, value.map(e => ({ ...e, selected: false }))])) as unknown as JobsFilterType;
+    dispatch( setJobFilter( clearedFilterValues ) );
   }
 
   function onSortOptionChange(option: string) {
@@ -132,7 +138,7 @@ export default function PlacementDrivePage() {
         </Box>
         <div className="flex-grow p-3">
           <p className="text-[1.2rem] font-semibold text-darkGreen mb-2">Search</p>
-          <div className="flex gap-[2.5em] h-[4em] flex-col">
+          <div className="flex gap-[2.5em] h-[4em] flex-row">
             <div className="flex-grow flex">
               <TextField inputRef={searchFieldRef} className="flex-grow" placeholder="Enter Keyword" size="small" />
             </div>
