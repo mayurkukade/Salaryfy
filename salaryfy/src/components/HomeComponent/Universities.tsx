@@ -20,157 +20,157 @@ import MahatmaGandhiCentralUniversitylogo from "../../../assets/Universities/Mah
 import Marquee from 'react-fast-marquee'
 const Universities = () => {
   return (
-    // <div className="w-full font-Lexend">
-    //   <div className="container mx-auto">
-    //     <p className="text-center  mt-8 md:mt-16 mb-6 md:mb-15 text-2xl md:text-4xl font-semibold">
-    //       <span className="text-darkGreen text-[3.9375rem]">Students from </span>
-    //       <span className="text-yellow text-[3.9375rem]">Universities</span>
-    //     </p>
-    //     <div className="max-h-[400px] overflow-y-auto">
-    //       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-10 ">
-    //         <UniversitiesCard
-    //           img={AhmedabadUniversitylogo}
-    //           university1="Ahmedabad"
-    //         />
-    //         <UniversitiesCard
-    //           img={DibrugarhUniversitylogo}
-    //           university1="Dibrugarh"
-    //         />
-    //         <UniversitiesCard img={AKSUniversitylogo} university1="A.K.S" />
-    //         <UniversitiesCard img={AshokaUniversitylogo} university1="Ashoka" />
-    //         <UniversitiesCard
-    //           img={BangaloreUniversitylogo}
-    //           university1="Bangalore"
-    //         />
-    //         <UniversitiesCard
-    //           img={BharatiVidyapeethlogo}
-    //           university1="Bharati"
-    //           university2="Vidyapeeth"
-    //         />
-    //         <UniversitiesCard img={IILMUniversitylogo} university1="IILM" />
-    //         <UniversitiesCard img={ITMUniversitylogo} university1="ITM" />
-    //         <UniversitiesCard
-    //           img={JaiPrakashVishwavidyalayalogo}
-    //           university1="JaiPrakash"
-    //           university2="Vishwa"
-    //           university3="Vidyalaya"
-    //         />
-    //         <UniversitiesCard img={KannurUniversitylogo} university1="Kannur" />
-    //         <UniversitiesCard
-    //           img={KrishnaUniversitylogo}
-    //           university1="Krishna"
-    //         />
-    //         <UniversitiesCard
-    //           img={MahatmaGandhiCentralUniversitylogo}
-    //           university1="Mahatma"
-    //           university2="Gandhi"
-    //           university3="Central"
-    //         />
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-    <>
-     <div className="container mx-auto ">
-      <Marquee 
-      >
-      
-        <UniversitiesCard
-               img={AhmedabadUniversitylogo}
+    <div className="w-full font-Lexend">
+      <div className="container mx-auto">
+        <p className="text-center  mt-8 md:mt-16 mb-6 md:mb-15 text-2xl md:text-4xl font-semibold">
+          <span className="text-darkGreen text-[3.9375rem]">Students from </span>
+          <span className="text-yellow text-[3.9375rem]">Universities</span>
+        </p>
+        <div className="max-h-[400px] overflow-y-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-10 ">
+            <UniversitiesCard
+              img={AhmedabadUniversitylogo}
               university1="Ahmedabad"
-           />
-     
-     <UniversitiesCard
-               img={DibrugarhUniversitylogo}
-               university1="Dibrugarh"
-         />
-      
-      <UniversitiesCard img={AKSUniversitylogo} university1="A.K.S" />
-       
-      <UniversitiesCard img={AshokaUniversitylogo} university1="Ashoka" />
- 
-      <UniversitiesCard
-               img={BangaloreUniversitylogo}
-               university1="Bangalore"
-           />
-        
-        <UniversitiesCard
-               img={BharatiVidyapeethlogo}
-               university1="Bharati"
-               university2="Vidyapeeth"
             />
-              <UniversitiesCard img={IILMUniversitylogo} university1="IILM" />
-              <UniversitiesCard img={ITMUniversitylogo} university1="ITM" />
-              <UniversitiesCard
-               img={JaiPrakashVishwavidyalayalogo}
-               university1="JaiPrakash"
-               university2="Vishwa"
-               university3="Vidyalaya"
-             />
-             <UniversitiesCard img={KannurUniversitylogo} university1="Kannur" />
-             <UniversitiesCard
-               img={KrishnaUniversitylogo}
-               university1="Krishna"
+            <UniversitiesCard
+              img={DibrugarhUniversitylogo}
+              university1="Dibrugarh"
             />
-       <UniversitiesCard
-               img={MahatmaGandhiCentralUniversitylogo}
-               university1="Mahatma"
+            <UniversitiesCard img={AKSUniversitylogo} university1="A.K.S" />
+            <UniversitiesCard img={AshokaUniversitylogo} university1="Ashoka" />
+            <UniversitiesCard
+              img={BangaloreUniversitylogo}
+              university1="Bangalore"
+            />
+            <UniversitiesCard
+              img={BharatiVidyapeethlogo}
+              university1="Bharati"
+              university2="Vidyapeeth"
+            />
+            <UniversitiesCard img={IILMUniversitylogo} university1="IILM" />
+            <UniversitiesCard img={ITMUniversitylogo} university1="ITM" />
+            <UniversitiesCard
+              img={JaiPrakashVishwavidyalayalogo}
+              university1="JaiPrakash"
+              university2="Vishwa"
+              university3="Vidyalaya"
+            />
+            <UniversitiesCard img={KannurUniversitylogo} university1="Kannur" />
+            <UniversitiesCard
+              img={KrishnaUniversitylogo}
+              university1="Krishna"
+            />
+            <UniversitiesCard
+              img={MahatmaGandhiCentralUniversitylogo}
+              university1="Mahatma"
               university2="Gandhi"
-               university3="Central"
-             />
-      </Marquee>
-      <Marquee className="mt-2 "
-      >
-      
-        <UniversitiesCard
-               img={AhmedabadUniversitylogo}
-              university1="Ahmedabad"
-           />
-     
-     <UniversitiesCard
-               img={DibrugarhUniversitylogo}
-               university1="Dibrugarh"
-         />
-      
-      <UniversitiesCard img={AKSUniversitylogo} university1="A.K.S" />
-       
-      <UniversitiesCard img={AshokaUniversitylogo} university1="Ashoka" />
- 
-      <UniversitiesCard
-               img={BangaloreUniversitylogo}
-               university1="Bangalore"
-           />
-        
-        <UniversitiesCard
-               img={BharatiVidyapeethlogo}
-               university1="Bharati"
-               university2="Vidyapeeth"
+              university3="Central"
             />
-              <UniversitiesCard img={IILMUniversitylogo} university1="IILM" />
-              <UniversitiesCard img={ITMUniversitylogo} university1="ITM" />
-              <UniversitiesCard
-               img={JaiPrakashVishwavidyalayalogo}
-               university1="JaiPrakash"
-               university2="Vishwa"
-               university3="Vidyalaya"
-             />
-             <UniversitiesCard img={KannurUniversitylogo} university1="Kannur" />
-             <UniversitiesCard
-               img={KrishnaUniversitylogo}
-               university1="Krishna"
-            />
-       <UniversitiesCard
-               img={MahatmaGandhiCentralUniversitylogo}
-               university1="Mahatma"
-              university2="Gandhi"
-               university3="Central"
-             />
-      </Marquee>
+          </div>
+        </div>
+      </div>
     </div>
-    </>
+ 
   )
 };
+<>
+{/* <div className="container mx-auto ">
+ <Marquee 
+ >
+ 
+   <UniversitiesCard
+          img={AhmedabadUniversitylogo}
+         university1="Ahmedabad"
+      />
 
+<UniversitiesCard
+          img={DibrugarhUniversitylogo}
+          university1="Dibrugarh"
+    />
+ 
+ <UniversitiesCard img={AKSUniversitylogo} university1="A.K.S" />
+  
+ <UniversitiesCard img={AshokaUniversitylogo} university1="Ashoka" />
+
+ <UniversitiesCard
+          img={BangaloreUniversitylogo}
+          university1="Bangalore"
+      />
+   
+   <UniversitiesCard
+          img={BharatiVidyapeethlogo}
+          university1="Bharati"
+          university2="Vidyapeeth"
+       />
+         <UniversitiesCard img={IILMUniversitylogo} university1="IILM" />
+         <UniversitiesCard img={ITMUniversitylogo} university1="ITM" />
+         <UniversitiesCard
+          img={JaiPrakashVishwavidyalayalogo}
+          university1="JaiPrakash"
+          university2="Vishwa"
+          university3="Vidyalaya"
+        />
+        <UniversitiesCard img={KannurUniversitylogo} university1="Kannur" />
+        <UniversitiesCard
+          img={KrishnaUniversitylogo}
+          university1="Krishna"
+       />
+  <UniversitiesCard
+          img={MahatmaGandhiCentralUniversitylogo}
+          university1="Mahatma"
+         university2="Gandhi"
+          university3="Central"
+        />
+ </Marquee>
+ <Marquee className="mt-2 "
+ >
+ 
+   <UniversitiesCard
+          img={AhmedabadUniversitylogo}
+         university1="Ahmedabad"
+      />
+
+<UniversitiesCard
+          img={DibrugarhUniversitylogo}
+          university1="Dibrugarh"
+    />
+ 
+ <UniversitiesCard img={AKSUniversitylogo} university1="A.K.S" />
+  
+ <UniversitiesCard img={AshokaUniversitylogo} university1="Ashoka" />
+
+ <UniversitiesCard
+          img={BangaloreUniversitylogo}
+          university1="Bangalore"
+      />
+   
+   <UniversitiesCard
+          img={BharatiVidyapeethlogo}
+          university1="Bharati"
+          university2="Vidyapeeth"
+       />
+         <UniversitiesCard img={IILMUniversitylogo} university1="IILM" />
+         <UniversitiesCard img={ITMUniversitylogo} university1="ITM" />
+         <UniversitiesCard
+          img={JaiPrakashVishwavidyalayalogo}
+          university1="JaiPrakash"
+          university2="Vishwa"
+          university3="Vidyalaya"
+        />
+        <UniversitiesCard img={KannurUniversitylogo} university1="Kannur" />
+        <UniversitiesCard
+          img={KrishnaUniversitylogo}
+          university1="Krishna"
+       />
+  <UniversitiesCard
+          img={MahatmaGandhiCentralUniversitylogo}
+          university1="Mahatma"
+         university2="Gandhi"
+          university3="Central"
+        />
+ </Marquee>
+</div> */}
+</>
 const UniversitiesCard = ({
   img,
   university1,
