@@ -42,6 +42,7 @@ export default function SubStep({
     (state: RootState) => state.currentRoute.currentRoute
   );
   console.log(currentRoute);
+  console.log(no)
   return (
     <div
       className={`flex ${stepBgColor} px-[2em] rounded-[1.5em] items-center h-[6.5em]`}
@@ -85,9 +86,10 @@ export default function SubStep({
         )}
       </div>
       <div className="">
-        {status !== SUB_STEP_STATUS.REMAINING && (
-          <div className=" text-[white] text-[15px] leading-[23px] font-normal">Step-{no}</div>
+        {status !== SUB_STEP_STATUS.REMAINING  && (
+          <div className=" text-[white] text-[15px] leading-[23px] font-normal">Step-{no} </div>
         )}
+        
         <div className={`text-[1.8em] font-medium ${titleColor}`}>{title}</div>
       </div>
     </div>

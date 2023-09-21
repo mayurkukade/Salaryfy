@@ -69,10 +69,10 @@ export default function BottomPageNavigationBar() {
   console.log(!nextButtonDisabled);
   const navigate = useNavigate();
 
-  const nextHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const nextHandler = async () => {
     if (currentRoute === "questionnaire") {
       console.log(true);
-      e.preventDefault();
+     
       try {
         const res = await register(registerFormData[0]);
         console.log(res);
@@ -146,6 +146,7 @@ export default function BottomPageNavigationBar() {
               height="25"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              
             >
               <path
                 d="M1.12891 12.1289C0.647814 12.61 0.647813 13.39 1.12891 13.8711L8.96875 21.7109C9.44985 22.192 10.2299 22.192 10.7109 21.7109C11.192 21.2298 11.192 20.4498 10.7109 19.9688L3.74219 13L10.7109 6.03124C11.192 5.55015 11.192 4.77015 10.7109 4.28905C10.2299 3.80796 9.44985 3.80796 8.96876 4.28905L1.12891 12.1289ZM33 11.7681L2 11.7681L2 14.2319L33 14.2319L33 11.7681Z"
@@ -153,13 +154,13 @@ export default function BottomPageNavigationBar() {
               />
             </svg>
           </span>
-          <span className="text-[18px] w-[5rem;] leading-[27px] text-[#FECD08] font-medium mr-[0.5em] ">
-            Back
+          <span className="text-[18px] w-[5rem] leading-[27px] text-[#FECD08] font-medium mr-[0.5em] ">
+           <p className="ml-4">Back</p> 
           </span>
         </div>
         <div
           className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#FECD08] mx-[1em] cursor-pointer"
-          onClick={backHandler}
+          onClick={nextHandler}
         >
           <span className="text-[18px] w-[5rem;] leading-[27px] text-darkGreen font-medium mr-[0.5em] ">
             {" "}

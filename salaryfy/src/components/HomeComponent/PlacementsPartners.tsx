@@ -1,4 +1,4 @@
-
+import Marquee from 'react-fast-marquee'
 
 import lenskartlogo from "../../../assets/Logos/lenskartlogo.png";
 import cromalogo from "../../../assets/Logos/cromalogo.png";
@@ -83,6 +83,100 @@ const PlacementsPartners = () => {
           </div>
         </div>
         {/* </marquee> */}
+        <div className="container mx-auto ">
+      <Marquee 
+      >
+      
+      <div className="rounded-lg bg-gradient-to-br  md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={lenskartlogo} alt="justdial Logo" className="max-h-full" />
+            </div>
+     
+            <div className="rounded-lg bg-gradient-to-br  md: shadow-md w-full md:w-[8.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={techmahindra} alt="justdial Logo" className="max-h-full" />
+            </div>
+      
+            <div className="rounded-lg bg-gradient-to-br p-2 md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={justdial} alt="justdial Logo" className="max-h-full" />
+            </div>
+       
+            <div className="rounded-lg bg-gradient-to-br p-2 md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={justdial} alt="justdial Logo" className="max-h-full" />
+            </div>
+ 
+            <div className="rounded-lg bg-gradient-to-br p-2 md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={justdial} alt="justdial Logo" className="max-h-full" />
+            </div>
+        
+            <div className="rounded-lg bg-gradient-to-br p-2 md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={justdial} alt="justdial Logo" className="max-h-full" />
+            </div>
+            <div className="rounded-lg bg-gradient-to-br p-2 md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={justdial} alt="justdial Logo" className="max-h-full" />
+            </div>
+            <div className="rounded-lg bg-gradient-to-br p-2 md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={justdial} alt="justdial Logo" className="max-h-full" />
+            </div>
+            <div className="rounded-lg bg-gradient-to-br p-2 md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={justdial} alt="justdial Logo" className="max-h-full" />
+            </div>
+            <div className="rounded-lg bg-gradient-to-br p-2 md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={justdial} alt="justdial Logo" className="max-h-full" />
+            </div>
+            <div className="rounded-lg bg-gradient-to-br p-2 md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={justdial} alt="justdial Logo" className="max-h-full" />
+            </div>
+            <div className="rounded-lg bg-gradient-to-br p-2 md:p-4 shadow-md w-full md:w-[11.20544rem] h-[7.95969rem] flex items-center justify-center">
+              <img src={justdial} alt="justdial Logo" className="max-h-full" />
+            </div>
+      </Marquee>
+      {/* <Marquee className="mt-2 "
+      >
+      
+        <UniversitiesCard
+               img={AhmedabadUniversitylogo}
+              university1="Ahmedabad"
+           />
+     
+     <UniversitiesCard
+               img={DibrugarhUniversitylogo}
+               university1="Dibrugarh"
+         />
+      
+      <UniversitiesCard img={AKSUniversitylogo} university1="A.K.S" />
+       
+      <UniversitiesCard img={AshokaUniversitylogo} university1="Ashoka" />
+ 
+      <UniversitiesCard
+               img={BangaloreUniversitylogo}
+               university1="Bangalore"
+           />
+        
+        <UniversitiesCard
+               img={BharatiVidyapeethlogo}
+               university1="Bharati"
+               university2="Vidyapeeth"
+            />
+              <UniversitiesCard img={IILMUniversitylogo} university1="IILM" />
+              <UniversitiesCard img={ITMUniversitylogo} university1="ITM" />
+              <UniversitiesCard
+               img={JaiPrakashVishwavidyalayalogo}
+               university1="JaiPrakash"
+               university2="Vishwa"
+               university3="Vidyalaya"
+             />
+             <UniversitiesCard img={KannurUniversitylogo} university1="Kannur" />
+             <UniversitiesCard
+               img={KrishnaUniversitylogo}
+               university1="Krishna"
+            />
+       <UniversitiesCard
+               img={MahatmaGandhiCentralUniversitylogo}
+               university1="Mahatma"
+              university2="Gandhi"
+               university3="Central"
+             />
+      </Marquee> */}
+    </div>
       </div>
     </div>
   );

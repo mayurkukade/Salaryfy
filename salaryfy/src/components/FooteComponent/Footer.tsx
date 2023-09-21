@@ -4,11 +4,11 @@ const Footer = () => {
   return (
    
 
-    <div className="w-full bg-darkGreen h-[20rem] ">
+    <div className="w-full bg-darkGreen h-[16rem] ">
      
-        <div className="mx-auto max-w-screen-xl space-y-5 px-4 py-16 sm:px-6 lg:space-y-[2rem] lg:px-8 ">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            <div className="flex flex-col">
+        <div className="mx-auto max-w-screen-xl space-y-5  px-4  sm:px-6  lg:px-8 ">
+          <div className="grid grid-cols-1  gap-8 lg:grid-cols-3 ">
+            <div className="flex flex-col mt-5 ">
               <div className=" shrink-0 flex justify-center">
                 <img
                   className="w-[60%] md:w-[40%]"
@@ -22,7 +22,7 @@ const Footer = () => {
               </p>
             </div>
 
-            <div className="flex gap-[50px] p-1 justify-center">
+            <div className="flex gap-[50px] p-1 justify-center mt-4">
               <div>
                 <p className=" text-white font-extrabold text-[1.5rem]">
                   Placement
@@ -109,7 +109,7 @@ const Footer = () => {
             </div>
 
             {/* Follow US */}
-            <div className="">
+            <div className="mt-5">
               <p className="font-extrabold text-white text-[1.5rem] flex justify-center">
                 Follow Us
               </p>

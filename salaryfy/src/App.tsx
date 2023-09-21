@@ -13,7 +13,7 @@ import { PasswordResetSuccessful } from "./pages/PasswordResetSuccessful";
 import "./App.css";
 import AppLayout from "./components/appLayout/AppLayout";
 
-import Footer from "./components/FooteComponent/Footer";
+
 import PlacementDrivePage from "./modules/questionnaire/PlacementDrivePage";
 import PlacementDriveDetails from "./pages/PlacementDriveDetails";
 
@@ -90,7 +90,7 @@ function App() {
         <Route path="/test" element={<TestComponent />} />
       </Routes>
 
-      <Footer />
+     
     </>
   );
 }
