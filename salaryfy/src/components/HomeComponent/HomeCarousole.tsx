@@ -1,10 +1,11 @@
 // Import Swiper React components
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import AnuragSrivastva from '../../../assets/Testimonals-Images/Anurag_Srivastava-min.png'
 import BharatKumar from '../../../assets/Testimonals-Images/Bharat_Kumar-min.png'
-import DhawalLokhande from '../../../assets/Testimonals-Images/Dhawal_Lokhande-min.png'
+
 import NameataKumar from '../../../assets/Testimonals-Images/Namrata_Kumar-min.png'
-import NitinTongaria from '../../../assets/Testimonals-Images/Nitin_Tongaria-min.png'
+
 import Pallavi from '../../../assets/Testimonals-Images/Pallavi_Rustagi-min.png'
 import PratyayDas from '../../../assets/Testimonals-Images/Pratyay_Das_Sharma-min.png'
 import RahulYadav from '../../../assets/Testimonals-Images/Rahul_Yadav-min.png'
@@ -12,9 +13,9 @@ import RahulYadav from '../../../assets/Testimonals-Images/Rahul_Yadav-min.png'
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-
+import "swiper/css/autoplay"
 // import required modules
-import { FreeMode, Pagination } from "swiper/modules";
+import { Autoplay, Pagination, Navigation ,FreeMode} from 'swiper/modules';
 import TestimonalsCards from "./TestimonalsCards";
 
 export default function HomeCarousole2() {
@@ -24,10 +25,15 @@ export default function HomeCarousole2() {
         slidesPerView={1}
         spaceBetween={30}
         freeMode={true}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
         pagination={{
           clickable: true,
         }}
-        modules={[FreeMode, Pagination]}
+        navigation={true}
+        modules={[FreeMode, Pagination,Autoplay,Navigation]}
         className="mySwiper"
         // Responsive settings
         breakpoints={{
