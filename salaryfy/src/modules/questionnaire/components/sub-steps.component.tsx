@@ -26,7 +26,7 @@ export default function SubSteps() {
         />
         <SubStepArrow />
         <SubStep
-          status={SUB_STEP_STATUS.COMPLETED}
+          status={SUB_STEP_STATUS.REMAINING}
           no={3}
           title="Confirming Interview Slot"
         />
@@ -48,7 +48,7 @@ export default function SubSteps() {
         />
         <SubStepArrow />
         <SubStep
-          status={SUB_STEP_STATUS.PENDING}
+          status={SUB_STEP_STATUS.REMAINING}
           no={3}
           title="Confirming Interview Slot"
         />

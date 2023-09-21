@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box} from '@mui/material';
 import image from '../../../assets/images/job-details-bg.png';
 import CalendarVector from './calendar-vector';
 import SideArrow from './side-arrow.icon';
