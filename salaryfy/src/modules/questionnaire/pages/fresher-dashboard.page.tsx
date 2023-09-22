@@ -303,16 +303,16 @@ export function FresherDashboard() {
             <div>{userProfile.email}</div>
             <div>Status</div>
             <div>
-              <span className="bg-[#0CBC8B] rounded-[1em] text-[white] px-[0.5em] py-[0.25em]">
+              { false && <span className="bg-[#0CBC8B] rounded-[1em] text-[white] px-[0.5em] py-[0.25em]">
                 Selected
-              </span>
+              </span> }
             </div>
             <div>Plan Opted</div>
-            <div>Rapid Placement</div>
+            <div>Job Fair</div>
             <div>Sign Up Date</div>
             <div>{userProfile?.date && CommonUtilities.date.formatDate(userProfile?.date)}</div>
             <div>Payment Method</div>
-            <div>Card</div>
+            <div></div>
           </div>
 
           {/* Education Details Section*/}
@@ -451,6 +451,8 @@ function UpcomingInterviewCard({ className, details }: { className?: string, det
   async function init() {
     const { data: { object: jobDetailsResponse } } = await getLazyJobById(details.jobId.toString());
     setJobDetails(() => jobDetailsResponse);
+    // console.log('dash1: ', jobDetailsResponse);
+    console.log('dash1: ', details);
   }
   useEffect(() => {
     init();
@@ -497,7 +499,7 @@ function UpcomingInterviewCard({ className, details }: { className?: string, det
             </div>
             <div className="text-[1.4em] flex">
               <div className="mr-[0.5em]">Location:</div>
-              <div className="text-[#0E5F59]">{jobDetails?.location}</div>
+              <div className="text-[#0E5F59]">{details?.location}</div>
             </div>
           </div>
           <div className="px-[1em] flex flex-row items-end">
