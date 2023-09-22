@@ -23,6 +23,13 @@ const initialValue: { value: CHANGED_BY } = {
   value: CHANGED_BY.SERVER
 };
 
+interface DocumentTypeResponse {
+  documentId: number
+  documentLink: string
+  documentType: FILE_UPLOAD_TYPES
+  userId: number
+}
+
 export default function FresherProfileUploadPage() {
   return (
     <div className="w-100 flex flex-col items-center h-[100%]">
@@ -38,6 +45,7 @@ export default function FresherProfileUploadPage() {
 
 function FresherProfileUpload() {
 
+  const [userProfilePhotoLink, setUserProfilePhotoLink] = useState<string | null>(null);
   const [userFullName, setUserFullName] = useState<string>('No Name');
   const userDocEduUploadFileRef = useRef<HTMLInputElement | null>(null);
   const userDocSkillUploadFileRef = useRef<HTMLInputElement | null>(null);
@@ -82,12 +90,16 @@ function FresherProfileUpload() {
       setUserFullName((userFullName) => userDetails.fullName || userFullName);
     }
 
-    httpClient.request(getUploadedDocs(userId))
-      .pipe( concatMap(async ({ data: response }) => response) )
-      .subscribe((response) => console.log('fresher: ', response))
+    fetchUserProfilePhoto();
 
-    console.log('fresher: ', { userId });
+    // console.log('fresher: ', { userId });
   }, [userId]);
+
+  function fetchUserProfilePhoto() {
+    httpClient.request(getUploadedDocs(userId))
+      .pipe(concatMap(async ({ data: { response } }) => (response as unknown as Array<DocumentTypeResponse>).find((doc) => doc.documentType === FILE_UPLOAD_TYPES.PROFILE_PHOTO).documentLink))
+      .subscribe((link: string) => setUserProfilePhotoLink(() => link))
+  }
 
   useEffect(() => {
     if (educationalSkillsChangedByRef.current.value === CHANGED_BY.USER) {
@@ -335,7 +347,7 @@ function FresherProfileUpload() {
             <div className="flex mb-[2em]">
 
 
-              <UserProfilePhoto userId={userId} profileLink="" />
+              <UserProfilePhoto userId={userId} profileLink={userProfilePhotoLink} onPhotoUpload={fetchUserProfilePhoto} />
 
 
               <div className="p-5 md:pl-10">
@@ -494,13 +506,13 @@ function DocUploader({ className, label, uploading, progress, onDocUpload }: { c
   );
 }
 
-function UserProfilePhoto({ profileLink, userId }: { profileLink: null | string, userId: string }) {
+function UserProfilePhoto({ profileLink, userId, onPhotoUpload }: { profileLink: null | string, userId: string, onPhotoUpload: () => void }) {
   const [fileUploadPost] = useUploadFileMutation();
   const userDocProfileRef = useRef<HTMLInputElement | null>(null);
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
 
   function profilePhotoClicked() {
-    if (userDocProfileRef?.current){
+    if (userDocProfileRef?.current) {
       userDocProfileRef?.current?.click();
       console.log('jobs: ', 'hehrehrehr');
     }
@@ -514,19 +526,21 @@ function UserProfilePhoto({ profileLink, userId }: { profileLink: null | string,
     }
   }
   function profilePhotoUpload(documentFile: File) {
-    if (!userId){ return; }
+    if (!userId) { return; }
     const formData = new FormData()
     formData.append('image', documentFile);
     formData.append('documentType', FILE_UPLOAD_TYPES.PROFILE_PHOTO);
     formData.append('userId', userId);
 
     httpClient.request(fileUploadPost(formData))
-      .subscribe((response) => console.log('fresher: ', response))
+      .subscribe(() => {
+        if (onPhotoUpload) { onPhotoUpload() }
+      })
   }
 
   return (
     <div onClick={profilePhotoClicked} className="select-none flex flex-col p-[1em] h-[20em] w-[18em] bg-[#F2F2F2] rounded-lg cursor-pointer">
-      { true && <div className="flex flex-grow flex-col">
+      {!profileLink && <div className="flex flex-grow flex-col">
         <div className="flex-grow flex justify-center items-center">
           <svg height="6em" width="6em">
             <rect height="100%" width="1px" x="50%" fill="#5B5B5B" />
@@ -535,7 +549,13 @@ function UserProfilePhoto({ profileLink, userId }: { profileLink: null | string,
         </div>
         <div className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center">Upload your Passport Photo</div>
         <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*" />
-      </div> }
+      </div>}
+      {
+        profileLink && <div className="flex-grow flex items-center">
+          <img src={profileLink} />
+          <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*" />
+        </div>
+      }
     </div >
   );
 }
