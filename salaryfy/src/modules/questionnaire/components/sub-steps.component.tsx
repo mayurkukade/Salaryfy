@@ -86,8 +86,8 @@ export default function SubSteps() {
           }}
           className="mb-[1em] text-[#0E5F59] text-[1.5em] px-[1em] rounded-[1em] py-[0.25em]"
         >
-          <span>3 steps selection process for&nbsp;</span>
-          <span className="font-bold">Lenskart</span>
+          <span className="text-[15px] font-normal leading-[27px]">3 steps selection process for&nbsp;</span>
+          <span className="font-medium leading-[27px] text-[15px]">Lenskart</span>
         </div>
         <div className="flex justify-between mb-[2em]">{subStepContent}</div>
       </div>
@@ -101,12 +101,12 @@ export default function SubSteps() {
         >
           <div className="text-[#0E5F59] text-[1.4em] px-[1em] pt-[0.5em] mb-2">
             <span>3 Steps selection process for&nbsp;</span>
-            <span className="font-bold">Lenskart</span>
+            <span className="font-medium leading-[27px] text-[15px]">Lenskart</span>
           </div>
           <div className="flex items-center gap-[0.5em] bg-[#0E5F59] p-[1em] rounded-[1.5em]">
             <div className="h-[4.5em] w-[4.5em] bg-[white] rounded-[50%]"></div>
             <div>
-              <div className="text-[white] text-[1.2em] font-[500]">Step-1</div>
+              <div className="text-[white] text-[15px] leading-[27px] font-normal">Step-1</div>
               <div className="text-[#FECD08] text-[1.9em] font-[500]">
                 Upload your resume
               </div>

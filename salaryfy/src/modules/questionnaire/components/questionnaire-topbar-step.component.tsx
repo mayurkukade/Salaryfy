@@ -32,6 +32,7 @@ export default function QuestionnaireTopBarStep() {
   let stepThreeTotal:number;
   if (currentRoute == "questionnaire/screening-questions") {
     stepTwoTotal = 25;
+    stepThreeTotal = 0
   }else if(currentRoute == 'questionnaire/fresher-dashboard'){
     stepTwoTotal = 100;
     stepThreeTotal = 40
@@ -55,6 +56,8 @@ export default function QuestionnaireTopBarStep() {
       stepThreeTotal = 0
   }
 
+
+
   return (
     <div className={ "flex w-[100%] md:w-[88.9%] container p-[3em] "}>
       {/* Code for Desktop view  */}
@@ -64,7 +67,7 @@ export default function QuestionnaireTopBarStep() {
       >
         <div className="flex flex-grow w-[100%]    mb-[2em] gap-[2em]">
           <StepDesktop
-            progress={100}
+            progress={currentRoute === "placementdrive" ? 50 :100 }
             active={false}
             no={1}
             title="Select the job"
@@ -96,14 +99,14 @@ export default function QuestionnaireTopBarStep() {
           <StepMobile
             className="text-[0.5rem]"
             progress={stepTwoTotal}
-            active={true}
+            active={stepTwoTotal > 0?true:false}
             no={2}
             title="Upload your Resume"
           />
           <StepMobile
             className="text-[0.5rem]"
             progress={stepThreeTotal}
-            active={false}
+            active={stepThreeTotal>0?true:false}
             no={3}
             title="Get hired!"
           />

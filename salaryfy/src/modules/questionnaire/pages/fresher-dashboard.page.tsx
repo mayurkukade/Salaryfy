@@ -236,7 +236,7 @@ export function FresherDashboard() {
           </div>
 
           {/* Upcoming interviews section */}
-          <div className="mx-[1em] whitespace-nowrap my-[1em] font-medium text-[2.6em] text-[#0E5F59]">
+          <div className="mx-[1em] whitespace-nowrap my-[1em]   font-medium text-[2.6em] text-[#0E5F59]">
             Upcoming Interviews
           </div>
           <div className="p-4 app-scrollbar h-[50em] flex flex-col gap-[2em]">
