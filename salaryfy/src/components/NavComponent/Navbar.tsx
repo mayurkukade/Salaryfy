@@ -86,7 +86,7 @@ const Navbar = () => {
       <ul className="hidden md:flex space-x-2 ">
         
         <li className="p-1  w-[125px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
-        <Link to={'/questionnaire/fresher-dashboard'}> Dashboard     </Link>
+        <Link to={token?'/questionnaire/fresher-dashboard':'/login'}> Dashboard     </Link>
         </li>
     
        

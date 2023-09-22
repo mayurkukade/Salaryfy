@@ -9,6 +9,7 @@ import { SLICE_NAMES } from "../features/slice-names.enum";
 import { setJobDetails } from "../features/reducers/job-details/job-details.slice";
 import Cookies from "js-cookie";
 import QuestionnaireTopBarStep from "../modules/questionnaire/components/questionnaire-topbar-step.component";
+import { useGetPlacementDetailsPDFQuery } from "../features/api-integration/jobs-search-slice/jobs-search.slice";
 
 function GreenHeading({ label }: { label: string }) {
   return (
@@ -29,6 +30,8 @@ console.log(currentRoute)
   const { jobId } = useParams();
   const navigate = useNavigate();
   const [lazyFetchJob] = useLazyGetJobByIdQuery();
+  const{data,error,isLoading,isFetching} = useGetPlacementDetailsPDFQuery(36)
+  
   const token = Cookies.get("jwtToken");
   function navigateToPlacementDrive() {
     navigate('/placementdrive');
@@ -46,7 +49,30 @@ console.log(currentRoute)
       }
     
   }
+const jobIdInNumber = Number(jobId)
+console.log(jobIdInNumber)
+  const getJobDetails = (jobIdInNumber:number)=>{
+    fetch(`http://192.168.1.53:8080/pdf/generate/${jobIdInNumber}`)
+        .then((response) => response.blob())
+        .then((blob) => {
+          
+          const url = window.URL.createObjectURL(blob);
 
+          
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = 'placement.pdf'; 
+
+          
+          document.body.appendChild(a);
+          a.click();
+
+          
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        })
+  }
   async function fetchJob() {
     try {
 
@@ -98,7 +124,7 @@ console.log(currentRoute)
 
               <p className="flex gap-[1em] w-[100%] lg:w-[max-content]">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.875 7.5H11.9824C10.8891 7.5 10 6.61094 10 5.51758V0.625C10 0.4 10.0594 0.185938 10.1668 0H3.85742C3.10898 0 2.5 0.608984 2.5 1.35742V18.6426C2.5 19.391 3.10898 20 3.85742 20H16.1426C16.891 20 17.5 19.391 17.5 18.6426V7.3332C17.31 7.44285 17.0944 7.50038 16.875 7.5ZM7.6832 11.4332C7.92734 11.1891 8.32266 11.1891 8.5668 11.4332L9.375 12.241V8.4375C9.375 8.09219 9.65469 7.8125 10 7.8125C10.3453 7.8125 10.625 8.09219 10.625 8.4375V12.241L11.4332 11.4332C11.677 11.1891 12.073 11.1891 12.3168 11.4332C12.5609 11.677 12.5609 12.073 12.3168 12.3168L10.4418 14.1918C10.31 14.327 10.1203 14.388 9.93984 14.3723C9.62688 14.3305 9.72559 14.3592 7.6832 12.3168C7.43906 12.073 7.43906 11.677 7.6832 11.4332ZM13.125 16.875H6.875C6.52969 16.875 6.25 16.5953 6.25 16.25C6.25 15.9047 6.52969 15.625 6.875 15.625H13.125C13.4703 15.625 13.75 15.9047 13.75 16.25C13.75 16.5953 13.4703 16.875 13.125 16.875ZM11.9824 6.25H16.875L11.25 0.625V5.51758C11.25 5.92148 11.5785 6.25 11.9824 6.25Z" fill="#005F59" /></svg>
-                <span className="text-[#0E5F59] font-medium text-[1.6em]">Job Details</span>
+                <span className="text-[#0E5F59] font-medium text-[1.6em] cursor-pointer" onClick={()=>getJobDetails(jobIdInNumber)}>Job Details</span>
               </p>
             </div>
             <p className="text-[1.6em]">
