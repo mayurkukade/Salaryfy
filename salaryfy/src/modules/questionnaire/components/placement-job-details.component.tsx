@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box} from '@mui/material';
 import image from '../../../assets/images/job-details-bg.png';
 import CalendarVector from './calendar-vector';
 import SideArrow from './side-arrow.icon';
@@ -39,7 +39,7 @@ export default function PlacementJobDetails({ jobDetails, onGetHiredClick }: { j
               <div className='absolute h-[5em] w-[5em] p-[0.5em] flex items-center justify-center rounded-md bg-[#D7E8F0] -translate-y-full overflow-hidden'>
                 <img src={jobDetails.logo}></img>
               </div>
-              <div className='relative text-center'>{ jobDetails.companyName }</div>
+              <div className='relative text-center  '><p className='font-bold'>{ jobDetails.companyName }</p></div>
             </div>
           </div>
 

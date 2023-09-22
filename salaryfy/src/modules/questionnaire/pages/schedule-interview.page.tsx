@@ -223,9 +223,9 @@ export function ScheduleInterview() {
   };
   return (
     <div className="h-[100%] ">
-      <div className="font-semibold text-[1.8em] text-[#000] mb-[1em]">
+      <p className="font-normal leading-[23px] text-[15px] mb-[1em]">
         You can select multiple locations with date and time
-      </div>
+      </p>
 
       <div
         className="bg-[#0E5F5910]  p-[1.5em] rounded-[1.5em] flex  mb-[2em] flex-col md:flex-row "
@@ -234,7 +234,7 @@ export function ScheduleInterview() {
         
         <div className="flex flex-col mr-[2em]">
           <div className="text-[1.6em] text-[#5B5B5B] mb-[1em]">
-            Please confirm your location for interview
+          <p className="font-normal leading-[23px] text-[15px] mb-[0.1em]">Please confirm your location for interview </p>  
           </div>
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
@@ -245,10 +245,11 @@ export function ScheduleInterview() {
                 value={location}
                 label="Location"
                 onChange={handleChangeLocation}
+                className="font-[500]"
                 sx={{
                   backgroundColor: "white",
-                  fontSize: "1.125rem",
-                  fontWeight: 600,
+                  fontSize: "1rem",
+              
                 }}
               >
                 <MenuItem value={"Pune"}>Pune</MenuItem>
@@ -260,15 +261,16 @@ export function ScheduleInterview() {
         </div>
         <div className="flex flex-col flex-grow">
           <div className="text-[1.6em] text-[#5B5B5B] mb-[1em]">
-            Please confirm your location for interview
+          <p className="font-normal leading-[23px] text-[15px] mb-[0.1em]"> Please confirm your location for interview </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-[2em]">
             <DatePicker
               selected={selectedDate}
               onChange={handleDateChange}
               dateFormat="yyyy-MM-dd"
-              className="border-2 w-[18rem] h-[3.5rem] rounded-md p-2 font-semibold text-lg"
+              className="border-2 w-[18rem] h-[3.5rem] rounded-md p-2 text-[1rem] font-[400]"
               placeholderText={"Please select a date"}
+            
             />
             <div className="flex flex-col sm:flex-row gap-[2em] ">
               <div className="flex">
@@ -279,7 +281,7 @@ export function ScheduleInterview() {
                     value={selectedHour}
                     label="Hour"
                     onChange={handleHourChange}
-                    className="w-[5rem] bg-[white] h-[3.4rem]"
+                    className="w-[6rem] bg-[white] h-[3.4rem] font-[500]"
                   >
                     {Array.from({ length: 25 }, (_, i) => {
                       // Generate time in half-hour increments from 9:00 to 21:00
@@ -288,7 +290,7 @@ export function ScheduleInterview() {
                       const time = `${hour}:${minute}`;
                       return (
                         <MenuItem key={time} value={time}>
-                          {time}
+                        <p className="text-[1rem]"></p>  {time}
                         </MenuItem>
                       );
                     })}
@@ -318,7 +320,7 @@ export function ScheduleInterview() {
                   variant="contained"
                   onClick={AddSubmitHandler}
                 >
-                  <span className="font-bold">Add</span>
+                  <span className="text-[18px] leading-[27px] font-semibold mr-[0.5em] ">Add</span>
                 </Button>
               </div>
             </div>
@@ -332,7 +334,7 @@ export function ScheduleInterview() {
         <div>
           <Checkbox checked={checked} onChange={handleChange} />
         </div>
-        <div>I want to get the job description on my </div>
+        <div><p className="text-[15px] font-Lexend font-normal leading-[23px]">I want to get the job description on my</p> </div>
         <div className="mx-[0.5em]">
           <svg
             width="18"

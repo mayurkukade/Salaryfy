@@ -86,10 +86,10 @@ const LoginSub: React.FC<LoginSubProps> = ({
           Sign In
         </h1>
         <div className="text-[0.85rem] font-[400] mt-3 text-center text-grey">
-          <h2>Please log in first to explore jobs</h2>
+          <h2 className="font-normal text-[14px] leading-[20px]">Please log in first to explore jobs</h2>
         </div>
         <div className="text-[1rem] font-[400] mt-5">
-          <h2>Enter Email Id</h2>
+          <h2 className="text-[1.1rem] font-medium leading-[27px]" >Enter Email Id</h2>
           <input
             type="email"
             onChange={(e) => setUserName(e.target.value)}
@@ -98,7 +98,7 @@ const LoginSub: React.FC<LoginSubProps> = ({
             className="w-full h-[2rem] rounded-[0.3125rem] border-[1px] border-solid border-darkGreen mt-2 pl-4 placeholder-green-500::placeholder"
           />
   
-          <h2 className="mt-5 text-[1]">Enter 4 Digit Password</h2>
+          <h2 className="mt-5 text-[1.1rem] font-medium leading-[27px]">Enter Password</h2>
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
@@ -123,7 +123,7 @@ const LoginSub: React.FC<LoginSubProps> = ({
   
           <div className="text-[1.26544rem] w-full flex justify-end mt-4 text-darkGreen font-medium	">
             <Link to={"/"} className="border-b border-darkGreen">
-              Forgot Password?
+             <p className="text-[1.1rem] font-medium leading-[27px]">Forgot Password?</p> 
             </Link>
           </div>
   
@@ -132,19 +132,19 @@ const LoginSub: React.FC<LoginSubProps> = ({
             className="mt-4 w-full h-[2.5rem] bg-darkGreen text-[#fff] rounded-[0.81694rem]"
             onClick={LoginSubmitHandler}
           >
-            Sign In
+           <span className="text-[18px] font-medium leading-[27px]">Sign In</span> 
           </button>
         </div>
         <div className="text-grey text-center mt-1 flex justify-center text-[1.2rem] ">
-          <h2>
+          <h2 className="text-[1.1rem] font-medium leading-[27px]">
             Didn’t sign up yet?{" "}
             <span
               onClick={() => setToggleLoginRegister(!toggleLoginRegister)}
-              className="border-b text-darkGreen border-darkGreen font-medium m-1 cursor-pointer"
+              className="border-b text-darkGreen border-darkGreen m-1 cursor-pointer text-[1.1rem] font-medium leading-[27px]"
             >
               Sign Up
             </span>
-            now
+           <span className="text-[1.1rem] font-medium leading-[27px]">now</span> 
           </h2>
         </div>
       </div>

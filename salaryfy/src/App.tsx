@@ -13,7 +13,7 @@ import { PasswordResetSuccessful } from "./pages/PasswordResetSuccessful";
 import "./App.css";
 import AppLayout from "./components/appLayout/AppLayout";
 
-import Footer from "./components/FooteComponent/Footer";
+
 import PlacementDrivePage from "./modules/questionnaire/PlacementDrivePage";
 import PlacementDriveDetails from "./pages/PlacementDriveDetails";
 
@@ -31,12 +31,10 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Faq from "./pages/Faq";
 import AboutUs from "./pages/AboutUs";
 
-
 function App() {
   return (
     <>
       <Routes>
-    
         {/* <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
@@ -44,27 +42,17 @@ function App() {
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
-          <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
 
           <Route path="/placementdrive" element={<PlacementDrivePage />} />
           <Route
             path="/placementdetails/:jobId"
             element={<PlacementDriveDetails />}
           />
-          <Route 
-          path="/termofuse"
-          element={<TermOfUse/>}
-          />
-          <Route
-          path="/faq"
-          element={<Faq/>}
-          />
+          <Route path="/termofuse" element={<TermOfUse />} />
+          <Route path="/faq" element={<Faq />} />
 
-          <Route
-          path="/aboutus"
-          element={<AboutUs/>}
-          />
-
+          <Route path="/aboutus" element={<AboutUs />} />
         </Route>
 
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
@@ -102,7 +90,7 @@ function App() {
         <Route path="/test" element={<TestComponent />} />
       </Routes>
 
-      <Footer />
+     
     </>
   );
 }

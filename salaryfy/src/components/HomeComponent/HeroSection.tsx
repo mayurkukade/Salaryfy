@@ -3,52 +3,46 @@ import herowave from "../../../assets/Homepage/Vector 30.jpg";
 import herosection from "../../../assets/Homepage/herosection.png";
 import { useNavigate } from "react-router-dom";
 
-
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCity } from "../../features/reducers/selected-city/selected-city.slice";
 import { AppStoreStateType } from "../../store/app.store";
 import { SLICE_NAMES } from "../../features/slice-names.enum";
 
 const HeroSection2 = () => {
-  const [selectedCityState, setSelectedCityState] = useState<string>('');
+  const [selectedCityState, setSelectedCityState] = useState<string>("");
   const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const jobs = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]);
-  console.log(jobs)
-  const goHandler = ()=>{
-    dispatch( setSelectedCity(selectedCityState) );
+  const navigate = useNavigate();
+  const jobs = useSelector(
+    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]
+  );
+  console.log(jobs);
+  const goHandler = () => {
+    dispatch(setSelectedCity(selectedCityState));
     console.log({ selectedCityState });
-    navigate('/placementdrive');
-  }
+    navigate("/placementdrive");
+  };
 
   function cityChange(cityChangeEvent: ChangeEvent<HTMLSelectElement>) {
     setSelectedCityState(() => cityChangeEvent.target.value);
   }
   return (
-   
-
     <div>
       <div className="absolute z-[-1] " style={{ width: "100%" }}>
         <img alt="img wave" src={herowave} style={{ width: "100%" }} />
       </div>
-      <div
-        className="container p-2 mx-auto md:flex md:flex-row md:justify-center md:gap-[20px] "
-     
-      >
-        <div
-          className="text-center leading-none text-[3rem] mt-[2.5rem] font-semibold md:p-5  md:w-[60%] md:text-left md:text-[5rem] md:mt-[5rem]"
-      
-        >
+      <div className="container p-2 mx-auto md:flex md:flex-row md:justify-center md:gap-[20px] ">
+        <div className="text-center leading-none lg:text-[4rem] text-[2.5rem] mt-[2.5rem] font-semibold md:p-5  md:w-[60%] md:text-left md:text-[4.25rem] md:mt-[5rem]">
           <p className="text-darkGreen font-Lexend  ">End to end</p>
           <div className=" font-Lexend text-darkGreen  ">
             <span className="text-yellow">Job Change</span> <br />
             <span className="text-darkGreen">solution for You</span>
-            <p className="font-Lexend text-[20px] mt-[2rem]  ">
+            <p className="font-Lexend text-[0.8127rem] mt-[2rem] text-[#5B5B5B] leading-5  lg:m-0 lg:mt-[1.25rem] lg:text-[1.25rem] m-5">
               6874+ people have got their dream job through Salaryfy.
+              When are you getting yours?
             </p>
-            <p className="font-Lexend text-[20px] "> When are you getting yours?</p>
-            <div className=" mt-[56px] h-[50px] flex relative justify-center md:justify-start">
-              <p className="font-Lexend text-[20px] text-darkGreen font-semibold flex relative align-text-top">
+        
+            <div className=" lg:mt-[3.2rem] mt-[2.44rem]  flex relative text-start ml-5 lg:ml-0">
+              <p className="font-Lexend lg:text-start text-[20px] text-darkGreen font-semibold flex relative align-text-top ">
                 Select your City
               </p>
               <svg
@@ -57,7 +51,7 @@ const HeroSection2 = () => {
                 height="55"
                 viewBox="0 0 56 55"
                 fill="none"
-                className="absolute mt-[-0.8rem] ml-[13rem] md:ml-[10rem]"
+                className="position mt-[-1.8rem]  "
               >
                 <path
                   d="M42.2816 36.171C44.8539 27.9038 40.0893 20.2316 32.247 17.216C24.2629 14.1473 14.2223 15.592 7.18817 20.2942C5.72408 21.2752 7.28213 23.2516 8.76145 22.4281C15.2257 18.8334 23.1575 17.4909 30.3043 19.7089C33.413 20.6546 36.134 22.5339 38.0815 25.0804C40.6522 28.4087 40.6716 32.1426 40.7064 36.104C40.714 37.0571 42.0422 36.9255 42.2816 36.171Z"
@@ -78,10 +72,13 @@ const HeroSection2 = () => {
               </svg>
             </div>
             <div
-              className="px-5 md:px-0 flex justify-center md:justify-start"
+              className="px-5  md:px-0 flex justify-center md:justify-start"
               // style={{border:"2px solid black"}}
             >
-              <select onChange={cityChange} className="border-2 border-darkGreen-600 h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base ">
+              <select
+                onChange={cityChange}
+                className="border-2 border-darkGreen-600  h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base "
+              >
                 <option></option>
                 <option>Jabalpur</option>
                 <option>Gwalior</option>
@@ -92,23 +89,25 @@ const HeroSection2 = () => {
                 <option>Banglore</option>
               </select>
               <div className="flex bg-yellow text-darkGreen ml-3 w-[123px] h-[43px] rounded-md  justify-center items-center relative ">
-           
-           <button className="  text-[20.247px] font-medium flex" onClick={goHandler}>Go 
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="33"
-                  height="19"
-                  viewBox="0 0 33 19"
-                  fill="none"
-                  className="align-middle ml-3 mt-1 cursor-pointer "
-                 
+                <button
+                  className="  text-[20.247px] font-medium flex"
+                  onClick={goHandler}
                 >
-                  <path
-                    d="M31.8711 10.375C32.3522 9.89391 32.3522 9.1139 31.8711 8.63281L24.0312 0.792963C23.5502 0.311871 22.7701 0.311871 22.2891 0.792963C21.808 1.27405 21.808 2.05406 22.2891 2.53515L29.2578 9.50391L22.2891 16.4727C21.808 16.9538 21.808 17.7338 22.2891 18.2148C22.7701 18.6959 23.5502 18.6959 24.0312 18.2148L31.8711 10.375ZM0 10.7358H31V8.27199H0V10.7358Z"
-                    fill="#005F59"
-                  />
-                </svg>
-                </button>  
+                  Go
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="33"
+                    height="19"
+                    viewBox="0 0 33 19"
+                    fill="none"
+                    className="align-middle ml-3 mt-1 cursor-pointer "
+                  >
+                    <path
+                      d="M31.8711 10.375C32.3522 9.89391 32.3522 9.1139 31.8711 8.63281L24.0312 0.792963C23.5502 0.311871 22.7701 0.311871 22.2891 0.792963C21.808 1.27405 21.808 2.05406 22.2891 2.53515L29.2578 9.50391L22.2891 16.4727C21.808 16.9538 21.808 17.7338 22.2891 18.2148C22.7701 18.6959 23.5502 18.6959 24.0312 18.2148L31.8711 10.375ZM0 10.7358H31V8.27199H0V10.7358Z"
+                      fill="#005F59"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
