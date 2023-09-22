@@ -2,7 +2,7 @@ import { Autocomplete, Button, TextField } from "@mui/material";
 import { HavingDoubts } from "../components/having-doubts.component";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";
-import { useLazyGetUserSkillsQuery, useSetUserSkillsMutation, useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
+import { useLazyGetUploadedFilesQuery, useLazyGetUserSkillsQuery, useSetUserSkillsMutation, useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import { catchError, concatMap, from, of, throwError } from 'rxjs';
@@ -42,7 +42,7 @@ function FresherProfileUpload() {
   const userDocEduUploadFileRef = useRef<HTMLInputElement | null>(null);
   const userDocSkillUploadFileRef = useRef<HTMLInputElement | null>(null);
 
-  const [educationDocs, setEducationDocs] = useState<Array<{  docType: FILE_UPLOAD_TYPES.EDUCATION | FILE_UPLOAD_TYPES.SKILL_CERTIFICATION, file: File }>>([]);
+  const [educationDocs, setEducationDocs] = useState<Array<{ docType: FILE_UPLOAD_TYPES.EDUCATION | FILE_UPLOAD_TYPES.SKILL_CERTIFICATION, file: File }>>([]);
 
   const educationalSkillsChangedByRef = useRef(initialValue);
   const [educationalSkills, setEducationalSkills] = useState<EducationalSkillsType>(INITIAL_EDUCATIONAL_SKILLS);
@@ -50,6 +50,7 @@ function FresherProfileUpload() {
 
   const skillTextFieldRef = useRef<HTMLInputElement | null>(null);
   const [fileUploadPost] = useUploadFileMutation();
+  const [getUploadedDocs] = useLazyGetUploadedFilesQuery();
   const [getUserSkills] = useLazyGetUserSkillsQuery();
   const [setUserSkills] = useSetUserSkillsMutation();
   const [getUniversities] = useLazyUniversitySuggestionsQuery();
@@ -80,6 +81,12 @@ function FresherProfileUpload() {
       const userDetails = jwt_decode(token) as unknown as { fullName: string };
       setUserFullName((userFullName) => userDetails.fullName || userFullName);
     }
+
+    httpClient.request(getUploadedDocs(userId))
+      .pipe( concatMap(async ({ data: response }) => response) )
+      .subscribe((response) => console.log('fresher: ', response))
+
+    console.log('fresher: ', { userId });
   }, [userId]);
 
   useEffect(() => {
@@ -122,14 +129,14 @@ function FresherProfileUpload() {
   function onUserUploadEduDoc(event: ChangeEvent<HTMLInputElement>) {
     if (!event?.target.files && !event?.target.files?.length) { return }
     const file = event?.target?.files[0];
-    setEducationDocs((eduDocs) => [ ...eduDocs, { docType: FILE_UPLOAD_TYPES.EDUCATION, file }]);
+    setEducationDocs((eduDocs) => [...eduDocs, { docType: FILE_UPLOAD_TYPES.EDUCATION, file }]);
     event.target.value = '';
   }
 
   function onUserUploadSkillDoc(event: ChangeEvent<HTMLInputElement>) {
     if (!event?.target.files && !event?.target.files?.length) { return }
     const file = event?.target?.files[0];
-    setEducationDocs((eduDocs) => [ ...eduDocs, { docType: FILE_UPLOAD_TYPES.SKILL_CERTIFICATION, file }]);
+    setEducationDocs((eduDocs) => [...eduDocs, { docType: FILE_UPLOAD_TYPES.SKILL_CERTIFICATION, file }]);
     event.target.value = '';
   }
 
@@ -304,7 +311,7 @@ function FresherProfileUpload() {
     httpClient.request(saveProfile(payload)).subscribe((response) => console.log({ response }))
   }
 
-  async function uploadUserEducationSkillCertificate(){
+  async function uploadUserEducationSkillCertificate() {
     console.log(educationDocs);
     educationDocs.map(({ docType, file }) => {
       onDocumentUploadEvent(docType, file);
@@ -313,8 +320,10 @@ function FresherProfileUpload() {
 
   async function onSaveFresherInfo() {
     saveEducationalProfile();
-    uploadUserEducationSkillCertificate();    
+    uploadUserEducationSkillCertificate();
   }
+
+
 
 
 
@@ -324,35 +333,31 @@ function FresherProfileUpload() {
         <div>
           <div>
             <div className="flex mb-[2em]">
-              <div className="flex flex-col p-[1em] h-[20em] w-[18em] bg-[#F2F2F2] rounded-lg">
-                <div className="flex-grow flex justify-center items-center">
-                  <svg height="6em" width="6em">
-                    <rect height="100%" width="1px" x="50%" fill="#5B5B5B" />
-                    <rect height="1px" width="100%" y="50%" fill="#5B5B5B" />
-                  </svg>
-                </div>
-                <div className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center">Upload your Passport Photo</div>
-              </div>
+
+
+              <UserProfilePhoto userId={userId} profileLink="" />
+
+
               <div className="p-5 md:pl-10">
                 <div className="font-bold text-[#005F59] text-[2rem] md:text-[4em]">Hi {userFullName},</div>
-                <div className="text-[#5B5B5B] text-[1.052rem]  pr-[0px] md:text-[2.4em] md:pr-[120px]">Please complete your profile and more subtext here</div>
+                <div className="text-[#5B5B5B] text-[1.052rem]  pr-[0px] md:text-[22px] md:pr-[120px]">Please complete your profile and more subtext here</div>
               </div>
             </div>
 
             <div className=" w-full md:my-[3em]">
-              <div className="text-[#005F59] text-[1.3rem]  font-bold mb-[1em] md:text-[3.2em]">Skills</div>
+              <div className="text-[#005F59] mb-[1em] app-theme-big-text">Skills</div>
 
               <div className="flex md:w-[50em] mb-[2em]">
                 <div className="flex-grow flex flex-col pr-[2em]">
                   <TextField inputRef={skillTextFieldRef} size="small" />
                 </div>
                 <div className="flex">
-                  <Button variant="contained" onClick={addSkillHandler}>Add</Button>
+                  <Button variant="contained" onClick={addSkillHandler}><span className="app-theme-text">Add</span></Button>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-[1em] mb-[3em]">
-                {Array.from(skills).map(skill => <Chip onClick={() => removeSkillHandler(skill)} className="text-[1.5em]" key={CommonUtilities.generateRandomString(100)} label={skill} />)}
+                {Array.from(skills).map(skill => <Chip onClick={() => removeSkillHandler(skill)} className="app-theme-text" key={CommonUtilities.generateRandomString(100)} label={skill} />)}
               </div>
             </div>
 
@@ -360,10 +365,10 @@ function FresherProfileUpload() {
 
             { /* Upload Documents section */}
             <div className="my-[3em]">
-              <div className="text-[#005F59] text-[1.375rem] md:text-[3.2em] font-bold mb-[1em]">Upload Documents</div>
+              <div className="text-[#005F59] mb-[1em] app-theme-big-text">Upload Documents</div>
 
               { /*Identification documents section  */}
-              <div className="text-[#5B5B5B] text-[0.875rem] md:text-[2.4em] font-bold mb-[1em]">Identification documents*</div>
+              <div className="text-[#5B5B5B] mb-[1em] app-theme-big-text">Identification documents*</div>
               <div className="flex flex-col gap-[2em] md:grid md:grid-cols-[repeat(2,1fr)] md:gap-[2em] md:mb-[2em]">
                 <DocUploader onDocUpload={(file: File) => onDocumentUploadEvent(FILE_UPLOAD_TYPES.AADHAR_CARD, file)} label="Upload Aadhar" uploading={false} />
                 <DocUploader onDocUpload={(file: File) => onDocumentUploadEvent(FILE_UPLOAD_TYPES.PAN_CARD, file)} label="Upload PAN" uploading={false} />
@@ -373,7 +378,7 @@ function FresherProfileUpload() {
 
               {/* Education Section */}
 
-              <div className="text-[#5B5B5B] text-[2.4em] font-bold my-[2em]">
+              <div className="text-[#5B5B5B] app-theme-big-text">
                 Education*
               </div>
               <div className=" flex  flex-col gap-5 md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:mb-[2em]">
@@ -390,30 +395,30 @@ function FresherProfileUpload() {
                   onDocUpload={unHandledEvent}
                 /> */ }
                 {
-                  educationDocs.filter((doc) => doc.docType === FILE_UPLOAD_TYPES.EDUCATION).map(({ file: educationDoc}) => <DocUploader label={educationDoc.name} uploading={true} progress={100} onDocUpload={unHandledEvent} key={CommonUtilities.generateRandomString(10)} />)
+                  educationDocs.filter((doc) => doc.docType === FILE_UPLOAD_TYPES.EDUCATION).map(({ file: educationDoc }) => <DocUploader label={educationDoc.name} uploading={true} progress={100} onDocUpload={unHandledEvent} key={CommonUtilities.generateRandomString(10)} />)
                 }
               </div>
               <div className="mt-[20px] md:mt-[0px]">
-                <Button variant="contained" onClick={() => addUserEducationDoc(FILE_UPLOAD_TYPES.EDUCATION)}>Add</Button>
+                <Button variant="contained" onClick={() => addUserEducationDoc(FILE_UPLOAD_TYPES.EDUCATION)}><span className="app-theme-text">Add</span></Button>
               </div>
 
               { /*Skills/Certification Section */}
-              <div className="text-[#5B5B5B] text-[2.4em] font-bold my-[2em]">
-                <h1>Skills/Certification*</h1>
+              <div className="text-[#5B5B5B] my-[2em]">
+                <div className="text-[#5B5B5B] app-theme-big-text">Skills/Certification*</div>
                 {/* <DocUploader label="MERN stack course.p..." className="w-full text-[0.5rem] md:w-[50%]" uploading={true} progress={100} onDocUpload={unHandledEvent} /> */}
                 {
-                  educationDocs.filter((doc) => doc.docType === FILE_UPLOAD_TYPES.SKILL_CERTIFICATION).map(({ file: educationDoc}) => <DocUploader label={educationDoc.name} className="w-full text-[0.5rem] md:w-[50%]" uploading={true} progress={100} onDocUpload={unHandledEvent} key={CommonUtilities.generateRandomString(20)} />)
+                  educationDocs.filter((doc) => doc.docType === FILE_UPLOAD_TYPES.SKILL_CERTIFICATION).map(({ file: educationDoc }) => <DocUploader label={educationDoc.name} className="w-full text-[0.5rem] md:w-[50%]" uploading={true} progress={100} onDocUpload={unHandledEvent} key={CommonUtilities.generateRandomString(20)} />)
                 }
                 <div>
                   {" "}
-                  <Button variant="contained" className="mt-[20px]" onClick={() => addUserEducationDoc(FILE_UPLOAD_TYPES.SKILL_CERTIFICATION)} style={{ marginTop: "20px" }}>Add</Button>
+                  <Button variant="contained" className="mt-[20px]" onClick={() => addUserEducationDoc(FILE_UPLOAD_TYPES.SKILL_CERTIFICATION)} style={{ marginTop: "20px" }}><span className="app-theme-text">Add</span></Button>
                 </div>
               </div>
             </div>
 
             <div className="flex gap-[2em] my-[2em] mt-[5em]">
-              <Button style={{ minWidth: "10em" }} size="large" variant="outlined" >Cancel</Button>
-              <Button style={{ minWidth: "10em" }} size="large" variant="contained" onClick={onSaveFresherInfo} >Save</Button>
+              <Button style={{ minWidth: "10em" }} size="large" variant="outlined" ><span className="app-theme-text">Cancel</span></Button>
+              <Button style={{ minWidth: "10em" }} size="large" variant="contained" onClick={onSaveFresherInfo} ><span className="app-theme-text">Save</span></Button>
             </div>
           </div>
         </div>
@@ -481,11 +486,57 @@ function DocUploader({ className, label, uploading, progress, onDocUpload }: { c
             <path d="M35.75 16.25H29.25C24.375 16.25 22.75 14.625 22.75 9.75V3.25L35.75 16.25Z" stroke="#005F59" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
-        <div className="text-[#005F59] text-[2em] font-semibold">{label}</div>
+        <div className="text-[#005F59] app-theme-text">{label}</div>
       </div>
       }
       <input ref={uploadFileRef} onChange={onFileUploadEvent} accept="image/jpeg" type="file" className="hidden" />
     </>
+  );
+}
+
+function UserProfilePhoto({ profileLink, userId }: { profileLink: null | string, userId: string }) {
+  const [fileUploadPost] = useUploadFileMutation();
+  const userDocProfileRef = useRef<HTMLInputElement | null>(null);
+  const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
+
+  function profilePhotoClicked() {
+    if (userDocProfileRef?.current){
+      userDocProfileRef?.current?.click();
+      console.log('jobs: ', 'hehrehrehr');
+    }
+  }
+
+  function onFileUploadEvent(event: ChangeEvent<HTMLInputElement>) {
+    const selectedFile = event.target.files && event.target.files[0];
+    if (selectedFile) {
+      profilePhotoUpload(selectedFile);
+      if (userDocProfileRef.current) { userDocProfileRef.current.value = ''; }
+    }
+  }
+  function profilePhotoUpload(documentFile: File) {
+    if (!userId){ return; }
+    const formData = new FormData()
+    formData.append('image', documentFile);
+    formData.append('documentType', FILE_UPLOAD_TYPES.PROFILE_PHOTO);
+    formData.append('userId', userId);
+
+    httpClient.request(fileUploadPost(formData))
+      .subscribe((response) => console.log('fresher: ', response))
+  }
+
+  return (
+    <div onClick={profilePhotoClicked} className="select-none flex flex-col p-[1em] h-[20em] w-[18em] bg-[#F2F2F2] rounded-lg cursor-pointer">
+      { true && <div className="flex flex-grow flex-col">
+        <div className="flex-grow flex justify-center items-center">
+          <svg height="6em" width="6em">
+            <rect height="100%" width="1px" x="50%" fill="#5B5B5B" />
+            <rect height="1px" width="100%" y="50%" fill="#5B5B5B" />
+          </svg>
+        </div>
+        <div className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center">Upload your Passport Photo</div>
+        <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*" />
+      </div> }
+    </div >
   );
 }
 

@@ -54,7 +54,7 @@ export default function PlacementDrivePage() {
 
   const [jobSortOptions, setJobSortOptions] = useState(SortOptions);
 
-  const selectedOption = Object.values(jobSortOptions).filter(({ selected }) => selected).map(e => e.label)[0]
+  const selectedOption = Object.values(jobSortOptions).filter(({ selected }) => selected).map(e => e.label)[0];
 
   const selectedCity = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.SELECTED_CITY]);
 
@@ -66,11 +66,18 @@ export default function PlacementDrivePage() {
       jobType: jobFilterValues.jobTypes.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(','),
       location: jobFilterValues.locations.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(',')
     }
+    await searchByFilterComponent2( filterProperties )
+    
+  }
 
+  async function searchByFilterComponent2(filterProperties : { companyName: string, jobType: string, location: string }) {
+    if (Object.values(filterProperties).map((value) => value).reduce((prev, curr) => prev+curr).length === 0) { return; }
     const filterPropertiesUriEncoded = Object.entries(filterProperties).map(([key, value]: [string, string]) => [key, encodeURIComponent(value)].join('=')).join('&');
     const { data: { list: jobsData } } = await lazyGetFilterJobs(filterPropertiesUriEncoded);
 
-    // dispatch(setJobs(jobsData));
+    console.log('jobs: ', filterPropertiesUriEncoded);
+    
+    dispatch(setJobs(jobsData));
 
     // setFilterKey(() => CommonUtilities.generateRandomString(10));
   }
@@ -87,13 +94,15 @@ export default function PlacementDrivePage() {
     const { data: { list: fetchedJobs } } = await lazyGetSearchJobs({ searchInput, sortField });
 
     dispatch(setJobs(fetchedJobs));
-    setFilterKey(() => CommonUtilities.generateRandomString(10));
+
+    // setFilterKey(() => CommonUtilities.generateRandomString(10));
   }
 
   useEffect(() => {
     if (once) { return; }
     once = true;
-    setAllJobs('');
+    console.log('jobs: ', { selectedCity });
+    if (selectedCity === '') { setAllJobs('') } else{ searchByFilterComponent2({ companyName: '', jobType: '', location: selectedCity }) }
   }, []);
 
   function toggleFilter() {
@@ -134,7 +143,7 @@ export default function PlacementDrivePage() {
 
       <div className="flex gap-[2em]">
         <Box className="text-[#0E5F59]" sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
-          <FilterComponent onClearButtonClick={clearFilterHandler} setAllJobs={setAllJobs} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[30em]" />
+          <FilterComponent onClearButtonClick={clearFilterHandler} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[30em]" />
         </Box>
         <div className="flex-grow p-3">
           <p className="text-[1.2rem] font-semibold text-darkGreen mb-2">Search</p>
@@ -158,7 +167,7 @@ export default function PlacementDrivePage() {
 
           <Box ref={expandableRef} id='expandable-element' className='w-[100%] my-[4em] relative' style={{ height: '0px', transition: '1000ms ease' }} sx={{ overflow: 'hidden', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
             <div className="aboslute">
-              <FilterComponent onClearButtonClick={clearFilterHandler} setAllJobs={setAllJobs} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[100%]" />
+              <FilterComponent onClearButtonClick={clearFilterHandler} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[100%]" />
             </div>
           </Box>
           {

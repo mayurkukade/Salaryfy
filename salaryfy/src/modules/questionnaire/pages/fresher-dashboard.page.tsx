@@ -22,6 +22,8 @@ import { EducationalSkillsKey, UserEducationSkill } from "../constants/fresher.t
 import { EducationalInfoComponent } from "../components/educational-info.component";
 import { BOARD_LIST, CHANGED_BY, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
 import { useLazyGetProfileQuery, useLazyUniversitySuggestionsQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
+import JobCard from "../../../components/PlacementPageComponent/JobCard";
+import JobCard2 from "../../../components/PlacementPageComponent/JobCard2";
 
 const initialValue: { value: CHANGED_BY } = {
   value: CHANGED_BY.SERVER
@@ -289,7 +291,7 @@ export function FresherDashboard() {
 
           {/* Candidate Table */}
           <div
-            style={{ boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)" }}
+            style={{ boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)", fontWeight: '500' }}
             className="mb-[2em] text-[1.8em] rounded-xl overflow-hidden grid grid-cols-[max-content,auto] grid-cols-auto [&>*]:whitespace-nowrap [&>*]:px-[1.5em] [&>*]:py-[0.5em] [&>*]:border-b [&>*]:border-solid [&>*]:border-b-[#0E5F591A] [&>*:nth-child(odd)]:bg-[#0E5F5919] [&>*:nth-child(odd)]:text-[#5b5b5b] [&>*:nth-child(odd)]:w-[10em] [&>*:nth-child(even)]:w-[100%]"
           >
             <div>Full Name</div>
@@ -335,27 +337,28 @@ export function FresherDashboard() {
 
             {/* <EducationalInfoComponent   /> */}
             <EducationalInfoComponent educationalSkills={educationalSkills} educationalSkillsKey={educationalSkillsKey} onHighestLevelEducationChangeHandler={onHighestLevelEducationChangeHandler} onBoardUniversityFieldInput={onBoardUniversityFieldInput} onBoardUniversityChangeHandler={onBoardUniversityChangeHandler} onStreamChangeHandler={onStreamChangeHandler} onPercentageChangeHandler={onPercentageChangeHandler} />
-            <Button style={{ minWidth: "10em" }} size="large" variant="contained" onClick={onSaveFresherInfo} >Update</Button>
-          
+            <Button style={{ minWidth: "10em", lineHeight: '27px', fontSize: '18px' }} size="large" variant="contained" onClick={onSaveFresherInfo} >Update</Button>
+
           </div>
 
           {/* Recommended Jobs Section Heading*/}
-          <div className="text-[2.6em] font-semibold my-[1em]">Recommended jobs</div>
+          <div className="text-[2.6em] font-[500] my-[1em]">Recommended jobs</div>
 
           {/* Recommended Jobs Card section*/}
 
           <div className="flex flex-col gap-6">
             {
-              recommendJobsState.map((details: JobsDetailsType) => <RecommendJobsCard key={CommonUtilities.generateRandomString(100)} details={details} />)
+              // recommendJobsState.map((details: JobsDetailsType) => <RecommendJobsCard key={CommonUtilities.generateRandomString(100)} details={details} />)
+              recommendJobsState.map((details: JobsDetailsType) => <JobCard2 key={CommonUtilities.generateRandomString(100)} details={details} />)
             }
           </div>
         </div>
 
         {/* Right Section of Card*/}
-        <div className="flex flex-col pr-[1em] md:pl-[5em]">
+        <div className="flex flex-col pr-[1em] md:pl-[5em] pt-[1.5rem]">
           <div className="flex flex-col mb-[1em]">
             <Button variant="contained">
-              <span className="text-[1.25em] mr-[1em]">
+              <span className="text-[18px] mr-[1em]" style={{ lineHeight: '27px' }}>
                 Upload joining documents
               </span>
               <span className="" style={{ transform: "scaleX(-1)" }}>
@@ -394,6 +397,9 @@ export function FresherDashboard() {
 }
 
 function RecommendJobsCard({ details }: { details: JobsDetailsType }) {
+
+  console.log('fresher: ', { date: CommonUtilities.date.formatDate(details.interviewStartDate) })
+
   return (
     <div className="rounded-[2em] px-[2.5em] py-[2em] app-box-shadow">
       <div className="flex mb-[1em]">
@@ -406,25 +412,25 @@ function RecommendJobsCard({ details }: { details: JobsDetailsType }) {
           <img src={LenskartImage} />
         </div>
         <div className="flex flex-col justify-center flex-grow px-[1em]">
-          <div className="text-[2em] font-semibold text-[#005F59]">
+          <div className="text-[#005F59] app-theme-text" style={{ fontWeight: '500 !important' }}>
             {details.postName}
           </div>
-          <div className="text-[1.8em] font-semibold text-[#5b5b5b]">
+          <div className="text-[1.8em] text-[#5b5b5b] app-theme-text">
             {details.companyName}
           </div>
         </div>
-        <div className="text-[#5B5B5B] flex">
+        <div className="text-[#5B5B5B] flex app-theme-text">
           <div className="mr-[0.5em]">Status</div>
           <div className="border border-solid h-[max-content] border-[#5B5B5B] px-[0.5em] rounded-[1em]">
             Application Sent
           </div>
         </div>
       </div>
-      <div className="mb-[0.5em] text-[1.6em] flex">
+      <div className="mb-[0.5em] flex app-theme-text">
         <div className="mr-[0.5em] text-[#5B5B5B]">Location:</div>
         <div className="text-[#005F59]">{details.location}</div>
       </div>
-      <div className="text-[1.6em] flex flex-row">
+      <div className="flex flex-row app-theme-text">
         <div className="mr-[0.5em] text-[#5B5B5B]">Job-Type:</div>
         <div className="text-[#005F59]">{details.jobType}</div>
         <div className="bg-[#00595F4C] mx-[2em] flex-grow max-w-[1px]"></div>

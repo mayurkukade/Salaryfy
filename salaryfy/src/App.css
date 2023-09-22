@@ -30,4 +30,18 @@ html, body, #root {
   box-shadow: 0 0 10px rgb(210, 210, 210, 0.7);
 }
 
+.app-theme-text {
+  font-family: 'Lexend';
+  line-height: 27px;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.app-theme-big-text {
+  font-family: 'Lexend';
+  line-height: 39px;
+  font-weight: 500;
+  font-size: 26px;
+}
+
 

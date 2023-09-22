@@ -9,6 +9,8 @@ export function TextFieldDropDown({ options, onOptionClick, onTextInput, value }
     if (onOptionClick) { onOptionClick(newValue); }
   }
   return (
-    <Autocomplete options={options} value={value?.length ? value : null} onChange={onFieldChange} size="small" renderInput={(params) => <TextField onChange={onTextInput$} {...params} />} />
+    <Autocomplete options={options} value={value?.length ? value : null}
+      style={{ color: 'red' }} onChange={onFieldChange} size="small"
+      renderInput={(params) => <TextField {...params} InputProps={{ sx: { fontWeight: 500, fontFamily: 'Lexend', lineHeight: '27px', fontSize: '18px' } }} onChange={onTextInput$} />} />
   );
 }

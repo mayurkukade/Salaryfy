@@ -10,7 +10,7 @@ export function EducationalInfoComponent({ educationalSkillsKey, educationalSkil
     <div className=" flex flex-col gap-3   md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:my-[2em]">
               <div>
                 <div className="text-[#005F59] text-[1.8em] font-semibold">Highest level of education</div>
-                <div>
+                <div className="" style={{ fontWeight: 500 }}>
                   <TextFieldDropDown
                     value={educationalSkillsKey.highestLevelEducation[0]}
                     options={educationalSkills.highestEducationList.map(e => e.value)}
@@ -42,7 +42,7 @@ export function EducationalInfoComponent({ educationalSkillsKey, educationalSkil
               <div>
                 <div className="text-[#005F59] text-[1.8em] font-semibold">Percentage</div>
                 <div className="flex flex-col">
-                  <TextField value={educationalSkills.percentage || ''} onChange={onPercentageChangeHandler} size="small" />
+                  <TextField value={educationalSkills.percentage || ''} InputProps={{ sx: { fontFamily: 'Lexend', fontWeight: '500', fontSize: '18px' } }} onChange={onPercentageChangeHandler} size="small" />
                 </div>
               </div>
             </div>

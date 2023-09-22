@@ -3,23 +3,21 @@ import { AppStoreStateType } from "../../../store/app.store";
 import { useEffect } from "react";
 import { setJobFilter } from "../../../features/reducers/job-filter/jobs-filter.slice";
 import DropdownMenu from "../../../components/DropdownMenu";
-import { JobsFilterType, OptionSelected } from "../../../features/reducers/job-filter/jobs-filter.interface";
+import { OptionSelected } from "../../../features/reducers/job-filter/jobs-filter.interface";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Chip from "./chip.component";
 import { CommonUtilities } from "../../../utils/common.utilities";
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
-import { JobType } from "../../../features/reducers/jobs/jobs.interface";
 import { Button } from "@mui/material";
 import { useLazyGetAllLocationsJobtypesCompanynamesQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { QuestionnaireHttpClient } from "../services/questionnaire.service";
-import { concatMap, mergeMap, switchMap, tap } from "rxjs";
+import { concatMap, mergeMap, switchMap } from "rxjs";
 import { setSelectedCity } from "../../../features/reducers/selected-city/selected-city.slice";
 
-export default function FilterComponent({ className, onSearchButtonClick, setAllJobs, onClearButtonClick }: { className?: string, onSearchButtonClick: () => void, setAllJobs: (v: string) => void, onClearButtonClick: () => void }) {
+export default function FilterComponent({ className, onSearchButtonClick, onClearButtonClick }: { className?: string, onSearchButtonClick: () => void, onClearButtonClick: () => void }) {
 
   const dispatch = useDispatch();
   const jobFilterValues = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS_FILTER]);
-  const jobs = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]);
   const selectedCity = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.SELECTED_CITY]);
   let once = false;
   const [getLnJtCn] = useLazyGetAllLocationsJobtypesCompanynamesQuery();
@@ -36,7 +34,7 @@ export default function FilterComponent({ className, onSearchButtonClick, setAll
       )
       .subscribe(async (response) => dispatch( setJobFilter(response) ));
 
-  }, [jobs]);
+  }, []);
 
 
   function onFilterOptionSelect(type: 'add' | 'remove', filterName: 'locations' | 'jobTypes' | 'companyNames', locationOption: string) {

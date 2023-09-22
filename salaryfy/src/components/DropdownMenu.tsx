@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem, ButtonProps  } from "@mui/material";
+import { Button, Menu, MenuItem, ButtonProps } from "@mui/material";
 import { ReactNode, useState } from "react";
 import { CommonUtilities } from "../utils/common.utilities";
 
@@ -10,8 +10,8 @@ export default function DropdownMenu({ onOptionClick, options, className, label,
     setAnchorEl(event.currentTarget);
   };
 
-  function optionClicked(option:string): void {
-    if(option && onOptionClick) { onOptionClick(option) }
+  function optionClicked(option: string): void {
+    if (option && onOptionClick) { onOptionClick(option) }
     handleClose();
   }
   const handleClose = () => {
@@ -20,7 +20,7 @@ export default function DropdownMenu({ onOptionClick, options, className, label,
 
   return (
     <div className={'flex ' + (className || '')}>
-      <Button variant={ variant === 'text' ? 'outlined' : variant } sx={{ display: 'flex', flexGrow: '1', justifyContent: 'space-between' }} onClick={handleClick} endIcon={endIcon || <></>}>{label}</Button>
+      <Button variant={variant === 'text' ? 'outlined' : variant} sx={{ display: 'flex', flexGrow: '1', justifyContent: 'space-between' }} onClick={handleClick} endIcon={endIcon || <></>}>{label}</Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {
           options?.map((option: string) => <MenuItem key={CommonUtilities.generateRandomString(10)} onClick={() => optionClicked(option)}>{option}</MenuItem>)
