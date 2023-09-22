@@ -3,7 +3,7 @@ export interface formDetails {
 location:string,
 interviewDate:string | null,
 time:string,
-date:number,
+date:Date,
 userId:string | null,
 jobId:number,
 status:string
