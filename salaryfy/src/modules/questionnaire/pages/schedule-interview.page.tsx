@@ -29,12 +29,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 
-
 import { Link } from "react-router-dom";
-import {
-  closeModel,
-  
-} from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
+import { closeModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 import { JSX } from "react/jsx-runtime";
 
 export default function ScheduleInterviewPage() {
@@ -60,8 +56,7 @@ export function ScheduleInterview() {
 
   const [selectedDate, setSelectedDate] = useState(null);
 
-
-
+  console.log(selectedDate);
 
   const isOpenselector = useSelector(
     (state: RootState) => state.scheduleInterviewForm.isOpen
@@ -80,8 +75,8 @@ export function ScheduleInterview() {
   );
   console.log(selectInterviewData.interviewEndDate);
   const [interviewScheduleApi] = useInterviewScheduleApiMutation();
-  const jobIdFormLocal:string = localStorage.getItem("jobId");
-  const jobId:number = Number(jobIdFormLocal)
+  const jobIdFormLocal: string = localStorage.getItem("jobId");
+  const jobId: number = Number(jobIdFormLocal);
   console.log(jobId);
   const { data, isLoading, isError } = useGetInterviewScheduleQuery({
     userId,
@@ -105,77 +100,142 @@ export function ScheduleInterview() {
   };
 
   //  slot details function
-  const getDetailsModule = data?.list.map((schedule: { location: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; date: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; time: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; }, i: React.Key) => {
-    
-    let content: string | number | boolean | JSX.Element | Iterable<React.ReactNode>;
-    if (isLoading) {
-      content = <p>Loading...</p>;
-    } else if (isError) {
-      return;
-    } else if (data) {
-      content = (
-        <div className="mr-[0.5em] text-[0.7rem] md:text-[1rem] " key={i}>
-          {schedule.location}, {schedule.date}, {schedule.time}
-        </div>
+  const getDetailsModule = data?.list.map(
+    (
+      schedule: {
+        interviewDate: ReactNode;
+        location:
+          | string
+          | number
+          | boolean
+          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+          | Iterable<React.ReactNode>
+          | React.ReactPortal;
+        date:
+          | string
+          | number
+          | boolean
+          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+          | Iterable<React.ReactNode>
+          | React.ReactPortal;
+        time:
+          | string
+          | number
+          | boolean
+          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+          | Iterable<React.ReactNode>
+          | React.ReactPortal;
+      },
+      i: React.Key
+    ) => {
+      console.log(schedule);
+      let content:
+        | string
+        | number
+        | boolean
+        | JSX.Element
+        | Iterable<React.ReactNode>;
+      if (isLoading) {
+        content = <p>Loading...</p>;
+      } else if (isError) {
+        return;
+      } else if (data) {
+        content = (
+          <div className="mr-[0.5em] text-[0.7rem] md:text-[1rem] " key={i}>
+            {schedule.location}, {schedule.interviewDate}, {schedule.time}
+          </div>
+        );
+      }
+
+      return (
+        <>
+          <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em] items-center">
+            <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
+            <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
+
+            {content}
+            <button onClick={() => handleDelete(schedule.interviewScheduleId)}>
+            <CancelIcon sx={{ color: "red" }} />
+          </button> 
+          </div>
+        </>
       );
     }
+  );
 
-    return (
-      <>
-        <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em] items-center">
-          <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
-          <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
+  const getDetails = data?.list.map(
+    (
+      schedule: {
+        interviewScheduleId: number;
+        location:
+          | string
+          | number
+          | boolean
+          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+          | Iterable<React.ReactNode>
+          | React.ReactPortal;
+        date:
+          | string
+          | number
+          | boolean
+          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+          | Iterable<React.ReactNode>
+          | React.ReactPortal;
+        time:
+          | string
+          | number
+          | boolean
+          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+          | Iterable<React.ReactNode>
+          | React.ReactPortal;
+      },
+      i: React.Key
+    ) => {
+      console.log(schedule.date);
+      let content:
+        | string
+        | number
+        | boolean
+        | JSX.Element
+        | Iterable<React.ReactNode>;
+      if (isLoading) {
+        content = <p>Loading...</p>;
+      } else if (isError) {
+        return;
+      } else if (data) {
+        content = (
+          <div className="mr-[0.5em] text-[0.7rem] md:text-[1rem] " key={i}>
+            {schedule.location}, {schedule.date}, {schedule.time}
+          </div>
+        );
+      }
 
-          {content}
-          {/* <button onClick={() => handleDelete(schedule.interviewScheduleId)}>
-            <CancelIcon sx={{ color: "red" }} />
-          </button> */}
-        </div>
-      </>
-    );
-  });
+      return (
+        <>
+          <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em] items-center">
+            <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
+            <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
 
-  const getDetails = data?.list.map((schedule: { interviewScheduleId: number; location: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; date: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; time: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; }, i: React.Key) => {
-    console.log(schedule.interviewScheduleId);
-    let content: string | number | boolean | JSX.Element | Iterable<React.ReactNode>;
-    if (isLoading) {
-      content = <p>Loading...</p>;
-    } else if (isError) {
-      return;
-    } else if (data) {
-      content = (
-        <div className="mr-[0.5em] text-[0.7rem] md:text-[1rem] " key={i}>
-          {schedule.location}, {schedule.date}, {schedule.time}
-        </div>
+            {content}
+            <button onClick={() => handleDelete(schedule.interviewScheduleId)}>
+              <CancelIcon sx={{ color: "red" }} />
+            </button>
+          </div>
+        </>
       );
     }
-
-    return (
-      <>
-        <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em] items-center">
-          <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
-          <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-
-          {content}
-          <button onClick={() => handleDelete(schedule.interviewScheduleId)}>
-            <CancelIcon sx={{ color: "red" }} />
-          </button>
-        </div>
-      </>
-    );
-  });
+  );
 
   console.log(userId);
-  const handleHourChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleHourChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setSelectedHour(event.target.value);
   };
 
- 
   const handleChangeLocation = (event: SelectChangeEvent) => {
     setLocation(event.target.value as string);
   };
-
- 
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
@@ -184,24 +244,37 @@ export function ScheduleInterview() {
   const handleDateChange = (date: any) => {
     setSelectedDate(date);
   };
-
-
+  console.log(selectedDate);
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
     console.log(selectedHour);
 
-    const dateFormat =
-      selectedDate != null ? selectedDate.toISOString().split("T")[0] : "";
+    // const dateFormat =
+    //   selectedDate != null ? selectedDate.toISOString().split("T")[0] : "";
+
+    const currentDate = new Date();
+    const Currentyear = currentDate.getFullYear();
+    const Currentmonth = String(currentDate.getMonth() + 1).padStart(2, "0"); // Add 1 to month since it's zero-based
+    const Currentday = String(currentDate.getDate()).padStart(2, "0");
+
+    const CurrentformattedDate = `${Currentyear}-${Currentmonth}-${Currentday}`;
+
     const hourFormat = `${selectedHour}:00`;
     console.log(hourFormat);
-    console.log(dateFormat);
+
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, "0"); // Add 1 to month since it's zero-based
+    const day = String(selectedDate.getDate()).padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log(formattedDate);
     try {
       const formDetails = {
         location: location,
-        interviewDate: "2023-08-10",
+        interviewDate: formattedDate,
         time: hourFormat,
-        date: dateFormat,
+        date: CurrentformattedDate,
         userId: userId,
         jobId: jobId,
         status: "Scheduled",
@@ -212,29 +285,27 @@ export function ScheduleInterview() {
 
       setLocation("");
       setSelectedHour("");
-      
+
       setSelectedDate(null);
-     
+
       setChecked(false);
     } catch (error) {
       console.log(error);
     }
-
   };
+
   return (
     <div className="h-[100%] ">
       <p className="font-normal leading-[23px] text-[15px] mb-[1em]">
         You can select multiple locations with date and time
       </p>
 
-      <div
-        className="bg-[#0E5F5910]  p-[1.5em] rounded-[1.5em] flex  mb-[2em] flex-col md:flex-row "
-   
-      >
-        
+      <div className="bg-[#0E5F5910]  p-[1.5em] rounded-[1.5em] flex  mb-[2em] flex-col md:flex-row ">
         <div className="flex flex-col mr-[2em]">
           <div className="text-[1.6em] text-[#5B5B5B] mb-[1em]">
-          <p className="font-normal leading-[23px] text-[15px] mb-[0.1em]">Please confirm your location for interview </p>  
+            <p className="font-normal leading-[23px] text-[15px] mb-[0.1em]">
+              Please confirm your location for interview{" "}
+            </p>
           </div>
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
@@ -249,7 +320,6 @@ export function ScheduleInterview() {
                 sx={{
                   backgroundColor: "white",
                   fontSize: "1rem",
-              
                 }}
               >
                 <MenuItem value={"Pune"}>Pune</MenuItem>
@@ -261,7 +331,10 @@ export function ScheduleInterview() {
         </div>
         <div className="flex flex-col flex-grow">
           <div className="text-[1.6em] text-[#5B5B5B] mb-[1em]">
-          <p className="font-normal leading-[23px] text-[15px] mb-[0.1em]"> Please confirm your location for interview </p>
+            <p className="font-normal leading-[23px] text-[15px] mb-[0.1em]">
+              {" "}
+              Please confirm your location for interview{" "}
+            </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-[2em]">
             <DatePicker
@@ -270,7 +343,6 @@ export function ScheduleInterview() {
               dateFormat="yyyy-MM-dd"
               className="border-2 w-[18rem] h-[3.5rem] rounded-md p-2 text-[1rem] font-[400]"
               placeholderText={"Please select a date"}
-            
             />
             <div className="flex flex-col sm:flex-row gap-[2em] ">
               <div className="flex">
@@ -290,7 +362,7 @@ export function ScheduleInterview() {
                       const time = `${hour}:${minute}`;
                       return (
                         <MenuItem key={time} value={time}>
-                        <p className="text-[1rem]"></p>  {time}
+                          <p className="text-[1rem]"></p> {time}
                         </MenuItem>
                       );
                     })}
@@ -320,21 +392,27 @@ export function ScheduleInterview() {
                   variant="contained"
                   onClick={AddSubmitHandler}
                 >
-                  <span className="text-[18px] leading-[27px] font-semibold mr-[0.5em] ">Add</span>
+                  <span className="text-[18px] leading-[27px] font-semibold mr-[0.5em] ">
+                    Add
+                  </span>
                 </Button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {getDetails}
+      {getDetailsModule}
 
       {/* This is whatsapp Checkbox Code */}
       <div className="flex items-center text-[1.6em] text-[#5B5B5B]">
         <div>
           <Checkbox checked={checked} onChange={handleChange} />
         </div>
-        <div><p className="text-[15px] font-Lexend font-normal leading-[23px]">I want to get the job description on my</p> </div>
+        <div>
+          <p className="text-[15px] font-Lexend font-normal leading-[23px]">
+            I want to get the job description on my
+          </p>{" "}
+        </div>
         <div className="mx-[0.5em]">
           <svg
             width="18"
@@ -368,8 +446,9 @@ export function ScheduleInterview() {
 }
 
 const Modal = ({ getDetails }) => {
-
-  const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
+  const jobDetails = useSelector(
+    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
+  );
   console.log(jobDetails);
   const openModelSelector = useSelector(
     (state: RootState) => state.scheduleInterviewForm.isOpen
@@ -390,7 +469,6 @@ const Modal = ({ getDetails }) => {
         aria-labelledby="responsive-dialog-title"
         style={{ border: "2px solid black" }}
       >
-      
         <DialogContent className="w-full md:w-full h-[44.5rem] rounded-3xl bg-white shadow-md text-black">
           <DialogContentText>
             <div>
