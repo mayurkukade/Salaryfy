@@ -19,11 +19,7 @@ const jobSearchSlice = apiSlice.injectEndpoints({
         `/jobs/jobSuggest?postName=${postName}&location=${location}`,
       providesTags: ["jobs-recommended"],
     }),
-    getPlacementDetailsPDF: builder.query({
-      query: () => `/pdf/generate/36`,
-     
-      providesTags: ["job-id"],
-    }),
+  
   }),
 });
 
@@ -32,7 +28,7 @@ export const {
   useLazyGetJobsFilterQuery,
   useLazyGetJobByIdQuery,
   useLazyGetRecommendedJobsQuery,
-  useGetPlacementDetailsPDFQuery
+  
 } = jobSearchSlice;
 
 export default jobSearchSlice;
