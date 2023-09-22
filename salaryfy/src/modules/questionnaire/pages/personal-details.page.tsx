@@ -699,12 +699,20 @@ const PersonalDetails = ({
   const [toggleLoginRegister, setToggleLoginRegister] = useState(false);
   const role = "USER";
   const userProfileType = "fresher";
-  const date = "2022-08-21";
+  
+  
   console.log(password);
   console.log(isError);
   console.log(isSuccess);
   console.log(matchpassword);
 
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Add 1 to month since it's zero-based
+  const day = String(currentDate.getDate()).padStart(2, '0');
+
+  const date = `${year}-${month}-${day}`;
+ 
   const resSubmitStatus = useSelector(
     (state: RootState) => state.mainStepsCounter.resStepTwo
   );
