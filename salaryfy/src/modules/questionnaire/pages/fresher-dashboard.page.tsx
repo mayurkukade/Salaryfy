@@ -24,6 +24,7 @@ import { BOARD_LIST, CHANGED_BY, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_
 import { useLazyGetProfileQuery, useLazyUniversitySuggestionsQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
 import JobCard from "../../../components/PlacementPageComponent/JobCard";
 import JobCard2 from "../../../components/PlacementPageComponent/JobCard2";
+import { Link } from "react-router-dom";
 
 const initialValue: { value: CHANGED_BY } = {
   value: CHANGED_BY.SERVER
@@ -357,6 +358,7 @@ export function FresherDashboard() {
         {/* Right Section of Card*/}
         <div className="flex flex-col pr-[1em] md:pl-[5em] pt-[1.5rem]">
           <div className="flex flex-col mb-[1em]">
+            <Link to='/questionnaire/fresher-profile-upload'>
             <Button variant="contained">
               <span className="text-[18px] mr-[1em]" style={{ lineHeight: '27px' }}>
                 Upload joining documents
@@ -374,7 +376,7 @@ export function FresherDashboard() {
                   />
                 </svg>
               </span>
-            </Button>
+            </Button></Link>
           </div>
 
           {/* Upcoming interviews section */}

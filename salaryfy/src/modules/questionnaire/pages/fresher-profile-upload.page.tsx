@@ -329,7 +329,7 @@ function FresherProfileUpload() {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:justify-between">
+      <div className="flex flex-col md:flex-row md:justify-between gap-[12rem]">
         <div>
           <div>
             <div className="flex mb-[2em]">
@@ -340,7 +340,7 @@ function FresherProfileUpload() {
 
               <div className="p-5 md:pl-10">
                 <div className="font-bold text-[#005F59] text-[2rem] md:text-[4em]">Hi {userFullName},</div>
-                <div className="text-[#5B5B5B] text-[1.052rem]  pr-[0px] md:text-[22px] md:pr-[120px]">Please complete your profile and more subtext here</div>
+                <div className="text-[#5B5B5B] text-[1.052rem]  pr-[0px] md:text-[22px] md:pr-[120px]">Please complete your profile</div>
               </div>
             </div>
 
@@ -426,8 +426,8 @@ function FresherProfileUpload() {
         <div >
           <HavingDoubts />
         </div>
-        <input className="hidden" ref={userDocEduUploadFileRef} onChange={onUserUploadEduDoc} type="file" />
-        <input className="hidden" ref={userDocSkillUploadFileRef} onChange={onUserUploadSkillDoc} type="file" />
+        <input className="hidden" ref={userDocEduUploadFileRef} onChange={onUserUploadEduDoc} type="file" accept=".pdf" />
+        <input className="hidden" ref={userDocSkillUploadFileRef} onChange={onUserUploadSkillDoc} type="file" accept=".pdf" />
       </div>
     </>
   );
@@ -489,7 +489,7 @@ function DocUploader({ className, label, uploading, progress, onDocUpload }: { c
         <div className="text-[#005F59] app-theme-text">{label}</div>
       </div>
       }
-      <input ref={uploadFileRef} onChange={onFileUploadEvent} accept="image/jpeg" type="file" className="hidden" />
+      <input ref={uploadFileRef} onChange={onFileUploadEvent} accept=".pdf" type="file" className="hidden" />
     </>
   );
 }
