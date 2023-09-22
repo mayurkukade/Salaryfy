@@ -10,9 +10,9 @@ import wipro from "../../../assets/Logos/wipro.jpg";
 import techmahindra from "../../../assets/Logos/techmahindra.png";
 const PlacementsPartners = () => {
   return (
-    <div className="w-full font-Lexend">
+    <div className="w-full  font-Lexend ">
       <div className="container mx-auto">
-        <p className="text-center mt-8 md:mt-[4rem] mb-6 md:mb-[3.81rem] text-2xl md:text-[3.9375rem] font-semibold">
+        <p className="text-center mt-8 md:mt-[4rem]  mb-6 md:mb-[3.81rem] text-2xl md:text-[3.9375rem] font-semibold">
           <span className="text-darkGreen">Our Placement</span>
           <span className="text-yellow"> Partners</span>
         </p>
