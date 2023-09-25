@@ -2,7 +2,7 @@
 
 const Faq = () => {
   return (
-    <div className="container mx-auto my-[2rem] md:my-[0rem] flex flex-col gap-[2rem]">
+    <div className="container mx-auto my-[2rem] md:my-[0rem] flex flex-col gap-[2rem] mb-[2rem] pb-[3rem]">
 
       <FaqBlock>
         <FaqHeading>Homepage FAQs</FaqHeading>
@@ -190,14 +190,14 @@ const Faq = () => {
 }
 
 function FaqBlock({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-[1rem]">{children}</div>
+  return <div className="flex flex-col gap-[1rem]">{ children }</div>
 }
 
 function QuestionAnswer({ children, heading }: { children: React.ReactNode, heading: string }) {
   return (
     <div className="text-[#5b5b5b] flex flex-col gap-[0.5rem]">
-      <div className="text-[14px] text-xl md:text-2xl font-bold text-darkGreen">{heading}</div>
-      <div className="text-[14px]">{children}</div>
+      <div className="text-[14px] text-xl md:text-2xl font-bold text-darkGreen">{ heading }</div>
+      <div className="text-[14px]">{ children }</div>
     </div>
   );
 }
