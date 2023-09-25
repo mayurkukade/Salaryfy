@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useParams } from "react-router-dom";
 import {
   useLoginMutation,
   useRegisterMutation,
@@ -40,6 +40,7 @@ import { setToken } from "../../../features/reducers/authReducers/auth-slice-red
 import LoginSub from "./LoginSub";
 import { Button } from "@mui/material";
 import { isEmpty } from "rxjs";
+import usePagination from "@mui/material/usePagination/usePagination";
 
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
@@ -59,7 +60,8 @@ type SubmitRegister = {
 
 export default function QuestionnairePersonalDetails() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-
+const {id} = useParams()
+console.log(id)
   const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
     email: "",
     password: "",
@@ -482,10 +484,32 @@ function UploadResumeComponent({
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
+    console.log(selectedFile)
     if (selectedFile) {
       onResumeUpload(selectedFile);
+      toast.success('pdf is selected', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        })
       if (uploadFileRef.current) {
         uploadFileRef.current.value = "";
+      }else{
+        toast.error('pdf is not selected', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       }
     }
   }

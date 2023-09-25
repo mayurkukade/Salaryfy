@@ -14,7 +14,7 @@ const jobSearchSlice = apiSlice.injectEndpoints({
       providesTags: ["jobs-filter"],
     }),
     getJobById: builder.query({
-      query: (id: string) => `/job/getJob?JobId=${id}`,
+      query: (id: string | number) => `/job/getJob?JobId=${id}`,
       providesTags: ["job-id"],
     }),
     getRecommendedJobs: builder.query({

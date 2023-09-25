@@ -44,7 +44,7 @@ console.log(currentRoute)
       if (token) {
         navigate('/questionnaire/screening-questions/' + jobId)
       } else {
-        navigate('/questionnaire')
+        navigate('/questionnaire/'+jobId)
       }
     
   }

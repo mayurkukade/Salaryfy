@@ -132,7 +132,7 @@ export default function PlacementCarousel() {
               <div>
                 <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  7Days
+                  10Days
                 </p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +29,8 @@ const Navbar = () => {
   const [profile,setProfile] = useState<string>()
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
+  const jobId = localStorage.getItem('jobId')
+  console.log(jobId)
   const open = Boolean(anchorEl);
   console.log(window.location.href);
   const currentLocation = window.location.href.slice(22);
@@ -150,7 +151,7 @@ const Navbar = () => {
             </Stack>
           ) : (
             <div className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5">
-              <Link to={"/login"}>
+              <Link to={`/login/${jobId}`}>
                 <div className="text-center text-white cursor-pointer text-[1.6em]">
                   Sign In
                 </div>

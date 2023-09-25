@@ -23,7 +23,8 @@ export const Login = () => {
   const currentRoute = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-
+const jobId = localStorage.getItem('jobId')
+console.log(jobId)
   const LoginSubmitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -46,8 +47,8 @@ export const Login = () => {
           theme: "light",
         });
 
-        if (token && currentRoute == "questionnaire") {
-          navigate("/questionnaire/screening-questions");
+        if (token && currentRoute == `questionnaire/${jobId}`) {
+          navigate(`/questionnaire/screening-questions/${jobId}`);
         } else {
           navigate(`/${currentRoute}`);
         }

@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useParams } from "react-router-dom"
 import Navbar from "../NavComponent/Navbar"
 import Footer from "../FooteComponent/Footer"
 

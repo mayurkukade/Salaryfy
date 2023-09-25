@@ -12,18 +12,19 @@ export default function UserJobDetails() {
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
   console.log(jobDetails);
-const {id} = useParams()
-  const {data,isLoading,isError} = useGetJobByIdQuery(id)
-  console.log(data)
-  
-  let content
- if(data){
-  content = data.object
- }else if(isLoading){
-  content = <p>Loading</p>
- }else if(isError){
-  content = <p>Error</p>
- }
+  const { id } = useParams();
+  const { data, isLoading, isError } = useGetJobByIdQuery(id);
+  console.log(data);
+
+  let content;
+  if (data) {
+    content = data.object;
+  } else if (isLoading) {
+    content = <p>Loading</p>;
+  } else if (isError) {
+    content = <p>Error</p>;
+  }
+  console.log(content,'data')
   return (
     <>
       {/* This is For Webiste View Components */}
@@ -45,16 +46,16 @@ const {id} = useParams()
               <div className="absolute h-[5em] w-[5em] p-[0.5em] flex items-center justify-center rounded-md bg-[#D7E8F0] -translate-y-full overflow-hidden">
                 <img src={content.logo}></img>
               </div>
-              <div className="relative text-center">
-                {content.companyName}
-              </div>
+              <div className="relative text-center">{content.companyName}</div>
             </div>
           </div>
 
           {/* Second */}
           <div className="px-[1em] py-[1em]">
             <div className="text-[2em]  mb-[0.5em] ">
-             <p className="font-medium text-[18px] leading-[27px]">{jobDetails?.jobDetails}</p> 
+              <p className="font-medium text-[18px] leading-[27px]">
+                {content.postName}
+              </p>
             </div>
             <div className="flex text-[1.4em] font-medium">
               <div>
@@ -65,9 +66,7 @@ const {id} = useParams()
               <div className="mx-2 w-[1px] h-[1.4em] bg-[#0E5F59]"></div>
               <div>
                 <span>Starting Salary:&nbsp;</span>
-                <span className="text-[#0E5F59]">
-                  {content.startingSalary}
-                </span>
+                <span className="text-[#0E5F59]">{content.startingSalary}</span>
               </div>
             </div>
           </div>
@@ -109,7 +108,7 @@ const {id} = useParams()
                 <img src="/src/assets/images/lenskart-icon.png"></img>
               </div>
               <div className="relative text-center">
-                {jobDetails?.companyName}
+                {content?.companyName}
               </div>
             </div>
           </div>
@@ -117,7 +116,7 @@ const {id} = useParams()
           {/* Second */}
           <div className="w-[100%] flex flex-col gap-[1em]">
             <div className="text-[1.8em] font-[700]">
-              {jobDetails?.jobDetails}
+              {content?.jobDetails}
             </div>
             <div className="flex bg-white text-[1.1em] gap-[0.5em] text-[#EA4335] w-[max-content] border border-solid rounded-[2em] px-[1em] py-[0.5em]">
               <span>
@@ -143,9 +142,7 @@ const {id} = useParams()
             </div>
             <div className="text-[1.4em] font-medium">
               <span className="text-[#5B5B5B]">Starting Salary:&nbsp;</span>
-              <span className="text-[#0E5F59]">
-                {content.startingSalary}
-              </span>
+              <span className="text-[#0E5F59]">{content.startingSalary}</span>
             </div>
           </div>
         </div>

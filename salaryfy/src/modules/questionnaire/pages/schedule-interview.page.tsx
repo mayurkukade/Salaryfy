@@ -33,6 +33,7 @@ import { Link } from "react-router-dom";
 import { closeModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 import { JSX } from "react/jsx-runtime";
 import { toast } from "react-toastify";
+import { useGetJobByIdQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
 
 export default function ScheduleInterviewPage() {
   return (
@@ -83,6 +84,23 @@ export function ScheduleInterview() {
     userId,
     jobId,
   });
+
+  
+
+  const {data:getJobDetails,isLoading:isLoadingGetDetails,isError:isErrorGetDetails,isSuccess} = useGetJobByIdQuery(jobId)
+  console.log(getJobDetails?.object.companyName,'getJobDetails')
+
+  let getJobDetailsData 
+  if(isSuccess){
+    getJobDetailsData = getJobDetails?.object.interviewLocation
+  }else if(isLoadingGetDetails){
+    getJobDetailsData = <p>isLoading</p>
+  }else if(isErrorGetDetails){
+    getJobDetailsData = <p>Error</p>
+  }
+  const jobLocationArray = getJobDetailsData
+  
+console.log(getJobDetailsData)
   console.log(isError);
   const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation();
 
@@ -366,9 +384,9 @@ export function ScheduleInterview() {
                     onChange={handleHourChange}
                     className="w-[6rem] bg-[white] h-[3.4rem] font-[500]"
                   >
-                    {Array.from({ length: 25 }, (_, i) => {
+                    {Array.from({ length: 15 }, (_, i) => {
                       // Generate time in half-hour increments from 9:00 to 21:00
-                      const hour = Math.floor(i / 2) + 9;
+                      const hour = Math.floor(i / 2) + 10;
                       const minute = i % 2 === 0 ? "00" : "30";
                       const time = `${hour}:${minute}`;
                       return (

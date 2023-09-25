@@ -24,7 +24,7 @@ const JobCard = ({ details }: { details: JobType }) => {
     if (token) {
       navigate('/questionnaire/screening-questions/'+details.jobId)
     } else {
-      navigate('/questionnaire')
+      navigate('/questionnaire/'+details.jobId)
     }
   }
 

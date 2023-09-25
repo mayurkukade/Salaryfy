@@ -60,7 +60,7 @@ console.log(id)
   console.log(currentRoute);
 
   let nextButtonDisabled: boolean;
-  if (currentRoute === "questionnaire") {
+  if (currentRoute === "questionnaire/"+id) {
     nextButtonDisabled = resSteptwoSelector && verifyEmailFlagSelector;
   } else if (currentRoute === "questionnaire/screening-questions/"+id) {
     nextButtonDisabled = true;
@@ -71,7 +71,7 @@ console.log(id)
   const navigate = useNavigate();
 
   const nextHandler = async () => {
-    if (currentRoute === "questionnaire") {
+    if (currentRoute === "questionnaire/"+id) {
       console.log(true);
      
       try {
@@ -90,7 +90,7 @@ console.log(id)
             theme: "light",
           });
           // navigate("/questionnaire/screening-questions");
-          navigate("/login");
+          navigate("/login/"+id);
         } else {
           return toast.error("error", {
             position: "top-center",
@@ -108,7 +108,7 @@ console.log(id)
     } else if (currentRoute === "questionnaire/screening-questions/" +id) {
       // logic to validate and submit
       if (screeningQuestionValidation) {
-        navigate("/questionnaire/schedule-interview");
+        navigate("/questionnaire/schedule-interview"+id);
       }
     } else if (currentRoute === "questionnaire/schedule-interview/" +id) {
       // navigate("/questionnaire/fresher-dashboard");
