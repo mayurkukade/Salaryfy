@@ -303,8 +303,8 @@ export function FresherDashboard() {
             <div>{userProfile.email}</div>
             <div>Status</div>
             <div>
-              { false && <span className="bg-[#0CBC8B] rounded-[1em] text-[white] px-[0.5em] py-[0.25em]">
-                Selected
+              { true && <span className="bg-[yellow] rounded-[1em] text-[green] px-[0.5em] py-[0.25em]">
+                In Progress
               </span> }
             </div>
             <div>Plan Opted</div>
@@ -312,7 +312,7 @@ export function FresherDashboard() {
             <div>Sign Up Date</div>
             <div>{userProfile?.date && CommonUtilities.date.formatDate(userProfile?.date)}</div>
             <div>Payment Method</div>
-            <div></div>
+            <div>-</div>
           </div>
 
           {/* Education Details Section*/}
