@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
 import Cookies from "js-cookie";
+import { useParams } from "react-router-dom";
 
 export default function QuestionnaireTopBarStep() {
   const token = Cookies.get("jwtToken");
@@ -27,16 +28,18 @@ export default function QuestionnaireTopBarStep() {
   const currentRoute = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
+  const {id} = useParams()
+  console.log(id)
   console.log(currentRoute);
   let stepTwoTotal: number;
   let stepThreeTotal:number;
-  if (currentRoute == "questionnaire/screening-questions") {
+  if (currentRoute == "questionnaire/screening-questions/"+id) {
     stepTwoTotal = 25;
     stepThreeTotal = 0
   }else if(currentRoute == 'questionnaire/fresher-dashboard'){
     stepTwoTotal = 100;
     stepThreeTotal = 40
-  } else if(currentRoute == 'questionnaire/schedule-interview'){
+  } else if(currentRoute == 'questionnaire/schedule-interview/'+id){
     stepTwoTotal = 70;
     stepThreeTotal = 0
   }else if(currentRoute == 'questionnaire/fresher-profile-upload'){

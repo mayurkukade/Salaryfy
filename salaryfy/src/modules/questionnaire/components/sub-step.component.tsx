@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { SUB_STEP_STATUS } from "../constants/sub-step.enum";
 import { RootState } from "../../../store/app.store";
+import { useParams } from "react-router-dom";
 
 export default function SubStep({
   status,
@@ -42,7 +43,9 @@ export default function SubStep({
     (state: RootState) => state.currentRoute.currentRoute
   );
   console.log(currentRoute);
-  console.log(no)
+  console.log(no);
+  const { id } = useParams();
+  console.log(id);
   return (
     <div
       className={`flex ${stepBgColor} px-[2em] rounded-[1.5em] items-center h-[6.5em]`}
@@ -66,7 +69,7 @@ export default function SubStep({
               d="M4.5 12.75l6 6 9-13.5"
             />
           </svg>
-        ) : no == 2 && currentRoute == "questionnaire/schedule-interview" ? (
+        ) : no == 2 && currentRoute == `questionnaire/schedule-interview/${id}` ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -86,10 +89,12 @@ export default function SubStep({
         )}
       </div>
       <div className="">
-        {status !== SUB_STEP_STATUS.REMAINING  && (
-          <div className=" text-[white] text-[15px] leading-[23px] font-normal">Step-{no} </div>
+        {status !== SUB_STEP_STATUS.REMAINING && (
+          <div className=" text-[white] text-[15px] leading-[23px] font-normal">
+            Step-{no}{" "}
+          </div>
         )}
-        
+
         <div className={`text-[1.8em] font-medium ${titleColor}`}>{title}</div>
       </div>
     </div>

@@ -73,7 +73,7 @@ console.log(collectResponse)
         // sending data to backend
           postQuestion(filteredResponses);
           console.log('data sent to backend is ', filteredResponses)
-          navigate("/questionnaire/schedule-interview"); // Navigate to a Next page
+          navigate("/questionnaire/schedule-interview/" + id); // Navigate to a Next page
         }
       } else {
         toast.error("Please complete all questions before submitting", {

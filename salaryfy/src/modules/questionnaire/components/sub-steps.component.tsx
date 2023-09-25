@@ -3,14 +3,16 @@ import { SUB_STEP_STATUS } from "../constants/sub-step.enum";
 import { SubStepArrow } from "../pages/personal-details.page";
 import SubStep from "./sub-step.component";
 import { RootState } from "../../../store/app.store";
+import { useParams } from "react-router-dom";
 
 export default function SubSteps() {
   const currentRoute = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
   console.log(currentRoute);
+  const {id} = useParams()
   let subStepContent;
-  if (currentRoute == "questionnaire/screening-questions") {
+  if (currentRoute == "questionnaire/screening-questions/" +id) {
     subStepContent = (
       <>
         <SubStep
@@ -32,7 +34,7 @@ export default function SubSteps() {
         />
       </>
     );
-  }else if(currentRoute == "questionnaire/schedule-interview"){
+  }else if(currentRoute == "questionnaire/schedule-interview/"+id){
     subStepContent = (
       <>
         <SubStep

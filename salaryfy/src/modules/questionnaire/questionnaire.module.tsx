@@ -29,7 +29,7 @@ export default function QuestionnaireModule() {
 
         <Route index element={<QuestionnairePersonalDetails />} />
         <Route path="screening-questions/:id" element={<ScreeningQuestions />} />
-        <Route path="schedule-interview" element={<ScheduleInterviewPage />} />
+        <Route path="schedule-interview/:id" element={<ScheduleInterviewPage />} />
 
         <Route element={<SideBar />}>
           <Route path="fresher-dashboard" element={<FresherDashboardPage />} />

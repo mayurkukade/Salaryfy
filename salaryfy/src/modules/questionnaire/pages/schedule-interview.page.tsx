@@ -32,6 +32,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import { Link } from "react-router-dom";
 import { closeModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 import { JSX } from "react/jsx-runtime";
+import { toast } from "react-toastify";
 
 export default function ScheduleInterviewPage() {
   return (
@@ -85,7 +86,7 @@ export function ScheduleInterview() {
   console.log(isError);
   const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation();
 
-  console.log(data);
+  console.log(data,'data');
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -290,7 +291,17 @@ export function ScheduleInterview() {
 
       setChecked(false);
     } catch (error) {
-      console.log(error);
+      console.log(error.data.message);
+      toast.error(error.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 
@@ -538,7 +549,7 @@ const Modal = ({ getDetails }) => {
                 </div>
 
                 <div className="text-[1.26544rem] flex justify-center mt-4  text-darkGreen font-medium   ">
-                  <Link to={"/"} className="border-b border-darkGreen">
+                  <Link to={"/placementdrive"} className="border-b border-darkGreen">
                     {" "}
                     View more jobs
                   </Link>
