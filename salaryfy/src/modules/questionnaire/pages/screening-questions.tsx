@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStoreStateType } from '../../../store/app.store';
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
-
+import { useParams } from "react-router-dom";
 export default function ScreeningQuestions() {
 
   // const cureentSelector = useSelector(
@@ -21,13 +21,17 @@ export default function ScreeningQuestions() {
   // );
   // console.log(cureentSelector);
 
+
  
    // selector hook to get all job details
    const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
    console.log( jobDetails?.jobId);
-   const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;
-  //  const id = jobDetails?.jobId;
+   const { id } = useParams();
    console.log(id)
+  //  const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;
+  //  const id = jobDetails?.jobId;
+  
+
   const navigate = useNavigate();
   // disptach hook
   const dispatch = useDispatch();

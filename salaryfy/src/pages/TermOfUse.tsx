@@ -5,7 +5,7 @@ const TermOfUse = () => {
   return (
     <div className="container mx-auto">
       <h3>Introduction</h3>
-      <p>
+      <p className="text-xl">
         Welcome to Salaryfy! We are a job placement and career development
         company that helps users find new job opportunities with a salary hike.
         Our platform offers personalized job search services, career development

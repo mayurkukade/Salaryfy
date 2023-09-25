@@ -28,6 +28,6 @@ const jobSearchSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLazyGetJobsSearchQuery, useLazyGetJobsFilterQuery, useLazyGetJobByIdQuery, useLazyGetRecommendedJobsQuery, useLazyGetAllLocationsJobtypesCompanynamesQuery } = jobSearchSlice;
+export const { useLazyGetJobsSearchQuery,useGetJobByIdQuery, useLazyGetJobsFilterQuery, useLazyGetJobByIdQuery, useLazyGetRecommendedJobsQuery, useLazyGetAllLocationsJobtypesCompanynamesQuery } = jobSearchSlice;
 
 export default jobSearchSlice;

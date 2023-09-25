@@ -21,7 +21,7 @@ const PlacementsPartners = () => {
         {/* </marquee> */}
         <div className="container mx-auto   ">
           <Marquee>
-            <div className="flex justify-center align-middle gap-9 mb-5">
+            <div className="flex justify-center align-middle gap-4 mb-5 lg:gap-12">
               <div className="w-[6rem] bg-gradient-to-br   rounded-lg md:p-4 shadow-md ">
                 <img
                   src={lenskartlogo}
@@ -83,6 +83,27 @@ const PlacementsPartners = () => {
                   src={hamleyslogo}
                   alt="justdial Logo"
                   className="max-h-full mt-2"
+                />
+              </div>
+              <div className="w-[6rem] bg-gradient-to-br   rounded-lg md:p-4 shadow-md ">
+                <img
+                  src={lenskartlogo}
+                  alt="justdial Logo"
+                  className="max-h-full mt-3 w-14  "
+                />
+              </div>
+              <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
+                <img
+                  src={techmahindra}
+                  alt="justdial Logo"
+                  className="max-h-full mt-3 w-15"
+                />
+              </div>
+              <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4 shadow-md  ">
+                <img
+                  src={justdial}
+                  alt="justdial Logo"
+                  className="max-h-full w-10 ml-2 mt-1 "
                 />
               </div>
               {/* <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
