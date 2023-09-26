@@ -10,7 +10,7 @@ const AppLayout:React.FC = () => {
     <>
    <div className="min-h-screen flex flex-col">
       {/* Navbar at the top */}
-      <header >
+      <header className="sticky top-[0px] bg-[#fff] z-[80]">
         {/* Navbar content */}
         <Navbar/>
       </header>
