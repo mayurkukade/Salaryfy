@@ -277,6 +277,19 @@ console.log(getJobDetailsData)
     const Currentmonth = String(currentDate.getMonth() + 1).padStart(2, "0"); // Add 1 to month since it's zero-based
     const Currentday = String(currentDate.getDate()).padStart(2, "0");
 
+    if(currentDate >= selectedDate){
+      toast.error('selected date is ', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    }
+    
     const CurrentformattedDate = `${Currentyear}-${Currentmonth}-${Currentday}`;
 
     const hourFormat = `${selectedHour}:00`;
@@ -288,6 +301,7 @@ console.log(getJobDetailsData)
 
     const formattedDate = `${year}-${month}-${day}`;
     console.log(formattedDate);
+    
     try {
       const formDetails = {
         location: location,

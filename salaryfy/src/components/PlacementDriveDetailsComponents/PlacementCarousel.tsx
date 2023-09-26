@@ -85,7 +85,7 @@ export default function PlacementCarousel() {
               <div>
                 <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  7Days
+                  7 Days
                 </p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">
@@ -132,7 +132,7 @@ export default function PlacementCarousel() {
               <div>
                 <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  10Days
+                  10 Days
                 </p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">
@@ -179,7 +179,7 @@ export default function PlacementCarousel() {
               <div>
                 <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  10Days
+                  10 Days
                 </p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">
@@ -211,7 +211,7 @@ export default function PlacementCarousel() {
                   Alok
                 </p>
                 <span className="text-grey text-[1rem] font-normal leading-[27px] ">
-                  Software Engineer
+                  Consultant 
                 </span>
               </div>
             </div>
@@ -227,7 +227,7 @@ export default function PlacementCarousel() {
               <div>
                 <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  10Days
+                  10 Days
                 </p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">
@@ -258,7 +258,7 @@ export default function PlacementCarousel() {
                   Priya
                 </p>
                 <span className="text-grey text-[1rem] font-normal leading-[27px] ">
-                  Software Engineer
+                Optometry Associate
                 </span>
               </div>
             </div>
@@ -274,7 +274,7 @@ export default function PlacementCarousel() {
               <div>
                 <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  10Days
+                  6 Days
                 </p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">
@@ -321,7 +321,7 @@ export default function PlacementCarousel() {
               <div>
                 <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  10Days
+                  10 Days
                 </p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">
@@ -350,7 +350,7 @@ export default function PlacementCarousel() {
                   Sameer
                 </p>
                 <span className="text-grey text-[1rem] font-normal leading-[27px] ">
-                  Software Engineer
+                  Store Manager
                 </span>
               </div>
             </div>
@@ -366,7 +366,7 @@ export default function PlacementCarousel() {
               <div>
                 <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  10Days
+                  13 Days
                 </p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">
@@ -395,7 +395,7 @@ export default function PlacementCarousel() {
                   Poonam
                 </p>
                 <span className="text-grey text-[1rem] font-normal leading-[27px] ">
-                  Software Engineer
+                  Consultant
                 </span>
               </div>
             </div>
@@ -405,13 +405,13 @@ export default function PlacementCarousel() {
                   Placed in
                 </p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  Lenskart
+                  Hamleys
                 </p>
               </div>
               <div>
                 <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  10Days
+                  10 Days
                 </p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">
@@ -441,7 +441,7 @@ export default function PlacementCarousel() {
                   Karan
                 </p>
                 <span className="text-grey text-[1rem] font-normal leading-[27px] ">
-                  Software Engineer
+                  Sales Associate
                 </span>
               </div>
             </div>
@@ -470,7 +470,7 @@ export default function PlacementCarousel() {
 
           <SwiperSlide className="mb-9 ">
             <p className="text-darkGreen font-Lexend text-[14px] font-normal leading-6">
-            " "Salaryfy's guidance helped me secure my Sales Associate position at Lenskart. I'm thrilled!""</p>
+            "Salaryfy's guidance helped me secure my Sales Associate position at Lenskart. I'm thrilled!"</p>
             <div className="flex   p-2 mt-4">
               <img
                 alt="logo"
@@ -487,7 +487,7 @@ export default function PlacementCarousel() {
                   Anita
                 </p>
                 <span className="text-grey text-[1rem] font-normal leading-[27px] ">
-                  Software Engineer
+                  Sales Associate
                 </span>
               </div>
             </div>
@@ -497,13 +497,13 @@ export default function PlacementCarousel() {
                   Placed in
                 </p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  Hamleys
+                  Lenskart
                 </p>
               </div>
               <div>
                 <p className="text-[12px] leading-[1.1rem]">Job Switched in</p>
                 <p className="text-[1.1rem] font-medium leading-[1.7rem]">
-                  10Days
+                  12 Days
                 </p>
               </div>
               <div className="relative flex justify-center items-center text-[1rem] font-semibold">
@@ -533,7 +533,7 @@ export default function PlacementCarousel() {
                   Swati
                 </p>
                 <span className="text-grey text-[1rem] font-normal leading-[27px] ">
-                  Software Engineer
+                  Field Sales
                 </span>
               </div>
             </div>
