@@ -57,9 +57,8 @@ function App() {
           <Route path="/contactus" element={<Contactus />} />
         </Route>
 
-        <Route element={<MainLoginLayout/>}>
         <Route path="/login" element={<Login />} />
-        </Route>
+    
 
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
         <Route path="/placementdrive" element={<PlacementDrivePage />} />

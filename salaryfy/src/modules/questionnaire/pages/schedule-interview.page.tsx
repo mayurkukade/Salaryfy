@@ -85,24 +85,29 @@ export function ScheduleInterview() {
     jobId,
   });
 
-  
-
-  const {data:getJobDetails,isLoading:isLoadingGetDetails,isError:isErrorGetDetails,isSuccess} = useGetJobByIdQuery(jobId)
-  console.log(getJobDetails?.object.companyName,'getJobDetails')
-
-  let getJobDetailsData 
-  if(isSuccess){
-    getJobDetailsData = getJobDetails?.object
-  }else if(isLoadingGetDetails){
-    getJobDetailsData = <p>isLoading</p>
-  }else if(isErrorGetDetails){
-    getJobDetailsData = <p>Error</p>
-  }
- 
-  
-console.log(getJobDetailsData)
-  console.log(isError);
   const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation();
+const {data:getJobDetails,isLoading:isLoadingGetDetails,isError:isErrorGetDetails,isSuccess} = useGetJobByIdQuery(jobId)
+
+// console.log(getJobDetails,isLoadingGetDetails,isErrorGetDetails)
+// console.log(isSuccess)
+// console.log(isLoadingGetDetails)
+// console.log(isErrorGetDetails)
+// console.log(getJobDetails.object)
+//   let getJobDetailsData:any 
+//   if(getJobDetails){
+//     getJobDetailsData = getJobDetails?.object
+//   }else if(isLoadingGetDetails){
+//     getJobDetailsData = <p>isLoading</p>
+//   }else if(isErrorGetDetails){
+//     getJobDetailsData = <p>Error</p>
+//   }
+//  console.log(getJobDetails)
+  
+// console.log(getJobDetailsData)
+if (isLoading) return <div>Loading...</div>
+  if (!getJobDetails) return <div>Missing post!</div>
+  console.log(isError);
+
 
   console.log(data,'data');
   if (isLoading) {
@@ -264,10 +269,9 @@ console.log(getJobDetailsData)
     setSelectedDate(date);
   };
 
-const locationStringArray = getJobDetailsData.interviewLocation.split(',')
+// const locationStringArray = getJobDetailsData.interviewLocation && interviewLocation
 
 
-console.log(getJobDetailsData,'datajobdetails')
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -341,11 +345,13 @@ console.log(getJobDetailsData,'datajobdetails')
     }
   };
 
-const interviewSlotMin = getJobDetailsData.interviewTimeSlot1Min
-const interviewSlotMinNumber = Number(interviewSlotMin)
+// const interviewSlotMin = getJobDetailsData.interviewTimeSlot1Min && 10
+const interviewSlotMinNumber =Number(getJobDetails.object.interviewTimeSlot1Min)
 console.log(interviewSlotMinNumber)
-const interviewSlotMax = getJobDetailsData.interviewTimeSlot1Max 
-const interviewSlotMaxNumber = Number(interviewSlotMax)
+// const interviewSlotMax = getJobDetailsData.interviewTimeSlot1Max && 15
+console.log(getJobDetails.object.interviewTimeSlot1Max)
+const interviewSlotMaxNumber =Number(getJobDetails.object.interviewTimeSlot1Max)
+// console.log(interviewSlotMaxNumber)
 
   return (
     <div className="h-[100%] ">
@@ -375,7 +381,7 @@ const interviewSlotMaxNumber = Number(interviewSlotMax)
                   fontSize: "1rem",
                 }}
               >
-             {locationStringArray.map((location:any, index:number):any => (
+             {getJobDetails.object.interviewLocation.map((location:any, index:number):any => (
     <MenuItem key={index} value={location}>
     {location}
   </MenuItem>
@@ -411,7 +417,7 @@ const interviewSlotMaxNumber = Number(interviewSlotMax)
                     onChange={handleHourChange}
                     className="w-[6rem] bg-[white] h-[3.4rem] font-[500]"
                   >
-                    {Array.from({ length: interviewSlotMaxNumber-2 }, (_, i) => {
+                    {Array.from({ length: interviewSlotMaxNumber }, (_, i) => {
                       // Generate time in half-hour increments from 9:00 to 21:00
                       const hour = Math.floor(i / 2) + interviewSlotMinNumber;
                       const minute = i % 2 === 0 ? "00" : "30";
@@ -496,12 +502,12 @@ const interviewSlotMaxNumber = Number(interviewSlotMax)
         </div>
         <div>whatsapp number</div>
       </div>
-      <Modal getDetails={getDetailsModule} getJobDetailsData={getJobDetailsData} />
+      <Modal getDetails={getDetailsModule} getJobDetails={getJobDetails} />
     </div>
   );
 }
 
-const Modal = ({ getDetails,getJobDetailsData }) => {
+const Modal = ({ getDetails,getJobDetails }) => {
   const jobDetails = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
@@ -549,7 +555,7 @@ const Modal = ({ getDetails,getJobDetailsData }) => {
                 </h2>
                 <div className=" flex justify-center items-center py-3">
                   <img
-                    src={getJobDetailsData.logo}
+                    src={getJobDetails.object.logo}
                     className=" w-[4.625rem] h[4.625rem]"
                   />
                 </div>

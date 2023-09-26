@@ -23,6 +23,7 @@ export const Login = () => {
   const currentRoute = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
+  console.log(currentRoute)
 const jobId = localStorage.getItem('jobId')
 console.log(jobId)
   const LoginSubmitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -50,7 +51,7 @@ console.log(jobId)
         if (token && currentRoute == `questionnaire/${jobId}`) {
           navigate(`/questionnaire/screening-questions/${jobId}`);
         } else {
-          navigate(`/${currentRoute}`);
+          navigate(-1);
         }
       } else {
         console.error("Login error");
@@ -75,6 +76,7 @@ console.log(jobId)
   const [showPassword, setShowPassword] = useState(false);
 
   return (
+    
     <div className="bg-darkGreen min-h-screen flex flex-col justify-center items-center p-4">
       <div className="w-full max-w-md rounded-3xl bg-white shadow-md text-darkGreen">
         <h1 className="text-center text-3xl font-bold mt-10 font-Lexend">

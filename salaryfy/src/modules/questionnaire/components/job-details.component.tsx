@@ -16,7 +16,7 @@ export default function UserJobDetails() {
   const { data, isLoading, isError } = useGetJobByIdQuery(id);
   console.log(data);
 
-  let content;
+  let content:any;
   if (data) {
     content = data.object;
   } else if (isLoading) {
