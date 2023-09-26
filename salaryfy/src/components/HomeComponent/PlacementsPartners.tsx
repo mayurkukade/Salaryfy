@@ -21,7 +21,7 @@ const PlacementsPartners = () => {
         {/* </marquee> */}
         <div className="container mx-auto   ">
           <Marquee>
-            <div className="flex justify-center align-middle gap-4 mb-5 lg:gap-12">
+            <div className="flex justify-center align-middle gap-4 mb-5 lg:gap-12  xs:justify-evenly">
               <div className="w-[6rem] bg-gradient-to-br   rounded-lg md:p-4 shadow-md ">
                 <img
                   src={lenskartlogo}

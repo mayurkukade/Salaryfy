@@ -24,7 +24,7 @@ export default {
         Inter: ["Inter,", "sans-serif"],
       },
       screens: {
-        xs: "480px",
+        xs: "390px",
         ss: "620px",
         sm: "768px",
         md: "1060px",

@@ -32,10 +32,10 @@ const HeroSection2 = () => {
       </div>
       <div className="container p-2 mx-auto md:flex md:flex-row md:justify-center md:gap-[20px] ">
         <div className="text-center leading-none lg:text-[4rem] text-[2.5rem] mt-[2.5rem] font-semibold md:p-5  md:w-[60%] md:text-left md:text-[4.25rem] md:mt-[5rem]">
-          <p className="text-darkGreen font-Lexend  ">End to end</p>
+          <p className="text-darkGreen font-Lexend xs:text-[2.25rem] lg:text-[4rem] ">End to end</p>
           <div className=" font-Lexend text-darkGreen  ">
-            <span className="text-yellow">Job Change</span> <br />
-            <span className="text-darkGreen">solution for You</span>
+            <span className="text-yellow xs:text-[2.25rem] lg:text-[4rem]">Job Change</span> <br />
+            <span className="text-darkGreen xs:text-[2.25rem] lg:text-[4rem]">solution for You</span>
             <p className="font-Lexend text-[0.8127rem] mt-[2rem] text-[#5B5B5B] leading-5  lg:m-0 lg:mt-[1.25rem] lg:text-[1.25rem] m-5">
               6874+ people have got their dream job through Salaryfy.
               When are you getting yours?
