@@ -8,7 +8,7 @@ function HeadingAnswer({ children, heading }: { children: React.ReactNode, headi
     return (
         <div className="text-[#5b5b5b] flex flex-col gap-[0.5rem]">
             <div className="text-[14px] text-xl md:text-2xl font-bold text-darkGreen">{heading}</div>
-            <div className="text-[14px]">{children}</div>
+            <div className="text-[14px] flex flex-col gap-[1rem]">{children}</div>
         </div>
     );
 }
@@ -19,7 +19,7 @@ function PrivacyPolicyHeading({ children }: { children: React.ReactNode }) {
 
 const PrivacyPolicy = () => {
     return (
-        <div className="container mx-auto my-[2rem] md:my-[0rem] flex flex-col gap-[1rem]">
+        <div className="container mx-auto my-[2rem] md:my-[0rem] flex flex-col gap-[1rem] pb-[2rem]">
             <PrivacyPolicyHeading>Privacy Policy for Salaryfy</PrivacyPolicyHeading>
 
             <div className="text-[20px] text-[#5b5b5b]">Salaryfy is committed to personal Information protection and management in order to operate effectively and successfully for the benefit of our stakeholders, customers, and the community. In doing so, it is critical to preserve people's privacy by using lawful and suitable methods for managing personal Information. As a result, we have put in place our privacy policy (hereafter referred to as "policy").</div>
@@ -186,7 +186,6 @@ const PrivacyPolicy = () => {
             <InfoBlock>
                 <HeadingAnswer heading="Information Mining">
                     <p>We deploy analytics tools and search information providers to track how visitors interact with our website's content. We also utilize Facebook Custom Audiences to request that Facebook display advertising that is tailored to your interactions with our websites or Facebook applications, as well as to track how you interact with those ads. Further information on how these services use such technologies can be found on the websites of Google, Adobe, and Facebook.</p>
-
                     <p>If you do not want Google Analytics to gather Information about your visits to our websites, you can opt-out by installing the Google Analytics opt-out browser add-on. To opt out of Facebook Custom Audiences, go to Facebook's opt-out page.</p>
                 </HeadingAnswer>
             </InfoBlock>
