@@ -104,7 +104,7 @@ const Navbar = () => {
     
        
         <li className="p-1  w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
-         <Link to="">Contact</Link> 
+         <Link to="/contactus">Contact</Link> 
         </li>
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
          <Link to={"/aboutus"}>About us</Link> 
