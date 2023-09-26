@@ -5,7 +5,7 @@ import UserJobDetails from "../components/job-details.component";
 
 import SubSteps from "../components/sub-steps.component";
 
-import { Button, Checkbox } from "@mui/material";
+import { Button, Checkbox, MenuList } from "@mui/material";
 
 import CancelIcon from "@mui/icons-material/Cancel";
 import * as React from "react";
@@ -92,13 +92,13 @@ export function ScheduleInterview() {
 
   let getJobDetailsData 
   if(isSuccess){
-    getJobDetailsData = getJobDetails?.object.interviewLocation
+    getJobDetailsData = getJobDetails?.object
   }else if(isLoadingGetDetails){
     getJobDetailsData = <p>isLoading</p>
   }else if(isErrorGetDetails){
     getJobDetailsData = <p>Error</p>
   }
-  const jobLocationArray = getJobDetailsData
+ 
   
 console.log(getJobDetailsData)
   console.log(isError);
@@ -122,7 +122,7 @@ console.log(getJobDetailsData)
   const getDetailsModule = data?.list.map(
     (
       schedule: {
-        interviewDate: ReactNode;
+        interviewDate: React.ReactNode;
         location:
           | string
           | number
@@ -263,7 +263,11 @@ console.log(getJobDetailsData)
   const handleDateChange = (date: any) => {
     setSelectedDate(date);
   };
-  console.log(selectedDate);
+
+const locationStringArray = getJobDetailsData.interviewLocation.split(',')
+
+
+console.log(getJobDetailsData,'datajobdetails')
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -278,7 +282,7 @@ console.log(getJobDetailsData)
     const Currentday = String(currentDate.getDate()).padStart(2, "0");
 
     if(currentDate >= selectedDate){
-      toast.error('selected date is ', {
+     return toast.error('you cant select previous date from current date', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -337,6 +341,12 @@ console.log(getJobDetailsData)
     }
   };
 
+const interviewSlotMin = getJobDetailsData.interviewTimeSlot1Min
+const interviewSlotMinNumber = Number(interviewSlotMin)
+console.log(interviewSlotMinNumber)
+const interviewSlotMax = getJobDetailsData.interviewTimeSlot1Max 
+const interviewSlotMaxNumber = Number(interviewSlotMax)
+
   return (
     <div className="h-[100%] ">
       <p className="font-normal leading-[23px] text-[15px] mb-[1em]">
@@ -352,10 +362,10 @@ console.log(getJobDetailsData)
           </div>
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Location</InputLabel>
+              <InputLabel id="location">Location</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                id="location"
                 value={location}
                 label="Location"
                 onChange={handleChangeLocation}
@@ -365,9 +375,12 @@ console.log(getJobDetailsData)
                   fontSize: "1rem",
                 }}
               >
-                <MenuItem value={"Pune"}>Pune</MenuItem>
-                <MenuItem value={"Mumbai"}>Mumbai</MenuItem>
-                <MenuItem value={"Nashik"}>Nashik</MenuItem>
+             {locationStringArray.map((location:any, index:number):any => (
+    <MenuItem key={index} value={location}>
+    {location}
+  </MenuItem>
+  ))}
+                
               </Select>
             </FormControl>
           </Box>
@@ -398,9 +411,9 @@ console.log(getJobDetailsData)
                     onChange={handleHourChange}
                     className="w-[6rem] bg-[white] h-[3.4rem] font-[500]"
                   >
-                    {Array.from({ length: 15 }, (_, i) => {
+                    {Array.from({ length: interviewSlotMaxNumber-2 }, (_, i) => {
                       // Generate time in half-hour increments from 9:00 to 21:00
-                      const hour = Math.floor(i / 2) + 10;
+                      const hour = Math.floor(i / 2) + interviewSlotMinNumber;
                       const minute = i % 2 === 0 ? "00" : "30";
                       const time = `${hour}:${minute}`;
                       return (
@@ -483,12 +496,12 @@ console.log(getJobDetailsData)
         </div>
         <div>whatsapp number</div>
       </div>
-      <Modal getDetails={getDetailsModule} />
+      <Modal getDetails={getDetailsModule} getJobDetailsData={getJobDetailsData} />
     </div>
   );
 }
 
-const Modal = ({ getDetails }) => {
+const Modal = ({ getDetails,getJobDetailsData }) => {
   const jobDetails = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
@@ -536,7 +549,7 @@ const Modal = ({ getDetails }) => {
                 </h2>
                 <div className=" flex justify-center items-center py-3">
                   <img
-                    src={jobDetails.logo}
+                    src={getJobDetailsData.logo}
                     className=" w-[4.625rem] h[4.625rem]"
                   />
                 </div>

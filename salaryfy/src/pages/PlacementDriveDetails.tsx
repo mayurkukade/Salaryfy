@@ -10,6 +10,7 @@ import { setJobDetails } from "../features/reducers/job-details/job-details.slic
 import Cookies from "js-cookie";
 import QuestionnaireTopBarStep from "../modules/questionnaire/components/questionnaire-topbar-step.component";
 import { useGetPlacementDetailsPDFQuery } from "../features/api-integration/jobs-search-slice/jobs-search.slice";
+import { toast } from "react-toastify";
 
 function GreenHeading({ label }: { label: string }) {
   return (
@@ -42,7 +43,7 @@ console.log(currentRoute)
   function onGetHiredClick() {
     
       if (token) {
-        navigate('/questionnaire/screening-questions/' + jobId)
+        navigate('/questionnaire/screening-questions/'+jobId)
       } else {
         navigate('/questionnaire/'+jobId)
       }
@@ -51,7 +52,7 @@ console.log(currentRoute)
 const jobIdInNumber = Number(jobId)
 console.log(jobIdInNumber)
   const getJobDetails = (jobIdInNumber:number)=>{
-    fetch(`http://192.168.1.53:8080/pdf/generate/${jobIdInNumber}`)
+    fetch(`http://192.168.1.49:8080/pdf/generate/${jobIdInNumber}`)
         .then((response) => response.blob())
         .then((blob) => {
           
@@ -70,6 +71,17 @@ console.log(jobIdInNumber)
           
           window.URL.revokeObjectURL(url);
           document.body.removeChild(a);
+        }).catch((error)=>{
+          toast.error(`pdf is not downloadable ${error}`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
         })
   }
   async function fetchJob() {
