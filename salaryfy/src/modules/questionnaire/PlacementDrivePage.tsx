@@ -151,7 +151,7 @@ export default function PlacementDrivePage() {
             <div className="flex-grow flex">
               <TextField inputRef={searchFieldRef} className="flex-grow" placeholder="Enter Keyword" size="small" />
             </div>
-            <div className="flex gap-[2.5em] h-[4em] flex" style={{ justifyContent: 'space-between' }}>
+            <div className="flex gap-[2.5em] h-[4em] " style={{ justifyContent: 'space-between' }}>
               <Button variant="contained" onClick={searchByKeyword} >Search</Button>
 
               {/* Desktop View */}

@@ -27,9 +27,9 @@ export default function QuestionnaireModule() {
     <Routes>
       <Route element={<StepsLayout />}>
 
-        <Route index element={<QuestionnairePersonalDetails />} />
-        <Route path="screening-questions" element={<ScreeningQuestions />} />
-        <Route path="schedule-interview" element={<ScheduleInterviewPage />} />
+        <Route path="/:id"  element={<QuestionnairePersonalDetails />} />
+        <Route path="screening-questions/:id" element={<ScreeningQuestions />} />
+        <Route path="schedule-interview/:id" element={<ScheduleInterviewPage />} />
 
         <Route element={<SideBar />}>
           <Route path="fresher-dashboard" element={<FresherDashboardPage />} />

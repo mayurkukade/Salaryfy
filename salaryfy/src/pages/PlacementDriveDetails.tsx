@@ -42,9 +42,9 @@ console.log(currentRoute)
   function onGetHiredClick() {
     
       if (token) {
-        navigate('/questionnaire/screening-questions')
+        navigate('/questionnaire/screening-questions/' + jobId)
       } else {
-        navigate('/questionnaire')
+        navigate('/questionnaire/'+jobId)
       }
     
   }

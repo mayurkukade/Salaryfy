@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../store/app.store";
-
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useRegisterMutation } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
 import { useGetInterviewScheduleQuery } from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
@@ -9,7 +9,8 @@ import { useGetInterviewScheduleQuery } from "../../../features/api-integration/
 import { openModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 export default function BottomPageNavigationBar() {
   const [register] = useRegisterMutation();
-
+const {id} = useParams()
+console.log(id)
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   const dispatch = useDispatch();
   const jobId: string = localStorage.getItem("jobId");
@@ -59,18 +60,18 @@ export default function BottomPageNavigationBar() {
   console.log(currentRoute);
 
   let nextButtonDisabled: boolean;
-  if (currentRoute === "questionnaire") {
+  if (currentRoute === "questionnaire/"+id) {
     nextButtonDisabled = resSteptwoSelector && verifyEmailFlagSelector;
-  } else if (currentRoute === "questionnaire/screening-questions") {
+  } else if (currentRoute === "questionnaire/screening-questions/"+id) {
     nextButtonDisabled = true;
-  } else if (currentRoute === "questionnaire/schedule-interview") {
+  } else if (currentRoute === "questionnaire/schedule-interview/" + id) {
     nextButtonDisabled = !isScheduleInterviewError;
   }
   console.log(!nextButtonDisabled);
   const navigate = useNavigate();
 
   const nextHandler = async () => {
-    if (currentRoute === "questionnaire") {
+    if (currentRoute === "questionnaire/"+id) {
       console.log(true);
      
       try {
@@ -89,7 +90,7 @@ export default function BottomPageNavigationBar() {
             theme: "light",
           });
           // navigate("/questionnaire/screening-questions");
-          navigate("/login");
+          navigate("/login/"+id);
         } else {
           return toast.error("error", {
             position: "top-center",
@@ -104,24 +105,24 @@ export default function BottomPageNavigationBar() {
       } catch (error) {
         console.log(error);
       }
-    } else if (currentRoute === "questionnaire/screening-questions") {
+    } else if (currentRoute === "questionnaire/screening-questions/" +id) {
       // logic to validate and submit
       if (screeningQuestionValidation) {
-        navigate("/questionnaire/schedule-interview");
+        navigate("/questionnaire/schedule-interview"+id);
       }
-    } else if (currentRoute === "questionnaire/schedule-interview") {
+    } else if (currentRoute === "questionnaire/schedule-interview/" +id) {
       // navigate("/questionnaire/fresher-dashboard");
       handleClickOpen();
     }
   };
 
   const backHandler = () => {
-    if (currentRoute === "questionnaire/screening-questions") {
+    if (currentRoute === "questionnaire/screening-questions/"+id) {
       navigate("/questionnaire");
-    } else if (currentRoute === "questionnaire/schedule-interview") {
-      navigate("/questionnaire/screening-questions");
+    } else if (currentRoute === "questionnaire/schedule-interview/"+id) {
+      navigate("/questionnaire/screening-questions/"+id);
     } else if (currentRoute === "questionnaire/fresher-dashboard") {
-      navigate("/questionnaire/schedule-interview");
+      navigate("/questionnaire/schedule-interview/"+id);
     }
   };
 

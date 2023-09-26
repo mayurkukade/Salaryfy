@@ -32,6 +32,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import { Link } from "react-router-dom";
 import { closeModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
 import { JSX } from "react/jsx-runtime";
+import { toast } from "react-toastify";
+import { useGetJobByIdQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
 
 export default function ScheduleInterviewPage() {
   return (
@@ -82,10 +84,27 @@ export function ScheduleInterview() {
     userId,
     jobId,
   });
+
+  
+
+  const {data:getJobDetails,isLoading:isLoadingGetDetails,isError:isErrorGetDetails,isSuccess} = useGetJobByIdQuery(jobId)
+  console.log(getJobDetails?.object.companyName,'getJobDetails')
+
+  let getJobDetailsData 
+  if(isSuccess){
+    getJobDetailsData = getJobDetails?.object.interviewLocation
+  }else if(isLoadingGetDetails){
+    getJobDetailsData = <p>isLoading</p>
+  }else if(isErrorGetDetails){
+    getJobDetailsData = <p>Error</p>
+  }
+  const jobLocationArray = getJobDetailsData
+  
+console.log(getJobDetailsData)
   console.log(isError);
   const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation();
 
-  console.log(data);
+  console.log(data,'data');
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -258,6 +277,19 @@ export function ScheduleInterview() {
     const Currentmonth = String(currentDate.getMonth() + 1).padStart(2, "0"); // Add 1 to month since it's zero-based
     const Currentday = String(currentDate.getDate()).padStart(2, "0");
 
+    if(currentDate >= selectedDate){
+      toast.error('selected date is ', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    }
+    
     const CurrentformattedDate = `${Currentyear}-${Currentmonth}-${Currentday}`;
 
     const hourFormat = `${selectedHour}:00`;
@@ -269,6 +301,7 @@ export function ScheduleInterview() {
 
     const formattedDate = `${year}-${month}-${day}`;
     console.log(formattedDate);
+    
     try {
       const formDetails = {
         location: location,
@@ -290,7 +323,17 @@ export function ScheduleInterview() {
 
       setChecked(false);
     } catch (error) {
-      console.log(error);
+      console.log(error.data.message);
+      toast.error(error.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 
@@ -355,9 +398,9 @@ export function ScheduleInterview() {
                     onChange={handleHourChange}
                     className="w-[6rem] bg-[white] h-[3.4rem] font-[500]"
                   >
-                    {Array.from({ length: 25 }, (_, i) => {
+                    {Array.from({ length: 15 }, (_, i) => {
                       // Generate time in half-hour increments from 9:00 to 21:00
-                      const hour = Math.floor(i / 2) + 9;
+                      const hour = Math.floor(i / 2) + 10;
                       const minute = i % 2 === 0 ? "00" : "30";
                       const time = `${hour}:${minute}`;
                       return (
@@ -538,7 +581,7 @@ const Modal = ({ getDetails }) => {
                 </div>
 
                 <div className="text-[1.26544rem] flex justify-center mt-4  text-darkGreen font-medium   ">
-                  <Link to={"/"} className="border-b border-darkGreen">
+                  <Link to={"/placementdrive"} className="border-b border-darkGreen">
                     {" "}
                     View more jobs
                   </Link>

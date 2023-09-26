@@ -3,6 +3,8 @@ import image from "../../../assets/images/job-details-bg.png";
 import CalendarVector from "./calendar-vector";
 import { AppStoreStateType } from "../../../store/app.store";
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
+import { useGetJobByIdQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
+import { useParams } from "react-router-dom";
 
 export default function UserJobDetails() {
   // selector hook to get all job details
@@ -10,6 +12,19 @@ export default function UserJobDetails() {
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
   console.log(jobDetails);
+  const { id } = useParams();
+  const { data, isLoading, isError } = useGetJobByIdQuery(id);
+  console.log(data);
+
+  let content;
+  if (data) {
+    content = data.object;
+  } else if (isLoading) {
+    content = <p>Loading</p>;
+  } else if (isError) {
+    content = <p>Error</p>;
+  }
+  console.log(content,'data')
   return (
     <>
       {/* This is For Webiste View Components */}
@@ -29,31 +44,29 @@ export default function UserJobDetails() {
           <div className="text-[1.8em] font-semibold text-[#0E5F59] px-[2em] flex items-center">
             <div className="relative min-w-[5em]">
               <div className="absolute h-[5em] w-[5em] p-[0.5em] flex items-center justify-center rounded-md bg-[#D7E8F0] -translate-y-full overflow-hidden">
-                <img src={jobDetails.logo}></img>
+                <img src={content.logo}></img>
               </div>
-              <div className="relative text-center">
-                {jobDetails?.companyName}
-              </div>
+              <div className="relative text-center">{content.companyName}</div>
             </div>
           </div>
 
           {/* Second */}
           <div className="px-[1em] py-[1em]">
             <div className="text-[2em]  mb-[0.5em] ">
-             <p className="font-medium text-[18px] leading-[27px]">{jobDetails?.jobDetails}</p> 
+              <p className="font-medium text-[18px] leading-[27px]">
+                {content.postName}
+              </p>
             </div>
             <div className="flex text-[1.4em] font-medium">
               <div>
                 <span>Location:&nbsp;</span>
                 <span className="text-[#0E5F59]"></span>
-                {jobDetails?.location}
+                {content.location}
               </div>
               <div className="mx-2 w-[1px] h-[1.4em] bg-[#0E5F59]"></div>
               <div>
                 <span>Starting Salary:&nbsp;</span>
-                <span className="text-[#0E5F59]">
-                  {jobDetails?.startingSalary}
-                </span>
+                <span className="text-[#0E5F59]">{content.startingSalary}</span>
               </div>
             </div>
           </div>
@@ -63,7 +76,7 @@ export default function UserJobDetails() {
             <div className="w-[fit-content] h-[fit-content] bg-white flex items-center border border-[#0E5F59] border-solid py-[0.5em] px-[1em] rounded-[2em]">
               <CalendarVector />
               <div className="ml-[0.5em] text-[1.3em] text-[#0E5F59] font-medium">
-                Interview on: {jobDetails?.interviewStartDate}
+                Interview on: {content.interviewStartDate}
               </div>
             </div>
           </div>
@@ -95,7 +108,7 @@ export default function UserJobDetails() {
                 <img src="/src/assets/images/lenskart-icon.png"></img>
               </div>
               <div className="relative text-center">
-                {jobDetails?.companyName}
+                {content?.companyName}
               </div>
             </div>
           </div>
@@ -103,7 +116,7 @@ export default function UserJobDetails() {
           {/* Second */}
           <div className="w-[100%] flex flex-col gap-[1em]">
             <div className="text-[1.8em] font-[700]">
-              {jobDetails?.jobDetails}
+              {content?.jobDetails}
             </div>
             <div className="flex bg-white text-[1.1em] gap-[0.5em] text-[#EA4335] w-[max-content] border border-solid rounded-[2em] px-[1em] py-[0.5em]">
               <span>
@@ -120,18 +133,16 @@ export default function UserJobDetails() {
                   />
                 </svg>
               </span>
-              <span>Interview on: {jobDetails?.interviewStartDate}</span>
+              <span>Interview on: {content.interviewStartDate}</span>
             </div>
 
             <div className="text-[1.4em] font-medium">
               <span className="text-[#5B5B5B]">Location&nbsp;</span>
-              <span className="text-[#0E5F59]">{jobDetails?.location}</span>
+              <span className="text-[#0E5F59]">{content.location}</span>
             </div>
             <div className="text-[1.4em] font-medium">
               <span className="text-[#5B5B5B]">Starting Salary:&nbsp;</span>
-              <span className="text-[#0E5F59]">
-                {jobDetails?.startingSalary}
-              </span>
+              <span className="text-[#0E5F59]">{content.startingSalary}</span>
             </div>
           </div>
         </div>
