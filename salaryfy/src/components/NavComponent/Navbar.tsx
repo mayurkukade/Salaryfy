@@ -170,32 +170,33 @@ const Navbar = () => {
           )}
         </li>
       </ul>
-      <div onClick={handleNav} className="block md:hidden">
+      <div onClick={handleNav} className="block md:hidden ">
         {nav ? <AiOutlineClose size={30} /> : <AiOutlineMenu size={30} />}
       </div>
       <ul
         className={
           nav
-            ? "fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-[#005F59] ease-in-out duration-500 text-[1.5rem] text-[#FDCC07] p-6 "
+            ? "fixed left-0 top-0 w-[60%] h-full border-r  border-r-gray-900 bg-[#005F59] ease-in-out duration-500 text-[1.5rem] text-[#FDCC07] p-6 "
             : "ease-in-out duration-500 fixed left-[-100%]"
+            
         }
       >
         {/* <h1 className="w-full text-3xl font-bold text-[#00df9a] m-4">REACT.</h1> */}
         <li>
-          <Link to="/" className="p-4 border-b border-gray-600  ">
+          <Link to="/" className="p-4  border-b border-gray-600  ">
             Home
           </Link>
         </li>
         <li>
           <Link
-            to="/fresher-dashboard"
+           to={token?'/questionnaire/fresher-dashboard':'/login'}
             className="p-4 border-b border-gray-600 "
           >
             Dashboard
           </Link>
         </li>
         <li>
-          <Link to="/contact" className="p-4 border-b border-gray-600 ">
+          <Link to="/contactus" className="p-4 border-b border-gray-600 ">
             Contact
           </Link>
         </li>
@@ -205,7 +206,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/signup" className="p-4">
+          <Link to="/login" className="p-4">
             Sign In
           </Link>
         </li>
