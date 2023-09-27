@@ -29,7 +29,7 @@ const JobCard2 = ({ details }: { details: JobType }) => {
 
   return (
     <div
-      className="p-[2em] app-box-shadow mx-auto mt-8 w-full rounded-[2em]"
+      className="p-[2em] app-box-shadow mx-auto mt-8 w-full rounded-[2em] xs:w-[90%]"
       style={{
         background:
           "linear-gradient(96deg, rgba(254, 205, 8, 0.01) 0%, rgba(0, 95, 89, 0.04) 100%)",

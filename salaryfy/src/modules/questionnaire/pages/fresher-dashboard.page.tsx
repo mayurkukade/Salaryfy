@@ -316,7 +316,7 @@ export function FresherDashboard() {
           </div>
 
           {/* Education Details Section*/}
-          <div style={{ boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)" }} className="rounded-xl mb-[2em] p-3">
+          <div style={{ boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)" }} className="rounded-xl lg:mb-[2em] xs:mb-[2em] p-3">
             {/* <div className="p-2 md:grid md:grid-cols-[1fr,1fr] md:[&>*]:mx-[2em] md:[&>*]:my-[1em] md:p-[1.5em] [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
               <div>
                 <div className="mb-[0.5em] text-[2em] text-[#005F59] font-semibold">Highest Level of Education</div><DropdownMenu label={profileLevel.highestLevelOfEdu[0] || ''} options={profileLevel.highestLevelOfEdu} endIcon={<KeyboardArrowDownIcon />} />
@@ -338,7 +338,7 @@ export function FresherDashboard() {
 
             {/* <EducationalInfoComponent   /> */}
             <EducationalInfoComponent educationalSkills={educationalSkills} educationalSkillsKey={educationalSkillsKey} onHighestLevelEducationChangeHandler={onHighestLevelEducationChangeHandler} onBoardUniversityFieldInput={onBoardUniversityFieldInput} onBoardUniversityChangeHandler={onBoardUniversityChangeHandler} onStreamChangeHandler={onStreamChangeHandler} onPercentageChangeHandler={onPercentageChangeHandler} />
-            <Button style={{ minWidth: "10em", lineHeight: '27px', fontSize: '18px' }} size="large" variant="contained" onClick={onSaveFresherInfo} >Update</Button>
+            <Button style={{ minWidth: "10em", lineHeight: '27px', fontSize: '18px'}} size="large" variant="contained" onClick={onSaveFresherInfo}  >Update</Button>
 
           </div>
 
