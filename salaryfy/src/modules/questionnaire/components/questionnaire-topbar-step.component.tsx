@@ -94,7 +94,7 @@ export default function QuestionnaireTopBarStep() {
         <div className="flex-grow   flex mb-[2em] gap-[2em] ">
           <StepMobile
             className="text-[0.5rem]"
-            progress={100}
+            progress={currentRoute === "placementdrive" ? 50 :100 }
             active={true}
             no={1}
             title="Select the job"

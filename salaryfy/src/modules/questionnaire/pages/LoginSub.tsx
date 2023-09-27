@@ -138,6 +138,7 @@ const LoginSub: React.FC<LoginSubProps> = ({
         <div className="text-grey text-center mt-1 flex justify-center text-[1.2rem] ">
           <h2 className="text-[1.1rem] font-medium leading-[27px]">
             Didn’t sign up yet?{" "}
+            <br className="lg:hidden md:hidden "/>
             <span
               onClick={() => setToggleLoginRegister(!toggleLoginRegister)}
               className="border-b text-darkGreen border-darkGreen m-1 cursor-pointer text-[1.1rem] font-medium leading-[27px]"
