@@ -164,11 +164,11 @@ export default function PlacementDrivePage() {
 
                 {/* Mobile View */}
                 <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}><Button className="h-[100%]" variant='contained' onClick={toggleFilter} ><FilterSVGIcon /></Button></Box>
-                <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
-                  <DropdownMenu onOptionClick={onSortOptionChange} options={Object.values(jobSortOptions).map(e => (e.label))} label={selectedOption || 'Select'} endIcon={<KeyboardArrowDownIcon />} />
-                </Box>
               </div>
             </div>
+            <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
+              <DropdownMenu onOptionClick={onSortOptionChange} options={Object.values(jobSortOptions).map(e => (e.label))} label={selectedOption || 'Select'} endIcon={<KeyboardArrowDownIcon />} />
+            </Box>
           </div>
 
           <Box ref={expandableRef} id='expandable-element' className='w-[100%] my-[4em] relative' style={{ height: '0px', transition: '1000ms ease' }} sx={{ overflow: 'hidden', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
