@@ -66,17 +66,17 @@ export default function PlacementDrivePage() {
       jobType: jobFilterValues.jobTypes.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(','),
       location: jobFilterValues.locations.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(',')
     }
-    await searchByFilterComponent2( filterProperties )
-    
+    await searchByFilterComponent2(filterProperties)
+
   }
 
-  async function searchByFilterComponent2(filterProperties : { companyName: string, jobType: string, location: string }) {
-    if (Object.values(filterProperties).map((value) => value).reduce((prev, curr) => prev+curr).length === 0) { return; }
+  async function searchByFilterComponent2(filterProperties: { companyName: string, jobType: string, location: string }) {
+    if (Object.values(filterProperties).map((value) => value).reduce((prev, curr) => prev + curr).length === 0) { return; }
     const filterPropertiesUriEncoded = Object.entries(filterProperties).map(([key, value]: [string, string]) => [key, encodeURIComponent(value)].join('=')).join('&');
     const { data: { list: jobsData } } = await lazyGetFilterJobs(filterPropertiesUriEncoded);
 
     console.log('jobs: ', filterPropertiesUriEncoded);
-    
+
     dispatch(setJobs(jobsData));
 
     // setFilterKey(() => CommonUtilities.generateRandomString(10));
@@ -102,7 +102,7 @@ export default function PlacementDrivePage() {
     if (once) { return; }
     once = true;
     console.log('jobs: ', { selectedCity });
-    if (selectedCity === '') { setAllJobs('') } else{ searchByFilterComponent2({ companyName: '', jobType: '', location: selectedCity }) }
+    if (selectedCity === '') { setAllJobs('') } else { searchByFilterComponent2({ companyName: '', jobType: '', location: selectedCity }) }
   }, []);
 
   function toggleFilter() {
@@ -121,9 +121,9 @@ export default function PlacementDrivePage() {
   }
 
   function clearFilterHandler() {
-    if (selectedCity !== '') { dispatch( setSelectedCity('') ); }
+    if (selectedCity !== '') { dispatch(setSelectedCity('')); }
     const clearedFilterValues = Object.fromEntries(Object.entries(jobFilterValues).map(([key, value]) => [key, value.map(e => ({ ...e, selected: false }))])) as unknown as JobsFilterType;
-    dispatch( setJobFilter( clearedFilterValues ) );
+    dispatch(setJobFilter(clearedFilterValues));
   }
 
   function onSortOptionChange(option: string) {
@@ -146,22 +146,28 @@ export default function PlacementDrivePage() {
           <FilterComponent onClearButtonClick={clearFilterHandler} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[30em]" />
         </Box>
         <div className="flex-grow p-3">
-          <p className="text-[1.2rem] font-semibold text-darkGreen mb-2">Search</p>
-          <div className="flex gap-[2.5em] h-[4em] flex-row">
-            <div className="flex-grow flex">
-              <TextField inputRef={searchFieldRef} className="flex-grow" placeholder="Enter Keyword" size="small" />
+          <div className="flex-grow flex justify-between gap-[1rem] flex-col md:flex-row">
+            <div className="flex items-center gap-[1rem] flex-grow">
+              <div className="text-[1.2rem] font-semibold text-darkGreen mb-2">Search</div>
+              <div className="flex-grow flex">
+                <TextField inputRef={searchFieldRef} className="flex-grow" placeholder="Enter Keyword" size="small" />
+              </div>
             </div>
-            <div className="flex gap-[2.5em] h-[4em] " style={{ justifyContent: 'space-between' }}>
-              <Button variant="contained" onClick={searchByKeyword} >Search</Button>
+            <div className="flex gap-[2.5em] h-[4em] flex-row flex-grow md:flex-grow-0">
+              <div className="flex gap-[2.5em] h-[4em] flex-grow justify-between">
+                <Button variant="contained" onClick={searchByKeyword} >Search</Button>
 
-              {/* Desktop View */}
-              <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
-                <DropdownMenu onOptionClick={onSortOptionChange} options={Object.values(jobSortOptions).map(e => (e.label))} label={selectedOption || 'Select'} endIcon={<KeyboardArrowDownIcon />} />
-              </Box>
+                {/* Desktop View */}
+                <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
+                  <DropdownMenu onOptionClick={onSortOptionChange} options={Object.values(jobSortOptions).map(e => (e.label))} label={selectedOption || 'Select'} endIcon={<KeyboardArrowDownIcon />} />
+                </Box>
 
-              {/* Mobile View */}
-              <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}><Button className="h-[100%]" variant='contained' onClick={toggleFilter} ><FilterSVGIcon /></Button></Box>
-              <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}><Button className="h-[100%]" variant='contained'><SortSVGIcon /></Button></Box>
+                {/* Mobile View */}
+                <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}><Button className="h-[100%]" variant='contained' onClick={toggleFilter} ><FilterSVGIcon /></Button></Box>
+                <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
+                  <DropdownMenu onOptionClick={onSortOptionChange} options={Object.values(jobSortOptions).map(e => (e.label))} label={selectedOption || 'Select'} endIcon={<KeyboardArrowDownIcon />} />
+                </Box>
+              </div>
             </div>
           </div>
 
