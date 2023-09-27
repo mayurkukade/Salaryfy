@@ -366,7 +366,7 @@ const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em] md:max-w-[45%]">
+    <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em] md:max-w-[50%]">
       <div>Password</div>
       <div className="flex gap-[1em] relative">
         <input
@@ -443,7 +443,7 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
     </svg>
   );
   return (
-    <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em] md:max-w-[45%]">
+    <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em] md:max-w-[50%]  ">
       <div>Confirm Password</div>
       <div className="flex w-full items-center">
         <div className="flex gap-[1em] relative w-full">
@@ -637,10 +637,10 @@ const Verified = (props: PropT): JSX.Element => {
     }
   };
   const inputStyle: CSSProperties = {
-    width: "2rem", // Set your desired width
-    height: "2rem", // Set your desired height
+    width: "1.8rem", // Set your desired width
+    height: "1.8rem", // Set your desired height
     textAlign: "center",
-    fontSize: "1.5rem",
+    fontSize: "1.3rem",
     border: "1px solid #ccc",
     borderRadius: "4px",
     marginRight: "5px", // Add some spacing between inputs
@@ -648,15 +648,15 @@ const Verified = (props: PropT): JSX.Element => {
   };
 
   return (
-    <div className="flex mb-[2em] justify-center md:justify-start">
-      <div className="flex pb-[1em] flex-col max-w-[50%] flex-grow text-[#005F59] font-semibold text-[1.8em] pr-[1em]">
-        <div className="mb-[0.25em]">OTP</div>
-        <div className="flex justify-between">
+    <div className="lg:flex lg:mb-[2em] justify-center md:justify-start ">
+      <div className="flex  md:flex-col max-w-[50%] md:flex-grow text-[#005F59] font-semibold text-[1.8em]  ">
+        <div className=" xs:text-start xs:font-medium xs:mr-3">OTP</div>
+        <div className="lg:flex lg:justify-between ">
           <OTPInput
             value={otp}
             onChange={setOtp}
             numInputs={4}
-            renderSeparator={<span className="mx-2">-</span>}
+            renderSeparator={<span className="lg:mx-5 xs:mx-3">-</span>}
             renderInput={(props, index) => (
               <input
                 {...props}
@@ -665,17 +665,18 @@ const Verified = (props: PropT): JSX.Element => {
               />
             )}
           />
-          <div className="flex items-center">
-            <div className="mr-[0.25em]"></div>
+          <div className="flex items-center lg:flex-row xs:flex-col">
+            
             {otp.length == 4 ? (
+               
               <button
-                className=" bg-[#005F59] text-[#FECD08] rounded-md font-medium p-[0.25em] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className=" bg-[#005F59] text-[#FECD08]  rounded-md font-medium  lg:text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed lg:ml-6 xs:mt-4 xs:text-[1.2rem] xs:p-2 "
                 onClick={handleSubmitVerify}
               >
                 Verified
               </button>
             ) : (
-              ""
+              null
             )}
           </div>
         </div>
