@@ -98,7 +98,7 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="#"
+                    <Link to="/contactus"
                       className="text-white transition hover:opacity-75"
                     >
                       Contact us

@@ -53,6 +53,16 @@ const Navbar = () => {
     Cookies.remove("jwtToken");
     navigate("/login");
   };
+
+  const logInHandler =()=>{
+    if(currentLocation === ''){
+      navigate('/login')
+    }else if(currentLocation === 'placementdrive'){
+      navigate('/login')
+    }else{
+      navigate('/login/'+jobId)
+    }
+  }
   useEffect(() => {
     if (token) {
       const userDetails: TokenPayload = jwt_decode(token);
@@ -94,7 +104,7 @@ const Navbar = () => {
     
        
         <li className="p-1  w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
-         <Link to="">Contact</Link> 
+         <Link to="/contactus">Contact</Link> 
         </li>
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
          <Link to={"/aboutus"}>About us</Link> 
@@ -150,12 +160,12 @@ const Navbar = () => {
               </Menu>
             </Stack>
           ) : (
-            <div className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5">
-              <Link to={`/login/${jobId}`}>
+            <div className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5" onClick={logInHandler}>
+              
                 <div className="text-center text-white cursor-pointer text-[1.6em]">
                   Sign In
                 </div>
-              </Link>
+            
             </div>
           )}
         </li>

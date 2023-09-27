@@ -20,90 +20,90 @@ const PlacementsPartners = () => {
         
         {/* </marquee> */}
         <div className="container mx-auto   ">
-          <Marquee>
-            <div className="flex justify-center align-middle gap-4 mb-5 lg:gap-12">
+          <Marquee  play={true}>
+            <div className="flex justify-center align-middle gap-12 mb-5   xs:justify-evenly">
               <div className="w-[6rem] bg-gradient-to-br   rounded-lg md:p-4 shadow-md ">
                 <img
                   src={lenskartlogo}
-                  alt="justdial Logo"
-                  className="max-h-full mt-3 w-14  "
+                  alt="lenskart Logo"
+                  className="max-h-full laptop:ml-1  w-14 xs:mt-4 xs:ml-4"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
                 <img
                   src={techmahindra}
                   alt="justdial Logo"
-                  className="max-h-full mt-3 w-15"
+                  className="max-h-full laptop:mt-4 xs:mt-3 w-15 "
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4 shadow-md  ">
                 <img
                   src={justdial}
                   alt="justdial Logo"
-                  className="max-h-full w-10 ml-2 mt-1 "
+                  className="max-h-full w-10 laptop:ml-2 laptop:mt-2 xs:mt-4 xs:ml-6  "
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4 shadow-md ">
                 <img
                   src={cromalogo}
                   alt="justdial Logo"
-                  className="max-h-full mt-4 w-15 "
+                  className="max-h-full mt-4 w-15 laptop:p-0 xs:p-2"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4 shadow-md ">
                 <img
                   src={trentlogo}
-                  alt="justdial Logo"
-                  className="max-h-full mt-4 w-16"
+                  alt="trent Logo"
+                  className="max-h-full laptop:mt-5 laptop:ml-0  w-16 xs:mt-7 xs:ml-5"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4 shadow-md ">
                 <img
                   src={hamleyslogo}
-                  alt="justdial Logo"
-                  className="max-h-full mt-1 w-16"
+                  alt="hamleys Logo"
+                  className="max-h-full laptop:mt-2 laptop:ml-0 w-16 xs:mt-4 xs:ml-4"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
                 <img
                   src={wipro}
                   alt="justdial Logo"
-                  className="w-19 mt-3"
+                  className="w-19 laptop:mt-5 xs:mt-3"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
                 <img
                   src={jimmychoo}
-                  alt="justdial Logo"
-                  className="max-h-full mt-3"
+                  alt="jimmychoo Logo"
+                  className="max-h-full laptop:mt-4 xs:mt-3"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4 shadow-md ">
                 <img
                   src={hamleyslogo}
-                  alt="justdial Logo"
-                  className="max-h-full mt-2"
+                  alt="hamleys Logo"
+                  className="max-h-full xs:mt-2 laptop:mt-2"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br   rounded-lg md:p-4 shadow-md ">
                 <img
                   src={lenskartlogo}
-                  alt="justdial Logo"
-                  className="max-h-full mt-3 w-14  "
+                  alt="lenskart Logo"
+                  className="max-h-full laptop:ml-1  w-14 xs:mt-4 xs:ml-3  "
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
                 <img
                   src={techmahindra}
-                  alt="justdial Logo"
+                  alt="techmahindra Logo"
                   className="max-h-full mt-3 w-15"
                 />
               </div>
-              <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4 shadow-md  ">
+              <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4  shadow-md mr-8  ">
                 <img
                   src={justdial}
                   alt="justdial Logo"
-                  className="max-h-full w-10 ml-2 mt-1 "
+                  className="max-h-full w-10 laptop:ml-2 laptop:mt-2 xs:mt-4 xs:ml-6 "
                 />
               </div>
               {/* <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">

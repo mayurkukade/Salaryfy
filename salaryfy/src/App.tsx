@@ -13,7 +13,6 @@ import { PasswordResetSuccessful } from "./pages/PasswordResetSuccessful";
 import "./App.css";
 import AppLayout from "./components/appLayout/AppLayout";
 
-
 import PlacementDrivePage from "./modules/questionnaire/PlacementDrivePage";
 import PlacementDriveDetails from "./pages/PlacementDriveDetails";
 
@@ -30,6 +29,8 @@ import TermOfUse from "./pages/TermOfUse";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Faq from "./pages/Faq";
 import AboutUs from "./pages/AboutUs";
+import Contactus from "./pages/Contactus";
+import MainLoginLayout from "./components/appLayout/MainLoginLayout";
 
 function App() {
   return (
@@ -53,7 +54,11 @@ function App() {
           <Route path="/faq" element={<Faq />} />
 
           <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/contactus" element={<Contactus />} />
         </Route>
+
+        <Route path="/login" element={<Login />} />
+    
 
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
         <Route path="/placementdrive" element={<PlacementDrivePage />} />
@@ -90,8 +95,6 @@ function App() {
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/test" element={<TestComponent />} />
       </Routes>
-
-     
     </>
   );
 }

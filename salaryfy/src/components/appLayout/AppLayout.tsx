@@ -1,4 +1,4 @@
-import { Outlet, useParams } from "react-router-dom"
+import { Outlet} from "react-router-dom"
 import Navbar from "../NavComponent/Navbar"
 import Footer from "../FooteComponent/Footer"
 
@@ -10,7 +10,7 @@ const AppLayout:React.FC = () => {
     <>
    <div className="min-h-screen flex flex-col">
       {/* Navbar at the top */}
-      <header >
+      <header className="sticky top-[0px] bg-[#fff] z-[80]">
         {/* Navbar content */}
         <Navbar/>
       </header>
