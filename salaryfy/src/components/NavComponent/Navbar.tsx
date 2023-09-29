@@ -23,6 +23,7 @@ interface TokenPayload {
 }
 
 import navlogo from "../../../assets/Logos/navbar-logo.png";
+import { useGetUserProfilePhotoQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 
 const Navbar = () => {
@@ -30,6 +31,7 @@ const Navbar = () => {
   const [profile,setProfile] = useState<string>()
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  
   // const {data,isLoading,isError} = useGetUploadedFilesQuery(14)
   //console.log(data)
   const jobId = localStorage.getItem('jobId')

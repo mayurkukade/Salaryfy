@@ -165,7 +165,7 @@ console.log(id)
         >
           <span className="text-[18px] w-[5rem;] leading-[27px] text-darkGreen font-medium mr-[0.5em] ">
             {" "}
-            {currentRoute == "questionnaire/schedule-interview"
+            {currentRoute == `questionnaire/schedule-interview/${jobId}`
               ? "Confirm"
               : "Next"}
           </span>

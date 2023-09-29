@@ -159,7 +159,7 @@ export default function PlacementJobDetails({
             <div className="text-[1.4em] font-medium">
               <span className="text-[#5B5B5B]">Starting Salary:&nbsp;</span>
               <span className="text-[#0E5F59]">
-                {jobDetails.startingSalary || "salary"}
+              &#8377;&nbsp; {jobDetails.startingSalary || "salary"}
               </span>
             </div>
             <div className="text-[1.4em] font-medium">
