@@ -118,7 +118,7 @@ console.log(id)
 
   const backHandler = () => {
     if (currentRoute === "questionnaire/screening-questions/"+id) {
-      navigate("/questionnaire");
+      navigate("/placementdrive");
     } else if (currentRoute === "questionnaire/schedule-interview/"+id) {
       navigate("/questionnaire/screening-questions/"+id);
     } else if (currentRoute === "questionnaire/fresher-dashboard") {

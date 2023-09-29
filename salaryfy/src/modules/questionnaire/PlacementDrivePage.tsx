@@ -14,9 +14,10 @@ import { setJobs } from "../../features/reducers/jobs/jobs.slice";
 import { JobType } from "../../features/reducers/jobs/jobs.interface";
 import { JobsFilterType, OptionSelected } from "../../features/reducers/job-filter/jobs-filter.interface";
 import { SORT_OPTIONS, SortOptions } from "../../contants/job-sort-options.enum";
-import { setJobFilter } from "../../features/reducers/job-filter/jobs-filter.slice";
+import jobsFilterSlice, { setJobFilter } from "../../features/reducers/job-filter/jobs-filter.slice";
 import { setSelectedCity } from "../../features/reducers/selected-city/selected-city.slice";
 function FilterSVGIcon() {
+
   return (
     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_46_6884)">

@@ -34,7 +34,7 @@ const userProfileApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLazyGetUserByIdQuery, useUploadFileMutation, useLazyGetUploadedFilesQuery, useLazyGetUserSkillsQuery, useSetUserSkillsMutation } = userProfileApiSlice;
+export const { useLazyGetUserByIdQuery,useGetUploadedFilesQuery ,useUploadFileMutation, useLazyGetUploadedFilesQuery, useLazyGetUserSkillsQuery, useSetUserSkillsMutation } = userProfileApiSlice;
 
 export default userProfileApiSlice.reducerPath;
 

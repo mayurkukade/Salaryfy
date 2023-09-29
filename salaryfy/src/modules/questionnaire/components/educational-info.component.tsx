@@ -7,7 +7,7 @@ import { ChangeEvent } from "react";
 
 export function EducationalInfoComponent({ educationalSkillsKey, educationalSkills, onHighestLevelEducationChangeHandler, onBoardUniversityFieldInput, onBoardUniversityChangeHandler, onStreamChangeHandler, onPercentageChangeHandler }: { educationalSkillsKey: EducationalSkillsKey, educationalSkills: EducationalSkillsType, onHighestLevelEducationChangeHandler: (v0: string | null, v2: CHANGED_BY) => void, onBoardUniversityFieldInput: (v: string) => void, onBoardUniversityChangeHandler: (v: string | null) => void, onStreamChangeHandler: (value: string | null) => void, onPercentageChangeHandler: (v: ChangeEvent<HTMLInputElement>) => void }) {
   return(
-    <div className=" flex flex-col gap-3   md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:my-[2em]">
+    <div className=" flex flex-col gap-3   md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:my-[2em] xs:my-[2em]">
               <div>
                 <div className="text-[#005F59] text-[1.8em] font-semibold">Highest level of education</div>
                 <div className="" style={{ fontWeight: 500 }}>

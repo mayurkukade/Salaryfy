@@ -1,4 +1,5 @@
 export interface JobType {
+  logo: string;
   postName: string,
   companyName: string,
   location: string,

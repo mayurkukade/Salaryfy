@@ -52,7 +52,7 @@ function App() {
           />
           <Route path="/termofuse" element={<TermOfUse />} />
           <Route path="/faq" element={<Faq />} />
-
+          <Route path="/login" element={<Login />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contactus" element={<Contactus />} />
         </Route>
@@ -74,7 +74,7 @@ function App() {
         <Route path="/paymentcompleted" element={<Paymentcompleted />} />
         <Route path="/forgotpasswordotp" element={<ForgotPasswordOtp />} />
         <Route path="/forgotpasswordemail" element={<ForgorPasswordEmail />} />
-        <Route path="/login" element={<Login />} />
+        
         <Route path="/login/:id" element={<Login />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route
