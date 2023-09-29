@@ -27,7 +27,7 @@ interface TokenPayload {
   userId: string;
 }
 
-import navlogo from "../../../assets/Logos/navbar-logo.png";
+
 import { useGetUserProfilePhotoQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 
