@@ -50,7 +50,7 @@ function FresherProfileUpload() {
   const userDocEduUploadFileRef = useRef<HTMLInputElement | null>(null);
   const userDocSkillUploadFileRef = useRef<HTMLInputElement | null>(null);
 
-  const [educationDocs, setEducationDocs] = useState<Array<{ docType: FILE_UPLOAD_TYPES.EDUCATION | FILE_UPLOAD_TYPES.SKILL_CERTIFICATION, file: File }>>([]);
+  const [educationDocs, setEducationDocs] = useState<Array<{ id: string, docType: FILE_UPLOAD_TYPES.EDUCATION | FILE_UPLOAD_TYPES.SKILL_CERTIFICATION, file: File }>>([]);
 
   const educationalSkillsChangedByRef = useRef(initialValue);
   const [educationalSkills, setEducationalSkills] = useState<EducationalSkillsType>(INITIAL_EDUCATIONAL_SKILLS);
@@ -142,14 +142,14 @@ function FresherProfileUpload() {
   function onUserUploadEduDoc(event: ChangeEvent<HTMLInputElement>) {
     if (!event?.target.files && !event?.target.files?.length) { return }
     const file = event?.target?.files[0];
-    setEducationDocs((eduDocs) => [...eduDocs, { docType: FILE_UPLOAD_TYPES.EDUCATION, file }]);
+    setEducationDocs((eduDocs) => [...eduDocs, { docType: FILE_UPLOAD_TYPES.EDUCATION, file, id: CommonUtilities.generateRandomString(20) }]);
     event.target.value = '';
   }
 
   function onUserUploadSkillDoc(event: ChangeEvent<HTMLInputElement>) {
     if (!event?.target.files && !event?.target.files?.length) { return }
     const file = event?.target?.files[0];
-    setEducationDocs((eduDocs) => [...eduDocs, { docType: FILE_UPLOAD_TYPES.SKILL_CERTIFICATION, file }]);
+    setEducationDocs((eduDocs) => [...eduDocs, { docType: FILE_UPLOAD_TYPES.SKILL_CERTIFICATION, file, id: CommonUtilities.generateRandomString(20) }]);
     event.target.value = '';
   }
 
@@ -336,9 +336,9 @@ function FresherProfileUpload() {
     uploadUserEducationSkillCertificate();
   }
 
-
-
-
+  function onEducationDocRemove(docId: string) {
+    setEducationDocs((educationDocs) => educationDocs.filter((educationDoc) => educationDoc.id !== docId));
+  }
 
   return (
     <>
@@ -346,11 +346,7 @@ function FresherProfileUpload() {
         <div>
           <div>
             <div className="flex mb-[2em]">
-
-
               <UserProfilePhoto userId={userId} profileLink={userProfilePhotoLink} onPhotoUpload={fetchUserProfilePhoto} />
-
-
               <div className="p-5 md:pl-10">
                 <div className="font-bold text-[#005F59] text-[2rem] md:text-[4em]">Hi {userFullName},</div>
                 <div className="text-[#5B5B5B] text-[1.052rem]  pr-[0px] md:text-[22px] md:pr-[120px]">Please complete your profile</div>
@@ -391,42 +387,24 @@ function FresherProfileUpload() {
 
               {/* Education Section */}
 
-              <div className="text-[#5B5B5B] app-theme-big-text">
-                Education*
-              </div>
+              <div className="text-[#5B5B5B] app-theme-big-text">Education*</div>
               <div className=" flex  flex-col gap-5 md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:mb-[2em]">
-                { /* <DocUploader
-                  label="12th_standard.png"
-                  uploading={true}
-                  progress={100}
-                  onDocUpload={unHandledEvent}
-                />
-                <DocUploader
-                  label="graduate.png"
-                  uploading={true}
-                  progress={10}
-                  onDocUpload={unHandledEvent}
-                /> */ }
-                {
-                  educationDocs.filter((doc) => doc.docType === FILE_UPLOAD_TYPES.EDUCATION).map(({ file: educationDoc }) => <DocUploader label={educationDoc.name} uploading={true} progress={100} onDocUpload={unHandledEvent} key={CommonUtilities.generateRandomString(10)} />)
-                }
+                {educationDocs.filter((doc) => doc.docType === FILE_UPLOAD_TYPES.EDUCATION).map(({ file: educationDoc, id }) => <DocUploader label={educationDoc.name} uploading={true} progress={100} onDocUpload={unHandledEvent} onCancelClick={() => onEducationDocRemove(id)} key={CommonUtilities.generateRandomString(10)} />)}
               </div>
-              <div className="mt-[20px] md:mt-[0px]">
+              <div className="mt-[20px] md:mt-[0px] mb-[1.5rem]">
                 <Button variant="contained" onClick={() => addUserEducationDoc(FILE_UPLOAD_TYPES.EDUCATION)}><span className="app-theme-text">Add</span></Button>
               </div>
 
               { /*Skills/Certification Section */}
-              <div className="text-[#5B5B5B] my-[2em]">
-                <div className="text-[#5B5B5B] app-theme-big-text">Skills/Certification*</div>
-                {/* <DocUploader label="MERN stack course.p..." className="w-full text-[0.5rem] md:w-[50%]" uploading={true} progress={100} onDocUpload={unHandledEvent} /> */}
-                {
-                  educationDocs.filter((doc) => doc.docType === FILE_UPLOAD_TYPES.SKILL_CERTIFICATION).map(({ file: educationDoc }) => <DocUploader label={educationDoc.name} className="w-full text-[0.5rem] md:w-[50%]" uploading={true} progress={100} onDocUpload={unHandledEvent} key={CommonUtilities.generateRandomString(20)} />)
-                }
-                <div>
-                  {" "}
-                  <Button variant="contained" className="mt-[20px]" onClick={() => addUserEducationDoc(FILE_UPLOAD_TYPES.SKILL_CERTIFICATION)} style={{ marginTop: "20px" }}><span className="app-theme-text">Add</span></Button>
-                </div>
+              <div className="text-[#5B5B5B] app-theme-big-text">Skills/Certification*</div>
+              <div className=" flex  flex-col gap-5 md:grid md:grid-cols-[1fr,1fr] md:gap-[2em] md:mb-[2em]">
+                {educationDocs.filter((doc) => doc.docType === FILE_UPLOAD_TYPES.SKILL_CERTIFICATION).map(({ file: educationDoc, id }) => <DocUploader label={educationDoc.name} uploading={true} progress={100} onDocUpload={unHandledEvent} onCancelClick={() => onEducationDocRemove(id)} key={CommonUtilities.generateRandomString(10) } />)}
               </div>
+              <div className="mt-[20px] md:mt-[0px]">
+                <Button variant="contained" onClick={() => addUserEducationDoc(FILE_UPLOAD_TYPES.SKILL_CERTIFICATION)}><span className="app-theme-text">Add</span></Button>
+              </div>
+
+              
             </div>
 
             <div className="flex gap-[2em] my-[2em] mt-[5em]">
@@ -446,7 +424,7 @@ function FresherProfileUpload() {
   );
 }
 
-function DocUploader({ className, label, uploading, progress, onDocUpload }: { className?: string; label: string; uploading?: boolean; progress?: number; onDocUpload: (file: File) => void }) {
+function DocUploader({ className, label, uploading, progress, onDocUpload, onCancelClick }: { className?: string; label: string; uploading?: boolean; progress?: number; onDocUpload: (file: File) => void, onCancelClick?: () => void }) {
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
 
   function onClicked() {
@@ -464,9 +442,13 @@ function DocUploader({ className, label, uploading, progress, onDocUpload }: { c
     }
   }
 
+  function onCancelClickHandle() {
+    if (onCancelClick) { onCancelClick(); }
+  }
+
   return (
     <>
-      {uploading && <div className={"flex justify-between items-center shadow-lg px-[2em] py-[1.5em] rounded-[1em] " + (className || "")} >
+      {uploading && <div onClick={onCancelClickHandle} className={"flex justify-between items-center shadow-lg px-[2em] py-[1.5em] rounded-[1em] " + (className || "")} >
         <div className="flex items-center gap-[1em] flex-grow">
           <div>
             <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg" >

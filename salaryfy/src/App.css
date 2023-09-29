@@ -30,6 +30,10 @@ html, body, #root {
   box-shadow: 0 0 10px rgb(210, 210, 210, 0.7);
 }
 
+.text-wrap {
+  text-wrap: wrap !important;
+}
+
 .app-theme-text {
   font-family: 'Lexend';
   line-height: 27px;
