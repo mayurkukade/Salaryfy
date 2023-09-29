@@ -320,13 +320,13 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
         <div className="flex-grow">
           <input
             type="email"
-            placeholder=" Email"
+            placeholder="Email"
             value={props.email}
             onChange={(e) => props.setemail(e.target.value)}
             onFocus={() => props.setEmailFocus(true)}
             onBlur={() => props.setEmailFocus(false)}
             autoComplete="off"
-            className="border border-[#005F59] border-solid rounded-md outline-none w-full"
+            className="border border-[#005F59] border-solid rounded-md outline-none w-full  px-[0.5em] "
           />
           {props.emailFocus && !props.validEmail ? (
             <p className="text-[#fe4a08]">Fill in a valid email</p>
@@ -451,11 +451,11 @@ const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
             type={showPassword ? "text" : "password"}
             onChange={(e) => props.setConfirmpassword(e.target.value)}
             value={props.confirmpassword}
-            placeholder=" Confirmpassword"
+            placeholder="Confirmpassword"
             autoComplete="off"
             onFocus={() => props.setConfirmFocus(true)}
             onBlur={() => props.setConfirmFocus(false)}
-            className="flex-grow border border-[#005F59] border-solid rounded-md outline-none"
+            className="flex-grow border border-[#005F59] border-solid rounded-md outline-none  px-[0.5em]"
           />
           <button
             onClick={() => setShowPassword(showPassword ? false : true)}
@@ -670,7 +670,7 @@ const Verified = (props: PropT): JSX.Element => {
             {otp.length == 4 ? (
                
               <button
-                className=" bg-[#005F59] text-[#FECD08]  rounded-md font-medium  lg:text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed lg:ml-6 xs:mt-4 xs:text-[1.2rem] xs:p-2 "
+                className=" bg-[#005F59] text-[#FECD08]    rounded-md font-medium  lg:text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed lg:ml-6 lg:mt-0 xs:mt-4 xs:text-[1.2rem] xs:p-2 "
                 onClick={handleSubmitVerify}
               >
                 Verified

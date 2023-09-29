@@ -59,6 +59,7 @@ function FresherProfileUpload() {
   const skillTextFieldRef = useRef<HTMLInputElement | null>(null);
   const [fileUploadPost] = useUploadFileMutation();
   const [getUploadedDocs] = useLazyGetUploadedFilesQuery();
+  
   const [getUserSkills] = useLazyGetUserSkillsQuery();
   const [setUserSkills] = useSetUserSkillsMutation();
   const [getUniversities] = useLazyUniversitySuggestionsQuery();
@@ -341,7 +342,7 @@ function FresherProfileUpload() {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:justify-between gap-[12rem]">
+      <div className="flex flex-col md:flex-row md:justify-between gap-[11rem]">
         <div>
           <div>
             <div className="flex mb-[2em]">
