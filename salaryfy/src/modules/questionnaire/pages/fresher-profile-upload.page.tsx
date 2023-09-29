@@ -18,17 +18,11 @@ import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 import { EducationalInfoComponent } from "../components/educational-info.component";
 import { EducationalSkillsKey, UserEducationSkill } from "../constants/fresher.type";
+import { DocumentTypeResponse } from "../constants/user-uploaded-documents.interface";
 
 const initialValue: { value: CHANGED_BY } = {
   value: CHANGED_BY.SERVER
 };
-
-interface DocumentTypeResponse {
-  documentId: number
-  documentLink: string
-  documentType: FILE_UPLOAD_TYPES
-  userId: number
-}
 
 export default function FresherProfileUploadPage() {
   return (
