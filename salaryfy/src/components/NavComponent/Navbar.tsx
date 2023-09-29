@@ -23,10 +23,19 @@ interface TokenPayload {
 }
 
 import navlogo from "../../../assets/Logos/navbar-logo.png";
+import { QuestionnaireHttpClient } from "../../modules/questionnaire/services/questionnaire.service";
+import { useLazyGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
+import { concatMap } from "rxjs";
+import { DocumentTypeResponse } from "../../modules/questionnaire/constants/user-uploaded-documents.interface";
+import { FILE_UPLOAD_TYPES } from "../../modules/questionnaire/constants/file-upload.enum";
 
 const Navbar = () => {
+  const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
+  const userId = useSelector((state: RootState) => state.authSlice.userId);
+  const [getUploadedDocs] = useLazyGetUploadedFilesQuery();
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [nav, setNav] = useState(false);
-  const [profile,setProfile] = useState<string>()
+  const [profile, setProfile] = useState<string>()
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const jobId = localStorage.getItem('jobId')
@@ -54,15 +63,30 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const logInHandler =()=>{
-    if(currentLocation === ''){
+  const logInHandler = () => {
+    if (currentLocation === '') {
       navigate('/login')
-    }else if(currentLocation === 'placementdrive'){
+    } else if (currentLocation === 'placementdrive') {
       navigate('/login')
-    }else{
-      navigate('/login/'+jobId)
+    } else {
+      navigate('/login/' + jobId)
     }
   }
+
+  useEffect(() => {
+    if (!userId) { return; }
+
+    fetchUserProfilePhoto();
+
+  }, [userId]);
+
+  function fetchUserProfilePhoto() {
+    httpClient.request(getUploadedDocs(userId))
+      .pipe(concatMap(async ({ data: { response } }) => (response as unknown as Array<DocumentTypeResponse>).find((doc) => doc.documentType === FILE_UPLOAD_TYPES.PROFILE_PHOTO).documentLink))
+      .subscribe((link: string) => setProfilePhoto(() => link))
+  }
+
+
   useEffect(() => {
     if (token) {
       const userDetails: TokenPayload = jwt_decode(token);
@@ -72,7 +96,7 @@ const Navbar = () => {
       setProfile(userName)
       console.log(userName);
       console.log(userDetails);
-  
+
       dispatch(userNameSelection(userName));
       dispatch(userIdSelection(userId));
     }
@@ -88,7 +112,7 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between  items-center h-24  w-full p-10 sticky top-[0px] bg-[#fff] z-[100]">
       <Link to="/" className="ml-[-30px]">
-       
+
         <img
           className="w-[95%] md:w-[70%] bg-[#fff] "
           src={navlogo}
@@ -97,17 +121,17 @@ const Navbar = () => {
       </Link>
 
       <ul className="hidden md:flex space-x-2 ">
-        
+
         <li className="p-1  w-[125px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
-        <Link to={token?'/questionnaire/fresher-dashboard':'/login'}> Dashboard     </Link>
+          <Link to={token ? '/questionnaire/fresher-dashboard' : '/login'}> Dashboard     </Link>
         </li>
-    
-       
+
+
         <li className="p-1  w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
-         <Link to="/contactus">Contact</Link> 
+          <Link to="/contactus">Contact</Link>
         </li>
         <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
-         <Link to={"/aboutus"}>About us</Link> 
+          <Link to={"/aboutus"}>About us</Link>
         </li>
 
         <li>
@@ -124,7 +148,13 @@ const Navbar = () => {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                <Avatar className="mr-2">U</Avatar>
+                <Avatar className="mr-2">
+                  {!profilePhoto && profile && profile[0].toUpperCase()}
+                  { profilePhoto &&
+                    <img src={ profilePhoto } />
+                  }
+
+                </Avatar>
                 <span className="text-lg decoration-solid ">
                   {profile}
                 </span>
@@ -154,18 +184,18 @@ const Navbar = () => {
                   "aria-labelledby": "basic-button",
                 }}
               >
-               <Link to="/questionnaire/fresher-dashboard"><MenuItem onClick={handleClose}>Profile</MenuItem></Link> 
-               <Link to="/questionnaire/fresher-profile-upload"> <MenuItem onClick={handleClose}>My account</MenuItem></Link>
+                <Link to="/questionnaire/fresher-dashboard"><MenuItem onClick={handleClose}>Profile</MenuItem></Link>
+                <Link to="/questionnaire/fresher-profile-upload"> <MenuItem onClick={handleClose}>My account</MenuItem></Link>
                 <MenuItem onClick={logoutHandleSubmit}>Logout</MenuItem>
               </Menu>
             </Stack>
           ) : (
             <div className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5" onClick={logInHandler}>
-              
-                <div className="text-center text-white cursor-pointer text-[1.6em]">
-                  Sign In
-                </div>
-            
+
+              <div className="text-center text-white cursor-pointer text-[1.6em]">
+                Sign In
+              </div>
+
             </div>
           )}
         </li>
