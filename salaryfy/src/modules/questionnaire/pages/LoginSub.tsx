@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
 import { toast } from "react-toastify";
 import { useState } from "react";
@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { setToken } from "../../../features/reducers/authReducers/auth-slice-reducer";
-import { Button } from "@mui/material";
+import { RootState } from "../../../store/app.store";
+
 
 interface LoginSubProps {
   setToggleLoginRegister: (value: boolean) => void;
@@ -22,9 +23,13 @@ const LoginSub: React.FC<LoginSubProps> = ({
 }) => {
   const [userName, setUserName] = useState<string>("");
   const navigate = useNavigate();
+  const{jobId} = useParams()
 
   const dispatch = useDispatch();
   const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
+  const currentLocation = window.location.href.slice(22);
+  console.log(currentLocation)
+
   console.log(isLoading, isError);
 
   const [password, setpassword] = useState<string>("");
@@ -51,7 +56,16 @@ const LoginSub: React.FC<LoginSubProps> = ({
           theme: "light",
         });
 
-        navigate("/questionnaire/screening-questions"); // Make sure your routing is correctly set up
+        // if(currentLocation === ''){
+        //   console.log(currentLocation)
+        //   navigate(currentLocation)
+        // }else if(currentLocation === 'placementdrive'){
+        //   navigate(currentLocation)
+        // }else{
+        //   navigate("/questionnaire/screening-questions/"+jobId)
+        // }
+navigate('/')
+        // navigate("/questionnaire/screening-questions"); // Make sure your routing is correctly set up
       } else {
         console.error("Login error");
       }
@@ -156,3 +170,7 @@ const LoginSub: React.FC<LoginSubProps> = ({
 };
 
 export default LoginSub;
+function useRouter(): { query: any; } {
+  throw new Error("Function not implemented.");
+}
+

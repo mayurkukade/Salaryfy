@@ -56,11 +56,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contactus" element={<Contactus />} />
+          <Route path="/navbarsignup" element={<NavbarSignUp/>} />
         </Route>
 
-        <Route path="/login" element={<Login />} />
+   
     
-<Route path="/navbarsignup" element={<NavbarSignUp/>} />
+
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
         <Route path="/placementdrive" element={<PlacementDrivePage />} />
         <Route

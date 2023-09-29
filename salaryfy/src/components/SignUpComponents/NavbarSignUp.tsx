@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { RootState } from "../../store/app.store";
 import { CSSProperties, ChangeEvent, useEffect, useRef, useState } from "react";
 import { useUploadFileMutation } from "../../features/api-integration/user-profile/user-profile.slice";
@@ -29,8 +29,6 @@ import OTPInput from "react-otp-input";
 import { useAppDispatch } from "../../store/app.hook";
 import { registerFormQuestionnaire } from "../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 import LoginSub from "../../modules/questionnaire/pages/LoginSub";
-import { Button } from "@mui/material";
-
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
 const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -49,7 +47,9 @@ type SubmitRegister = {
 
 export default function NavbarSignUp() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
+  const [register] = useRegisterMutation();
   const { id } = useParams();
+  const navigator = useNavigate()
   console.log(id);
   const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
     email: "",
@@ -77,8 +77,8 @@ export default function NavbarSignUp() {
   }
 
   return (
-    <div className="max-w-[120em] w-[100%] mb-[2em] flex flex-col h-[100%]">
-      <div className="py-[2em] px-[3em] h-[100%]">
+    <div className="flex h-screen justify-center items-center">
+      <div>
         <PersonalDetails
           onResumeUpload={onResumeUpload}
           setSubmitRegister={setSubmitRegister}
@@ -294,7 +294,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
     );
 
   return (
-    <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em] md:max-w-[50%]">
+     <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em] md:max-w-[50%]">
       <div className="flex gap-2">
         <div>Email</div>
 
@@ -323,7 +323,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
           onClick={handleSubmitEmail}
           className="w-full md:w-auto"
         >
-          <span className="bg-[#005F59] text-[#FECD08]  rounded-md font-medium p-[0.25em] h-[2rem] text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed block md:inline-block w-full md:w-auto">
+          <span className="bg-[#005F59] text-[#FECD08] lg:text-[0.5rem]  rounded-md font-medium p-[0.25em] h-[2rem] xs:text-[1em] cursor-default disabled:bg-gray-400 disabled:cursor-not-allowed block md:inline-block w-full md:w-auto">
             Send OTP
           </span>
         </button>
@@ -679,6 +679,11 @@ const PersonalDetails = ({
 
   const token = localStorage.getItem("userToken");
   console.log(token);
+const navigator = useNavigate()
+  const currentRoute = useSelector(
+    (state: RootState) => state.currentRoute.currentRoute
+  );
+  console.log(currentRoute)
 
   const [fullName, setfullName] = useState<string>("");
   const [validName, setValidName] = useState(false);
@@ -702,7 +707,7 @@ const PersonalDetails = ({
   const [confirmFocus, setConfirmFocus] = useState(false);
 
   const [showVerifyedOTP, setShowVerifyedOTP] = useState(false);
-  const [toggleLoginRegister, setToggleLoginRegister] = useState(false);
+  const [toggleLoginRegister, setToggleLoginRegister] = useState(true);
   const role = "USER";
   const userProfileType = "fresher";
 
@@ -734,23 +739,62 @@ const PersonalDetails = ({
     !matchpassword;
 
   console.log(!contentDisabled);
-  useEffect(() => {
-    if (!contentDisabled) {
-      console.log("dispatch");
-      dispatch(
-        registerFormQuestionnaire({
-          fullName,
-          mobile_no,
-          email,
-          password,
-          role,
-          userProfileType,
-          date,
-        })
-      );
-      dispatch(resSteptwoSelector(true));
-    }
-  }, [contentDisabled, date, dispatch, email, fullName, mobile_no, password]);
+
+  const registerHandler = async () => {
+
+   const res =   await register({
+      fullName,
+      mobile_no,
+      email,
+      password,
+      role,
+      userProfileType,
+      date,
+    });
+    if (res.data) {
+        toast.success("register successfully please login", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        // navigate("/questionnaire/screening-questions");
+        navigator('/')
+       
+      } else {
+        return toast.error("error", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+  };
+
+//   useEffect(() => {
+//     if (!contentDisabled) {
+//       console.log("dispatch");
+//       dispatch(
+//         registerFormQuestionnaire({
+//           fullName,
+//           mobile_no,
+//           email,
+//           password,
+//           role,
+//           userProfileType,
+//           date,
+//         })
+//       );
+//       dispatch(resSteptwoSelector(true));
+//     }
+//   }, [contentDisabled, date, dispatch, email, fullName, mobile_no, password]);
 
   useEffect(() => {
     setValidName(USER_REGEX.test(fullName));
@@ -807,7 +851,7 @@ const PersonalDetails = ({
   console.log(matchpassword);
   console.log(toggleLoginRegister);
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center">
       <div className="flex flex-col gap-[2em] md:px-[10em]">
         {/* <div className="font-medium text-[1.8em] text-[#5B5B5B] mt-3">
         Fill the details below
@@ -884,7 +928,11 @@ const PersonalDetails = ({
             </div>
           </div>
         </div>
-        <button className="bg-darkGreen w-[80px] p-2  ">Sign Up</button>
+        <div className="flex justify-center items-center">
+          <button className="bg-darkGreen w-[8rem] p-2 text-yellow text-[1rem]" onClick={registerHandler}>
+            Sign Up
+          </button>
+        </div>
       </div>
     </div>
   );
