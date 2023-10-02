@@ -31,8 +31,9 @@ const userProfileApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['set-user-skills']
     }),
     getUserProfilePhoto:builder.query({
-      query: (userId:number) => `uploadFile/getDocuments?userId=${userId}&DocumentType=PPHOTO`,
-      providesTags: ['user-files']
+      query: (userId:number) => `/uploadFile/getDocuments?userId=${userId}&DocumentType=PPHOTO`,
+
+      providesTags: ['user-files','user-resume']
     })
 
   }),
