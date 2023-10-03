@@ -159,18 +159,18 @@ const Navbar = () => {
         />
       </Link>
 
-      <ul className="hidden md:flex space-x-2 ">
-        <li className="p-1  w-[125px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
+      <ul className="hidden md:flex space-x-2 w-auto gap-12 ">
+        <li className="p-1   shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
           <Link to={token ? "/questionnaire/fresher-dashboard" : "/login"}>
             {" "}
             Dashboard{" "}
           </Link>
         </li>
 
-        <li className="p-1  w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
+        <li className="p-1   shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
           <Link to="/contactus">Contact</Link>
         </li>
-        <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
+        <li className="p-1   shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
           <Link to={"/aboutus"}>About us</Link>
         </li>
 
@@ -188,12 +188,13 @@ const Navbar = () => {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                <Avatar className="mr-2">
-                  {/* {!profilePhoto && profile && profile[0].toUpperCase()}
-                  { profilePhoto &&
+                <Avatar className="mr-1">
+                {!profilePicture && profile && profile[0].toUpperCase()}
+                  {/* { profilePhoto &&
                     <img src={ profilePhoto } />
-                  } */}
+                  }  */}
                   {profilePicture}
+                  
                 </Avatar>
                 <span className="text-lg decoration-solid ">{profile}</span>
                 <span>

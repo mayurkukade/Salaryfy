@@ -149,16 +149,18 @@ const JobCard = ({ details }: { details: JobType }) => {
             onClick={onDetailsClick}
             variant="outlined"
             endIcon={<SideArrow />}
+            className="xs:h-12"
           >
-            <span className="text-[1.25em]">Details</span>
+            <span className="font-Lexend font-[600]  lg:text-[20px] xs:text-[12px]">Details</span>
           </Button>
           <Button
             onClick={onGetHiredClick}
             variant="contained"
             color="secondary"
             endIcon={<SideArrow />}
+            className="xs:h-12"
           >
-            <span className="text-[1.25em] text-[#0E5F59]">Get Hired</span>
+            <span className="lg:text-[20px]  font-Lexend font-[600] xs:text-[12px]  text-[#0E5F59]">Get Hired</span>
           </Button>
         </div>
       </div>
