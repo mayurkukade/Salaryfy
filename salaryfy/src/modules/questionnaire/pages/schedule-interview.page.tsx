@@ -577,13 +577,13 @@ const Modal = ({ getDetails, getJobDetails }) => {
                   />
                 </svg>
 
-                <h2 className=" text-center text-[1rem] md:text-[1.375rem] font-[600] mt-10 font-Inter ">
+                <h2 className=" text-center text-[1rem] md:text-[1.375rem] font-[600]  font-Inter ">
                   Your interview for
                 </h2>
                 <div className=" flex justify-center items-center py-3">
                   <img
                     src={getJobDetails.object.logo}
-                    className=" w-[4.625rem] h[4.625rem]"
+                    className=" w-[9.625rem] h[4.625rem]"
                   />
                 </div>
                 <div className="text-[1rem] md:text-[1.375rem] font-[600] text-center font-Inter">
@@ -592,9 +592,9 @@ const Modal = ({ getDetails, getJobDetails }) => {
                   </h2>
                 </div>
 
-                <div className="flex justify-center pt-5">
+                <div className="flex justify-center ">
                   <div
-                    className="flex flex-col justify-center items-center w-[max-content] text-[0.8rem] md:text-[1em]   "
+                    className="flex flex-col justify-center items-center w-[max-content] text-[0.8rem] md:text-[1em]  mt-3 "
                     style={{ minHeight: "30vh" }}
                   >
                     {getDetails}
@@ -607,7 +607,7 @@ const Modal = ({ getDetails, getJobDetails }) => {
                   <Link
                     to="/questionnaire/fresher-dashboard"
                     type="submit"
-                    className="mt-8 w-[16.4375rem] h-[3.375rem] font-medium  bg-yellow text-darkGreen rounded-[0.81694rem] flex text-[1.26544rem] justify-center items-center "
+                    className="mt-2 w-[16.4375rem] h-[3.375rem] font-medium  bg-yellow text-darkGreen rounded-[0.81694rem] flex text-[1.26544rem] justify-center items-center "
                   >
                     Go to dashboard
                     <svg
