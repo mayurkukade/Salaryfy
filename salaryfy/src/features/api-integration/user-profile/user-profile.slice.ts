@@ -29,12 +29,17 @@ const userProfileApiSlice = apiSlice.injectEndpoints({
         body: userSkills
       }),
       invalidatesTags: ['set-user-skills']
+    }),
+    getUserProfilePhoto:builder.query({
+      query: (userId:number) => `/uploadFile/getDocuments?userId=${userId}&DocumentType=PPHOTO`,
+
+      providesTags: ['user-files','user-resume']
     })
 
   }),
 });
 
-export const { useLazyGetUserByIdQuery,useGetUploadedFilesQuery ,useUploadFileMutation, useLazyGetUploadedFilesQuery, useLazyGetUserSkillsQuery, useSetUserSkillsMutation } = userProfileApiSlice;
+export const { useLazyGetUserByIdQuery,useGetUserProfilePhotoQuery,useGetUploadedFilesQuery ,useUploadFileMutation, useLazyGetUploadedFilesQuery, useLazyGetUserSkillsQuery, useSetUserSkillsMutation } = userProfileApiSlice;
 
 export default userProfileApiSlice.reducerPath;
 

@@ -7,6 +7,7 @@ import { useRegisterMutation } from "../../../features/api-integration/apiUserSl
 import { useGetInterviewScheduleQuery } from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
 
 import { openModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
+import { useGetJobByIdQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
 export default function BottomPageNavigationBar() {
   const [register] = useRegisterMutation();
 const {id} = useParams()
@@ -19,6 +20,9 @@ console.log(id)
     userId,
     jobId,
   });
+  
+  const {data:getJobDetails,isLoading:isLoadingGetDetails,isError:isErrorGetDetails,isSuccess} = useGetJobByIdQuery(jobId)
+  console.log(getJobDetails)
   console.log(isScheduleInterviewError);
   const registerFormData: string[] = useSelector(
     (state: RootState) => state.registerFormSlice.registerFormData
@@ -137,9 +141,9 @@ console.log(id)
             : ""
         } `}
       >
-        <div
+        <button
           className="flex items-center px-[1.5em] py-[0.5m] h-[2.5rem] rounded-xl bg-darkGreen mx-[1em] cursor-pointer"
-          onClick={backHandler}
+          onClick={backHandler} 
         >
           <span className="ml-[1em]">
             <svg
@@ -158,14 +162,14 @@ console.log(id)
           <span className="text-[18px] w-[5rem] leading-[27px] text-[#FECD08] font-medium mr-[0.5em] ">
            <p className="ml-4">Back</p> 
           </span>
-        </div>
-        <div
-          className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#FECD08] mx-[1em] cursor-pointer"
-          onClick={nextHandler}
+        </button>
+        <button
+          className="flex items-center px-[1.5em] py-[0.5em] rounded-xl bg-[#FECD08] mx-[1em] cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed   "
+          onClick={nextHandler}  disabled={!nextButtonDisabled}
         >
           <span className="text-[18px] w-[5rem;] leading-[27px] text-darkGreen font-medium mr-[0.5em] ">
             {" "}
-            {currentRoute == "questionnaire/schedule-interview"
+            {currentRoute == `questionnaire/schedule-interview/${jobId}`
               ? "Confirm"
               : "Next"}
           </span>
@@ -182,7 +186,7 @@ console.log(id)
               />
             </svg>
           </span>
-        </div>
+        </button>
         {/* <button
           className="flex items-center  bg-[#FECD08] px-[1.5em] py-[0.5em] rounded-xl mx-[1em] text-[2em] font-medium mr-[0.5em] text-[#005F59] cursor-pointer  disabled:bg-gray-400 disabled:cursor-not-allowed "
           onClick={nextHandler}

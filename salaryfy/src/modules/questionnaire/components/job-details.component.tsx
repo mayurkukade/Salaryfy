@@ -64,7 +64,7 @@ export default function UserJobDetails() {
               <div className="mx-2 w-[1px] h-[1.4em] bg-[#0E5F59]"></div>
               <div>
                 <span>Starting Salary:&nbsp;</span>
-                <span className="text-[#0E5F59]">{content.startingSalary}</span>
+                <span className="text-[#0E5F59]">&#8377;&nbsp;{content.startingSalary}</span>
               </div>
             </div>
           </div>
@@ -120,7 +120,7 @@ export default function UserJobDetails() {
             </div>
             <div className="text-[1.4em] font-medium">
               <span className="text-[#5B5B5B]">Starting Salary:&nbsp;</span>
-              <span className="text-[#0E5F59]">{content.startingSalary}</span>
+              <span className="text-[#0E5F59]">&#8377;&nbsp;{content.startingSalary}</span>
             </div>
           </div>
         </div>

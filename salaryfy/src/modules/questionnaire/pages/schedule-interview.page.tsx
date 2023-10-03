@@ -86,30 +86,34 @@ export function ScheduleInterview() {
   });
 
   const [deleteInterviewSchedule] = useDeleteInterviewScheduleMutation();
-const {data:getJobDetails,isLoading:isLoadingGetDetails,isError:isErrorGetDetails,isSuccess} = useGetJobByIdQuery(jobId)
+  const {
+    data: getJobDetails,
+    isLoading: isLoadingGetDetails,
+    isError: isErrorGetDetails,
+    isSuccess,
+  } = useGetJobByIdQuery(jobId);
 
-// console.log(getJobDetails,isLoadingGetDetails,isErrorGetDetails)
-// console.log(isSuccess)
-// console.log(isLoadingGetDetails)
-// console.log(isErrorGetDetails)
-// console.log(getJobDetails.object)
-//   let getJobDetailsData:any 
-//   if(getJobDetails){
-//     getJobDetailsData = getJobDetails?.object
-//   }else if(isLoadingGetDetails){
-//     getJobDetailsData = <p>isLoading</p>
-//   }else if(isErrorGetDetails){
-//     getJobDetailsData = <p>Error</p>
-//   }
-//  console.log(getJobDetails)
-  
-// console.log(getJobDetailsData)
-if (isLoading) return <div>Loading...</div>
-  if (!getJobDetails) return <div>Missing post!</div>
+  // console.log(getJobDetails,isLoadingGetDetails,isErrorGetDetails)
+  // console.log(isSuccess)
+  // console.log(isLoadingGetDetails)
+  // console.log(isErrorGetDetails)
+  // console.log(getJobDetails.object)
+  //   let getJobDetailsData:any
+  //   if(getJobDetails){
+  //     getJobDetailsData = getJobDetails?.object
+  //   }else if(isLoadingGetDetails){
+  //     getJobDetailsData = <p>isLoading</p>
+  //   }else if(isErrorGetDetails){
+  //     getJobDetailsData = <p>Error</p>
+  //   }
+  //  console.log(getJobDetails)
+
+  // console.log(getJobDetailsData)
+  if (isLoading) return <div>Loading...</div>;
+  if (!getJobDetails) return <div>Missing post!</div>;
   console.log(isError);
 
-
-  console.log(data,'data');
+  console.log(data, "data");
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -179,8 +183,8 @@ if (isLoading) return <div>Loading...</div>
 
             {content}
             <button onClick={() => handleDelete(schedule.interviewScheduleId)}>
-            <CancelIcon sx={{ color: "red" }} />
-          </button> 
+              <CancelIcon sx={{ color: "red" }} />
+            </button>
           </div>
         </>
       );
@@ -269,9 +273,7 @@ if (isLoading) return <div>Loading...</div>
     setSelectedDate(date);
   };
 
-// const locationStringArray = getJobDetailsData.interviewLocation && interviewLocation
-
-
+  // const locationStringArray = getJobDetailsData.interviewLocation && interviewLocation
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -285,8 +287,8 @@ if (isLoading) return <div>Loading...</div>
     const Currentmonth = String(currentDate.getMonth() + 1).padStart(2, "0"); // Add 1 to month since it's zero-based
     const Currentday = String(currentDate.getDate()).padStart(2, "0");
 
-    if(currentDate >= selectedDate){
-     return toast.error('you cant select previous date from current date', {
+    if (currentDate >= selectedDate) {
+      return toast.error("you cant select previous date from current date", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -295,9 +297,9 @@ if (isLoading) return <div>Loading...</div>
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
     }
-    
+
     const CurrentformattedDate = `${Currentyear}-${Currentmonth}-${Currentday}`;
 
     const hourFormat = `${selectedHour}:00`;
@@ -309,7 +311,7 @@ if (isLoading) return <div>Loading...</div>
 
     const formattedDate = `${year}-${month}-${day}`;
     console.log(formattedDate);
-    
+
     try {
       const formDetails = {
         location: location,
@@ -341,17 +343,21 @@ if (isLoading) return <div>Loading...</div>
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
     }
   };
 
-// const interviewSlotMin = getJobDetailsData.interviewTimeSlot1Min && 10
-const interviewSlotMinNumber =Number(getJobDetails.object.interviewTimeSlot1Min)
-console.log(interviewSlotMinNumber)
-// const interviewSlotMax = getJobDetailsData.interviewTimeSlot1Max && 15
-console.log(getJobDetails.object.interviewTimeSlot1Max)
-const interviewSlotMaxNumber =Number(getJobDetails.object.interviewTimeSlot1Max)
-// console.log(interviewSlotMaxNumber)
+  // const interviewSlotMin = getJobDetailsData.interviewTimeSlot1Min && 10
+  const interviewSlotMinNumber = Number(
+    getJobDetails.object.interviewTimeSlot1Min
+  );
+  console.log(interviewSlotMinNumber);
+  // const interviewSlotMax = getJobDetailsData.interviewTimeSlot1Max && 15
+  console.log(getJobDetails.object.interviewTimeSlot1Max);
+  const interviewSlotMaxNumber = Number(
+    getJobDetails.object.interviewTimeSlot1Max
+  );
+  // console.log(interviewSlotMaxNumber)
 
   return (
     <div className="h-[100%] ">
@@ -381,12 +387,13 @@ const interviewSlotMaxNumber =Number(getJobDetails.object.interviewTimeSlot1Max)
                   fontSize: "1rem",
                 }}
               >
-             {getJobDetails.object.interviewLocation.map((location:any, index:number):any => (
-    <MenuItem key={index} value={location}>
-    {location}
-  </MenuItem>
-  ))}
-                
+                {getJobDetails.object.interviewLocation.map(
+                  (location: any, index: number): any => (
+                    <MenuItem key={index} value={location}>
+                      {location}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
           </Box>
@@ -507,7 +514,7 @@ const interviewSlotMaxNumber =Number(getJobDetails.object.interviewTimeSlot1Max)
   );
 }
 
-const Modal = ({ getDetails,getJobDetails }) => {
+const Modal = ({ getDetails, getJobDetails }) => {
   const jobDetails = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
@@ -531,6 +538,26 @@ const Modal = ({ getDetails,getJobDetails }) => {
         aria-labelledby="responsive-dialog-title"
         style={{ border: "2px solid black" }}
       >
+        <button
+          className="flex justify-end cursor-pointer mr-3  "
+          onClick={handleCLose}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="xs:w-8 h-8 lg:w-10 xs:h-10  align-middle bg-slate-200"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+
         <DialogContent className="w-full md:w-full h-[44.5rem] rounded-3xl bg-white shadow-md text-black">
           <DialogContentText>
             <div>
@@ -550,13 +577,13 @@ const Modal = ({ getDetails,getJobDetails }) => {
                   />
                 </svg>
 
-                <h2 className=" text-center text-[1rem] md:text-[1.375rem] font-[600] mt-10 font-Inter ">
+                <h2 className=" text-center text-[1rem] md:text-[1.375rem] font-[600]  font-Inter ">
                   Your interview for
                 </h2>
                 <div className=" flex justify-center items-center py-3">
                   <img
                     src={getJobDetails.object.logo}
-                    className=" w-[4.625rem] h[4.625rem]"
+                    className=" w-[9.625rem] h[4.625rem]"
                   />
                 </div>
                 <div className="text-[1rem] md:text-[1.375rem] font-[600] text-center font-Inter">
@@ -565,9 +592,9 @@ const Modal = ({ getDetails,getJobDetails }) => {
                   </h2>
                 </div>
 
-                <div className="flex justify-center pt-5">
+                <div className="flex justify-center ">
                   <div
-                    className="flex flex-col justify-center items-center w-[max-content] text-[0.8rem] md:text-[1em]   "
+                    className="flex flex-col justify-center items-center w-[max-content] text-[0.8rem] md:text-[1em]  mt-3 "
                     style={{ minHeight: "30vh" }}
                   >
                     {getDetails}
@@ -580,7 +607,7 @@ const Modal = ({ getDetails,getJobDetails }) => {
                   <Link
                     to="/questionnaire/fresher-dashboard"
                     type="submit"
-                    className="mt-8 w-[16.4375rem] h-[3.375rem] font-medium  bg-yellow text-darkGreen rounded-[0.81694rem] flex text-[1.26544rem] justify-center items-center "
+                    className="mt-2 w-[16.4375rem] h-[3.375rem] font-medium  bg-yellow text-darkGreen rounded-[0.81694rem] flex text-[1.26544rem] justify-center items-center "
                   >
                     Go to dashboard
                     <svg
@@ -600,7 +627,10 @@ const Modal = ({ getDetails,getJobDetails }) => {
                 </div>
 
                 <div className="text-[1.26544rem] flex justify-center mt-4  text-darkGreen font-medium   ">
-                  <Link to={"/placementdrive"} className="border-b border-darkGreen">
+                  <Link
+                    to={"/placementdrive"}
+                    className="border-b border-darkGreen"
+                  >
                     {" "}
                     View more jobs
                   </Link>

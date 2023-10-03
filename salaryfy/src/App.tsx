@@ -31,6 +31,7 @@ import Faq from "./pages/Faq";
 import AboutUs from "./pages/AboutUs";
 import Contactus from "./pages/Contactus";
 import MainLoginLayout from "./components/appLayout/MainLoginLayout";
+import NavbarSignUp from "./components/SignUpComponents/NavbarSignUp";
 
 function App() {
   return (
@@ -55,9 +56,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contactus" element={<Contactus />} />
+          <Route path="/navbarsignup" element={<NavbarSignUp/>} />
         </Route>
 
-        <Route path="/login" element={<Login />} />
+   
     
 
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}

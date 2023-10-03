@@ -4,7 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { userIdSelection, userNameSelection } from "../../features/reducers/authReducers/auth-slice-reducer";
+import {
+  userIdSelection,
+  userNameSelection,
+} from "../../features/reducers/authReducers/auth-slice-reducer";
 import { RootState } from "../../store/app.store";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
@@ -17,7 +20,10 @@ import { cureentSelector } from "../../features/reducers/currentRouteReducers/cu
 import navlogo from "../../../assets/Logos/navbar-logo.png";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 import { QuestionnaireHttpClient } from "../../modules/questionnaire/services/questionnaire.service";
-import { useLazyGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
+import {
+  useGetUploadedFilesQuery,
+  useLazyGetUploadedFilesQuery,
+} from "../../features/api-integration/user-profile/user-profile.slice";
 import { concatMap } from "rxjs";
 import { DocumentTypeResponse } from "../../modules/questionnaire/constants/user-uploaded-documents.interface";
 import { FILE_UPLOAD_TYPES } from "../../modules/questionnaire/constants/file-upload.enum";
@@ -27,19 +33,44 @@ interface TokenPayload {
   userId: string;
 }
 
+import { useGetUserProfilePhotoQuery } from "../../features/api-integration/user-profile/user-profile.slice";
+// import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
+
 const Navbar = () => {
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
+  console.log(userId);
   const [getUploadedDocs] = useLazyGetUploadedFilesQuery();
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [nav, setNav] = useState(false);
-  const [profile, setProfile] = useState<string>()
+  const [profile, setProfile] = useState<string>();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  // const {data,isLoading,isError} = useGetUploadedFilesQuery(14)
-  //console.log(data)
-  const jobId = localStorage.getItem('jobId')
-  console.log(jobId)
+
+  const { data, isLoading, isError } = useGetUserProfilePhotoQuery(
+    Number(userId)
+  );
+  console.log(data?.response);
+
+  const profilePicture = data?.response.map((item: string) => {
+    let content;
+    if (data) {
+      content = item?.documentLink;
+    } else if (isLoading) {
+      content = <p>loading...</p>;
+    } else if (isError) {
+      content = <p>error</p>;
+    }
+    console.log(item);
+    return (
+      <>
+        <img src={content} />
+      </>
+    );
+  });
+
+  const jobId = localStorage.getItem("jobId");
+  console.log(jobId);
   const open = Boolean(anchorEl);
   console.log(window.location.href);
   const currentLocation = window.location.href.slice(22);
@@ -64,36 +95,45 @@ const Navbar = () => {
   };
 
   const logInHandler = () => {
-    if (currentLocation === '') {
-      navigate('/login')
-    } else if (currentLocation === 'placementdrive') {
-      navigate('/login')
+    if (currentLocation === "") {
+      navigate("/login");
+    } else if (currentLocation === "placementdrive") {
+      navigate("/login");
     } else {
-      navigate('/login/' + jobId)
+      navigate("/login/" + jobId);
     }
-  }
+  };
 
   useEffect(() => {
-    if (!userId) { return; }
+    if (!userId) {
+      return;
+    }
 
     fetchUserProfilePhoto();
-
   }, [userId]);
 
   function fetchUserProfilePhoto() {
-    httpClient.request(getUploadedDocs(userId))
-      .pipe(concatMap(async ({ data: { response } }) => (response as unknown as Array<DocumentTypeResponse>).find((doc) => doc.documentType === FILE_UPLOAD_TYPES.PROFILE_PHOTO).documentLink))
-      .subscribe((link: string) => setProfilePhoto(() => link))
+    httpClient
+      .request(getUploadedDocs(userId))
+      .pipe(
+        concatMap(
+          async ({ data: { response } }) =>
+            (response as unknown as Array<DocumentTypeResponse>).find(
+              (doc) => doc.documentType === FILE_UPLOAD_TYPES.PROFILE_PHOTO
+            ).documentLink
+        )
+      )
+      .subscribe((link: string) => setProfilePhoto(() => link));
   }
 
-
+  console.log(profilePhoto);
   useEffect(() => {
     if (token) {
       const userDetails: TokenPayload = jwt_decode(token);
 
       const userName: string = userDetails.fullName;
       const userId: string = userDetails.userId;
-      setProfile(userName)
+      setProfile(userName);
       console.log(userName);
       console.log(userDetails);
 
@@ -112,7 +152,6 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between  items-center h-24  w-full p-10 sticky top-[0px] bg-[#fff] shadow-xl z-[100]">
       <Link to="/" className="ml-[-30px]">
-
         <img
           className="w-[95%] md:w-[70%] bg-[#fff] "
           src={navlogo}
@@ -120,17 +159,18 @@ const Navbar = () => {
         />
       </Link>
 
-      <ul className="hidden md:flex space-x-2 ">
-
-        <li className="p-1  w-[125px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
-          <Link to={token ? '/questionnaire/fresher-dashboard' : '/login'}> Dashboard     </Link>
+      <ul className="hidden md:flex space-x-2 w-auto gap-12 ">
+        <li className="p-1   shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
+          <Link to={token ? "/questionnaire/fresher-dashboard" : "/login"}>
+            {" "}
+            Dashboard{" "}
+          </Link>
         </li>
 
-
-        <li className="p-1  w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
+        <li className="p-1   shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
           <Link to="/contactus">Contact</Link>
         </li>
-        <li className="p-1 w-[97px] h-[13px] shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
+        <li className="p-1   shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
           <Link to={"/aboutus"}>About us</Link>
         </li>
 
@@ -148,16 +188,15 @@ const Navbar = () => {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                <Avatar className="mr-2">
-                  {!profilePhoto && profile && profile[0].toUpperCase()}
-                  { profilePhoto &&
+                <Avatar className="mr-1">
+                {!profilePicture && profile && profile[0].toUpperCase()}
+                  {/* { profilePhoto &&
                     <img src={ profilePhoto } />
-                  }
-
+                  }  */}
+                  {profilePicture}
+                  
                 </Avatar>
-                <span className="text-lg decoration-solid ">
-                  {profile}
-                </span>
+                <span className="text-lg decoration-solid ">{profile}</span>
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -175,6 +214,7 @@ const Navbar = () => {
                   </svg>
                 </span>
               </Button>
+
               <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
@@ -184,18 +224,24 @@ const Navbar = () => {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <Link to="/questionnaire/fresher-dashboard"><MenuItem onClick={handleClose}>Profile</MenuItem></Link>
-                <Link to="/questionnaire/fresher-profile-upload"> <MenuItem onClick={handleClose}>My account</MenuItem></Link>
+                <Link to="/questionnaire/fresher-dashboard">
+                  <MenuItem onClick={handleClose}>Profile </MenuItem>
+                </Link>
+                <Link to="/questionnaire/fresher-profile-upload">
+                  {" "}
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                </Link>
                 <MenuItem onClick={logoutHandleSubmit}>Logout</MenuItem>
               </Menu>
             </Stack>
           ) : (
-            <div className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5" onClick={logInHandler}>
-
+            <div
+              className="p-1 w-[100px] h-[36px] shrink-0  bg-darkGreen rounded-lg mr-5"
+              onClick={logInHandler}
+            >
               <div className="text-center text-white cursor-pointer text-[1.6em]">
                 Sign In
               </div>
-
             </div>
           )}
         </li>
@@ -207,8 +253,7 @@ const Navbar = () => {
         className={
           nav
             ? "fixed left-0 top-0 w-[60%] h-full border-r  border-r-gray-900 bg-[#005F59] ease-in-out duration-500 leading-[3.8rem] text-[1.5rem] text-[#FDCC07] p-6 "
-            : "ease-in-out duration-500 fixed left-[-100%]"
-            
+            : "ease-in-out duration-500 hidden"
         }
       >
         {/* <h1 className="w-full text-3xl font-bold text-[#00df9a] m-4">REACT.</h1> */}
@@ -219,7 +264,7 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-           to={token?'/questionnaire/fresher-dashboard':'/login'}
+            to={token ? "/questionnaire/fresher-dashboard" : "/login"}
             className="p-4 border-b border-gray-600 "
           >
             Dashboard
@@ -249,7 +294,6 @@ const Navbar = () => {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                
                 <span className="text-[2rem] decoration-solid text-yellow   min-w-[6rem]">
                   {profile}
                 </span>
@@ -279,18 +323,22 @@ const Navbar = () => {
                   "aria-labelledby": "basic-button",
                 }}
               >
-               <Link to="/questionnaire/fresher-dashboard"><MenuItem onClick={handleClose}>Profile</MenuItem></Link> 
-               <Link to="/questionnaire/fresher-profile-upload"> <MenuItem onClick={handleClose}>My account</MenuItem></Link>
+                <Link to="/questionnaire/fresher-dashboard">
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                </Link>
+                <Link to="/questionnaire/fresher-profile-upload">
+                  {" "}
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                </Link>
                 <MenuItem onClick={logoutHandleSubmit}>Logout</MenuItem>
               </Menu>
             </Stack>
           ) : (
-            <div className=" ml-3  shrink-0  bg-darkGreen rounded-lg " onClick={logInHandler}>
-              
-               
-                  Sign In
-              
-            
+            <div
+              className=" ml-3  shrink-0  bg-darkGreen rounded-lg "
+              onClick={logInHandler}
+            >
+              Sign In
             </div>
           )}
         </li>

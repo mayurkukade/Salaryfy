@@ -52,7 +52,7 @@ const PlacementDriveDetails = () => {
   const jobIdInNumber = Number(jobId)
   console.log(jobIdInNumber)
   const getJobDetails = (jobIdInNumber: number) => {
-    fetch(`http://192.168.1.49:8080/pdf/generate/${jobIdInNumber}`)
+    fetch(`http://192.168.1.56:8080/pdf/generate/${jobIdInNumber}`)
       .then((response) => response.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);

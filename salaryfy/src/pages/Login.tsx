@@ -77,7 +77,7 @@ console.log(jobId)
 
   return (
     
-    <div className="bg-darkGreen min-h-screen flex flex-col justify-center items-center p-4">
+    <div className="bg-darkGreen min-h-screen flex flex-col justify-center items-center p-4 ">
       <div className="w-full max-w-md rounded-3xl bg-white shadow-md text-darkGreen">
         <h1 className="text-center text-3xl font-bold mt-10 font-Lexend">
           Login
@@ -138,7 +138,7 @@ console.log(jobId)
           <h2>
             Didn't sign up yet?{" "}
             <Link
-              to={"/signup"}
+              to={"/navbarsignup"}
               className="border-b text-darkGreen border-darkGreen font-medium"
             >
               Sign Up
