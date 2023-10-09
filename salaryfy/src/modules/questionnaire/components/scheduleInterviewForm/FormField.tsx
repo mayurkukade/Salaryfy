@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import { ReactNode } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -7,44 +7,19 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
 } from "@mui/material";
 
-interface FormFieldProps {
-  id: number;
-  selectedDate: Date | null;
-  selectedLocation: string;
-  selectedTime: Date | null;
-  location:string | null
-  handleFieldChange: (id: number, field: string, value: any) => void;
-  handleDateChange: (id: number, date: Date | null) => void;
-}
-
-const FormField: React.FC<FormFieldProps> = ({
-  id,
-  selectedDate,
-  selectedLocation,
-  selectedTime,
-  handleFieldChange,
-  handleDateChange,
-location,
-  addFormField
-}) => {
-  const handleLocationChange = (
-    event: React.ChangeEvent<{ value: unknown }>
-  ) => {
+const FormField = ({ id, selectedDate, selectedLocation, selectedTime, handleFieldChange, handleDateChange, addFormField } : any) => {
+  const handleLocationChange = (event: SelectChangeEvent<string>, _child: ReactNode) => {
     handleFieldChange(id, "selectedLocation", event.target.value);
   };
 
   const handleTimeChange = (time: Date | null) => {
     handleFieldChange(id, "selectedTime", time);
-
   };
 
  
-  console.log(location)
-console.log(selectedLocation)
-console.log(selectedTime)
-
   return (
     <>
     <div className=" gap-2 bg-[#0E5F5910] p-[1.5em] rounded-[1.5em] flex mb-[2em] flex-col md:flex-row ">
