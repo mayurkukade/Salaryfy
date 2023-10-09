@@ -34,15 +34,6 @@ const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const password_REGEX: RegExp =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-type SubmitRegister = {
-  email: string;
-  password: string;
-  mobile_no: string;
-  role: string;
-  fullName: string;
-  date: string;
-  userProfileType: string;
-};
 
 export default function NavbarSignUp() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
@@ -50,16 +41,19 @@ export default function NavbarSignUp() {
   const { id } = useParams();
   // const navigator = useNavigate()
   console.log(id);
-  const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
-    email: "",
-    password: "",
-    mobile_no: "",
-    role: "",
-    fullName: "",
-    date: "",
-    userProfileType: "",
-  });
-  console.log(submitRegister);
+  
+  /* SEEMS USELESS CODE BLOCK 
+   Developer: sandwich */
+  // const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
+  //   email: "",
+  //   password: "",
+  //   mobile_no: "",
+  //   role: "",
+  //   fullName: "",
+  //   date: "",
+  //   userProfileType: "",
+  // });
+  // console.log(submitRegister);
 
   const [imageUploadApi] = useUploadFileMutation();
 
@@ -80,7 +74,6 @@ export default function NavbarSignUp() {
       <div>
         <PersonalDetails
           onResumeUpload={onResumeUpload}
-          setSubmitRegister={setSubmitRegister}
         />
         {/* <BottomPageNavigationBar /> */}
       </div>
@@ -88,7 +81,7 @@ export default function NavbarSignUp() {
   );
 }
 
-const NameComponent: React.FC<PersonDetails> = (props) => {
+const NameComponent = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
@@ -149,7 +142,7 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
   );
 };
 
-const PhoneComponent: React.FC<PersonDetails> = (props) => {
+const PhoneComponent = (props) => {
   console.log(props);
   return (
     <>
@@ -214,7 +207,7 @@ const PhoneComponent: React.FC<PersonDetails> = (props) => {
   );
 };
 
-const EmailComponent: React.FC<EmailComponent> = (props) => {
+const EmailComponent = (props) => {
   // const [loading, setLoading] = useState(false);
   const toggleContent = () => {
     props.setShowVerifyedOTP(true);
@@ -346,7 +339,7 @@ console.log(res)
   );
 };
 
-const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
+const PasswordComponent = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -393,7 +386,7 @@ const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
   );
 };
 
-const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
+const ComfirmPassword = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const content = props.matchpassword ? (
     <svg
@@ -749,8 +742,8 @@ const navigator = useNavigate()
       role,
       userProfileType,
       date,
-    });
-    if ('data' in res) {
+    }) as unknown as any;
+    if (res.data) {
         toast.success("register successfully please login", {
           position: "top-center",
           autoClose: 2000,
