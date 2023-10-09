@@ -52,18 +52,19 @@ const Navbar = () => {
   console.log(data?.response);
 
   const profilePicture = data?.response.map((item: string) => {
-    let content;
-    if (data) {
-      content = item?.documentLink;
-    } else if (isLoading) {
+    let content: string | JSX.Element;
+
+    if (isLoading) {
       content = <p>loading...</p>;
     } else if (isError) {
       content = <p>error</p>;
+    } else {
+      content = <img src={item?.documentLink} alt="profile picture" />;
     }
     console.log(item);
     return (
       <>
-        <img src={content} />
+        {content}
       </>
     );
   });
@@ -82,9 +83,9 @@ const Navbar = () => {
   };
 
   const dispatch = useDispatch();
-  const userNameSelect = useSelector(
-    (state: RootState) => state.authSlice.userName
-  );
+  // const userNameSelect = useSelector(
+  //   (state: RootState) => state.authSlice.userName
+  // );
 
   const token = Cookies.get("jwtToken");
   const logoutHandleSubmit = () => {
@@ -109,6 +110,7 @@ const Navbar = () => {
     }
 
     fetchUserProfilePhoto();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   function fetchUserProfilePhoto() {

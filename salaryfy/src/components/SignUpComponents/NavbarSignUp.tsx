@@ -3,8 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { RootState } from "../../store/app.store";
 import { CSSProperties, ChangeEvent, useEffect, useRef, useState } from "react";
 import { useUploadFileMutation } from "../../features/api-integration/user-profile/user-profile.slice";
-import UserJobDetails from "../../modules/questionnaire/components/job-details.component";
-import SubSteps from "../../modules/questionnaire/components/sub-steps.component";
+
 import {
   useRegisterMutation,
   useSendEmailMutation,
@@ -22,12 +21,11 @@ import {
   passwordStepsCounterIncrement,
   phoneNumberStepsCounterDecrement,
   phoneNumberStepsCounterIncrement,
-  resSteptwoSelector,
+  
   verifyEmailFlagSelector,
 } from "../../features/reducers/main-steps-counter/main-steps-counter.reducer";
 import OTPInput from "react-otp-input";
 import { useAppDispatch } from "../../store/app.hook";
-import { registerFormQuestionnaire } from "../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 import LoginSub from "../../modules/questionnaire/pages/LoginSub";
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
@@ -47,9 +45,9 @@ type SubmitRegister = {
 
 export default function NavbarSignUp() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-  const [register] = useRegisterMutation();
+  // const [register] = useRegisterMutation();
   const { id } = useParams();
-  const navigator = useNavigate()
+  // const navigator = useNavigate()
   console.log(id);
   const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
     email: "",
