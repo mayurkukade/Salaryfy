@@ -30,7 +30,6 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Faq from "./pages/Faq";
 import AboutUs from "./pages/AboutUs";
 import Contactus from "./pages/Contactus";
-import MainLoginLayout from "./components/appLayout/MainLoginLayout";
 import NavbarSignUp from "./components/SignUpComponents/NavbarSignUp";
 
 function App() {

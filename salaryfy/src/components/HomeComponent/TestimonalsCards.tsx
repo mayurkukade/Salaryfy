@@ -1,5 +1,3 @@
-// import avtarlogo from "../../../assets/Homepage/feedbackimg.png";
-import avatar from '../../assets/images/avatar.png'
 
 import "./testimonals.css";
 const TestimonalsCards = ({ testimonals, name, company,testimonalsImg }) => {

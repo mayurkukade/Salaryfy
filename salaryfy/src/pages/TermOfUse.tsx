@@ -38,16 +38,7 @@ function HeadingAndInfo({ children, heading }: { children: React.ReactNode, head
 
   ); 
 
-} 
-
- 
-
-function TermsofUseHeading({ children }: { children: React.ReactNode }) { 
-
-  return <h2 className="text-5xl text-darkGreen my-[1rem]">{children}</h2> 
-
-} 
-
+}
  
 
 const TermOfUse = () => { 

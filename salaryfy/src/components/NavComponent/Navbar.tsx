@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,6 @@ import navlogo from "../../../assets/Logos/navbar-logo.png";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 import { QuestionnaireHttpClient } from "../../modules/questionnaire/services/questionnaire.service";
 import {
-  useGetUploadedFilesQuery,
   useLazyGetUploadedFilesQuery,
 } from "../../features/api-integration/user-profile/user-profile.slice";
 import { concatMap } from "rxjs";

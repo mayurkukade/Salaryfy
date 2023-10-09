@@ -9,7 +9,6 @@ import { SLICE_NAMES } from "../features/slice-names.enum";
 import { setJobDetails } from "../features/reducers/job-details/job-details.slice";
 import Cookies from "js-cookie";
 import QuestionnaireTopBarStep from "../modules/questionnaire/components/questionnaire-topbar-step.component";
-import { useGetPlacementDetailsPDFQuery } from "../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { toast } from "react-toastify";
 
 function GreenHeading({ label }: { label: string }) {
