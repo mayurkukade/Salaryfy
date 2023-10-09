@@ -1,4 +1,4 @@
-import { Autocomplete, Button, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { HavingDoubts } from "../components/having-doubts.component";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";

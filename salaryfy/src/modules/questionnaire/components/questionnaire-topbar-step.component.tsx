@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/app.store";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
 
 export default function QuestionnaireTopBarStep() {
