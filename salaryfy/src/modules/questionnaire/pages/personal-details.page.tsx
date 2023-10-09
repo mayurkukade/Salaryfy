@@ -221,8 +221,8 @@ const PhoneComponent: React.FC<PersonDetails> = (props) => {
   );
 };
 
-const EmailComponent: React.FC<EmailComponent> = (props) => {
-  const [loading, setLoading] = useState(false);
+const EmailComponent = (props) => {
+  const [_loading, setLoading] = useState(false);
   const toggleContent = () => {
     props.setShowVerifyedOTP(true);
   };
@@ -233,7 +233,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await email(props.email);
+      const res = await email(props.email) as unknown as any;
 
       if (res?.error) {
         toast.error(`${res?.error.data.message}`, {
@@ -353,7 +353,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
   );
 };
 
-const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
+const PasswordComponent = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -400,7 +400,7 @@ const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
   );
 };
 
-const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
+const ComfirmPassword = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const content = props.matchpassword ? (
     <svg
@@ -467,11 +467,6 @@ function UploadResumeComponent({
   onResumeUpload: (i: File) => void;
 }) {
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
-
-  function onClicked() {
-    console.log("clicked");
-    uploadFileRef.current?.click();
-  }
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
@@ -582,7 +577,7 @@ const Verified = (props: PropT): JSX.Element => {
     e.preventDefault();
 
     try {
-      const response = await verifyOTP({ otp, email });
+      const response = await verifyOTP({ otp, email }) as unknown as any;
       console.log(response);
       // Assuming the response structure doesn't have an "error" property
 
@@ -681,7 +676,7 @@ const PersonalDetails = ({
 }: {
   onResumeUpload: (i: File) => void;
 }): JSX.Element => {
-  const [register, { isError, isSuccess }] = useRegisterMutation();
+  const [_register, { isError, isSuccess }] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 

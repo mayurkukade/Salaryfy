@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
 import { useLoginMutation } from "../features/api-integration/apiUserSlice/api-integration-user.slice";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +19,7 @@ export const Login = () => {
   const [password, setpassword] = useState<string>("");
 
   const currentRoute = useSelector(
-    (state: RootState) => state.currentRoute.currentRoute
+    (state: any) => state.currentRoute.currentRoute
   );
   console.log(currentRoute)
 const jobId = localStorage.getItem('jobId')
@@ -29,7 +28,7 @@ console.log(jobId)
     e.preventDefault();
 
     try {
-      const response = await login({ username: userName, password });
+      const response = await login({ username: userName, password }) as unknown as any;
       console.log(response);
       if (response?.data) {
         const token: string = response.data; // Access the actual token data

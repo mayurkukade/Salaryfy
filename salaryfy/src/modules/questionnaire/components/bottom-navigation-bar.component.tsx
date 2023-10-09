@@ -21,7 +21,7 @@ console.log(id)
     jobId,
   });
   
-  const {data:getJobDetails,isLoading:isLoadingGetDetails,isError:isErrorGetDetails,isSuccess} = useGetJobByIdQuery(jobId)
+  const {data:getJobDetails} = useGetJobByIdQuery(jobId)
   console.log(getJobDetails)
   console.log(isScheduleInterviewError);
   const registerFormData: string[] = useSelector(

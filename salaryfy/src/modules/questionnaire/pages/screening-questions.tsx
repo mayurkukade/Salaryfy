@@ -157,7 +157,7 @@ function Questions({ responseData, setCollectResponse }: any) {
 
     setResponseData((prevData: any[]) => {
       const updatedQuestion = {
-        ...question,
+        question,
         ans,
         userId,
       };
