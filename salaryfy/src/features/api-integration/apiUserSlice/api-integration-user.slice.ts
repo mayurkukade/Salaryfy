@@ -8,8 +8,8 @@ const apiIntegrationSlice = apiSlice.injectEndpoints({
     fetchItems: builder.query({
       query: (id) => `/user/getAllUsers?pageNo=${id}`, // Remove any query parameters here
     }),
-    register: builder.mutation<object, FormData>({
-      query: (register) => ({
+    register: builder.mutation<any, any>({
+      query: (register: any) => ({
         url: `/user/register`,
         transformResponse: console.log(register),
         headers:{

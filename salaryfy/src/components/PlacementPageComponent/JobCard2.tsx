@@ -6,7 +6,6 @@ import Cookies from "js-cookie";
 const JobCard2 = ({ details }: { details: JobType }) => {
   console.log(details)
   const navigate = useNavigate();
-  const token = Cookies.get("jwtToken");
   function onDetailsClick() {
     console.log("details clicked: ", details.jobId);
     localStorage.setItem('jobId',String(details.jobId))

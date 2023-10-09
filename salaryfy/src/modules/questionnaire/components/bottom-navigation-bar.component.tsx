@@ -79,10 +79,10 @@ console.log(id)
       console.log(true);
      
       try {
-        const res = await register(registerFormData[0]);
+        const res = await register(registerFormData[0]) as unknown as any;
         console.log(res);
 
-        if (res.data) {
+        if (res?.data) {
           toast.success("register successfully please login", {
             position: "top-center",
             autoClose: 2000,
