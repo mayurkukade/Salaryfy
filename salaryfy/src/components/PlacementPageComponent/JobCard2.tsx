@@ -5,6 +5,7 @@ import { CommonUtilities } from "../../utils/common.utilities";
 const JobCard2 = ({ details }: { details: JobType }) => {
   console.log(details)
   const navigate = useNavigate();
+  // const token = Cookies.get("jwtToken");
   const jobId: number = details.jobId;
   function onDetailsClick() {
     console.log("details clicked: ", jobId);

@@ -215,7 +215,7 @@ const PhoneComponent: React.FC<PersonDetails> = (props) => {
 };
 
 const EmailComponent: React.FC<EmailComponent> = (props) => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const toggleContent = () => {
     props.setShowVerifyedOTP(true);
   };
@@ -224,12 +224,12 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
 
   const handleSubmitEmail = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
     try {
       const res = await email(props.email);
-
-      if (res?.error) {
-        toast.error(`${res?.error.data.message}`, {
+console.log(res)
+      if ('error' in res) {
+        toast.error('User is already exists ', {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -239,9 +239,9 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
           progress: undefined,
           theme: "light",
         });
-        setLoading(false);
+        // setLoading(false);
       } else {
-        toast.success(`${res.data.message}`, {
+        toast.success('OTP is send to your email address', {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -251,7 +251,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
           progress: undefined,
           theme: "light",
         });
-        setLoading(false);
+        // setLoading(false);
         toggleContent();
       }
     } catch (error) {
@@ -461,10 +461,10 @@ function UploadResumeComponent({
 }) {
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
 
-  function onClicked() {
-    console.log("clicked");
-    uploadFileRef.current?.click();
-  }
+  // function onClicked() {
+  //   console.log("clicked");
+  //   uploadFileRef.current?.click();
+  // }
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
@@ -580,7 +580,7 @@ const Verified = (props: PropT): JSX.Element => {
       // Assuming the response structure doesn't have an "error" property
 
       if (response) {
-        if (response?.error) {
+        if ('error' in response) {
           dispatch(verifyEmailFlagSelector(false));
           toast.error("OTP is not verified", {
             position: "top-center",
@@ -591,7 +591,7 @@ const Verified = (props: PropT): JSX.Element => {
             progress: undefined,
             theme: "light",
           });
-        } else if (response?.data) {
+        } else if ('data' in response) {
           toast.success("otp verified successfully", {
             position: "top-center",
             autoClose: 2000,
@@ -670,7 +670,7 @@ const PersonalDetails = ({
 }: {
   onResumeUpload: (i: File) => void;
 }): JSX.Element => {
-  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
+  const [register, {  isError, isSuccess }] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 
