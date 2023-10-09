@@ -13,7 +13,6 @@ import { setUserDetails } from "../../../features/reducers/user-details/user-det
 import { useLazyGetUpcomingInterviewsQuery } from "../../../features/api-integration/upcoming-interviews/upcoming-interviews.slice";
 import { useLazyGetJobByIdQuery, useLazyGetRecommendedJobsQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { JobsDetailsType } from "../../../features/reducers/job-details/job-details.interface";
-import React from "react";
 import _ from 'lodash';
 import { QuestionnaireHttpClient } from "../services/questionnaire.service";
 import { concatMap } from "rxjs";
@@ -22,7 +21,6 @@ import { EducationalSkillsKey, UserEducationSkill } from "../constants/fresher.t
 import { EducationalInfoComponent } from "../components/educational-info.component";
 import { BOARD_LIST, CHANGED_BY, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
 import { useLazyGetProfileQuery, useLazyUniversitySuggestionsQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
-import JobCard from "../../../components/PlacementPageComponent/JobCard";
 import JobCard2 from "../../../components/PlacementPageComponent/JobCard2";
 import { Link } from "react-router-dom";
 
@@ -40,12 +38,7 @@ interface UpcomingInterviewType {
   userId: number,
 }
 
-interface ProfileLevelType {
-  board: Array<string>
-  highestLevelOfEdu: Array<string>,
-  percentage: string,
-  stream: Array<string>
-}
+
 
 // Main Page of fresher Dashboard Page
 export default function FresherDashboardPage() {

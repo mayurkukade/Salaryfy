@@ -460,7 +460,6 @@ function UploadResumeComponent({
 }) {
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
 
-  function onClicked() {
     console.log("clicked");
     uploadFileRef.current?.click();
   }
@@ -669,7 +668,7 @@ const PersonalDetails = ({
 }: {
   onResumeUpload: (i: File) => void;
 }): JSX.Element => {
-  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
+  const [register, {  isError, isSuccess }] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 
@@ -951,6 +950,4 @@ export function SubStepArrow() {
     </div>
   );
 }
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}
+

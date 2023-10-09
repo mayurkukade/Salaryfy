@@ -20,7 +20,7 @@ export default function SideBar() {
     const newPagesActive = { ...pageActive };
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    Object.entries(newPagesActive).map(([key, value]: [string, boolean]) => {
+    Object.entries(newPagesActive).map(([key]: [string, boolean]) => {
       newPagesActive[key as keyof typeof newPagesActive] = false;
     });
     switch (location.pathname) {
