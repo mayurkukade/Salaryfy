@@ -789,7 +789,7 @@ const PersonalDetails = ({
 
   useEffect(() => {
     if (password === "") {
-      setMatchpassword(password == !confirmpassword);
+      setMatchpassword(password !== confirmpassword);
     } else {
       setMatchpassword(password === confirmpassword);
     }

@@ -31,10 +31,10 @@ console.log(jobId)
       const response = await login({ username: userName, password }) as unknown as any;
       console.log(response);
       if (response?.data) {
-        const token: string = response.data; // Access the actual token data
+        const token: object = response.data; // Access the actual token data
         console.log(token);
         dispatch(setToken(token));
-        Cookies.set("jwtToken", token);
+        Cookies.set("jwtToken", JSON.stringify(token));
 
         toast.success("Successfully logged in", {
           position: "top-center",
