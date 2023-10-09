@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import lenscartlogo from "../../../assets/Logos/lenskartlogo.png";
 import { JobType } from "../../features/reducers/jobs/jobs.interface";
 import { useNavigate } from "react-router-dom";
 import { CommonUtilities } from "../../utils/common.utilities";
