@@ -8,7 +8,6 @@ import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
 
 export default function QuestionnaireTopBarStep() {
-  const token = Cookies.get("jwtToken");
   const phoneNumberCounterStep2 = useSelector(
     (state: RootState) => state.mainStepsCounter.phoneNumberCounter
   );

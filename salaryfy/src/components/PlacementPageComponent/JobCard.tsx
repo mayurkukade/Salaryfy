@@ -19,7 +19,7 @@ const JobCard = ({ details }: { details: JobType }) => {
   function onGetHiredClick() {
     
     
-    localStorage.setItem('jobId',details.jobId as string)
+    localStorage.setItem('jobId',String(details.jobId))
     if (token) {
       navigate('/questionnaire/screening-questions/'+details.jobId)
     } else {
