@@ -5,7 +5,7 @@ import UserJobDetails from "../components/job-details.component";
 
 import SubSteps from "../components/sub-steps.component";
 
-import { Button, Checkbox, MenuList } from "@mui/material";
+import { Button, Checkbox } from "@mui/material";
 
 import CancelIcon from "@mui/icons-material/Cancel";
 import * as React from "react";
@@ -93,22 +93,7 @@ export function ScheduleInterview() {
     isSuccess,
   } = useGetJobByIdQuery(jobId);
 
-  // console.log(getJobDetails,isLoadingGetDetails,isErrorGetDetails)
-  // console.log(isSuccess)
-  // console.log(isLoadingGetDetails)
-  // console.log(isErrorGetDetails)
-  // console.log(getJobDetails.object)
-  //   let getJobDetailsData:any
-  //   if(getJobDetails){
-  //     getJobDetailsData = getJobDetails?.object
-  //   }else if(isLoadingGetDetails){
-  //     getJobDetailsData = <p>isLoading</p>
-  //   }else if(isErrorGetDetails){
-  //     getJobDetailsData = <p>Error</p>
-  //   }
-  //  console.log(getJobDetails)
-
-  // console.log(getJobDetailsData)
+  
   if (isLoading) return <div>Loading...</div>;
   if (!getJobDetails) return <div>Missing post!</div>;
   console.log(isError);
