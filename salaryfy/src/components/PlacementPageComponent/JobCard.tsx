@@ -10,7 +10,7 @@ const JobCard = ({ details }: { details: JobType }) => {
   console.log(details.jobId)
   function onDetailsClick() {
     console.log("details clicked: ", details.jobId);
-    localStorage.setItem('jobId',details.jobId)
+    localStorage.setItem('jobId', String(details.jobId))
     if (details?.jobId) {
       navigate("/placementdetails/" + details.jobId);
     }

@@ -690,7 +690,7 @@ const PersonalDetails = ({
 }: {
   onResumeUpload: (i: File) => void;
 }): JSX.Element => {
-  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
+  const [register, { isError, isSuccess }] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 

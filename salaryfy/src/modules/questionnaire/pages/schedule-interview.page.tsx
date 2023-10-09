@@ -176,69 +176,6 @@ export function ScheduleInterview() {
     }
   );
 
-  const getDetails = data?.list.map(
-    (
-      schedule: {
-        interviewScheduleId: number;
-        location:
-          | string
-          | number
-          | boolean
-          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-          | Iterable<React.ReactNode>
-          | React.ReactPortal;
-        date:
-          | string
-          | number
-          | boolean
-          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-          | Iterable<React.ReactNode>
-          | React.ReactPortal;
-        time:
-          | string
-          | number
-          | boolean
-          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-          | Iterable<React.ReactNode>
-          | React.ReactPortal;
-      },
-      i: React.Key
-    ) => {
-      console.log(schedule.date);
-      let content:
-        | string
-        | number
-        | boolean
-        | JSX.Element
-        | Iterable<React.ReactNode>;
-      if (isLoading) {
-        content = <p>Loading...</p>;
-      } else if (isError) {
-        return;
-      } else if (data) {
-        content = (
-          <div className="mr-[0.5em] text-[0.7rem] md:text-[1rem] " key={i}>
-            {schedule.location}, {schedule.date}, {schedule.time}
-          </div>
-        );
-      }
-
-      return (
-        <>
-          <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em] items-center">
-            <div style={{ whiteSpace: "nowrap" }}>Slot-{i + 1}</div>
-            <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
-
-            {content}
-            <button onClick={() => handleDelete(schedule.interviewScheduleId)}>
-              <CancelIcon sx={{ color: "red" }} />
-            </button>
-          </div>
-        </>
-      );
-    }
-  );
-
   console.log(userId);
   const handleHourChange = (event: {
     target: { value: React.SetStateAction<string> };
