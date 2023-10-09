@@ -814,10 +814,11 @@ const navigator = useNavigate()
       dispatch(emailStepsCounterDecrement);
     }
   }, [email, validEmail, dispatch]);
-
+console.log(password)
+console.log(confirmpassword)
   useEffect(() => {
     if (password === "") {
-      setMatchpassword(password == !confirmpassword);
+      setMatchpassword(password !== confirmpassword);
     } else {
       setMatchpassword(password === confirmpassword);
     }
@@ -945,3 +946,6 @@ export function SubStepArrow() {
     </div>
   );
 }
+// function dispatch(arg0: any) {
+//   throw new Error("Function not implemented.");
+// }
