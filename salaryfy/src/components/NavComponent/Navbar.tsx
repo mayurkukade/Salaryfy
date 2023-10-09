@@ -31,7 +31,9 @@ interface TokenPayload {
   fullName: string;
   userId: string;
 }
-
+type DocumentLink = {
+  documentLink: string; // Adjust this type definition based on the actual structure of your data
+};
 import { useGetUserProfilePhotoQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 
@@ -51,7 +53,7 @@ const Navbar = () => {
   );
   console.log(data?.response);
 
-  const profilePicture = data?.response.map((item: any) => {
+  const profilePicture = data?.response.map((item: DocumentLink) => {
     let content: string | JSX.Element;
 
     if (isLoading) {
