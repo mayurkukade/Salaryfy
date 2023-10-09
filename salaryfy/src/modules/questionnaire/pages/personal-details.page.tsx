@@ -1,17 +1,13 @@
 import UserJobDetails from "../components/job-details.component";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
 import SubSteps from "../components/sub-steps.component";
 import { useRef, useState, useEffect, CSSProperties, ChangeEvent } from "react";
 import OTPInput from "react-otp-input";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "react-router-dom";
 import {
-  useLoginMutation,
   useRegisterMutation,
   useSendEmailMutation,
   useVerifyOTPMutation,
@@ -35,12 +31,7 @@ import { RootState } from "../../../store/app.store";
 import { registerFormQuestionnaire } from "../../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 import { useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
 import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";
-import { Login } from "../../../pages/Login";
-import { setToken } from "../../../features/reducers/authReducers/auth-slice-reducer";
 import LoginSub from "./LoginSub";
-import { Button } from "@mui/material";
-import { isEmpty } from "rxjs";
-import usePagination from "@mui/material/usePagination/usePagination";
 
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
