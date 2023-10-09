@@ -51,7 +51,7 @@ const Navbar = () => {
   );
   console.log(data?.response);
 
-  const profilePicture = data?.response.map((item: string) => {
+  const profilePicture = data?.response.map((item: any) => {
     let content: string | JSX.Element;
 
     if (isLoading) {

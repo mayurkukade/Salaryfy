@@ -9,20 +9,9 @@ const JobCard2 = ({ details }: { details: JobType }) => {
   const token = Cookies.get("jwtToken");
   function onDetailsClick() {
     console.log("details clicked: ", details.jobId);
-    localStorage.setItem('jobId',details.jobId)
+    localStorage.setItem('jobId',String(details.jobId))
     if (details?.jobId) {
       navigate("/placementdetails/" + details.jobId);
-    }
-  }
-
-  function onGetHiredClick() {
-    
-    
-    localStorage.setItem('jobId',details.jobId)
-    if (token) {
-      navigate('/questionnaire/screening-questions')
-    } else {
-      navigate('/questionnaire')
     }
   }
 

@@ -27,6 +27,7 @@ import {
 import OTPInput from "react-otp-input";
 import { useAppDispatch } from "../../store/app.hook";
 import LoginSub from "../../modules/questionnaire/pages/LoginSub";
+import { FILE_UPLOAD_TYPES } from "../../modules/questionnaire/constants/file-upload.enum";
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
 const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
