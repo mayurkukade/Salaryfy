@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { Link, useParams } from "react-router-dom";
+import { Link} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,7 @@ import navlogo from "../../../assets/Logos/navbar-logo.png";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 import { QuestionnaireHttpClient } from "../../modules/questionnaire/services/questionnaire.service";
 import {
-  useGetUploadedFilesQuery,
+  
   useLazyGetUploadedFilesQuery,
 } from "../../features/api-integration/user-profile/user-profile.slice";
 import { concatMap } from "rxjs";
@@ -53,18 +53,19 @@ const Navbar = () => {
   console.log(data?.response);
 
   const profilePicture = data?.response.map((item: string) => {
-    let content;
-    if (data) {
-      content = item?.documentLink;
-    } else if (isLoading) {
+    let content: string | JSX.Element;
+
+    if (isLoading) {
       content = <p>loading...</p>;
     } else if (isError) {
       content = <p>error</p>;
+    } else {
+      content = <img src={item?.documentLink} alt="profile picture" />;
     }
     console.log(item);
     return (
       <>
-        <img src={content} />
+        {content}
       </>
     );
   });
@@ -83,9 +84,9 @@ const Navbar = () => {
   };
 
   const dispatch = useDispatch();
-  const userNameSelect = useSelector(
-    (state: RootState) => state.authSlice.userName
-  );
+  // const userNameSelect = useSelector(
+  //   (state: RootState) => state.authSlice.userName
+  // );
 
   const token = Cookies.get("jwtToken");
   const logoutHandleSubmit = () => {
@@ -110,6 +111,7 @@ const Navbar = () => {
     }
 
     fetchUserProfilePhoto();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   function fetchUserProfilePhoto() {

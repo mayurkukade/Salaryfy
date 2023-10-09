@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import lenscartlogo from "../../../assets/Logos/lenskartlogo.png";
 import { JobType } from "../../features/reducers/jobs/jobs.interface";
 import { useNavigate } from "react-router-dom";
 import { CommonUtilities } from "../../utils/common.utilities";
@@ -20,7 +19,7 @@ const JobCard = ({ details }: { details: JobType }) => {
   function onGetHiredClick() {
     
     
-    localStorage.setItem('jobId',details.jobId)
+    localStorage.setItem('jobId',details.jobId as string)
     if (token) {
       navigate('/questionnaire/screening-questions/'+details.jobId)
     } else {
