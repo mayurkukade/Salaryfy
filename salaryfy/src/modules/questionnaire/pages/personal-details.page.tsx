@@ -53,7 +53,7 @@ export default function QuestionnairePersonalDetails() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
 const {id} = useParams()
 console.log(id)
-  const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
+  const [submitRegister, _setSubmitRegister] = useState<SubmitRegister>({
     email: "",
     password: "",
     mobile_no: "",
@@ -87,7 +87,6 @@ console.log(id)
         <SubSteps />
         <PersonalDetails
           onResumeUpload={onResumeUpload}
-          setSubmitRegister={setSubmitRegister}
         />
         {/* <BottomPageNavigationBar /> */}
       </div>
@@ -95,7 +94,7 @@ console.log(id)
   );
 }
 
-const NameComponent: React.FC<PersonDetails> = (props) => {
+const NameComponent  = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
@@ -156,7 +155,7 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
   );
 };
 
-const PhoneComponent: React.FC<PersonDetails> = (props) => {
+const PhoneComponent = (props) => {
   console.log(props);
   return (
     <>

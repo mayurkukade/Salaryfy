@@ -36,7 +36,7 @@ const appStore = configureStore({
     [profileQualificationSlice.reducerPath]: profileQualificationSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiIntegrationSlice.middleware).concat(screeningQuestionsSlice.middleware).concat(thunkMiddleware)
+    getDefaultMiddleware().concat(apiIntegrationSlice.middleware as any, screeningQuestionsSlice.middleware as any, thunkMiddleware)
 
 });
 export type RootState = ReturnType<typeof appStore.getState>

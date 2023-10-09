@@ -1,12 +1,11 @@
 import { apiSlice } from "../../apiSlice";
-import { ScreeningData } from "./screening.model.interface";
 
 const screeningQuestionsSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getScreeningQuestion: builder.query({
       query: (id) => `/JobFair/getJobFairDetailsByJobId?jobId=${id}`,
     }),
-    postScreeningQuestionSlice :builder.mutation<[object],ScreeningData>({
+    postScreeningQuestionSlice :builder.mutation<[object],any>({
       query: (filteredData) => ({
         url: `/jobFairQueAns/saveAllJobFairques`,
         transformResponse: console.log('From api sli of screening question',filteredData),

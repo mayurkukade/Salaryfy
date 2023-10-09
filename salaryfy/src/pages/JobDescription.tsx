@@ -1,4 +1,7 @@
+import { useSelector } from "react-redux";
 import PlacementJobDetails from "../modules/questionnaire/components/placement-job-details.component";
+import { AppStoreStateType } from "../store/app.store";
+import { SLICE_NAMES } from "../features/slice-names.enum";
 
 function GreenHeading({ label }: { label: string }) {
   return (
@@ -19,12 +22,13 @@ function onGetHiredClick() {
   debugger
 }
 const JobDescription = () => {
+  const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
   return (
      
     <div className="bg-darkGreen min-h-screen flex flex-col justify-center items-center py-10 px-4 md:px-0">
       <div className="w-full md:w-[60.1875rem] h-[43.7rem] rounded-3xl bg-white shadow-md text-darkGreen">
         <div className="app-box-shadow mb-[5em] rounded-[2em]">
-          <PlacementJobDetails onGetHiredClick={onGetHiredClick} />
+          <PlacementJobDetails jobDetails={jobDetails} onGetHiredClick={onGetHiredClick} />
           <div className='p-[1em] app-scrollbar h-[50em]'>
           <div className="px-[5em] py-[0.5em]">
             <div className="flex justify-between items-center">
