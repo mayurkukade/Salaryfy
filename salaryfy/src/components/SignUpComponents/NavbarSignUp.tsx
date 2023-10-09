@@ -750,7 +750,7 @@ const navigator = useNavigate()
       userProfileType,
       date,
     });
-    if (res.data) {
+    if ('data' in res) {
         toast.success("register successfully please login", {
           position: "top-center",
           autoClose: 2000,
@@ -821,10 +821,11 @@ const navigator = useNavigate()
       dispatch(emailStepsCounterDecrement);
     }
   }, [email, validEmail, dispatch]);
-
+console.log(password)
+console.log(confirmpassword)
   useEffect(() => {
     if (password === "") {
-      setMatchpassword(password == !confirmpassword);
+      setMatchpassword(password !== confirmpassword);
     } else {
       setMatchpassword(password === confirmpassword);
     }
@@ -952,6 +953,6 @@ export function SubStepArrow() {
     </div>
   );
 }
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}
+// function dispatch(arg0: any) {
+//   throw new Error("Function not implemented.");
+// }
