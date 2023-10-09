@@ -811,7 +811,7 @@ const navigator = useNavigate()
       dispatch(phoneNumberStepsCounterDecrement());
     }
   }, [mobile_no, validMobile, dispatch]);
-
+console.log(matchpassword)
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
     if (validEmail) {
@@ -820,7 +820,7 @@ const navigator = useNavigate()
       dispatch(emailStepsCounterDecrement);
     }
   }, [email, validEmail, dispatch]);
-
+console.log(typeof password)
   useEffect(() => {
     if (password === "") {
       setMatchpassword(password == !confirmpassword);
