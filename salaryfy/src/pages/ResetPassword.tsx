@@ -1,4 +1,3 @@
-import React from 'react'
 import eyelogo from "../../assets/Logos/eyelogo.png";
 import eyelogo2 from "../../assets/Logos/eyelogo2.png";
 

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import eyelogo from "../../assets/Logos/eyelogo.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -15,7 +14,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
+  const [login, { isLoading, isError }] = useLoginMutation();
   console.log(isLoading, isError);
 
   const [password, setpassword] = useState<string>("");

@@ -1,6 +1,4 @@
-import React from "react";
 import PlacementJobDetails from "../modules/questionnaire/components/placement-job-details.component";
-import PlacementDriveDetails from "./PlacementDriveDetails";
 
 function GreenHeading({ label }: { label: string }) {
   return (
