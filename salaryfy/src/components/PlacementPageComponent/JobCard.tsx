@@ -8,22 +8,23 @@ const JobCard = ({ details }: { details: JobType }) => {
   const navigate = useNavigate();
   const token = Cookies.get("jwtToken");
   console.log(details.jobId)
+  const jobId: number = details.jobId;
   function onDetailsClick() {
-    console.log("details clicked: ", details.jobId);
-    localStorage.setItem('jobId',details.jobId)
+    console.log("details clicked: ", jobId);
+    localStorage.setItem('jobId', jobId.toString())
     if (details?.jobId) {
-      navigate("/placementdetails/" + details.jobId);
+      navigate("/placementdetails/" + jobId);
     }
   }
 
   function onGetHiredClick() {
     
     
-    localStorage.setItem('jobId',details.jobId as string)
+    localStorage.setItem('jobId',jobId.toString())
     if (token) {
-      navigate('/questionnaire/screening-questions/'+details.jobId)
+      navigate('/questionnaire/screening-questions/'+jobId)
     } else {
-      navigate('/questionnaire/'+details.jobId)
+      navigate('/questionnaire/'+jobId)
     }
   }
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,6 @@ import navlogo from "../../../assets/Logos/navbar-logo.png";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 import { QuestionnaireHttpClient } from "../../modules/questionnaire/services/questionnaire.service";
 import {
-  
   useLazyGetUploadedFilesQuery,
 } from "../../features/api-integration/user-profile/user-profile.slice";
 import { concatMap } from "rxjs";
@@ -32,7 +31,9 @@ interface TokenPayload {
   fullName: string;
   userId: string;
 }
-
+type DocumentLink = {
+  documentLink: string; // Adjust this type definition based on the actual structure of your data
+};
 import { useGetUserProfilePhotoQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 
@@ -52,7 +53,7 @@ const Navbar = () => {
   );
   console.log(data?.response);
 
-  const profilePicture = data?.response.map((item: string) => {
+  const profilePicture = data?.response.map((item: DocumentLink) => {
     let content: string | JSX.Element;
 
     if (isLoading) {

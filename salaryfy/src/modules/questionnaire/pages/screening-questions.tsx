@@ -10,7 +10,7 @@ import Rating from "@mui/material/Rating";
 import { RootState } from "../../../store/app.store";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppStoreStateType } from '../../../store/app.store';
 import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import { useParams } from "react-router-dom";
@@ -34,7 +34,6 @@ export default function ScreeningQuestions() {
 
   const navigate = useNavigate();
   // disptach hook
-  const dispatch = useDispatch();
   const [collectResponse, setCollectResponse] = useState([]);
 console.log(collectResponse)
   //  RTK query hook to get all question related to job
@@ -158,7 +157,7 @@ function Questions({ responseData, setCollectResponse }: any) {
 
     setResponseData((prevData: any[]) => {
       const updatedQuestion = {
-        ...question,
+        question,
         ans,
         userId,
       };
@@ -256,7 +255,7 @@ function RatingResponseSet({ question, onResponseChange }: any) {
         <Rating
           name="simple-controlled"
           value={value}
-          onChange={(event, newValue) => handleResponseChange(newValue)}
+          onChange={(_event, newValue) => handleResponseChange(newValue)}
         />
       </Box>
       <QuestionSeparator className="mb-[2em]" />

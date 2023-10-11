@@ -31,6 +31,7 @@ import Faq from "./pages/Faq";
 import AboutUs from "./pages/AboutUs";
 import Contactus from "./pages/Contactus";
 import NavbarSignUp from "./components/SignUpComponents/NavbarSignUp";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contactus" element={<Contactus />} />
           <Route path="/navbarsignup" element={<NavbarSignUp/>} />
+          <Route path="/admin/*" element={<AdminPage/>} />
         </Route>
 
    

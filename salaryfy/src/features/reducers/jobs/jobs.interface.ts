@@ -16,5 +16,5 @@ export interface JobType {
   status: boolean,
   user_Id: number,
   jobType: string,
-  jobId: number | null | string
+  jobId: number 
 }

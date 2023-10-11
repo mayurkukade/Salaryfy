@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import eyelogo from "../../assets/Logos/eyelogo.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
 import { useLoginMutation } from "../features/api-integration/apiUserSlice/api-integration-user.slice";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,13 +13,13 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
+  const [login, { isLoading, isError }] = useLoginMutation();
   console.log(isLoading, isError);
 
   const [password, setpassword] = useState<string>("");
 
   const currentRoute = useSelector(
-    (state: RootState) => state.currentRoute.currentRoute
+    (state: any) => state.currentRoute.currentRoute
   );
   console.log(currentRoute)
 const jobId = localStorage.getItem('jobId')
@@ -30,13 +28,13 @@ console.log(jobId)
     e.preventDefault();
 
     try {
-      const response = await login({ username: userName, password });
+      const response = await login({ username: userName, password }) as unknown as any;
       console.log(response);
       if (response?.data) {
-        const token: string = response.data; // Access the actual token data
+        const token: object = response.data; // Access the actual token data
         console.log(token);
         dispatch(setToken(token));
-        Cookies.set("jwtToken", token);
+        Cookies.set("jwtToken", JSON.stringify(token));
 
         toast.success("Successfully logged in", {
           position: "top-center",

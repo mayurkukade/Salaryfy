@@ -12,6 +12,7 @@ import interviewSchedule from '../features/api-integration/interview-schedule/in
 import upcomingInterviewSlice from '../features/api-integration/upcoming-interviews/upcoming-interviews.slice';
 import profileQualificationSlice from '../features/api-integration/profile-qualification/profile-qualification.slice';
 import screeningQuestionFormSlice from '../features/reducers/screening-question/screening-question.slice'
+import adminSlice from '../features/api-integration/adminSlice/adminSlice';
 
 export interface AppStoreStateType {
   root: ReturnType<typeof rootReducer>,
@@ -33,10 +34,11 @@ const appStore = configureStore({
     [screeningQuestionsSlice.reducerPath]:screeningQuestionsSlice.reducer,
     [interviewSchedule.reducerPath]:interviewSchedule.reducer,
     [upcomingInterviewSlice.reducerPath]: upcomingInterviewSlice.reducer,
-    [profileQualificationSlice.reducerPath]: profileQualificationSlice.reducer
+    [profileQualificationSlice.reducerPath]: profileQualificationSlice.reducer,
+  
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiIntegrationSlice.middleware).concat(screeningQuestionsSlice.middleware).concat(thunkMiddleware)
+    getDefaultMiddleware().concat(apiIntegrationSlice.middleware as any, screeningQuestionsSlice.middleware as any, thunkMiddleware)
 
 });
 export type RootState = ReturnType<typeof appStore.getState>

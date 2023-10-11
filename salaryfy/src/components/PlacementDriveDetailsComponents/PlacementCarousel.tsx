@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import star from "../../../assets/placementdetails/Star6.png";
 import Frame from "../../../assets/placementdetails/Frame.png";
 import Raj from "../../../assets/placementTestimonies/Raj.jpg";
-
 import Alok from "../../../assets/placementTestimonies/Alok.jpg";
 import Priya from "../../../assets/placementTestimonies/Priya.jpg";
 import Utkarsh from '../../../assets/placementTestimonies/Utkarsh.jpg'
@@ -14,7 +13,6 @@ import Poonam from '../../../assets/placementTestimonies/Poonam.jpeg'
 import Karan from '../../../assets/placementTestimonies/Karan.jpg'
 import Anita from '../../../assets/placementTestimonies/AArti.jpg'
 import Naveen from '../../../assets/placementTestimonies/Naveen.jpg'
-
 import Swati from '../../../assets/placementTestimonies/Swati.jpg'
 
 // Import Swiper styles

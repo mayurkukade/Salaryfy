@@ -1,17 +1,13 @@
 import UserJobDetails from "../components/job-details.component";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
 import SubSteps from "../components/sub-steps.component";
 import { useRef, useState, useEffect, CSSProperties, ChangeEvent } from "react";
 import OTPInput from "react-otp-input";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "react-router-dom";
 import {
-  useLoginMutation,
   useRegisterMutation,
   useSendEmailMutation,
   useVerifyOTPMutation,
@@ -35,12 +31,7 @@ import { RootState } from "../../../store/app.store";
 import { registerFormQuestionnaire } from "../../../features/reducers/questionnaire-register-form/questionnaire-register-form.slice";
 import { useUploadFileMutation } from "../../../features/api-integration/user-profile/user-profile.slice";
 import { FILE_UPLOAD_TYPES } from "../constants/file-upload.enum";
-import { Login } from "../../../pages/Login";
-import { setToken } from "../../../features/reducers/authReducers/auth-slice-reducer";
 import LoginSub from "./LoginSub";
-import { Button } from "@mui/material";
-import { isEmpty } from "rxjs";
-import usePagination from "@mui/material/usePagination/usePagination";
 
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
@@ -62,7 +53,7 @@ export default function QuestionnairePersonalDetails() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
 const {id} = useParams()
 console.log(id)
-  const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
+  const [submitRegister, _setSubmitRegister] = useState<SubmitRegister>({
     email: "",
     password: "",
     mobile_no: "",
@@ -96,7 +87,6 @@ console.log(id)
         <SubSteps />
         <PersonalDetails
           onResumeUpload={onResumeUpload}
-          setSubmitRegister={setSubmitRegister}
         />
         {/* <BottomPageNavigationBar /> */}
       </div>
@@ -104,7 +94,7 @@ console.log(id)
   );
 }
 
-const NameComponent: React.FC<PersonDetails> = (props) => {
+const NameComponent  = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
@@ -165,7 +155,7 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
   );
 };
 
-const PhoneComponent: React.FC<PersonDetails> = (props) => {
+const PhoneComponent = (props) => {
   console.log(props);
   return (
     <>
@@ -230,8 +220,8 @@ const PhoneComponent: React.FC<PersonDetails> = (props) => {
   );
 };
 
-const EmailComponent: React.FC<EmailComponent> = (props) => {
-  const [loading, setLoading] = useState(false);
+const EmailComponent = (props) => {
+  const [_loading, setLoading] = useState(false);
   const toggleContent = () => {
     props.setShowVerifyedOTP(true);
   };
@@ -242,7 +232,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await email(props.email);
+      const res = await email(props.email) as unknown as any;
 
       if (res?.error) {
         toast.error(`${res?.error.data.message}`, {
@@ -362,7 +352,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
   );
 };
 
-const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
+const PasswordComponent = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -409,7 +399,7 @@ const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
   );
 };
 
-const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
+const ComfirmPassword = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const content = props.matchpassword ? (
     <svg
@@ -476,11 +466,6 @@ function UploadResumeComponent({
   onResumeUpload: (i: File) => void;
 }) {
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
-
-  function onClicked() {
-    console.log("clicked");
-    uploadFileRef.current?.click();
-  }
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
@@ -591,7 +576,7 @@ const Verified = (props: PropT): JSX.Element => {
     e.preventDefault();
 
     try {
-      const response = await verifyOTP({ otp, email });
+      const response = await verifyOTP({ otp, email }) as unknown as any;
       console.log(response);
       // Assuming the response structure doesn't have an "error" property
 
@@ -690,7 +675,7 @@ const PersonalDetails = ({
 }: {
   onResumeUpload: (i: File) => void;
 }): JSX.Element => {
-  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
+  const [_register, { isError, isSuccess }] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 
@@ -803,7 +788,7 @@ const PersonalDetails = ({
 
   useEffect(() => {
     if (password === "") {
-      setMatchpassword(password == !confirmpassword);
+      setMatchpassword(password !== confirmpassword);
     } else {
       setMatchpassword(password === confirmpassword);
     }

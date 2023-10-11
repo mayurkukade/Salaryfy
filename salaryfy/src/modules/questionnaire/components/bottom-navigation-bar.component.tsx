@@ -7,7 +7,7 @@ import { useRegisterMutation } from "../../../features/api-integration/apiUserSl
 import { useGetInterviewScheduleQuery } from "../../../features/api-integration/interview-schedule/interview-schedule-slice";
 
 import { openModel } from "../../../features/reducers/schedule-interview-form/schedule-interview.slice";
-import { useGetJobByIdQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
+// import { useGetJobByIdQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
 export default function BottomPageNavigationBar() {
   const [register] = useRegisterMutation();
 const {id} = useParams()
@@ -21,8 +21,8 @@ console.log(id)
     jobId,
   });
   
-  const {data:getJobDetails,isLoading:isLoadingGetDetails,isError:isErrorGetDetails,isSuccess} = useGetJobByIdQuery(jobId)
-  console.log(getJobDetails)
+  // const {data:getJobDetails,isLoading:isLoadingGetDetails,isError:isErrorGetDetails,isSuccess} = useGetJobByIdQuery(jobId)
+  // console.log(getJobDetails)
   console.log(isScheduleInterviewError);
   const registerFormData: string[] = useSelector(
     (state: RootState) => state.registerFormSlice.registerFormData
@@ -79,10 +79,10 @@ console.log(id)
       console.log(true);
      
       try {
-        const res = await register(registerFormData[0]);
+        const res = await register(registerFormData[0]) as object ;
         console.log(res);
 
-        if (res.data) {
+        if ('data' in res) {
           toast.success("register successfully please login", {
             position: "top-center",
             autoClose: 2000,

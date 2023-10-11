@@ -1,7 +1,5 @@
-import React from 'react'
 import eyelogo from "../../assets/Logos/eyelogo.png";
 import eyelogo2 from "../../assets/Logos/eyelogo2.png";
-import { Link } from "react-router-dom";
 
 
 const ResetPassword = () => {

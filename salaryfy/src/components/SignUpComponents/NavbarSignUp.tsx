@@ -27,21 +27,13 @@ import {
 import OTPInput from "react-otp-input";
 import { useAppDispatch } from "../../store/app.hook";
 import LoginSub from "../../modules/questionnaire/pages/LoginSub";
+import { FILE_UPLOAD_TYPES } from "../../modules/questionnaire/constants/file-upload.enum";
 const USER_REGEX: RegExp = /^[a-zA-Z]{4,}$/;
 const INDIAN_MOBILE_REGEX: RegExp = /^(\+91|0)?[6789]\d{9}$/;
 const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const password_REGEX: RegExp =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-type SubmitRegister = {
-  email: string;
-  password: string;
-  mobile_no: string;
-  role: string;
-  fullName: string;
-  date: string;
-  userProfileType: string;
-};
 
 export default function NavbarSignUp() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
@@ -49,16 +41,19 @@ export default function NavbarSignUp() {
   const { id } = useParams();
   // const navigator = useNavigate()
   console.log(id);
-  const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
-    email: "",
-    password: "",
-    mobile_no: "",
-    role: "",
-    fullName: "",
-    date: "",
-    userProfileType: "",
-  });
-  console.log(submitRegister);
+  
+  /* SEEMS USELESS CODE BLOCK 
+   Developer: sandwich */
+  // const [submitRegister, setSubmitRegister] = useState<SubmitRegister>({
+  //   email: "",
+  //   password: "",
+  //   mobile_no: "",
+  //   role: "",
+  //   fullName: "",
+  //   date: "",
+  //   userProfileType: "",
+  // });
+  // console.log(submitRegister);
 
   const [imageUploadApi] = useUploadFileMutation();
 
@@ -79,7 +74,6 @@ export default function NavbarSignUp() {
       <div>
         <PersonalDetails
           onResumeUpload={onResumeUpload}
-          setSubmitRegister={setSubmitRegister}
         />
         {/* <BottomPageNavigationBar /> */}
       </div>
@@ -87,7 +81,7 @@ export default function NavbarSignUp() {
   );
 }
 
-const NameComponent: React.FC<PersonDetails> = (props) => {
+const NameComponent = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
@@ -148,7 +142,7 @@ const NameComponent: React.FC<PersonDetails> = (props) => {
   );
 };
 
-const PhoneComponent: React.FC<PersonDetails> = (props) => {
+const PhoneComponent = (props) => {
   console.log(props);
   return (
     <>
@@ -213,8 +207,8 @@ const PhoneComponent: React.FC<PersonDetails> = (props) => {
   );
 };
 
-const EmailComponent: React.FC<EmailComponent> = (props) => {
-  const [loading, setLoading] = useState(false);
+const EmailComponent = (props) => {
+  // const [loading, setLoading] = useState(false);
   const toggleContent = () => {
     props.setShowVerifyedOTP(true);
   };
@@ -223,12 +217,12 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
 
   const handleSubmitEmail = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
     try {
       const res = await email(props.email);
-
-      if (res?.error) {
-        toast.error(`${res?.error.data.message}`, {
+console.log(res)
+      if ('error' in res) {
+        toast.error('User is already exists ', {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -238,9 +232,9 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
           progress: undefined,
           theme: "light",
         });
-        setLoading(false);
+        // setLoading(false);
       } else {
-        toast.success(`${res.data.message}`, {
+        toast.success('OTP is send to your email address', {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -250,7 +244,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
           progress: undefined,
           theme: "light",
         });
-        setLoading(false);
+        // setLoading(false);
         toggleContent();
       }
     } catch (error) {
@@ -345,7 +339,7 @@ const EmailComponent: React.FC<EmailComponent> = (props) => {
   );
 };
 
-const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
+const PasswordComponent = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -392,7 +386,7 @@ const PasswordComponent: React.FC<PasswordComponentProps> = (props) => {
   );
 };
 
-const ComfirmPassword: React.FC<ComfirmPassword> = (props) => {
+const ComfirmPassword = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const content = props.matchpassword ? (
     <svg
@@ -460,10 +454,10 @@ function UploadResumeComponent({
 }) {
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
 
-  function onClicked() {
-    console.log("clicked");
-    uploadFileRef.current?.click();
-  }
+  // function onClicked() {
+  //   console.log("clicked");
+  //   uploadFileRef.current?.click();
+  // }
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
@@ -579,7 +573,7 @@ const Verified = (props: PropT): JSX.Element => {
       // Assuming the response structure doesn't have an "error" property
 
       if (response) {
-        if (response?.error) {
+        if ('error' in response) {
           dispatch(verifyEmailFlagSelector(false));
           toast.error("OTP is not verified", {
             position: "top-center",
@@ -590,7 +584,7 @@ const Verified = (props: PropT): JSX.Element => {
             progress: undefined,
             theme: "light",
           });
-        } else if (response?.data) {
+        } else if ('data' in response) {
           toast.success("otp verified successfully", {
             position: "top-center",
             autoClose: 2000,
@@ -669,7 +663,7 @@ const PersonalDetails = ({
 }: {
   onResumeUpload: (i: File) => void;
 }): JSX.Element => {
-  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation();
+  const [register, {  isError, isSuccess }] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 
@@ -748,7 +742,7 @@ const navigator = useNavigate()
       role,
       userProfileType,
       date,
-    });
+    }) as unknown as any;
     if (res.data) {
         toast.success("register successfully please login", {
           position: "top-center",
@@ -820,10 +814,11 @@ console.log(matchpassword)
       dispatch(emailStepsCounterDecrement);
     }
   }, [email, validEmail, dispatch]);
-console.log(typeof password)
+console.log(password)
+console.log(confirmpassword)
   useEffect(() => {
     if (password === "") {
-      setMatchpassword(password == !confirmpassword);
+      setMatchpassword(password !== confirmpassword);
     } else {
       setMatchpassword(password === confirmpassword);
     }
@@ -951,6 +946,6 @@ export function SubStepArrow() {
     </div>
   );
 }
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}
+// function dispatch(arg0: any) {
+//   throw new Error("Function not implemented.");
+// }

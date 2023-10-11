@@ -1,7 +1,7 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../../features/api-integration/apiUserSlice/api-integration-user.slice";
 import { toast } from "react-toastify";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { setToken } from "../../../features/reducers/authReducers/auth-slice-reducer";
-import { RootState } from "../../../store/app.store";
+//import { RootState } from "../../../store/app.store";
 
 
 interface LoginSubProps {
@@ -23,10 +23,10 @@ const LoginSub: React.FC<LoginSubProps> = ({
 }) => {
   const [userName, setUserName] = useState<string>("");
   const navigate = useNavigate();
-  const{jobId} = useParams()
+  // const{jobId} = useParams()
 
   const dispatch = useDispatch();
-  const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
+  const [login, { isLoading,  isError }] = useLoginMutation();
   const currentLocation = window.location.href.slice(22);
   console.log(currentLocation)
 
@@ -40,11 +40,11 @@ const LoginSub: React.FC<LoginSubProps> = ({
     try {
       const response = await login({ username: userName, password });
       console.log(response);
-      if (response?.data) {
-        const token: string = response.data; // Access the actual token data
+      if ('data' in response) {
+        const token: object = response.data; // Access the actual token data
         console.log(token);
         dispatch(setToken(token));
-        Cookies.set("jwtToken", token);
+        Cookies.set("jwtToken", JSON.stringify(token));
 
         toast.success("Successfully logged in", {
           position: "top-center",
@@ -69,7 +69,7 @@ navigate('/')
       } else {
         console.error("Login error");
       }
-      if (response.error) {
+      if ('error' in response) {
         toast.error("Unsuccesful login", {
           position: "top-center",
           autoClose: 2000,
@@ -170,7 +170,7 @@ navigate('/')
 };
 
 export default LoginSub;
-function useRouter(): { query: any; } {
-  throw new Error("Function not implemented.");
-}
+// function useRouter(): { query: any; } {
+//   throw new Error("Function not implemented.");
+// }
 

@@ -13,7 +13,6 @@ import { setUserDetails } from "../../../features/reducers/user-details/user-det
 import { useLazyGetUpcomingInterviewsQuery } from "../../../features/api-integration/upcoming-interviews/upcoming-interviews.slice";
 import { useLazyGetJobByIdQuery, useLazyGetRecommendedJobsQuery } from "../../../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { JobsDetailsType } from "../../../features/reducers/job-details/job-details.interface";
-import React from "react";
 import _ from 'lodash';
 import { QuestionnaireHttpClient } from "../services/questionnaire.service";
 import { concatMap } from "rxjs";
@@ -22,7 +21,6 @@ import { EducationalSkillsKey, UserEducationSkill } from "../constants/fresher.t
 import { EducationalInfoComponent } from "../components/educational-info.component";
 import { BOARD_LIST, CHANGED_BY, HIGHEST_EDUCATION, STREAM_LIST, STREAM_NOBOARD_LIST } from "../constants/fresher-profile-upload.list";
 import { useLazyGetProfileQuery, useLazyUniversitySuggestionsQuery, useSaveProfileMutation } from "../../../features/api-integration/profile-qualification/profile-qualification.slice";
-import JobCard from "../../../components/PlacementPageComponent/JobCard";
 import JobCard2 from "../../../components/PlacementPageComponent/JobCard2";
 import { Link } from "react-router-dom";
 
@@ -40,12 +38,7 @@ interface UpcomingInterviewType {
   userId: number,
 }
 
-interface ProfileLevelType {
-  board: Array<string>
-  highestLevelOfEdu: Array<string>,
-  percentage: string,
-  stream: Array<string>
-}
+
 
 // Main Page of fresher Dashboard Page
 export default function FresherDashboardPage() {
@@ -398,65 +391,66 @@ export function FresherDashboard() {
   );
 }
 
-function RecommendJobsCard({ details }: { details: JobsDetailsType }) {
+// function RecommendJobsCard({ details }: { details: JobsDetailsType }) {
 
-  console.log('fresher: ', { date: CommonUtilities.date.formatDate(details.interviewStartDate) })
+//   console.log('fresher: ', { date: CommonUtilities.date.formatDate(details.interviewStartDate) })
 
-  return (
-    <div className="rounded-[2em] px-[2.5em] py-[2em] app-box-shadow">
-      <div className="flex mb-[1em]">
-        <div
-          className="rounded-md border border-solid border-[#D7E8F0] p-[1em] h-[7.7em] w-[7.7em] flex items-center justify-center"
-          style={{
-            background: "linear-gradient(to right, #D7E8F0, #F1FAFB)",
-          }}
-        >
-          <img src={LenskartImage} />
-        </div>
-        <div className="flex flex-col justify-center flex-grow px-[1em]">
-          <div className="text-[#005F59] app-theme-text" style={{ fontWeight: '500 !important' }}>
-            {details.postName}
-          </div>
-          <div className="text-[1.8em] text-[#5b5b5b] app-theme-text">
-            {details.companyName}
-          </div>
-        </div>
-        <div className="text-[#5B5B5B] flex app-theme-text">
-          <div className="mr-[0.5em]">Status</div>
-          <div className="border border-solid h-[max-content] border-[#5B5B5B] px-[0.5em] rounded-[1em]">
-            Application Sent
-          </div>
-        </div>
-      </div>
-      <div className="mb-[0.5em] flex app-theme-text">
-        <div className="mr-[0.5em] text-[#5B5B5B]">Location:</div>
-        <div className="text-[#005F59]">{details.location}</div>
-      </div>
-      <div className="flex flex-row app-theme-text">
-        <div className="mr-[0.5em] text-[#5B5B5B]">Job-Type:</div>
-        <div className="text-[#005F59]">{details.jobType}</div>
-        <div className="bg-[#00595F4C] mx-[2em] flex-grow max-w-[1px]"></div>
-        <div className="mr-[0.5em] text-[#5B5B5B]">No of Posts:</div>
-        <div className="text-[#005F59]">{details.noOfPosts}</div>
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div className="rounded-[2em] px-[2.5em] py-[2em] app-box-shadow">
+//       <div className="flex mb-[1em]">
+//         <div
+//           className="rounded-md border border-solid border-[#D7E8F0] p-[1em] h-[7.7em] w-[7.7em] flex items-center justify-center"
+//           style={{
+//             background: "linear-gradient(to right, #D7E8F0, #F1FAFB)",
+//           }}
+//         >
+//           <img src={LenskartImage} />
+//         </div>
+//         <div className="flex flex-col justify-center flex-grow px-[1em]">
+//           <div className="text-[#005F59] app-theme-text" style={{ fontWeight: '500 !important' }}>
+//             {details.postName}
+//           </div>
+//           <div className="text-[1.8em] text-[#5b5b5b] app-theme-text">
+//             {details.companyName}
+//           </div>
+//         </div>
+//         <div className="text-[#5B5B5B] flex app-theme-text">
+//           <div className="mr-[0.5em]">Status</div>
+//           <div className="border border-solid h-[max-content] border-[#5B5B5B] px-[0.5em] rounded-[1em]">
+//             Application Sent
+//           </div>
+//         </div>
+//       </div>
+//       <div className="mb-[0.5em] flex app-theme-text">
+//         <div className="mr-[0.5em] text-[#5B5B5B]">Location:</div>
+//         <div className="text-[#005F59]">{details.location}</div>
+//       </div>
+//       <div className="flex flex-row app-theme-text">
+//         <div className="mr-[0.5em] text-[#5B5B5B]">Job-Type:</div>
+//         <div className="text-[#005F59]">{details.jobType}</div>
+//         <div className="bg-[#00595F4C] mx-[2em] flex-grow max-w-[1px]"></div>
+//         <div className="mr-[0.5em] text-[#5B5B5B]">No of Posts:</div>
+//         <div className="text-[#005F59]">{details.noOfPosts}</div>
+//       </div>
+//     </div>
+//   );
+// }
 
 // Upcoming Card Interview Section
 function UpcomingInterviewCard({ className, details }: { className?: string, details: UpcomingInterviewType }) {
   const [getLazyJobById] = useLazyGetJobByIdQuery();
   const [jobDetails, setJobDetails] = useState<JobsDetailsType>();
 
-  async function init() {
-    const { data: { object: jobDetailsResponse } } = await getLazyJobById(details.jobId.toString());
-    setJobDetails(() => jobDetailsResponse);
-    // console.log('dash1: ', jobDetailsResponse);
-    console.log('dash1: ', details);
-  }
   useEffect(() => {
-    init();
-  }, []);
+    async function init() {
+      const { data: { object: jobDetailsResponse } } = await getLazyJobById(details.jobId.toString());
+      setJobDetails(() => jobDetailsResponse);
+      console.log('dash1: ', details);
+    }
+  
+    init(); // Call the init function immediately within the effect
+  
+  }, [details, getLazyJobById]); 
 
   return (
     <div
