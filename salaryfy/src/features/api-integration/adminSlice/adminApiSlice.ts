@@ -15,4 +15,4 @@ const adminApiSlice = apiSlice.injectEndpoints({
 
 export const {usePostJobsMutation} = adminApiSlice
 
-export default adminApiSlice.reducerPath
+export default adminApiSlice
