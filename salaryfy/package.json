@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.22.5",
+    "@locator/babel-jsx": "^0.4.2",
     "@types/chroma-js": "^2.4.0",
     "@types/node": "^20.4.5",
     "@types/react": "^18.2.21",
