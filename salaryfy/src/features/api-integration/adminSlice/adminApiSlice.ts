@@ -2,14 +2,16 @@ import { apiSlice } from "../../apiSlice";
 
 const adminApiSlice = apiSlice.injectEndpoints({
     endpoints : (builder)=>({
-        postJobs:builder.mutation({
-            query:(inputStateJobPost)=>({
-                url:`job/update/36`,
+        postJobs:builder.mutation<unknown,unknown>({
+            query:(inputStateJobPost:unknown)=>({
+                url:`job/add`,
+                transformResponse:console.log(inputStateJobPost),
                 method:'POST',
                 body:inputStateJobPost
             }),
             invalidatesTags:['job-post']
-        })
+        }),
+      
     })
 })
 

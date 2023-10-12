@@ -1,6 +1,7 @@
 import { Button, FormControl, TextField } from "@mui/material";
 
 import React, { useState } from "react";
+import {  usePostJobsMutation } from "../../features/api-integration/adminSlice/adminApiSlice";
 
 interface JobPost {
   jobsTitle:string,
@@ -22,7 +23,7 @@ interface JobPost {
 }
 
 const AddJobPost = () => {
- const [inputStateJobPost, setinputStateJobPost] = useState<JobPost>({
+ const [inputStatesJobPost, setinputStatesJobPost] = useState<JobPost>({
    jobsTitle: "",
    companyName: "",
    location: "",
@@ -41,9 +42,12 @@ const AddJobPost = () => {
    jobType: "",
  });
 
+ const [inputStateJobPost] = usePostJobsMutation()
+ 
+
  const onChangeHandler=(e:React.ChangeEvent<HTMLInputElement>)=>{
 const {name,value} = e.target
-setinputStateJobPost((preVal)=>{
+setinputStatesJobPost((preVal)=>{
   return{
     ...preVal,
     [name]:value
@@ -52,10 +56,50 @@ setinputStateJobPost((preVal)=>{
 
  }
 
- const submitHandler = (e:React.MouseEvent<HTMLInputElement>)=>{
+ const submitHandler = async(e:React.MouseEvent<HTMLInputElement>)=>{
   e.preventDefault()
-  console.log(inputStateJobPost)
+  const {jobDetails} = inputStatesJobPost
+  try {
+    
+    const res = await inputStateJobPost(
+      {
+        postName: jobDetails,
+        companyName: "Justdial",
+        location: "Bhopal",
+        logo: "Justdial",
+        noOfPosts: 15,
+        interviewStartDate: "2023-10-20",
+        interviewEndDate: "2023-10-30",
+        essentialRequirements: "Bachelor's degree in Computer Science",
+        incentives: "Healthcare, 401(k), Flexible hours...",
+        interviewDetails: "Freshers/Experience (Selling/Customer Acquisition Skills), communication skills",
+        jobDetails: null,
+        date: "2023-10-18",
+        startingSalary: "17605-22000",
+        jobFairSetNo: 7,
+        status: true,
+        interviewLocation: ["[location1", "location2]"],
+        interviewTimeSlot1Min: "10:00",
+        interviewTimeSlot1Max: "15:00",
+        interviewTimeSlot2Min: null,
+        interviewTimeSlot2Max: null,
+        jobType: "On-Site",
+        user_Id: 1
+      }
+      
+    ) 
+    console.log(res)
+  } catch (error) {
+    console.log(error)
+  }
+
  }
+
+
+
+
+
+
   return (
     <div>
       <div className=" flex  justify-center mb-5 ">
@@ -70,7 +114,7 @@ setinputStateJobPost((preVal)=>{
               autoComplete="off"
               name="jobsTitle"
               onChange={onChangeHandler}
-              value={inputStateJobPost.jobsTitle}
+              value={inputStatesJobPost.jobsTitle}
               
             />
             <TextField
@@ -81,7 +125,7 @@ setinputStateJobPost((preVal)=>{
               autoComplete="off"
               name="companyName"
               onChange={onChangeHandler}
-              value={inputStateJobPost.companyName}
+              value={inputStatesJobPost.companyName}
             />
           </div>
           <div className="space-x-3 flex p-3 justify-around">
@@ -92,7 +136,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               autoComplete="off"
               name="location"
-              value={inputStateJobPost.location}
+              value={inputStatesJobPost.location}
               onChange={onChangeHandler}
             />
             <TextField
@@ -103,7 +147,7 @@ setinputStateJobPost((preVal)=>{
               autoComplete="off"
               name="logo"
               onChange={onChangeHandler}
-              value={inputStateJobPost.logo}
+              value={inputStatesJobPost.logo}
             />
           </div>
           <div className="space-x-3 flex p-3 justify-around">
@@ -115,7 +159,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               name="totalPost"
               onChange={onChangeHandler}
-              value={inputStateJobPost.totalPost}
+              value={inputStatesJobPost.totalPost}
               type="number"
             />
             <TextField
@@ -126,7 +170,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               name="highestEducation"
               onChange={onChangeHandler}
-              value={inputStateJobPost.highestEducation}
+              value={inputStatesJobPost.highestEducation}
             />
           </div>
           <div className="space-x-3 flex p-3 justify-around">
@@ -138,7 +182,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               name="interviewStartDate"
               onChange={onChangeHandler}
-              value={inputStateJobPost.interviewStartDate}
+              value={inputStatesJobPost.interviewStartDate}
             />
             <TextField
               id="outlined-basic"
@@ -148,7 +192,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               name="interviewEndDate"
               onChange={onChangeHandler}
-              value={inputStateJobPost.interviewEndDate}
+              value={inputStatesJobPost.interviewEndDate}
             />
           </div>
           <div className="space-x-3 flex p-3 justify-around">
@@ -160,7 +204,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               name="incentives"
               onChange={onChangeHandler}
-              value={inputStateJobPost.incentives}
+              value={inputStatesJobPost.incentives}
             />
             <TextField
               id="outlined-basic"
@@ -170,7 +214,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               name="interviewDetails"
               onChange={onChangeHandler}
-              value={inputStateJobPost.interviewDetails}
+              value={inputStatesJobPost.interviewDetails}
             />
           </div>
           <div className="space-x-3 flex p-3 justify-around">
@@ -182,7 +226,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               name="jobDetails"
               onChange={onChangeHandler}
-              value={inputStateJobPost.jobDetails}
+              value={inputStatesJobPost.jobDetails}
             />
             <TextField
               id="outlined-basic"
@@ -192,7 +236,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               name="date"
               onChange={onChangeHandler}
-              value={inputStateJobPost.date}
+              value={inputStatesJobPost.date}
             />
           </div>
           <div className="space-x-3 flex p-3 justify-around">
@@ -204,7 +248,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               name="startingSalary"
               onChange={onChangeHandler}
-              value={inputStateJobPost.startingSalary}
+              value={inputStatesJobPost.startingSalary}
             />
             <TextField
               id="outlined-basic"
@@ -214,7 +258,7 @@ setinputStateJobPost((preVal)=>{
               className="w-[50%]"
               name="interviewLocations"
               onChange={onChangeHandler}
-              value={inputStateJobPost.interviewLocations}
+              value={inputStatesJobPost.interviewLocations}
             />
           </div>
           <div className="space-x-3 flex p-3 justify-around">
