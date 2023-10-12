@@ -88,9 +88,9 @@ setinputStatesJobPost((preVal)=>{
       }
       
     ) 
-    console.log(res)
+    (res)
   } catch (error) {
-    console.log(error)
+    (error)
   }
 
  }

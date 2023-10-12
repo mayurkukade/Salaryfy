@@ -11,23 +11,23 @@ import { openModel } from "../../../features/reducers/schedule-interview-form/sc
 export default function BottomPageNavigationBar() {
   const [register] = useRegisterMutation();
 const {id} = useParams()
-console.log(id)
+(id)
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   const dispatch = useDispatch();
   const jobId: string = localStorage.getItem("jobId");
-  console.log(jobId);
+  (jobId);
   const { isError: isScheduleInterviewError } = useGetInterviewScheduleQuery({
     userId,
     jobId,
   });
   
   // const {data:getJobDetails,isLoading:isLoadingGetDetails,isError:isErrorGetDetails,isSuccess} = useGetJobByIdQuery(jobId)
-  // console.log(getJobDetails)
-  console.log(isScheduleInterviewError);
+  // (getJobDetails)
+  (isScheduleInterviewError);
   const registerFormData: string[] = useSelector(
     (state: RootState) => state.registerFormSlice.registerFormData
   );
-  console.log(registerFormData);
+  (registerFormData);
 
   // to read validation value from redux of screening question form
   const screeningQuestionValidation = useSelector(
@@ -37,8 +37,8 @@ console.log(id)
   const screeningQuestionResponse = useSelector(
     (state: RootState) => state.screeningQuestionSlice.screeningQuestionResponse
   );
-  console.log(`Secreen question validation is ${screeningQuestionValidation}`);
-  console.log("Secreen question Response is ", screeningQuestionResponse);
+  (`Secreen question validation is ${screeningQuestionValidation}`);
+  ("Secreen question Response is ", screeningQuestionResponse);
 
   const currentRoutee = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
@@ -54,14 +54,14 @@ console.log(id)
   const handleClickOpen = () => {
     dispatch(openModel());
   };
-  console.log(!verifyEmailFlagSelector);
-  console.log(currentRoutee);
-  console.log(registerFormData[0]);
-  console.log(resSteptwoSelector && verifyEmailFlagSelector);
-  console.log(resSteptwoSelector);
-  console.log(verifyEmailFlagSelector);
+  (!verifyEmailFlagSelector);
+  (currentRoutee);
+  (registerFormData[0]);
+  (resSteptwoSelector && verifyEmailFlagSelector);
+  (resSteptwoSelector);
+  (verifyEmailFlagSelector);
   const currentRoute = window.location.href.slice(22);
-  console.log(currentRoute);
+  (currentRoute);
 
   let nextButtonDisabled: boolean;
   if (currentRoute === "questionnaire/"+id) {
@@ -71,16 +71,16 @@ console.log(id)
   } else if (currentRoute === "questionnaire/schedule-interview/" + id) {
     nextButtonDisabled = !isScheduleInterviewError;
   }
-  console.log(!nextButtonDisabled);
+  (!nextButtonDisabled);
   const navigate = useNavigate();
 
   const nextHandler = async () => {
     if (currentRoute === "questionnaire/"+id) {
-      console.log(true);
+      (true);
      
       try {
         const res = await register(registerFormData[0]) as object ;
-        console.log(res);
+        (res);
 
         if ('data' in res) {
           toast.success("register successfully please login", {
@@ -107,7 +107,7 @@ console.log(id)
           });
         }
       } catch (error) {
-        console.log(error);
+        (error);
       }
     } else if (currentRoute === "questionnaire/screening-questions/" +id) {
       // logic to validate and submit

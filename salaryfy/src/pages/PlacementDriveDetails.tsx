@@ -24,7 +24,7 @@ function GreenHeading({ label }: { label: string }) {
 
 const PlacementDriveDetails = () => {
   const currentRoute = useSelector((state: RootState) => state.currentRoute.currentRoute)
-  console.log(currentRoute)
+  (currentRoute)
   const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
   const dispatch = useDispatch();
   const { jobId } = useParams();
@@ -49,7 +49,7 @@ const PlacementDriveDetails = () => {
 
   }
   const jobIdInNumber = Number(jobId)
-  console.log(jobIdInNumber)
+  (jobIdInNumber)
   const getJobDetails = (jobIdInNumber: number) => {
     fetch(`http://192.168.1.76:8080/pdf/generate/${jobIdInNumber}`)
       .then((response) => response.blob())

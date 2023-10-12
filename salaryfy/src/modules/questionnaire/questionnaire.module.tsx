@@ -17,7 +17,7 @@ export default function QuestionnaireModule() {
   const currentPath = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-  console.log(currentPath);
+  (currentPath);
   const navigate = useNavigate();
   if (token && currentPath == "questionnaire") {
     navigate("/questionnaire/screening-questions");

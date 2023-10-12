@@ -23,7 +23,7 @@ const authSlice = createSlice({
         },
         userNameSelection:(state,action: PayloadAction<string>) =>{
             state.userName.push(action.payload);
-           console.log(action.payload)
+           (action.payload)
         },
         userIdSelection: (state, action: PayloadAction<string>) => {
             state.userId = action.payload

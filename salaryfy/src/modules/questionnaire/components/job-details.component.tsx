@@ -23,10 +23,10 @@ export default function UserJobDetails() {
   } else if (isError) {
     content = <p>Error</p>;
   }
-  console.log(content,'data');
+  (content,'data');
 
   useEffect(() => {
-    console.log('jobs: ', jobDetails);
+    ('jobs: ', jobDetails);
   }, [jobDetails]);
 
   return (

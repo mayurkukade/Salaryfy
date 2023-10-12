@@ -58,28 +58,28 @@ export function ScheduleInterview() {
 
   const [selectedDate, setSelectedDate] = useState(null);
 
-  console.log(selectedDate);
+  (selectedDate);
 
   const isOpenselector = useSelector(
     (state: RootState) => state.scheduleInterviewForm.isOpen
   );
-  console.log(isOpenselector);
+  (isOpenselector);
 
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-  console.log(userId);
+  (userId);
   const jobDetails = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
-  console.log(jobDetails);
-  console.log(selectedDate);
+  (jobDetails);
+  (selectedDate);
   const selectInterviewData = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
-  console.log(selectInterviewData.interviewEndDate);
+  (selectInterviewData.interviewEndDate);
   const [interviewScheduleApi] = useInterviewScheduleApiMutation();
   const jobIdFormLocal: string = localStorage.getItem("jobId");
   const jobId: number = Number(jobIdFormLocal);
-  console.log(jobId);
+  (jobId);
   const { data, isLoading, isError } = useGetInterviewScheduleQuery({
     userId,
     jobId,
@@ -93,16 +93,16 @@ export function ScheduleInterview() {
   
   if (isLoading) return <div>Loading...</div>;
   if (!getJobDetails) return <div>Missing post!</div>;
-  console.log(isError);
+  (isError);
 
-  console.log(data, "data");
+  (data, "data");
   if (isLoading) {
     return <p>Loading...</p>;
   }
   const handleDelete = async (interviewScheduleId: number) => {
-    console.log(interviewScheduleId);
+    (interviewScheduleId);
     try {
-      console.log(interviewScheduleId);
+      (interviewScheduleId);
       await deleteInterviewSchedule(interviewScheduleId);
     } catch (error) {
       console.error("Error deleting interview schedule:", error);
@@ -111,7 +111,7 @@ export function ScheduleInterview() {
 
   //  slot details function
   const getDetailsModule = data?.list.map( ( schedule: { location: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; interviewDate: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; time: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; interviewScheduleId: number; }, i: React.Key ) => {
-      console.log(schedule);
+      (schedule);
       let content:
         | string
         | number
@@ -146,7 +146,7 @@ export function ScheduleInterview() {
     }
   );
 
-  console.log(userId);
+  (userId);
   const handleHourChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
@@ -169,7 +169,7 @@ export function ScheduleInterview() {
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(selectedHour);
+    (selectedHour);
 
     // const dateFormat =
     //   selectedDate != null ? selectedDate.toISOString().split("T")[0] : "";
@@ -195,14 +195,14 @@ export function ScheduleInterview() {
     const CurrentformattedDate = `${Currentyear}-${Currentmonth}-${Currentday}`;
 
     const hourFormat = `${selectedHour}:00`;
-    console.log(hourFormat);
+    (hourFormat);
 
     const year = selectedDate.getFullYear();
     const month = String(selectedDate.getMonth() + 1).padStart(2, "0"); // Add 1 to month since it's zero-based
     const day = String(selectedDate.getDate()).padStart(2, "0");
 
     const formattedDate = `${year}-${month}-${day}`;
-    console.log(formattedDate);
+    (formattedDate);
 
     try {
       const formDetails = {
@@ -216,7 +216,7 @@ export function ScheduleInterview() {
       };
       const res = await interviewScheduleApi(formDetails).unwrap();
 
-      console.log(res);
+      (res);
 
       setLocation("");
       setSelectedHour("");
@@ -225,7 +225,7 @@ export function ScheduleInterview() {
 
       setChecked(false);
     } catch (error) {
-      console.log(error.data.message);
+      (error.data.message);
       toast.error(error.data.message, {
         position: "top-center",
         autoClose: 5000,
@@ -243,13 +243,13 @@ export function ScheduleInterview() {
   const interviewSlotMinNumber = Number(
     getJobDetails.object.interviewTimeSlot1Min
   );
-  console.log(interviewSlotMinNumber);
+  (interviewSlotMinNumber);
   // const interviewSlotMax = getJobDetailsData.interviewTimeSlot1Max && 15
-  console.log(getJobDetails.object.interviewTimeSlot1Max);
+  (getJobDetails.object.interviewTimeSlot1Max);
   const interviewSlotMaxNumber = Number(
     getJobDetails.object.interviewTimeSlot1Max
   );
-  // console.log(interviewSlotMaxNumber)
+  // (interviewSlotMaxNumber)
 
   return (
     <div className="h-[100%] ">
@@ -410,11 +410,11 @@ const Modal = ({ getDetails, getJobDetails }) => {
   const jobDetails = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
   );
-  console.log(jobDetails);
+  (jobDetails);
   const openModelSelector = useSelector(
     (state: RootState) => state.scheduleInterviewForm.isOpen
   );
-  console.log(openModelSelector);
+  (openModelSelector);
   const dispatch = useDispatch();
 
   const handleCLose = () => {

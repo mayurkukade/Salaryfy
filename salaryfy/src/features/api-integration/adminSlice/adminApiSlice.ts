@@ -5,7 +5,7 @@ const adminApiSlice = apiSlice.injectEndpoints({
         postJobs:builder.mutation<unknown,unknown>({
             query:(inputStateJobPost:unknown)=>({
                 url:`job/add`,
-                transformResponse:console.log(inputStateJobPost),
+                transformResponse:(inputStateJobPost),
                 method:'POST',
                 body:inputStateJobPost
             }),

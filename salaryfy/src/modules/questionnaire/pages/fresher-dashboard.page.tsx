@@ -137,7 +137,7 @@ export function FresherDashboard() {
     const { data: { response: responseData } } = await getLazyUserProfile(userId.toString());
     const userProfile = responseData as UserDetailsType;
 
-    console.log(userProfile);
+    (userProfile);
     if (userProfile) {
       dispatch(setUserDetails(userProfile));
 
@@ -197,7 +197,7 @@ export function FresherDashboard() {
           onPercentageChangeHandler$(response.percentage.toString());
         }
 
-        console.log(response);
+        (response);
       })
   }
 
@@ -263,9 +263,9 @@ export function FresherDashboard() {
     if (payload.highestLevelOfEdu === HIGHEST_EDUCATION.MATRIC) { payload.stream = null; }
     else { if (Object.values(payload).includes(undefined)) { return; } }
 
-    console.log(payload);
+    (payload);
 
-    httpClient.request(saveProfile(payload)).subscribe((response) => console.log({ response }))
+    httpClient.request(saveProfile(payload)).subscribe((response) => ({ response }))
   }
 
   return (
@@ -393,7 +393,7 @@ export function FresherDashboard() {
 
 // function RecommendJobsCard({ details }: { details: JobsDetailsType }) {
 
-//   console.log('fresher: ', { date: CommonUtilities.date.formatDate(details.interviewStartDate) })
+//   ('fresher: ', { date: CommonUtilities.date.formatDate(details.interviewStartDate) })
 
 //   return (
 //     <div className="rounded-[2em] px-[2.5em] py-[2em] app-box-shadow">
@@ -445,7 +445,7 @@ function UpcomingInterviewCard({ className, details }: { className?: string, det
     async function init() {
       const { data: { object: jobDetailsResponse } } = await getLazyJobById(details.jobId.toString());
       setJobDetails(() => jobDetailsResponse);
-      console.log('dash1: ', details);
+      ('dash1: ', details);
     }
   
     init(); // Call the init function immediately within the effect

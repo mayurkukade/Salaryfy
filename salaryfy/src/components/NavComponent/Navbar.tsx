@@ -40,7 +40,7 @@ import { useGetUserProfilePhotoQuery } from "../../features/api-integration/user
 const Navbar = () => {
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-  console.log(userId);
+  (userId);
   const [getUploadedDocs] = useLazyGetUploadedFilesQuery();
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [nav, setNav] = useState(false);
@@ -51,7 +51,7 @@ const Navbar = () => {
   const { data, isLoading, isError } = useGetUserProfilePhotoQuery(
     Number(userId)
   );
-  console.log(data?.response);
+  (data?.response);
 
   const profilePicture = data?.response.map((item: DocumentLink) => {
     let content: string | JSX.Element;
@@ -63,7 +63,7 @@ const Navbar = () => {
     } else {
       content = <img src={item?.documentLink} alt="profile picture" />;
     }
-    console.log(item);
+    (item);
     return (
       <>
         {content}
@@ -72,11 +72,11 @@ const Navbar = () => {
   });
 
   const jobId = localStorage.getItem("jobId");
-  console.log(jobId);
+  (jobId);
   const open = Boolean(anchorEl);
-  console.log(window.location.href);
+  (window.location.href);
   const currentLocation = window.location.href.slice(22);
-  console.log(currentLocation);
+  (currentLocation);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -129,7 +129,7 @@ const Navbar = () => {
       .subscribe((link: string) => setProfilePhoto(() => link));
   }
 
-  console.log(profilePhoto);
+  (profilePhoto);
   useEffect(() => {
     if (token) {
       const userDetails: TokenPayload = jwt_decode(token);
@@ -137,8 +137,8 @@ const Navbar = () => {
       const userName: string = userDetails.fullName;
       const userId: string = userDetails.userId;
       setProfile(userName);
-      console.log(userName);
-      console.log(userDetails);
+      (userName);
+      (userDetails);
 
       dispatch(userNameSelection(userName));
       dispatch(userIdSelection(userId));

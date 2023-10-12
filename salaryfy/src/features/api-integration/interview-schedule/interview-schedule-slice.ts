@@ -5,7 +5,7 @@ const interviewSchedule = apiSlice.injectEndpoints({
         interviewScheduleApi:builder.mutation<[],formDetails>({
             query:(formDetails)=>({
                 url:`/Interview/Schedule`,
-                transformResponse:console.log(formDetails,'formsdetails'),
+                transformResponse:(formDetails,'formsdetails'),
                 headers:{
                     "Content-Type":"application/json"
                 },
@@ -17,7 +17,7 @@ const interviewSchedule = apiSlice.injectEndpoints({
         getInterviewSchedule:builder.query({
             query: ({userId,jobId}) =>({
                 url: `/Interview/getInterviewByUserIdJobId?userId=${userId}&jobId=${jobId}`,
-                transformResponse:console.log(userId,jobId),
+                transformResponse:(userId,jobId),
                
                 method:"GET",
             }),
@@ -28,7 +28,7 @@ const interviewSchedule = apiSlice.injectEndpoints({
         deleteInterviewSchedule:builder.mutation({
             query:(interviewScheduleId)=>({
               
-                transformResponse:console.log(interviewScheduleId),
+                transformResponse:(interviewScheduleId),
                 url:`/Interview/DleteSchedule/${interviewScheduleId}`,
              
                 method:"DELETE",
