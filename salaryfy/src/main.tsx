@@ -9,7 +9,9 @@ import { appTheme } from "./theme/app.theme.ts";
 import appStore from "./store/app.store.ts";
 import {ToastContainer} from 'react-toastify'
 import Wrapper from "./pages/Wrapper.tsx";
+import {disableReactDevTools} from '@fvilers/disable-react-devtools'
 
+if(process.env.NODE_ENV === 'production') disableReactDevTools()
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
    
