@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { CommonUtilities } from "../../utils/common.utilities";
 import Cookies from "js-cookie";
 const JobCard = ({ details }: { details: JobType }) => {
-  console.log(details)
+  //console.log(details)
   const navigate = useNavigate();
   const token = Cookies.get("jwtToken");
-  console.log(details.jobId)
+  //console.log(details.jobId)
   const jobId: number = details.jobId;
   function onDetailsClick() {
-    console.log("details clicked: ", jobId);
+    //console.log("details clicked: ", jobId);
     localStorage.setItem('jobId', jobId.toString())
     if (details?.jobId) {
       navigate("/placementdetails/" + jobId);

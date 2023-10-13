@@ -3,12 +3,12 @@ import { JobType } from "../../features/reducers/jobs/jobs.interface";
 import { useNavigate } from "react-router-dom";
 import { CommonUtilities } from "../../utils/common.utilities";
 const JobCard2 = ({ details }: { details: JobType }) => {
-  console.log(details)
+  //console.log(details)
   const navigate = useNavigate();
   // const token = Cookies.get("jwtToken");
   const jobId: number = details.jobId;
   function onDetailsClick() {
-    console.log("details clicked: ", jobId);
+    //console.log("details clicked: ", jobId);
     localStorage.setItem('jobId',jobId.toString())
     if (details?.jobId) {
       navigate("/placementdetails/" + jobId);

@@ -58,28 +58,28 @@ export function ScheduleInterview() {
 
   const [selectedDate, setSelectedDate] = useState(null);
 
-  console.log(selectedDate);
+  //console.log(selectedDate);
 
-  const isOpenselector = useSelector(
-    (state: RootState) => state.scheduleInterviewForm.isOpen
-  );
-  console.log(isOpenselector);
+  // const isOpenselector = useSelector(
+  //   (state: RootState) => state.scheduleInterviewForm.isOpen
+  // );
+  //console.log(isOpenselector);
 
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-  console.log(userId);
-  const jobDetails = useSelector(
-    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
-  );
-  console.log(jobDetails);
-  console.log(selectedDate);
-  const selectInterviewData = useSelector(
-    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
-  );
-  console.log(selectInterviewData.interviewEndDate);
+  // console.log(userId);
+  // const jobDetails = useSelector(
+  //   (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
+  // );
+  //console.log(jobDetails);
+  //console.log(selectedDate);
+  // const selectInterviewData = useSelector(
+  //   (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
+  // );
+  //console.log(selectInterviewData.interviewEndDate);
   const [interviewScheduleApi] = useInterviewScheduleApiMutation();
   const jobIdFormLocal: string = localStorage.getItem("jobId");
   const jobId: number = Number(jobIdFormLocal);
-  console.log(jobId);
+  //console.log(jobId);
   const { data, isLoading, isError } = useGetInterviewScheduleQuery({
     userId,
     jobId,
@@ -93,25 +93,25 @@ export function ScheduleInterview() {
   
   if (isLoading) return <div>Loading...</div>;
   if (!getJobDetails) return <div>Missing post!</div>;
-  console.log(isError);
+  //console.log(isError);
 
-  console.log(data, "data");
+  //console.log(data, "data");
   if (isLoading) {
     return <p>Loading...</p>;
   }
   const handleDelete = async (interviewScheduleId: number) => {
-    console.log(interviewScheduleId);
+    //console.log(interviewScheduleId);
     try {
-      console.log(interviewScheduleId);
+      //console.log(interviewScheduleId);
       await deleteInterviewSchedule(interviewScheduleId);
     } catch (error) {
-      console.error("Error deleting interview schedule:", error);
+      //console.error("Error deleting interview schedule:", error);
     }
   };
 
   //  slot details function
   const getDetailsModule = data?.list.map( ( schedule: { location: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; interviewDate: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; time: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal; interviewScheduleId: number; }, i: React.Key ) => {
-      console.log(schedule);
+      //console.log(schedule);
       let content:
         | string
         | number
@@ -146,7 +146,7 @@ export function ScheduleInterview() {
     }
   );
 
-  console.log(userId);
+  //console.log(userId);
   const handleHourChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
@@ -169,7 +169,7 @@ export function ScheduleInterview() {
 
   const AddSubmitHandler = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(selectedHour);
+    //console.log(selectedHour);
 
     // const dateFormat =
     //   selectedDate != null ? selectedDate.toISOString().split("T")[0] : "";
@@ -195,14 +195,14 @@ export function ScheduleInterview() {
     const CurrentformattedDate = `${Currentyear}-${Currentmonth}-${Currentday}`;
 
     const hourFormat = `${selectedHour}:00`;
-    console.log(hourFormat);
+    //console.log(hourFormat);
 
     const year = selectedDate.getFullYear();
     const month = String(selectedDate.getMonth() + 1).padStart(2, "0"); // Add 1 to month since it's zero-based
     const day = String(selectedDate.getDate()).padStart(2, "0");
 
     const formattedDate = `${year}-${month}-${day}`;
-    console.log(formattedDate);
+    //console.log(formattedDate);
 
     try {
       const formDetails = {
@@ -214,9 +214,10 @@ export function ScheduleInterview() {
         jobId: jobId,
         status: "Scheduled",
       };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const res = await interviewScheduleApi(formDetails).unwrap();
 
-      console.log(res);
+      //console.log(res);
 
       setLocation("");
       setSelectedHour("");
@@ -225,7 +226,7 @@ export function ScheduleInterview() {
 
       setChecked(false);
     } catch (error) {
-      console.log(error.data.message);
+      // console.log(error.data.message);
       toast.error(error.data.message, {
         position: "top-center",
         autoClose: 5000,
@@ -243,9 +244,9 @@ export function ScheduleInterview() {
   const interviewSlotMinNumber = Number(
     getJobDetails.object.interviewTimeSlot1Min
   );
-  console.log(interviewSlotMinNumber);
+  //console.log(interviewSlotMinNumber);
   // const interviewSlotMax = getJobDetailsData.interviewTimeSlot1Max && 15
-  console.log(getJobDetails.object.interviewTimeSlot1Max);
+  //console.log(getJobDetails.object.interviewTimeSlot1Max);
   const interviewSlotMaxNumber = Number(
     getJobDetails.object.interviewTimeSlot1Max
   );
@@ -407,14 +408,14 @@ export function ScheduleInterview() {
 }
 
 const Modal = ({ getDetails, getJobDetails }) => {
-  const jobDetails = useSelector(
-    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
-  );
-  console.log(jobDetails);
+  // const jobDetails = useSelector(
+  //   (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
+  // );
+  //console.log(jobDetails);
   const openModelSelector = useSelector(
     (state: RootState) => state.scheduleInterviewForm.isOpen
   );
-  console.log(openModelSelector);
+  //console.log(openModelSelector);
   const dispatch = useDispatch();
 
   const handleCLose = () => {

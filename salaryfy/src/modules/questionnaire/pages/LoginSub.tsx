@@ -28,9 +28,9 @@ const LoginSub: React.FC<LoginSubProps> = ({
   const dispatch = useDispatch();
   const [login, { isLoading,  isError }] = useLoginMutation();
   const currentLocation = window.location.href.slice(22);
-  console.log(currentLocation)
+  //console.log(currentLocation)
 
-  console.log(isLoading, isError);
+  //console.log(isLoading, isError);
 
   const [password, setpassword] = useState<string>("");
 
@@ -39,10 +39,10 @@ const LoginSub: React.FC<LoginSubProps> = ({
 
     try {
       const response = await login({ username: userName, password });
-      console.log(response);
+      //console.log(response);
       if ('data' in response) {
         const token: object = response.data; // Access the actual token data
-        console.log(token);
+        //console.log(token);
         dispatch(setToken(token));
         Cookies.set("jwtToken", JSON.stringify(token));
 

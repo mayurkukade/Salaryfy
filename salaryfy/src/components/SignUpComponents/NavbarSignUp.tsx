@@ -40,7 +40,7 @@ export default function NavbarSignUp() {
   // const [register] = useRegisterMutation();
   const { id } = useParams();
   // const navigator = useNavigate()
-  console.log(id);
+  //console.log(id);
   
   /* SEEMS USELESS CODE BLOCK 
    Developer: sandwich */
@@ -85,7 +85,7 @@ const NameComponent = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
-  console.log(props);
+  //console.log(props);
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
@@ -143,7 +143,7 @@ const NameComponent = (props) => {
 };
 
 const PhoneComponent = (props) => {
-  console.log(props);
+  //console.log(props);
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
@@ -220,7 +220,7 @@ const EmailComponent = (props) => {
     // setLoading(true);
     try {
       const res = await email(props.email);
-console.log(res)
+//console.log(res)
       if ('error' in res) {
         toast.error('User is already exists ', {
           position: "top-center",
@@ -248,7 +248,7 @@ console.log(res)
         toggleContent();
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -560,16 +560,16 @@ const Verified = (props: PropT): JSX.Element => {
 
   const [verifyOTP] = useVerifyOTPMutation();
   const dispatch = useDispatch();
-  console.log(otp);
-  console.log(props.email);
+  //console.log(otp);
+  //console.log(props.email);
   const email = props.email;
-  console.log(otp, email);
+  //console.log(otp, email);
   const handleSubmitVerify = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     try {
       const response = await verifyOTP({ otp, email });
-      console.log(response);
+      //console.log(response);
       // Assuming the response structure doesn't have an "error" property
 
       if (response) {
@@ -609,7 +609,7 @@ const Verified = (props: PropT): JSX.Element => {
         dispatch(verifyEmailFlagSelector(false));
       }
     } catch (error) {
-      console.log("API call error:", error);
+      //console.log("API call error:", error);
       dispatch(verifyEmailFlagSelector(false));
     }
   };
@@ -669,13 +669,13 @@ const PersonalDetails = ({
 
   const dispatch = useAppDispatch();
 
-  const token = localStorage.getItem("userToken");
-  console.log(token);
+  // const token = localStorage.getItem("userToken");
+  //console.log(token);
 const navigator = useNavigate()
-  const currentRoute = useSelector(
-    (state: RootState) => state.currentRoute.currentRoute
-  );
-  console.log(currentRoute)
+  // const currentRoute = useSelector(
+  //   (state: RootState) => state.currentRoute.currentRoute
+  // );
+  //console.log(currentRoute)
 
   const [fullName, setfullName] = useState<string>("");
   const [validName, setValidName] = useState(false);
@@ -703,10 +703,10 @@ const navigator = useNavigate()
   const role = "USER";
   const userProfileType = "fresher";
 
-  console.log(password);
-  console.log(isError);
-  console.log(isSuccess);
-  console.log(matchpassword);
+  // console.log(password);
+  // console.log(isError);
+  // console.log(isSuccess);
+  // console.log(matchpassword);
 
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -719,7 +719,7 @@ const navigator = useNavigate()
     (state: RootState) => state.mainStepsCounter.resStepTwo
   );
 
-  console.log(resSubmitStatus);
+  //console.log(resSubmitStatus);
   const contentDisabled =
     !validName ||
     !validMobile ||
@@ -730,7 +730,7 @@ const navigator = useNavigate()
     !date ||
     !matchpassword;
 
-  console.log(!contentDisabled);
+  //console.log(!contentDisabled);
 
   const registerHandler = async () => {
 
@@ -814,8 +814,8 @@ const navigator = useNavigate()
       dispatch(emailStepsCounterDecrement);
     }
   }, [email, validEmail, dispatch]);
-console.log(password)
-console.log(confirmpassword)
+//console.log(password)
+//console.log(confirmpassword)
   useEffect(() => {
     if (password === "") {
       setMatchpassword(password !== confirmpassword);
@@ -835,14 +835,14 @@ console.log(confirmpassword)
 
   useEffect(() => {
     if (contentDisabled) {
-      console.log(contentDisabled);
+      //console.log(contentDisabled);
     }
   }, [contentDisabled]);
-  console.log(contentDisabled);
+  //console.log(contentDisabled);
 
-  console.log(validpassword);
-  console.log(matchpassword);
-  console.log(toggleLoginRegister);
+  //console.log(validpassword);
+  //console.log(matchpassword);
+  //console.log(toggleLoginRegister);
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-[2em] md:px-[10em]">

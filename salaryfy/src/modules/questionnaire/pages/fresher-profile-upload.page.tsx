@@ -156,7 +156,7 @@ function FresherProfileUpload() {
     }
 
     else {
-      console.log('unhandled')
+      //console.log('unhandled')
     }
   }
 
@@ -190,7 +190,7 @@ function FresherProfileUpload() {
           onPercentageChangeHandler$(response.percentage.toString());
         }
 
-        console.log(response);
+        //console.log(response);
       })
   }
 
@@ -225,7 +225,7 @@ function FresherProfileUpload() {
         catchError(error => throwError(error))
       ).subscribe(
         (response) => {
-          console.log('File upload success: ', response);
+          //console.log('File upload success: ', response);
           alert('File ' + documentType + ' has been uploaded successfully');
         },
         (error: ErrorType) => {
@@ -264,7 +264,7 @@ function FresherProfileUpload() {
   }
 
   function unHandledEvent() {
-    console.log('event not handled');
+    //console.log('event not handled');
   }
 
   function onHighestLevelEducationChangeHandler(value: string | null, changedBy: CHANGED_BY) {
@@ -319,7 +319,7 @@ function FresherProfileUpload() {
   }
 
   async function uploadUserEducationSkillCertificate() {
-    console.log(educationDocs);
+    //console.log(educationDocs);
     educationDocs.map(({ docType, file }) => {
       onDocumentUploadEvent(docType, file);
     })
@@ -422,7 +422,7 @@ function DocUploader({ className, label, uploading, progress, onDocUpload, onCan
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
 
   function onClicked() {
-    console.log('clicked');
+    //console.log('clicked');
     uploadFileRef.current?.click();
   }
 
@@ -491,7 +491,7 @@ function UserProfilePhoto({ profileLink, userId, onPhotoUpload }: { profileLink:
   function profilePhotoClicked() {
     if (userDocProfileRef?.current) {
       userDocProfileRef?.current?.click();
-      console.log('jobs: ', 'hehrehrehr');
+      //console.log('jobs: ', 'hehrehrehr');
     }
   }
 

@@ -100,7 +100,7 @@ export default function SideBar() {
     );
   }
   function HomeIcon({ active }: { active?: boolean }) {
-    console.log({ active });
+    //console.log({ active });
     return (
       <svg
         width="25"

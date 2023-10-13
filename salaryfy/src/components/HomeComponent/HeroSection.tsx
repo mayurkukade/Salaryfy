@@ -3,22 +3,22 @@ import herowave from "../../../assets/Homepage/Vector 30.jpg";
 import herosection from "../../../assets/Homepage/herosection.png";
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSelectedCity } from "../../features/reducers/selected-city/selected-city.slice";
-import { AppStoreStateType } from "../../store/app.store";
-import { SLICE_NAMES } from "../../features/slice-names.enum";
+//import { AppStoreStateType } from "../../store/app.store";
+//import { SLICE_NAMES } from "../../features/slice-names.enum";
 
 const HeroSection2 = () => {
   const [selectedCityState, setSelectedCityState] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const jobs = useSelector(
-    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]
-  );
-  console.log(jobs);
+  // const jobs = useSelector(
+  //   (state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]
+  // );
+  //console.log(jobs);
   const goHandler = () => {
     dispatch(setSelectedCity(selectedCityState));
-    console.log({ selectedCityState });
+    //console.log({ selectedCityState });
     navigate("/placementdrive");
   };
 

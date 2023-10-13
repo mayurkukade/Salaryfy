@@ -25,7 +25,7 @@ export default function ScreeningQuestions() {
  
    // selector hook to get all job details
    const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
-   console.log( jobDetails?.jobId);
+   //console.log( jobDetails?.jobId);
    const { id } = useParams();
    console.log(id)
   //  const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;

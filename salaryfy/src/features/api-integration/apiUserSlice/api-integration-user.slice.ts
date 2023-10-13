@@ -11,7 +11,7 @@ const apiIntegrationSlice = apiSlice.injectEndpoints({
     register: builder.mutation<unknown, unknown>({
       query: (register: unknown) => ({
         url: `/user/register`,
-        transformResponse: console.log(register),
+        //transformResponse: console.log(register),
         headers:{
           "Content-Type":"application/json"
         },
@@ -23,7 +23,7 @@ const apiIntegrationSlice = apiSlice.injectEndpoints({
     sendEmail: builder.mutation<object, email>({
       query: (email) => ({
         url: `/verification/sendEmail?email=${email}`,
-        transformResponse: console.log(email),
+        //transformResponse: console.log(email),
         method: "POST",
         body: email,
       }),
@@ -31,7 +31,7 @@ const apiIntegrationSlice = apiSlice.injectEndpoints({
     }),
     verifyOTP: builder.mutation<object, email>({
       query: ({ otp, email }) => ({
-        transformResponse: console.log(otp, email),
+        //transformResponse: console.log(otp, email),
         url: `/verification/verifyOpt?otp=${Number(otp) }&email=${email}`,
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ const apiIntegrationSlice = apiSlice.injectEndpoints({
     }),
    login:builder.mutation<object,userLogin>({
     query:({username,password})=>({
-      transformResponse: console.log(username,password),
+      //transformResponse: console.log(username,password),
       url: '/jwt/login',
       headers: {
         "Content-Type": "application/json",

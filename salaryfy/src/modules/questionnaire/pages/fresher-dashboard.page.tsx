@@ -137,7 +137,7 @@ export function FresherDashboard() {
     const { data: { response: responseData } } = await getLazyUserProfile(userId.toString());
     const userProfile = responseData as UserDetailsType;
 
-    console.log(userProfile);
+    //console.log(userProfile);
     if (userProfile) {
       dispatch(setUserDetails(userProfile));
 
@@ -197,7 +197,7 @@ export function FresherDashboard() {
           onPercentageChangeHandler$(response.percentage.toString());
         }
 
-        console.log(response);
+        //console.log(response);
       })
   }
 
@@ -263,7 +263,7 @@ export function FresherDashboard() {
     if (payload.highestLevelOfEdu === HIGHEST_EDUCATION.MATRIC) { payload.stream = null; }
     else { if (Object.values(payload).includes(undefined)) { return; } }
 
-    console.log(payload);
+    //console.log(payload);
 
     httpClient.request(saveProfile(payload)).subscribe((response) => console.log({ response }))
   }

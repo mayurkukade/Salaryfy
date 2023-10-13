@@ -42,10 +42,10 @@ export default function SubStep({
   const currentRoute = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-  console.log(currentRoute);
-  console.log(no);
+  //console.log(currentRoute);
+  //console.log(no);
   const { id } = useParams();
-  console.log(id);
+  //console.log(id);
   return (
     <div
       className={`flex ${stepBgColor} px-[2em] rounded-[1.5em] items-center h-[6.5em]`}
