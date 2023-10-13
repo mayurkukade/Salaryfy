@@ -52,7 +52,7 @@ type SubmitRegister = {
 export default function QuestionnairePersonalDetails() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
 const {id} = useParams()
-console.log(id)
+(id)
   const [submitRegister, _setSubmitRegister] = useState<SubmitRegister>({
     email: "",
     password: "",
@@ -62,7 +62,7 @@ console.log(id)
     date: "",
     userProfileType: "",
   });
-  console.log(submitRegister);
+  (submitRegister);
 
   const [imageUploadApi] = useUploadFileMutation();
 
@@ -98,7 +98,7 @@ const NameComponent  = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
-  console.log(props);
+  (props);
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
@@ -156,7 +156,7 @@ const NameComponent  = (props) => {
 };
 
 const PhoneComponent = (props) => {
-  console.log(props);
+  (props);
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
@@ -261,7 +261,7 @@ const EmailComponent = (props) => {
         toggleContent();
       }
     } catch (error) {
-      console.log(error);
+      (error);
     }
   };
 
@@ -469,7 +469,7 @@ function UploadResumeComponent({
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
-    console.log(selectedFile)
+    (selectedFile)
     if (selectedFile) {
       onResumeUpload(selectedFile);
       toast.success('pdf is selected', {
@@ -568,16 +568,16 @@ const Verified = (props: PropT): JSX.Element => {
 
   const [verifyOTP] = useVerifyOTPMutation();
   const dispatch = useDispatch();
-  console.log(otp);
-  console.log(props.email);
+  (otp);
+  (props.email);
   const email = props.email;
-  console.log(otp, email);
+  (otp, email);
   const handleSubmitVerify = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     try {
       const response = await verifyOTP({ otp, email }) as unknown as any;
-      console.log(response);
+      (response);
       // Assuming the response structure doesn't have an "error" property
 
       if (response) {
@@ -617,7 +617,7 @@ const Verified = (props: PropT): JSX.Element => {
         dispatch(verifyEmailFlagSelector(false));
       }
     } catch (error) {
-      console.log("API call error:", error);
+      ("API call error:", error);
       dispatch(verifyEmailFlagSelector(false));
     }
   };
@@ -682,7 +682,7 @@ const PersonalDetails = ({
   const dispatch = useAppDispatch();
 
   const token = localStorage.getItem("userToken");
-  console.log(token);
+  (token);
 
   const [fullName, setfullName] = useState<string>("");
   const [validName, setValidName] = useState(false);
@@ -711,10 +711,10 @@ const PersonalDetails = ({
   const userProfileType = "fresher";
   
   
-  console.log(password);
-  console.log(isError);
-  console.log(isSuccess);
-  console.log(matchpassword);
+  (password);
+  (isError);
+  (isSuccess);
+  (matchpassword);
 
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -727,7 +727,7 @@ const PersonalDetails = ({
     (state: RootState) => state.mainStepsCounter.resStepTwo
   );
 
-  console.log(resSubmitStatus);
+  (resSubmitStatus);
   const contentDisabled =
     !validName ||
     !validMobile ||
@@ -738,10 +738,10 @@ const PersonalDetails = ({
     !date ||
     !matchpassword;
 
-  console.log(!contentDisabled);
+  (!contentDisabled);
   useEffect(() => {
     if (!contentDisabled) {
-      console.log("dispatch");
+      ("dispatch");
       dispatch(
         registerFormQuestionnaire({
           fullName,
@@ -805,14 +805,14 @@ const PersonalDetails = ({
 
   useEffect(() => {
     if (contentDisabled) {
-      console.log(contentDisabled);
+      (contentDisabled);
     }
   }, [contentDisabled]);
-  console.log(contentDisabled);
+  (contentDisabled);
 
-  console.log(validpassword);
-  console.log(matchpassword);
-  console.log(toggleLoginRegister);
+  (validpassword);
+  (matchpassword);
+  (toggleLoginRegister);
   return (
     <div className="flex flex-col gap-[2em] md:px-[10em]">
       <div className="font-medium text-[1.8em] text-[#5B5B5B] mt-3">

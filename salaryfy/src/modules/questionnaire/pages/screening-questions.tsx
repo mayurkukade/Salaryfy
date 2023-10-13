@@ -19,15 +19,15 @@ export default function ScreeningQuestions() {
   // const cureentSelector = useSelector(
   //   (state: RootState) => state.currentRoute.currentRoute
   // );
-  // console.log(cureentSelector);
+  // (cureentSelector);
 
 
  
    // selector hook to get all job details
    const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
-   console.log( jobDetails?.jobId);
+   ( jobDetails?.jobId);
    const { id } = useParams();
-   console.log(id)
+   (id)
   //  const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;
   //  const id = jobDetails?.jobId;
   
@@ -35,14 +35,14 @@ export default function ScreeningQuestions() {
   const navigate = useNavigate();
   // disptach hook
   const [collectResponse, setCollectResponse] = useState([]);
-console.log(collectResponse)
+(collectResponse)
   //  RTK query hook to get all question related to job
   const {
     data: responseData,
     isError,
     isLoading,
   } = useGetScreeningQuestionQuery(id);
-   console.log("Get all quesation", responseData);
+   ("Get all quesation", responseData);
   // used to post the question and answer
   const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
   // const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation(id);
@@ -51,12 +51,12 @@ console.log(collectResponse)
   const submitResponse = async () => {
     try {
       const filteredResponses = removeDuplicateResponses(collectResponse);
-      console.log("filteredResponses length is", filteredResponses)
-      console.log("Response Data length is", responseData.response);
+      ("filteredResponses length is", filteredResponses)
+      ("Response Data length is", responseData.response);
       // applied validation to submit all question
       if (filteredResponses.length === responseData?.response.length )  {
-        //  console.log("Submitted Data is", filteredResponses);
-        console.log('postQuestionResponse is ',postQuestionResponse)
+        //  ("Submitted Data is", filteredResponses);
+        ('postQuestionResponse is ',postQuestionResponse)
         if (postQuestionResponse.error) {
           toast.error("Error While Submitting Response");
         } else {
@@ -71,7 +71,7 @@ console.log(collectResponse)
           });
         // sending data to backend
           postQuestion(filteredResponses);
-          console.log('data sent to backend is ', filteredResponses)
+          ('data sent to backend is ', filteredResponses)
           navigate("/questionnaire/schedule-interview/" + id); // Navigate to a Next page
         }
       } else {
@@ -86,7 +86,7 @@ console.log(collectResponse)
         });
       }
     } catch (error) {
-      console.log(error);
+      (error);
     }
   };
 
@@ -141,19 +141,19 @@ return (
 
 // Main Question components
 function Questions({ responseData, setCollectResponse }: any) {
-  // console.log("response for question is", responseData);
+  // ("response for question is", responseData);
   const { response } = responseData;
-  // console.log("response for question is", response);
+  // ("response for question is", response);
 
   // selector  hook to grab userID from redux state of user
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-  // console.log('user id is',userId);
+  // ('user id is',userId);
 
   // const [responseData1, setResponseData] = React.useState([{ question: '', response: '' }]);
   const [responseData1, setResponseData] = React.useState([]);
 
   function responseOfQuestion(question: string, ans: string) {
-    // console.log("Sent question is ", question, "response is ", ans);
+    // ("Sent question is ", question, "response is ", ans);
 
     setResponseData((prevData: any[]) => {
       const updatedQuestion = {
@@ -170,7 +170,7 @@ function Questions({ responseData, setCollectResponse }: any) {
     setCollectResponse(responseData1);
   }, [responseData1, setCollectResponse]);
 
-  // console.log("Updated reposne is ", responseData1);
+  // ("Updated reposne is ", responseData1);
 
   return (
     <>

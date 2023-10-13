@@ -9,7 +9,7 @@ export default function SubSteps() {
   const currentRoute = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-  console.log(currentRoute);
+  (currentRoute);
   const {id} = useParams()
   let subStepContent;
   if (currentRoute == "questionnaire/screening-questions/" +id) {

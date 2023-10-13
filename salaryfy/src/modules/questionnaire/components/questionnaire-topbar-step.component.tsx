@@ -28,8 +28,8 @@ export default function QuestionnaireTopBarStep() {
     (state: RootState) => state.currentRoute.currentRoute
   );
   const {id} = useParams()
-  console.log(id)
-  console.log(currentRoute);
+  (id)
+  (currentRoute);
   let stepTwoTotal: number;
   let stepThreeTotal:number;
   if (currentRoute == "questionnaire/screening-questions/"+id) {
@@ -177,8 +177,8 @@ function StepDesktop({
   const currentRoute = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-  console.log(currentRoute);
-  console.log(currentRoute == "questionnaire/fresher-dashboard" || "questionnaire/fresher-profile-upload");
+  (currentRoute);
+  (currentRoute == "questionnaire/fresher-dashboard" || "questionnaire/fresher-profile-upload");
   return (
     <div className={"flex flex-grow " + (className || "")}>
       <div className="flex flex-col items-center mr-[1.5em]">
@@ -236,7 +236,7 @@ const CircularProgressBarSVG = ({
   const currentRoute = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-  console.log(currentRoute);
+  (currentRoute);
   return (
     <svg
       width="100%"

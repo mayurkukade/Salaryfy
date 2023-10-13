@@ -15,10 +15,10 @@ const HeroSection2 = () => {
   const jobs = useSelector(
     (state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]
   );
-  console.log(jobs);
+  (jobs);
   const goHandler = () => {
     dispatch(setSelectedCity(selectedCityState));
-    console.log({ selectedCityState });
+    ({ selectedCityState });
     navigate("/placementdrive");
   };
 

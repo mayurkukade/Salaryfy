@@ -14,25 +14,25 @@ export const Login = () => {
   const dispatch = useDispatch();
 
   const [login, { isLoading, isError }] = useLoginMutation();
-  console.log(isLoading, isError);
+  (isLoading, isError);
 
   const [password, setpassword] = useState<string>("");
 
   const currentRoute = useSelector(
     (state: any) => state.currentRoute.currentRoute
   );
-  console.log(currentRoute)
+  (currentRoute)
 const jobId = localStorage.getItem('jobId')
-console.log(jobId)
+(jobId)
   const LoginSubmitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     try {
       const response = await login({ username: userName, password }) as unknown as any;
-      console.log(response);
+      (response);
       if (response?.data) {
         const token: object = response.data; // Access the actual token data
-        console.log(token);
+        (token);
         dispatch(setToken(token));
         Cookies.set("jwtToken", JSON.stringify(token));
 

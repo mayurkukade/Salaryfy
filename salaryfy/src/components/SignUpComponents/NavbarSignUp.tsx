@@ -40,7 +40,7 @@ export default function NavbarSignUp() {
   // const [register] = useRegisterMutation();
   const { id } = useParams();
   // const navigator = useNavigate()
-  console.log(id);
+  (id);
   
   /* SEEMS USELESS CODE BLOCK 
    Developer: sandwich */
@@ -53,7 +53,7 @@ export default function NavbarSignUp() {
   //   date: "",
   //   userProfileType: "",
   // });
-  // console.log(submitRegister);
+  // (submitRegister);
 
   const [imageUploadApi] = useUploadFileMutation();
 
@@ -85,7 +85,7 @@ const NameComponent = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
-  console.log(props);
+  (props);
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
@@ -143,7 +143,7 @@ const NameComponent = (props) => {
 };
 
 const PhoneComponent = (props) => {
-  console.log(props);
+  (props);
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
@@ -220,7 +220,7 @@ const EmailComponent = (props) => {
     // setLoading(true);
     try {
       const res = await email(props.email);
-console.log(res)
+(res)
       if ('error' in res) {
         toast.error('User is already exists ', {
           position: "top-center",
@@ -248,7 +248,7 @@ console.log(res)
         toggleContent();
       }
     } catch (error) {
-      console.log(error);
+      (error);
     }
   };
 
@@ -455,13 +455,13 @@ function UploadResumeComponent({
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
 
   // function onClicked() {
-  //   console.log("clicked");
+  //   ("clicked");
   //   uploadFileRef.current?.click();
   // }
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
-    console.log(selectedFile);
+    (selectedFile);
     if (selectedFile) {
       onResumeUpload(selectedFile);
       toast.success("pdf is selected", {
@@ -560,16 +560,16 @@ const Verified = (props: PropT): JSX.Element => {
 
   const [verifyOTP] = useVerifyOTPMutation();
   const dispatch = useDispatch();
-  console.log(otp);
-  console.log(props.email);
+  (otp);
+  (props.email);
   const email = props.email;
-  console.log(otp, email);
+  (otp, email);
   const handleSubmitVerify = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     try {
       const response = await verifyOTP({ otp, email });
-      console.log(response);
+      (response);
       // Assuming the response structure doesn't have an "error" property
 
       if (response) {
@@ -609,7 +609,7 @@ const Verified = (props: PropT): JSX.Element => {
         dispatch(verifyEmailFlagSelector(false));
       }
     } catch (error) {
-      console.log("API call error:", error);
+      ("API call error:", error);
       dispatch(verifyEmailFlagSelector(false));
     }
   };
@@ -670,12 +670,12 @@ const PersonalDetails = ({
   const dispatch = useAppDispatch();
 
   const token = localStorage.getItem("userToken");
-  console.log(token);
+  (token);
 const navigator = useNavigate()
   const currentRoute = useSelector(
     (state: RootState) => state.currentRoute.currentRoute
   );
-  console.log(currentRoute)
+  (currentRoute)
 
   const [fullName, setfullName] = useState<string>("");
   const [validName, setValidName] = useState(false);
@@ -703,10 +703,10 @@ const navigator = useNavigate()
   const role = "USER";
   const userProfileType = "fresher";
 
-  console.log(password);
-  console.log(isError);
-  console.log(isSuccess);
-  console.log(matchpassword);
+  (password);
+  (isError);
+  (isSuccess);
+  (matchpassword);
 
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -719,7 +719,7 @@ const navigator = useNavigate()
     (state: RootState) => state.mainStepsCounter.resStepTwo
   );
 
-  console.log(resSubmitStatus);
+  (resSubmitStatus);
   const contentDisabled =
     !validName ||
     !validMobile ||
@@ -730,7 +730,7 @@ const navigator = useNavigate()
     !date ||
     !matchpassword;
 
-  console.log(!contentDisabled);
+  (!contentDisabled);
 
   const registerHandler = async () => {
 
@@ -772,7 +772,7 @@ const navigator = useNavigate()
 
 //   useEffect(() => {
 //     if (!contentDisabled) {
-//       console.log("dispatch");
+//       ("dispatch");
 //       dispatch(
 //         registerFormQuestionnaire({
 //           fullName,
@@ -805,7 +805,7 @@ const navigator = useNavigate()
       dispatch(phoneNumberStepsCounterDecrement());
     }
   }, [mobile_no, validMobile, dispatch]);
-console.log(matchpassword)
+(matchpassword)
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
     if (validEmail) {
@@ -814,8 +814,8 @@ console.log(matchpassword)
       dispatch(emailStepsCounterDecrement);
     }
   }, [email, validEmail, dispatch]);
-console.log(password)
-console.log(confirmpassword)
+(password)
+(confirmpassword)
   useEffect(() => {
     if (password === "") {
       setMatchpassword(password !== confirmpassword);
@@ -835,14 +835,14 @@ console.log(confirmpassword)
 
   useEffect(() => {
     if (contentDisabled) {
-      console.log(contentDisabled);
+      (contentDisabled);
     }
   }, [contentDisabled]);
-  console.log(contentDisabled);
+  (contentDisabled);
 
-  console.log(validpassword);
-  console.log(matchpassword);
-  console.log(toggleLoginRegister);
+  (validpassword);
+  (matchpassword);
+  (toggleLoginRegister);
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-[2em] md:px-[10em]">

@@ -87,7 +87,7 @@ function FresherProfileUpload() {
 
     fetchUserProfilePhoto();
 
-    // console.log('fresher: ', { userId });
+    // ('fresher: ', { userId });
   }, [userId]);
 
   function fetchUserProfilePhoto() {
@@ -156,7 +156,7 @@ function FresherProfileUpload() {
     }
 
     else {
-      console.log('unhandled')
+      ('unhandled')
     }
   }
 
@@ -190,7 +190,7 @@ function FresherProfileUpload() {
           onPercentageChangeHandler$(response.percentage.toString());
         }
 
-        console.log(response);
+        (response);
       })
   }
 
@@ -225,7 +225,7 @@ function FresherProfileUpload() {
         catchError(error => throwError(error))
       ).subscribe(
         (response) => {
-          console.log('File upload success: ', response);
+          ('File upload success: ', response);
           alert('File ' + documentType + ' has been uploaded successfully');
         },
         (error: ErrorType) => {
@@ -264,7 +264,7 @@ function FresherProfileUpload() {
   }
 
   function unHandledEvent() {
-    console.log('event not handled');
+    ('event not handled');
   }
 
   function onHighestLevelEducationChangeHandler(value: string | null, changedBy: CHANGED_BY) {
@@ -315,11 +315,11 @@ function FresherProfileUpload() {
     if (payload.highestLevelOfEdu === HIGHEST_EDUCATION.MATRIC) { payload.stream = null; }
     else { if (Object.values(payload).includes(undefined)) { return; } }
 
-    httpClient.request(saveProfile(payload)).subscribe((response) => console.log({ response }))
+    httpClient.request(saveProfile(payload)).subscribe((response) => ({ response }))
   }
 
   async function uploadUserEducationSkillCertificate() {
-    console.log(educationDocs);
+    (educationDocs);
     educationDocs.map(({ docType, file }) => {
       onDocumentUploadEvent(docType, file);
     })
@@ -422,7 +422,7 @@ function DocUploader({ className, label, uploading, progress, onDocUpload, onCan
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
 
   function onClicked() {
-    console.log('clicked');
+    ('clicked');
     uploadFileRef.current?.click();
   }
 
@@ -491,7 +491,7 @@ function UserProfilePhoto({ profileLink, userId, onPhotoUpload }: { profileLink:
   function profilePhotoClicked() {
     if (userDocProfileRef?.current) {
       userDocProfileRef?.current?.click();
-      console.log('jobs: ', 'hehrehrehr');
+      ('jobs: ', 'hehrehrehr');
     }
   }
 

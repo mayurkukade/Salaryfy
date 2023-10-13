@@ -41,8 +41,8 @@ const appStore = configureStore({
   
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiIntegrationSlice.middleware as any, screeningQuestionsSlice.middleware as any, thunkMiddleware)
-
+    getDefaultMiddleware().concat(apiIntegrationSlice.middleware as any, screeningQuestionsSlice.middleware as any, thunkMiddleware),
+devTools:false
 });
 export type RootState = ReturnType<typeof appStore.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
