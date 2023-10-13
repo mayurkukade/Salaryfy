@@ -12,7 +12,7 @@ import interviewSchedule from '../features/api-integration/interview-schedule/in
 import upcomingInterviewSlice from '../features/api-integration/upcoming-interviews/upcoming-interviews.slice';
 import profileQualificationSlice from '../features/api-integration/profile-qualification/profile-qualification.slice';
 import screeningQuestionFormSlice from '../features/reducers/screening-question/screening-question.slice'
-import adminSliceApi from '../features/api-integration/adminSlice/adminApiSlice'
+//import adminSlice from '../features/api-integration/adminSlice/adminSlice';
 
 export interface AppStoreStateType {
   root: ReturnType<typeof rootReducer>,
