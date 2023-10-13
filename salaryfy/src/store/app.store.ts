@@ -35,7 +35,7 @@ const appStore = configureStore({
     [interviewSchedule.reducerPath]:interviewSchedule.reducer,
     [upcomingInterviewSlice.reducerPath]: upcomingInterviewSlice.reducer,
     [profileQualificationSlice.reducerPath]: profileQualificationSlice.reducer,
-   [adminSliceApi.reducerPath]: adminSliceApi.reducer
+   //[adminSliceApi.reducerPath]: adminSliceApi.reducer
     
 
   
