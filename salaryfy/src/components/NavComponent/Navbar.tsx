@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ import navlogo from "../../../assets/Logos/navbar-logo.png";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 import { QuestionnaireHttpClient } from "../../modules/questionnaire/services/questionnaire.service";
 import {
+  
   useLazyGetUploadedFilesQuery,
 } from "../../features/api-integration/user-profile/user-profile.slice";
 import { concatMap } from "rxjs";
@@ -31,16 +32,14 @@ interface TokenPayload {
   fullName: string;
   userId: string;
 }
-type DocumentLink = {
-  documentLink: string; // Adjust this type definition based on the actual structure of your data
-};
+
 import { useGetUserProfilePhotoQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 
 const Navbar = () => {
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-  // console.log(userId);
+  console.log(userId);
   const [getUploadedDocs] = useLazyGetUploadedFilesQuery();
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [nav, setNav] = useState(false);
@@ -51,9 +50,9 @@ const Navbar = () => {
   const { data, isLoading, isError } = useGetUserProfilePhotoQuery(
     Number(userId)
   );
-  //console.log(data?.response);
+  console.log(data?.response);
 
-  const profilePicture = data?.response.map((item: DocumentLink,index) => {
+  const profilePicture = data?.response.map((item: string) => {
     let content: string | JSX.Element;
 
     if (isLoading) {
@@ -61,22 +60,22 @@ const Navbar = () => {
     } else if (isError) {
       content = <p>error</p>;
     } else {
-      content = <img src={item?.documentLink} alt="profile picture"  />;
+      content = <img src={item?.documentLink} alt="profile picture" />;
     }
-    //console.log(item);
+    console.log(item);
     return (
-      <div key={index}>
+      <>
         {content}
-      </div>
+      </>
     );
   });
 
   const jobId = localStorage.getItem("jobId");
-  //console.log(jobId);
+  console.log(jobId);
   const open = Boolean(anchorEl);
-  //console.log(window.location.href);
+  console.log(window.location.href);
   const currentLocation = window.location.href.slice(22);
-  //console.log(currentLocation);
+  console.log(currentLocation);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -129,7 +128,7 @@ const Navbar = () => {
       .subscribe((link: string) => setProfilePhoto(() => link));
   }
 
-  //console.log(profilePhoto);
+  console.log(profilePhoto);
   useEffect(() => {
     if (token) {
       const userDetails: TokenPayload = jwt_decode(token);
@@ -137,8 +136,8 @@ const Navbar = () => {
       const userName: string = userDetails.fullName;
       const userId: string = userDetails.userId;
       setProfile(userName);
-      //console.log(userName);
-      //console.log(userDetails);
+      console.log(userName);
+      console.log(userDetails);
 
       dispatch(userNameSelection(userName));
       dispatch(userIdSelection(userId));
@@ -150,6 +149,7 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(cureentSelector(currentLocation));
+    setAnchorEl(null);
   }, [dispatch, currentLocation]);
 
   return (
@@ -162,8 +162,8 @@ const Navbar = () => {
         />
       </Link>
 
-      <ul className="hidden md:flex space-x-2 w-auto gap-12 " >
-        <li className="p-1   shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium " >
+      <ul className="hidden md:flex space-x-2 w-auto gap-12 ">
+        <li className="p-1   shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
           <Link to={token ? "/questionnaire/fresher-dashboard" : "/login"}>
             {" "}
             Dashboard{" "}
@@ -226,7 +226,6 @@ const Navbar = () => {
                 MenuListProps={{
                   "aria-labelledby": "basic-button",
                 }}
-
               >
                 <Link to="/questionnaire/fresher-dashboard">
                   <MenuItem onClick={handleClose}>Profile </MenuItem>
@@ -259,7 +258,6 @@ const Navbar = () => {
             ? "fixed left-0 top-0 w-[60%] h-full border-r  border-r-gray-900 bg-[#005F59] ease-in-out duration-500 leading-[3.8rem] text-[1.5rem] text-[#FDCC07] p-6 "
             : "ease-in-out duration-500 hidden"
         }
-      
       >
         {/* <h1 className="w-full text-3xl font-bold text-[#00df9a] m-4">REACT.</h1> */}
         <li>

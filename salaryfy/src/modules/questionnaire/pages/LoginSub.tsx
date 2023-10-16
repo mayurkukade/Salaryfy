@@ -26,8 +26,8 @@ const LoginSub: React.FC<LoginSubProps> = ({
   // const{jobId} = useParams()
 
   const dispatch = useDispatch();
-  const [login, { isLoading,  isError }] = useLoginMutation();
-  const currentLocation = window.location.href.slice(22);
+  const [login] = useLoginMutation();
+  //const currentLocation = window.location.href.slice(22);
   //console.log(currentLocation)
 
   //console.log(isLoading, isError);

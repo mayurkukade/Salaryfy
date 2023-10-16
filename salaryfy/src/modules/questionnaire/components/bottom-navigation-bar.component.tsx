@@ -40,9 +40,9 @@ const {id} = useParams()
   //console.log(`Secreen question validation is ${screeningQuestionValidation}`);
   //console.log("Secreen question Response is ", screeningQuestionResponse);
 
-  const currentRoutee = useSelector(
-    (state: RootState) => state.currentRoute.currentRoute
-  );
+  // const currentRoutee = useSelector(
+  //   (state: RootState) => state.currentRoute.currentRoute
+  // );
   const resSteptwoSelector = useSelector(
     (state: RootState) => state.mainStepsCounter.resStepTwo
   );

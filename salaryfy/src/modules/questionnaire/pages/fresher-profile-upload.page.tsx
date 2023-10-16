@@ -226,7 +226,7 @@ function FresherProfileUpload() {
       ).subscribe(
         (response) => {
           //console.log('File upload success: ', response);
-          alert('File ' + documentType + ' has been uploaded successfully');
+          alert('File '+ response + documentType + ' has been uploaded successfully');
         },
         (error: ErrorType) => {
           console.error('Got An Error while upoading: ', error);

@@ -233,9 +233,9 @@ const CircularProgressBarSVG = ({
   const radius = 40; // Radius of the circle
   const circumference = 2 * Math.PI * radius;
   const progress = ((100 - value) * circumference) / 100;
-  const currentRoute = useSelector(
-    (state: RootState) => state.currentRoute.currentRoute
-  );
+  // const currentRoute = useSelector(
+  //   (state: RootState) => state.currentRoute.currentRoute
+  // );
   //console.log(currentRoute);
   return (
     <svg

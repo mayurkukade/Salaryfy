@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import "react-toastify/dist/ReactToastify.css";
-import { useParams } from "react-router-dom";
+//import { useParams } from "react-router-dom";
 import {
   useRegisterMutation,
   useSendEmailMutation,
@@ -39,29 +39,29 @@ const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const password_REGEX: RegExp =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-type SubmitRegister = {
-  email: string;
-  password: string;
-  mobile_no: string;
-  role: string;
-  fullName: string;
-  date: string;
-  userProfileType: string;
-};
+// type SubmitRegister = {
+//   email: string;
+//   password: string;
+//   mobile_no: string;
+//   role: string;
+//   fullName: string;
+//   date: string;
+//   userProfileType: string;
+// };
 
 export default function QuestionnairePersonalDetails() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-const {id} = useParams()
+//const {id} = useParams()
 //console.log(id)
-  const [submitRegister, _setSubmitRegister] = useState<SubmitRegister>({
-    email: "",
-    password: "",
-    mobile_no: "",
-    role: "",
-    fullName: "",
-    date: "",
-    userProfileType: "",
-  });
+  // const [submitRegister, _setSubmitRegister] = useState<SubmitRegister>({
+  //   email: "",
+  //   password: "",
+  //   mobile_no: "",
+  //   role: "",
+  //   fullName: "",
+  //   date: "",
+  //   userProfileType: "",
+  // });
   //console.log(submitRegister);
 
   const [imageUploadApi] = useUploadFileMutation();
@@ -676,7 +676,7 @@ const PersonalDetails = ({
   onResumeUpload: (i: File) => void;
 }): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_register, { isError, isSuccess }] = useRegisterMutation();
+  const [_register] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 
@@ -724,9 +724,9 @@ const PersonalDetails = ({
 
   const date = `${year}-${month}-${day}`;
  
-  const resSubmitStatus = useSelector(
-    (state: RootState) => state.mainStepsCounter.resStepTwo
-  );
+  // const resSubmitStatus = useSelector(
+  //   (state: RootState) => state.mainStepsCounter.resStepTwo
+  // );
 
   //console.log(resSubmitStatus);
   const contentDisabled =

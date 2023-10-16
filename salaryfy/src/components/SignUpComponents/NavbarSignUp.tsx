@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/app.store";
 import { CSSProperties, ChangeEvent, useEffect, useRef, useState } from "react";
 import { useUploadFileMutation } from "../../features/api-integration/user-profile/user-profile.slice";
@@ -38,7 +38,7 @@ const password_REGEX: RegExp =
 export default function NavbarSignUp() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   // const [register] = useRegisterMutation();
-  const { id } = useParams();
+  //const { id } = useParams();
   // const navigator = useNavigate()
   //console.log(id);
   
@@ -663,7 +663,7 @@ const PersonalDetails = ({
 }: {
   onResumeUpload: (i: File) => void;
 }): JSX.Element => {
-  const [register, {  isError, isSuccess }] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 
@@ -715,9 +715,9 @@ const navigator = useNavigate()
 
   const date = `${year}-${month}-${day}`;
 
-  const resSubmitStatus = useSelector(
-    (state: RootState) => state.mainStepsCounter.resStepTwo
-  );
+  // const resSubmitStatus = useSelector(
+  //   (state: RootState) => state.mainStepsCounter.resStepTwo
+  // );
 
   //console.log(resSubmitStatus);
   const contentDisabled =
