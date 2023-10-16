@@ -40,7 +40,7 @@ import { useGetUserProfilePhotoQuery } from "../../features/api-integration/user
 const Navbar = () => {
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-  //console.log(userId);
+  // console.log(userId);
   const [getUploadedDocs] = useLazyGetUploadedFilesQuery();
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [nav, setNav] = useState(false);
@@ -53,7 +53,7 @@ const Navbar = () => {
   );
   //console.log(data?.response);
 
-  const profilePicture = data?.response.map((item: DocumentLink) => {
+  const profilePicture = data?.response.map((item: DocumentLink,index) => {
     let content: string | JSX.Element;
 
     if (isLoading) {
@@ -61,13 +61,13 @@ const Navbar = () => {
     } else if (isError) {
       content = <p>error</p>;
     } else {
-      content = <img src={item?.documentLink} alt="profile picture" />;
+      content = <img src={item?.documentLink} alt="profile picture"  />;
     }
     //console.log(item);
     return (
-      <>
+      <div key={index}>
         {content}
-      </>
+      </div>
     );
   });
 
@@ -162,8 +162,8 @@ const Navbar = () => {
         />
       </Link>
 
-      <ul className="hidden md:flex space-x-2 w-auto gap-12 ">
-        <li className="p-1   shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium ">
+      <ul className="hidden md:flex space-x-2 w-auto gap-12 " >
+        <li className="p-1   shrink-0 text-darkGreen text-[18px] leading-[27px] font-medium " >
           <Link to={token ? "/questionnaire/fresher-dashboard" : "/login"}>
             {" "}
             Dashboard{" "}
@@ -226,6 +226,7 @@ const Navbar = () => {
                 MenuListProps={{
                   "aria-labelledby": "basic-button",
                 }}
+
               >
                 <Link to="/questionnaire/fresher-dashboard">
                   <MenuItem onClick={handleClose}>Profile </MenuItem>
@@ -258,6 +259,7 @@ const Navbar = () => {
             ? "fixed left-0 top-0 w-[60%] h-full border-r  border-r-gray-900 bg-[#005F59] ease-in-out duration-500 leading-[3.8rem] text-[1.5rem] text-[#FDCC07] p-6 "
             : "ease-in-out duration-500 hidden"
         }
+      
       >
         {/* <h1 className="w-full text-3xl font-bold text-[#00df9a] m-4">REACT.</h1> */}
         <li>

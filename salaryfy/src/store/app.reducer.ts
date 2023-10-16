@@ -9,7 +9,7 @@ import selectedCitySlice from '../features/reducers/selected-city/selected-city.
 
 const setTestValueReducer: CaseReducer<number, PayloadAction<number>>
   = (state: number, action: PayloadAction<number>) => {
-    console.log('in this');
+    //console.log('in this');
     state = action.payload;
     return state;
 };

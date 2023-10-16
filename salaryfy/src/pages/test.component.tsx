@@ -8,10 +8,10 @@ export default function TestComponent(): JSX.Element {
   const storeValue: any = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  console.log(storeValue)
+  //console.log(storeValue)
 
   function addValue() {
-    console.log('hehrehr');
+    //console.log('hehrehr');
     dispatch( testSlice.actions.setValue(5) );
   }
   return (

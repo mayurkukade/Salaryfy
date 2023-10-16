@@ -4,6 +4,7 @@ const screeningQuestionsSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getScreeningQuestion: builder.query({
       query: (id) => `/JobFair/getJobFairDetailsByJobId?jobId=${id}`,
+   
     }),
     postScreeningQuestionSlice :builder.mutation<[object],any>({
       query: (filteredData) => ({
