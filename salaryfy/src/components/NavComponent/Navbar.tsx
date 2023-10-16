@@ -149,6 +149,7 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(cureentSelector(currentLocation));
+    setAnchorEl(null);
   }, [dispatch, currentLocation]);
 
   return (
