@@ -516,7 +516,7 @@ function UserProfilePhoto({ profileLink, userId, onPhotoUpload }: { profileLink:
   }
 
   return (
-    <div onClick={profilePhotoClicked} className="select-none flex flex-col p-[1em] h-[20em] w-[18em] bg-[#F2F2F2] rounded-lg cursor-pointer">
+    <div onClick={profilePhotoClicked} className="select-none flex flex-col p-[1em] h-[20em] w-[18em] bg-[#F2F2F2] rounded-lg cursor-pointer lg:w-[18em] ">
       {!profileLink && <div className="flex flex-grow flex-col">
         <div className="flex-grow flex justify-center items-center">
           <svg height="6em" width="6em">
@@ -525,12 +525,12 @@ function UserProfilePhoto({ profileLink, userId, onPhotoUpload }: { profileLink:
           </svg>
         </div>
         <div className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center">Upload your Passport Photo</div>
-        <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*" />
+        <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*"  />
       </div>}
       {
-        profileLink && <div className="flex-grow flex items-center">
+        profileLink && <div className="flex-grow flex items-center justify-center lg:w-[12em] lg:ml-[2em] lg:p-1">
           <img src={profileLink} />
-          <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*" />
+          <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*"   />
         </div>
       }
     </div >
