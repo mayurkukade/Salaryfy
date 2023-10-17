@@ -7,7 +7,7 @@ export const apiSlice = createApi({
       let  token = Cookies.get('jwtToken')
       //console.log(JSON.parse(Cookies.get('jwtToken')) )
       //const token = localStorage.getItem("userToken");
-      console.log(token);
+      //console.log(token);
       if (token) {
         token =  JSON.parse(Cookies.get('jwtToken')) 
         headers.set("authorization", `Bearer ${token}`);
