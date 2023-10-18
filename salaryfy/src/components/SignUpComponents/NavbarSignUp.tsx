@@ -461,7 +461,7 @@ function UploadResumeComponent({
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
-    console.log(selectedFile);
+    //console.log(selectedFile);
     if (selectedFile) {
       onResumeUpload(selectedFile);
       toast.success("pdf is selected", {

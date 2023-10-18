@@ -29,10 +29,10 @@ const jobId = localStorage.getItem('jobId')
 
     try {
       const response = await login({ username: userName, password }) as unknown as any;
-      console.log(response);
+      //console.log(response);
       if (response?.data) {
         const token: object = response.data; // Access the actual token data
-        console.log(token);
+        //console.log(token);
         dispatch(setToken(token));
         Cookies.set("jwtToken", JSON.stringify(token));
 

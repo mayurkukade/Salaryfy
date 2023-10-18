@@ -54,7 +54,7 @@ setinputStateJobPost((preVal)=>{
 
  const submitHandler = (e:React.MouseEvent<HTMLInputElement>)=>{
   e.preventDefault()
-  console.log(inputStateJobPost)
+  //console.log(inputStateJobPost)
  }
   return (
     <div>

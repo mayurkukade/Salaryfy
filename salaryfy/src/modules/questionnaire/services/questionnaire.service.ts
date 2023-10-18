@@ -6,6 +6,7 @@ class QuestionnaireHttpClient {
     return from(requestPromise)
       .pipe(
         concatMap((response$) => {
+          console.log(response$)
           if ((response$ as ErrorType)?.error?.status >= 400 && (response$ as ErrorType)?.error?.status <= 499) { return throwError('Server error'); }
           return of(response$);
         }),

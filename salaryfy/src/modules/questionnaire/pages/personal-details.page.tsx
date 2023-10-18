@@ -742,7 +742,7 @@ const PersonalDetails = ({
   //console.log(!contentDisabled);
   useEffect(() => {
     if (!contentDisabled) {
-      console.log("dispatch");
+      //console.log("dispatch");
       dispatch(
         registerFormQuestionnaire({
           fullName,

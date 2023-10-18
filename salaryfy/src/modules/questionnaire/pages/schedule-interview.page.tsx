@@ -17,8 +17,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { AppStoreStateType, RootState } from "../../../store/app.store";
-import { SLICE_NAMES } from "../../../features/slice-names.enum";
+import {  RootState } from "../../../store/app.store";
+// import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import {
   useDeleteInterviewScheduleMutation,
   useGetInterviewScheduleQuery,
@@ -58,28 +58,28 @@ export function ScheduleInterview() {
 
   const [selectedDate, setSelectedDate] = useState(null);
 
-  console.log(selectedDate);
+  //console.log(selectedDate);
 
-  const isOpenselector = useSelector(
-    (state: RootState) => state.scheduleInterviewForm.isOpen
-  );
-  console.log(isOpenselector);
+  // const isOpenselector = useSelector(
+  //   (state: RootState) => state.scheduleInterviewForm.isOpen
+  // );
+  //console.log(isOpenselector);
 
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-  console.log(userId);
-  const jobDetails = useSelector(
-    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
-  );
-  console.log(jobDetails);
-  console.log(selectedDate);
-  const selectInterviewData = useSelector(
-    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
-  );
-  console.log(selectInterviewData.interviewEndDate);
+  
+  // const jobDetails = useSelector(
+  //   (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
+  // );
+  //console.log(jobDetails);
+  //console.log(selectedDate);
+  // const selectInterviewData = useSelector(
+  //   (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
+  // );
+  //console.log(selectInterviewData.interviewEndDate);
   const [interviewScheduleApi] = useInterviewScheduleApiMutation();
   const jobIdFormLocal: string = localStorage.getItem("jobId");
   const jobId: number = Number(jobIdFormLocal);
-  console.log(jobId);
+  //console.log(jobId);
   const { data, isLoading, isError } = useGetInterviewScheduleQuery({
     userId,
     jobId,
@@ -99,17 +99,17 @@ export function ScheduleInterview() {
   if(isErrorGetDetails) return <div>Error in jobs</div>
   //console.log(isError);
 
-  console.log(data, "data");
+  //console.log(data, "data");
   if (isLoading) {
     return <p>Loading...</p>;
   }
   const handleDelete = async (interviewScheduleId: number) => {
-    console.log(interviewScheduleId);
+    //console.log(interviewScheduleId);
     try {
-      console.log(interviewScheduleId);
+      //console.log(interviewScheduleId);
       await deleteInterviewSchedule(interviewScheduleId);
     } catch (error) {
-      console.error("Error deleting interview schedule:", error);
+      //console.error("Error deleting interview schedule:", error);
     }
   };
 
@@ -143,7 +143,7 @@ export function ScheduleInterview() {
       },
       i:number
     ) => {
-      console.log(schedule);
+      //console.log(schedule);
       let content:
         | string
         | number
@@ -243,7 +243,7 @@ export function ScheduleInterview() {
   //   }
   // );
 
-  console.log(userId);
+  //console.log(userId);
   const handleHourChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
@@ -292,14 +292,14 @@ export function ScheduleInterview() {
     const CurrentformattedDate = `${Currentyear}-${Currentmonth}-${Currentday}`;
 
     const hourFormat = `${selectedHour}:00`;
-    console.log(hourFormat);
+    //console.log(hourFormat);
 
     const year = selectedDate.getFullYear();
     const month = String(selectedDate.getMonth() + 1).padStart(2, "0"); // Add 1 to month since it's zero-based
     const day = String(selectedDate.getDate()).padStart(2, "0");
 
     const formattedDate = `${year}-${month}-${day}`;
-    console.log(formattedDate);
+    //console.log(formattedDate);
 
     try {
       const formDetails = {
@@ -311,9 +311,9 @@ export function ScheduleInterview() {
         jobId: jobId,
         status: "Scheduled",
       };
-      const res = await interviewScheduleApi(formDetails).unwrap();
+       await interviewScheduleApi(formDetails).unwrap();
 
-      console.log(res);
+      //console.log(res);
 
       setLocation("");
       setSelectedHour("");
@@ -340,9 +340,9 @@ export function ScheduleInterview() {
   const interviewSlotMinNumber = Number(
     getJobDetails.object.interviewTimeSlot1Min
   );
-  console.log(interviewSlotMinNumber);
+  // console.log(interviewSlotMinNumber);
   // const interviewSlotMax = getJobDetailsData.interviewTimeSlot1Max && 15
-  console.log(getJobDetails.object.interviewTimeSlot1Max);
+  //console.log(getJobDetails.object.interviewTimeSlot1Max);
   const interviewSlotMaxNumber = Number(
     getJobDetails.object.interviewTimeSlot1Max
   );
@@ -504,14 +504,14 @@ export function ScheduleInterview() {
 }
 
 const Modal = ({ getDetails, getJobDetails }) => {
-  const jobDetails = useSelector(
-    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
-  );
-  console.log(jobDetails);
+  // const jobDetails = useSelector(
+  //   (state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]
+  // );
+  //console.log(jobDetails);
   const openModelSelector = useSelector(
     (state: RootState) => state.scheduleInterviewForm.isOpen
   );
-  console.log(openModelSelector);
+  //console.log(openModelSelector);
   const dispatch = useDispatch();
 
   const handleCLose = () => {

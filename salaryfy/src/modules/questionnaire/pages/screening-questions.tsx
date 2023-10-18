@@ -11,8 +11,8 @@ import { RootState } from "../../../store/app.store";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { AppStoreStateType } from '../../../store/app.store';
-import { SLICE_NAMES } from "../../../features/slice-names.enum";
+// import { AppStoreStateType } from '../../../store/app.store';
+// import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import { useParams } from "react-router-dom";
 export default function ScreeningQuestions() {
 
@@ -24,10 +24,10 @@ export default function ScreeningQuestions() {
 
  
    // selector hook to get all job details
-   const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
-   console.log( jobDetails?.jobId);
+   //const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
+   //console.log( jobDetails?.jobId);
    const { id } = useParams();
-   console.log(id)
+   //console.log(id)
   //  const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;
   //  const id = jobDetails?.jobId;
   
@@ -36,14 +36,14 @@ export default function ScreeningQuestions() {
   // disptach hook
   //const dispatch = useDispatch();
   const [collectResponse, setCollectResponse] = useState([]);
-console.log(collectResponse)
+//console.log(collectResponse)
   //  RTK query hook to get all question related to job
   const {
     data: responseData,
     isError,
     isLoading,
   } = useGetScreeningQuestionQuery(id);
-   console.log("Get all quesation", responseData);
+   //console.log("Get all quesation", responseData);
   // used to post the question and answer
   const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
   // const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation(id);
@@ -52,12 +52,12 @@ console.log(collectResponse)
   const submitResponse = async () => {
     try {
       const filteredResponses = removeDuplicateResponses(collectResponse);
-      console.log("filteredResponses length is", filteredResponses)
-      console.log("Response Data length is", responseData.response);
+      //console.log("filteredResponses length is", filteredResponses)
+      //console.log("Response Data length is", responseData.response);
       // applied validation to submit all question
       if (filteredResponses.length === responseData?.response.length )  {
         //  console.log("Submitted Data is", filteredResponses);
-        console.log('postQuestionResponse is ',postQuestionResponse)
+        //console.log('postQuestionResponse is ',postQuestionResponse)
         if (postQuestionResponse.error) {
           toast.error("Error While Submitting Response");
         } else {
@@ -72,7 +72,7 @@ console.log(collectResponse)
           });
         // sending data to backend
           postQuestion(filteredResponses);
-          console.log('data sent to backend is ', filteredResponses)
+          //console.log('data sent to backend is ', filteredResponses)
           navigate("/questionnaire/schedule-interview/" + id); // Navigate to a Next page
         }
       } else {
@@ -87,7 +87,7 @@ console.log(collectResponse)
         });
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 

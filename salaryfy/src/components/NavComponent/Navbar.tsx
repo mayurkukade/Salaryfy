@@ -34,6 +34,7 @@ interface TokenPayload {
 }
 
 import { useGetUserProfilePhotoQuery } from "../../features/api-integration/user-profile/user-profile.slice";
+//import { random } from "chroma-js";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 
 const Navbar = () => {
@@ -52,7 +53,7 @@ const Navbar = () => {
   );
   //console.log(data?.response);
 
-  const profilePicture = data?.response.map((item: string) => {
+  const profilePicture = data?.response.map((item: string,index:number) => {
     let content: string | JSX.Element;
 
     if (isLoading) {
@@ -64,9 +65,9 @@ const Navbar = () => {
     }
     //console.log(item);
     return (
-      <>
+      <div key={index}>
         {content}
-      </>
+      </div>
     );
   });
 
@@ -191,7 +192,7 @@ const Navbar = () => {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                <Avatar className="mr-1">
+                <Avatar className="mr-1" key={Math.random()}>
                 {!profilePicture && profile && profile[0].toUpperCase()}
                   {/* { profilePhoto &&
                     <img src={ profilePhoto } />
