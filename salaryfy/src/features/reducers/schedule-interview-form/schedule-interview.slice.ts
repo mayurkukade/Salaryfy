@@ -15,7 +15,7 @@ const scheduleInterviewFormSlice = createSlice({
             
             arrayFormScheduleInterview:(state,action:PayloadAction<string>)=>{
                 state.scheduleInterviewForms.push(action.payload)
-                (action.payload)
+                //console.log(action.payload)
         },
         nextButtonFlag:(state,action:PayloadAction<undefined>)=>{
                 state.nextButtonFlag = action.payload

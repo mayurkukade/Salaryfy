@@ -12,7 +12,7 @@ export default function PlacementJobDetails({
   jobDetails: JobsDetailsType;
   onGetHiredClick: () => void;
 }) {
-  (jobDetails);
+  //console.log(jobDetails);
 
   return (
     <>

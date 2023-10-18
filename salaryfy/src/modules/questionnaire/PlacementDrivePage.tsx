@@ -76,7 +76,7 @@ export default function PlacementDrivePage() {
     const filterPropertiesUriEncoded = Object.entries(filterProperties).map(([key, value]: [string, string]) => [key, encodeURIComponent(value)].join('=')).join('&');
     const { data: { list: jobsData } } = await lazyGetFilterJobs(filterPropertiesUriEncoded);
 
-    ('jobs: ', filterPropertiesUriEncoded);
+    //console.log('jobs: ', filterPropertiesUriEncoded);
 
     dispatch(setJobs(jobsData));
 
@@ -102,7 +102,7 @@ export default function PlacementDrivePage() {
   useEffect(() => {
     if (once) { return; }
     once = true;
-    ('jobs: ', { selectedCity });
+    //console.log('jobs: ', { selectedCity });
     if (selectedCity === '') { setAllJobs('') } else { searchByFilterComponent2({ companyName: '', jobType: '', location: selectedCity }) }
   }, []);
 
@@ -128,7 +128,7 @@ export default function PlacementDrivePage() {
   }
 
   function onSortOptionChange(option: string) {
-    ('placement: ', option);
+    //console.log('placement: ', option);
     setJobSortOptions((jobSortOptions) => {
       const updated = Object.entries(jobSortOptions)
         .map(([key, value]) => ([key, { ...value, selected: value.label === option }]));

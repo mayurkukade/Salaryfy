@@ -156,7 +156,7 @@ function FresherProfileUpload() {
     }
 
     else {
-      ('unhandled')
+      //console.log('unhandled')
     }
   }
 
@@ -190,7 +190,7 @@ function FresherProfileUpload() {
           onPercentageChangeHandler$(response.percentage.toString());
         }
 
-        (response);
+        //console.log(response);
       })
   }
 
@@ -225,8 +225,8 @@ function FresherProfileUpload() {
         catchError(error => throwError(error))
       ).subscribe(
         (response) => {
-          ('File upload success: ', response);
-          alert('File ' + documentType + ' has been uploaded successfully');
+          //console.log('File upload success: ', response);
+          alert('File '+ response + documentType + ' has been uploaded successfully');
         },
         (error: ErrorType) => {
           console.error('Got An Error while upoading: ', error);
@@ -264,7 +264,7 @@ function FresherProfileUpload() {
   }
 
   function unHandledEvent() {
-    ('event not handled');
+    //console.log('event not handled');
   }
 
   function onHighestLevelEducationChangeHandler(value: string | null, changedBy: CHANGED_BY) {
@@ -319,7 +319,7 @@ function FresherProfileUpload() {
   }
 
   async function uploadUserEducationSkillCertificate() {
-    (educationDocs);
+    //console.log(educationDocs);
     educationDocs.map(({ docType, file }) => {
       onDocumentUploadEvent(docType, file);
     })
@@ -422,7 +422,7 @@ function DocUploader({ className, label, uploading, progress, onDocUpload, onCan
   const uploadFileRef = useRef<HTMLInputElement | null>(null);
 
   function onClicked() {
-    ('clicked');
+    //console.log('clicked');
     uploadFileRef.current?.click();
   }
 
@@ -491,7 +491,7 @@ function UserProfilePhoto({ profileLink, userId, onPhotoUpload }: { profileLink:
   function profilePhotoClicked() {
     if (userDocProfileRef?.current) {
       userDocProfileRef?.current?.click();
-      ('jobs: ', 'hehrehrehr');
+      //console.log('jobs: ', 'hehrehrehr');
     }
   }
 
@@ -516,7 +516,7 @@ function UserProfilePhoto({ profileLink, userId, onPhotoUpload }: { profileLink:
   }
 
   return (
-    <div onClick={profilePhotoClicked} className="select-none flex flex-col p-[1em] h-[20em] w-[18em] bg-[#F2F2F2] rounded-lg cursor-pointer">
+    <div onClick={profilePhotoClicked} className="select-none flex flex-col p-[1em] h-[20em] w-[18em] bg-[#F2F2F2] rounded-lg cursor-pointer lg:w-[18em] ">
       {!profileLink && <div className="flex flex-grow flex-col">
         <div className="flex-grow flex justify-center items-center">
           <svg height="6em" width="6em">
@@ -525,12 +525,12 @@ function UserProfilePhoto({ profileLink, userId, onPhotoUpload }: { profileLink:
           </svg>
         </div>
         <div className="w-full bg-[#FFFFFF] md:bg-[#F2F2F2] text-[#5B5B5B] text-[0.8rem] md:text-[1.8em] text-center">Upload your Passport Photo</div>
-        <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*" />
+        <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*"  />
       </div>}
       {
-        profileLink && <div className="flex-grow flex items-center">
+        profileLink && <div className="flex-grow flex items-center justify-center lg:w-[12em] lg:ml-[2em] lg:p-1">
           <img src={profileLink} />
-          <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*" />
+          <input ref={userDocProfileRef} onChange={onFileUploadEvent} className="hidden" type="file" accept="image/*"   />
         </div>
       }
     </div >

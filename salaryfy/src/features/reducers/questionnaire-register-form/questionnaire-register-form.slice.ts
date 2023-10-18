@@ -12,7 +12,7 @@ const questionnarieFormSLice = createSlice({
     reducers:{
         registerFormQuestionnaire:(state,action:PayloadAction<any>)=>{
                 state.registerFormData.push(action.payload)
-                (action.payload)
+                //console.log(action.payload)
         }
     }
 })

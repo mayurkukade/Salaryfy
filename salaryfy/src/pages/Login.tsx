@@ -13,26 +13,26 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [login, { isLoading, isError }] = useLoginMutation();
-  (isLoading, isError);
+  const [login] = useLoginMutation();
+  //console.log(isLoading, isError);
 
   const [password, setpassword] = useState<string>("");
 
   const currentRoute = useSelector(
     (state: any) => state.currentRoute.currentRoute
   );
-  (currentRoute)
+  //console.log(currentRoute)
 const jobId = localStorage.getItem('jobId')
-(jobId)
+//console.log(jobId)
   const LoginSubmitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     try {
       const response = await login({ username: userName, password }) as unknown as any;
-      (response);
+      //console.log(response);
       if (response?.data) {
         const token: object = response.data; // Access the actual token data
-        (token);
+        //console.log(token);
         dispatch(setToken(token));
         Cookies.set("jwtToken", JSON.stringify(token));
 
@@ -52,7 +52,7 @@ const jobId = localStorage.getItem('jobId')
           navigate(-1);
         }
       } else {
-        console.error("Login error");
+        //console.error("Login error");
       }
       if (response.error) {
         toast.error("Unsuccesful login", {
@@ -66,7 +66,7 @@ const jobId = localStorage.getItem('jobId')
         });
       }
     } catch (error) {
-      console.error("Unexpected error:", error);
+      //console.error("Unexpected error:", error);
     }
   };
 

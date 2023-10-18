@@ -11,8 +11,8 @@ import { RootState } from "../../../store/app.store";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { AppStoreStateType } from '../../../store/app.store';
-import { SLICE_NAMES } from "../../../features/slice-names.enum";
+// import { AppStoreStateType } from '../../../store/app.store';
+// import { SLICE_NAMES } from "../../../features/slice-names.enum";
 import { useParams } from "react-router-dom";
 export default function ScreeningQuestions() {
 
@@ -24,25 +24,26 @@ export default function ScreeningQuestions() {
 
  
    // selector hook to get all job details
-   const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
-   ( jobDetails?.jobId);
+   //const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
+   //console.log( jobDetails?.jobId);
    const { id } = useParams();
-   (id)
+   //console.log(id)
   //  const id = isNaN(jobDetails?.jobId) ? 1 : jobDetails?.jobId;
   //  const id = jobDetails?.jobId;
   
 
   const navigate = useNavigate();
   // disptach hook
+  //const dispatch = useDispatch();
   const [collectResponse, setCollectResponse] = useState([]);
-(collectResponse)
+//console.log(collectResponse)
   //  RTK query hook to get all question related to job
   const {
     data: responseData,
     isError,
     isLoading,
   } = useGetScreeningQuestionQuery(id);
-   ("Get all quesation", responseData);
+   //console.log("Get all quesation", responseData);
   // used to post the question and answer
   const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation();
   // const [postQuestion, postQuestionResponse] = usePostScreeningQuestionSliceMutation(id);
@@ -51,12 +52,12 @@ export default function ScreeningQuestions() {
   const submitResponse = async () => {
     try {
       const filteredResponses = removeDuplicateResponses(collectResponse);
-      ("filteredResponses length is", filteredResponses)
-      ("Response Data length is", responseData.response);
+      //console.log("filteredResponses length is", filteredResponses)
+      //console.log("Response Data length is", responseData.response);
       // applied validation to submit all question
       if (filteredResponses.length === responseData?.response.length )  {
-        //  ("Submitted Data is", filteredResponses);
-        ('postQuestionResponse is ',postQuestionResponse)
+        //  console.log("Submitted Data is", filteredResponses);
+        //console.log('postQuestionResponse is ',postQuestionResponse)
         if (postQuestionResponse.error) {
           toast.error("Error While Submitting Response");
         } else {
@@ -71,7 +72,7 @@ export default function ScreeningQuestions() {
           });
         // sending data to backend
           postQuestion(filteredResponses);
-          ('data sent to backend is ', filteredResponses)
+          //console.log('data sent to backend is ', filteredResponses)
           navigate("/questionnaire/schedule-interview/" + id); // Navigate to a Next page
         }
       } else {
@@ -86,7 +87,7 @@ export default function ScreeningQuestions() {
         });
       }
     } catch (error) {
-      (error);
+      //console.log(error);
     }
   };
 
@@ -152,12 +153,12 @@ function Questions({ responseData, setCollectResponse }: any) {
   // const [responseData1, setResponseData] = React.useState([{ question: '', response: '' }]);
   const [responseData1, setResponseData] = React.useState([]);
 
-  function responseOfQuestion(question: string, ans: string) {
-    // ("Sent question is ", question, "response is ", ans);
+  function responseOfQuestion(question: [], ans: string) {
+    // console.log("Sent question is ", question, "response is ", ans);
 
     setResponseData((prevData: any[]) => {
       const updatedQuestion = {
-        question,
+        ...question,
         ans,
         userId,
       };
@@ -255,7 +256,7 @@ function RatingResponseSet({ question, onResponseChange }: any) {
         <Rating
           name="simple-controlled"
           value={value}
-          onChange={(_event, newValue) => handleResponseChange(newValue)}
+          onChange={(_event:React.ChangeEvent<HTMLInputElement>, newValue) => handleResponseChange(newValue)}
         />
       </Box>
       <QuestionSeparator className="mb-[2em]" />

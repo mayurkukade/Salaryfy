@@ -58,48 +58,8 @@ setinputStatesJobPost((preVal)=>{
 
  const submitHandler = async(e:React.MouseEvent<HTMLInputElement>)=>{
   e.preventDefault()
-  const {jobDetails} = inputStatesJobPost
-  try {
-    
-    const res = await inputStateJobPost(
-      {
-        postName: jobDetails,
-        companyName: "Justdial",
-        location: "Bhopal",
-        logo: "Justdial",
-        noOfPosts: 15,
-        interviewStartDate: "2023-10-20",
-        interviewEndDate: "2023-10-30",
-        essentialRequirements: "Bachelor's degree in Computer Science",
-        incentives: "Healthcare, 401(k), Flexible hours...",
-        interviewDetails: "Freshers/Experience (Selling/Customer Acquisition Skills), communication skills",
-        jobDetails: null,
-        date: "2023-10-18",
-        startingSalary: "17605-22000",
-        jobFairSetNo: 7,
-        status: true,
-        interviewLocation: ["[location1", "location2]"],
-        interviewTimeSlot1Min: "10:00",
-        interviewTimeSlot1Max: "15:00",
-        interviewTimeSlot2Min: null,
-        interviewTimeSlot2Max: null,
-        jobType: "On-Site",
-        user_Id: 1
-      }
-      
-    ) 
-    (res)
-  } catch (error) {
-    (error)
-  }
-
+  //console.log(inputStateJobPost)
  }
-
-
-
-
-
-
   return (
     <div>
       <div className=" flex  justify-center mb-5 ">

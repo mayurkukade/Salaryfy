@@ -10,6 +10,7 @@ const profileQualificationSlice = apiSlice.injectEndpoints({
     saveProfile: builder.mutation({
       query: (payload) => ({
         url: '/profileLevel/save',
+        
         method: 'POST',
         body: payload
       }),
@@ -17,6 +18,7 @@ const profileQualificationSlice = apiSlice.injectEndpoints({
     }),
     universitySuggestions: builder.query({
       query: (userInput: string) => `/ESuggest/get-suggestions?userInput=${encodeURIComponent(userInput)}&education=Graduation`,
+   
       providesTags: ['get-universities']
     })
   }),

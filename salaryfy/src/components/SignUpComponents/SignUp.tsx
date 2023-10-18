@@ -40,7 +40,7 @@ const SignUp = () => {
       });
       navigate("/verifyemail");
     } catch (error) {
-      (error);
+      //console.log(error);
     }
   };
 

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/app.store";
 import { CSSProperties, ChangeEvent, useEffect, useRef, useState } from "react";
 import { useUploadFileMutation } from "../../features/api-integration/user-profile/user-profile.slice";
@@ -38,9 +38,9 @@ const password_REGEX: RegExp =
 export default function NavbarSignUp() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   // const [register] = useRegisterMutation();
-  const { id } = useParams();
+  //const { id } = useParams();
   // const navigator = useNavigate()
-  (id);
+  //console.log(id);
   
   /* SEEMS USELESS CODE BLOCK 
    Developer: sandwich */
@@ -85,7 +85,7 @@ const NameComponent = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
-  (props);
+  //console.log(props);
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
@@ -143,7 +143,7 @@ const NameComponent = (props) => {
 };
 
 const PhoneComponent = (props) => {
-  (props);
+  //console.log(props);
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
@@ -220,7 +220,7 @@ const EmailComponent = (props) => {
     // setLoading(true);
     try {
       const res = await email(props.email);
-(res)
+//console.log(res)
       if ('error' in res) {
         toast.error('User is already exists ', {
           position: "top-center",
@@ -248,7 +248,7 @@ const EmailComponent = (props) => {
         toggleContent();
       }
     } catch (error) {
-      (error);
+      //console.log(error);
     }
   };
 
@@ -461,7 +461,7 @@ function UploadResumeComponent({
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
-    (selectedFile);
+    //console.log(selectedFile);
     if (selectedFile) {
       onResumeUpload(selectedFile);
       toast.success("pdf is selected", {
@@ -560,16 +560,16 @@ const Verified = (props: PropT): JSX.Element => {
 
   const [verifyOTP] = useVerifyOTPMutation();
   const dispatch = useDispatch();
-  (otp);
-  (props.email);
+  //console.log(otp);
+  //console.log(props.email);
   const email = props.email;
-  (otp, email);
+  //console.log(otp, email);
   const handleSubmitVerify = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     try {
       const response = await verifyOTP({ otp, email });
-      (response);
+      //console.log(response);
       // Assuming the response structure doesn't have an "error" property
 
       if (response) {
@@ -609,7 +609,7 @@ const Verified = (props: PropT): JSX.Element => {
         dispatch(verifyEmailFlagSelector(false));
       }
     } catch (error) {
-      ("API call error:", error);
+      //console.log("API call error:", error);
       dispatch(verifyEmailFlagSelector(false));
     }
   };
@@ -663,19 +663,19 @@ const PersonalDetails = ({
 }: {
   onResumeUpload: (i: File) => void;
 }): JSX.Element => {
-  const [register, {  isError, isSuccess }] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useAppDispatch();
 
-  const token = localStorage.getItem("userToken");
-  (token);
+  // const token = localStorage.getItem("userToken");
+  //console.log(token);
 const navigator = useNavigate()
-  const currentRoute = useSelector(
-    (state: RootState) => state.currentRoute.currentRoute
-  );
-  (currentRoute)
+  // const currentRoute = useSelector(
+  //   (state: RootState) => state.currentRoute.currentRoute
+  // );
+  //console.log(currentRoute)
 
   const [fullName, setfullName] = useState<string>("");
   const [validName, setValidName] = useState(false);
@@ -703,10 +703,10 @@ const navigator = useNavigate()
   const role = "USER";
   const userProfileType = "fresher";
 
-  (password);
-  (isError);
-  (isSuccess);
-  (matchpassword);
+  // console.log(password);
+  // console.log(isError);
+  // console.log(isSuccess);
+  // console.log(matchpassword);
 
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -715,11 +715,11 @@ const navigator = useNavigate()
 
   const date = `${year}-${month}-${day}`;
 
-  const resSubmitStatus = useSelector(
-    (state: RootState) => state.mainStepsCounter.resStepTwo
-  );
+  // const resSubmitStatus = useSelector(
+  //   (state: RootState) => state.mainStepsCounter.resStepTwo
+  // );
 
-  (resSubmitStatus);
+  //console.log(resSubmitStatus);
   const contentDisabled =
     !validName ||
     !validMobile ||
@@ -730,7 +730,7 @@ const navigator = useNavigate()
     !date ||
     !matchpassword;
 
-  (!contentDisabled);
+  //console.log(!contentDisabled);
 
   const registerHandler = async () => {
 
@@ -814,8 +814,8 @@ const navigator = useNavigate()
       dispatch(emailStepsCounterDecrement);
     }
   }, [email, validEmail, dispatch]);
-(password)
-(confirmpassword)
+//console.log(password)
+//console.log(confirmpassword)
   useEffect(() => {
     if (password === "") {
       setMatchpassword(password !== confirmpassword);
@@ -835,14 +835,14 @@ const navigator = useNavigate()
 
   useEffect(() => {
     if (contentDisabled) {
-      (contentDisabled);
+      //console.log(contentDisabled);
     }
   }, [contentDisabled]);
-  (contentDisabled);
+  //console.log(contentDisabled);
 
-  (validpassword);
-  (matchpassword);
-  (toggleLoginRegister);
+  //console.log(validpassword);
+  //console.log(matchpassword);
+  //console.log(toggleLoginRegister);
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-[2em] md:px-[10em]">

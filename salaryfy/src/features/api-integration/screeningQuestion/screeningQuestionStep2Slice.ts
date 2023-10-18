@@ -4,11 +4,12 @@ const screeningQuestionsSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getScreeningQuestion: builder.query({
       query: (id) => `/JobFair/getJobFairDetailsByJobId?jobId=${id}`,
+   
     }),
     postScreeningQuestionSlice :builder.mutation<[object],any>({
       query: (filteredData) => ({
         url: `/jobFairQueAns/saveAllJobFairques`,
-        transformResponse: ('From api sli of screening question',filteredData),
+        //transformResponse: console.log('From api sli of screening question',filteredData),
         headers:{
           "Content-Type":"application/json"
         },

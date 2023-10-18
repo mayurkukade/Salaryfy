@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ import navlogo from "../../../assets/Logos/navbar-logo.png";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 import { QuestionnaireHttpClient } from "../../modules/questionnaire/services/questionnaire.service";
 import {
+  
   useLazyGetUploadedFilesQuery,
 } from "../../features/api-integration/user-profile/user-profile.slice";
 import { concatMap } from "rxjs";
@@ -31,16 +32,15 @@ interface TokenPayload {
   fullName: string;
   userId: string;
 }
-type DocumentLink = {
-  documentLink: string; // Adjust this type definition based on the actual structure of your data
-};
+
 import { useGetUserProfilePhotoQuery } from "../../features/api-integration/user-profile/user-profile.slice";
+//import { random } from "chroma-js";
 // import { useGetUploadedFilesQuery } from "../../features/api-integration/user-profile/user-profile.slice";
 
 const Navbar = () => {
   const httpClient: QuestionnaireHttpClient = new QuestionnaireHttpClient();
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-  (userId);
+  //console.log(userId);
   const [getUploadedDocs] = useLazyGetUploadedFilesQuery();
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [nav, setNav] = useState(false);
@@ -51,9 +51,9 @@ const Navbar = () => {
   const { data, isLoading, isError } = useGetUserProfilePhotoQuery(
     Number(userId)
   );
-  (data?.response);
+  //console.log(data?.response);
 
-  const profilePicture = data?.response.map((item: DocumentLink) => {
+  const profilePicture = data?.response.map((item: string,index:number) => {
     let content: string | JSX.Element;
 
     if (isLoading) {
@@ -63,20 +63,20 @@ const Navbar = () => {
     } else {
       content = <img src={item?.documentLink} alt="profile picture" />;
     }
-    (item);
+    //console.log(item);
     return (
-      <>
+      <div key={index}>
         {content}
-      </>
+      </div>
     );
   });
 
   const jobId = localStorage.getItem("jobId");
-  (jobId);
+  //console.log(jobId);
   const open = Boolean(anchorEl);
-  (window.location.href);
+  //console.log(window.location.href);
   const currentLocation = window.location.href.slice(22);
-  (currentLocation);
+  //console.log(currentLocation);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -129,7 +129,7 @@ const Navbar = () => {
       .subscribe((link: string) => setProfilePhoto(() => link));
   }
 
-  (profilePhoto);
+  //console.log(profilePhoto);
   useEffect(() => {
     if (token) {
       const userDetails: TokenPayload = jwt_decode(token);
@@ -137,8 +137,8 @@ const Navbar = () => {
       const userName: string = userDetails.fullName;
       const userId: string = userDetails.userId;
       setProfile(userName);
-      (userName);
-      (userDetails);
+      //console.log(userName);
+      //console.log(userDetails);
 
       dispatch(userNameSelection(userName));
       dispatch(userIdSelection(userId));
@@ -150,6 +150,7 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(cureentSelector(currentLocation));
+    setAnchorEl(null);
   }, [dispatch, currentLocation]);
 
   return (
@@ -191,7 +192,7 @@ const Navbar = () => {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                <Avatar className="mr-1">
+                <Avatar className="mr-1" key={Math.random()}>
                 {!profilePicture && profile && profile[0].toUpperCase()}
                   {/* { profilePhoto &&
                     <img src={ profilePhoto } />

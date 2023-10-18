@@ -4,13 +4,13 @@ import PlacementJobDetails from "../modules/questionnaire/components/placement-j
 import { useParams, useNavigate } from "react-router-dom";
 import { useLazyGetJobByIdQuery } from "../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { useDispatch, useSelector } from "react-redux";
-import { AppStoreStateType, RootState } from "../store/app.store";
+import { AppStoreStateType} from "../store/app.store";
 import { SLICE_NAMES } from "../features/slice-names.enum";
 import { setJobDetails } from "../features/reducers/job-details/job-details.slice";
 import Cookies from "js-cookie";
 import QuestionnaireTopBarStep from "../modules/questionnaire/components/questionnaire-topbar-step.component";
 import { toast } from "react-toastify";
-
+import APP_CONSTANTS from "../contants/app.contants";
 function GreenHeading({ label }: { label: string }) {
   return (
     <p className="text-[#0E5F59] font-Lexend text-[1.25rem] font-semibold flex my-[1em] w-[100%] lg:w-[max-content]">
@@ -23,8 +23,8 @@ function GreenHeading({ label }: { label: string }) {
 }
 
 const PlacementDriveDetails = () => {
-  const currentRoute = useSelector((state: RootState) => state.currentRoute.currentRoute)
-  (currentRoute)
+  //const currentRoute = useSelector((state: RootState) => state.currentRoute.currentRoute)
+  //console.log(currentRoute)
   const jobDetails = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOB_DETAILS]);
   const dispatch = useDispatch();
   const { jobId } = useParams();
@@ -49,9 +49,9 @@ const PlacementDriveDetails = () => {
 
   }
   const jobIdInNumber = Number(jobId)
-  (jobIdInNumber)
+  //console.log(jobIdInNumber)
   const getJobDetails = (jobIdInNumber: number) => {
-    fetch(`http://192.168.1.76:8080/pdf/generate/${jobIdInNumber}`)
+    fetch(`${APP_CONSTANTS.SERVER_URL}/pdf/generate/${jobIdInNumber}`)
       .then((response) => response.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);

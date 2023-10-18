@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import "react-toastify/dist/ReactToastify.css";
-import { useParams } from "react-router-dom";
+//import { useParams } from "react-router-dom";
 import {
   useRegisterMutation,
   useSendEmailMutation,
@@ -39,30 +39,30 @@ const EMAIL_REGEX: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const password_REGEX: RegExp =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-type SubmitRegister = {
-  email: string;
-  password: string;
-  mobile_no: string;
-  role: string;
-  fullName: string;
-  date: string;
-  userProfileType: string;
-};
+// type SubmitRegister = {
+//   email: string;
+//   password: string;
+//   mobile_no: string;
+//   role: string;
+//   fullName: string;
+//   date: string;
+//   userProfileType: string;
+// };
 
 export default function QuestionnairePersonalDetails() {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
-const {id} = useParams()
-(id)
-  const [submitRegister, _setSubmitRegister] = useState<SubmitRegister>({
-    email: "",
-    password: "",
-    mobile_no: "",
-    role: "",
-    fullName: "",
-    date: "",
-    userProfileType: "",
-  });
-  (submitRegister);
+//const {id} = useParams()
+//console.log(id)
+  // const [submitRegister, _setSubmitRegister] = useState<SubmitRegister>({
+  //   email: "",
+  //   password: "",
+  //   mobile_no: "",
+  //   role: "",
+  //   fullName: "",
+  //   date: "",
+  //   userProfileType: "",
+  // });
+  //console.log(submitRegister);
 
   const [imageUploadApi] = useUploadFileMutation();
 
@@ -98,7 +98,7 @@ const NameComponent  = (props) => {
   useEffect(() => {
     props.userRef.current.focus();
   }, []);
-  (props);
+  //console.log(props);
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
@@ -156,7 +156,7 @@ const NameComponent  = (props) => {
 };
 
 const PhoneComponent = (props) => {
-  (props);
+  //console.log(props);
   return (
     <>
       <div className="flex flex-col flex-grow text-[#005F59] font-medium text-[1.8em]">
@@ -261,7 +261,7 @@ const EmailComponent = (props) => {
         toggleContent();
       }
     } catch (error) {
-      (error);
+      //console.log(error);
     }
   };
 
@@ -469,7 +469,7 @@ function UploadResumeComponent({
 
   function onFileUpload(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
-    (selectedFile)
+    //console.log(selectedFile)
     if (selectedFile) {
       onResumeUpload(selectedFile);
       toast.success('pdf is selected', {
@@ -568,16 +568,16 @@ const Verified = (props: PropT): JSX.Element => {
 
   const [verifyOTP] = useVerifyOTPMutation();
   const dispatch = useDispatch();
-  (otp);
-  (props.email);
+  //console.log(otp);
+  //console.log(props.email);
   const email = props.email;
-  (otp, email);
+  //console.log(otp, email);
   const handleSubmitVerify = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     try {
       const response = await verifyOTP({ otp, email }) as unknown as any;
-      (response);
+      //console.log(response);
       // Assuming the response structure doesn't have an "error" property
 
       if (response) {
@@ -617,7 +617,7 @@ const Verified = (props: PropT): JSX.Element => {
         dispatch(verifyEmailFlagSelector(false));
       }
     } catch (error) {
-      ("API call error:", error);
+      //console.log("API call error:", error);
       dispatch(verifyEmailFlagSelector(false));
     }
   };
@@ -675,14 +675,15 @@ const PersonalDetails = ({
 }: {
   onResumeUpload: (i: File) => void;
 }): JSX.Element => {
-  const [_register, { isError, isSuccess }] = useRegisterMutation();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_register] = useRegisterMutation();
 
   const userRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useAppDispatch();
 
-  const token = localStorage.getItem("userToken");
-  (token);
+  //const token = localStorage.getItem("userToken");
+  //console.log(token);
 
   const [fullName, setfullName] = useState<string>("");
   const [validName, setValidName] = useState(false);
@@ -711,10 +712,10 @@ const PersonalDetails = ({
   const userProfileType = "fresher";
   
   
-  (password);
-  (isError);
-  (isSuccess);
-  (matchpassword);
+  // console.log(password);
+  // console.log(isError);
+  // console.log(isSuccess);
+  // console.log(matchpassword);
 
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -723,11 +724,11 @@ const PersonalDetails = ({
 
   const date = `${year}-${month}-${day}`;
  
-  const resSubmitStatus = useSelector(
-    (state: RootState) => state.mainStepsCounter.resStepTwo
-  );
+  // const resSubmitStatus = useSelector(
+  //   (state: RootState) => state.mainStepsCounter.resStepTwo
+  // );
 
-  (resSubmitStatus);
+  //console.log(resSubmitStatus);
   const contentDisabled =
     !validName ||
     !validMobile ||
@@ -738,10 +739,10 @@ const PersonalDetails = ({
     !date ||
     !matchpassword;
 
-  (!contentDisabled);
+  //console.log(!contentDisabled);
   useEffect(() => {
     if (!contentDisabled) {
-      ("dispatch");
+      //console.log("dispatch");
       dispatch(
         registerFormQuestionnaire({
           fullName,
@@ -805,14 +806,14 @@ const PersonalDetails = ({
 
   useEffect(() => {
     if (contentDisabled) {
-      (contentDisabled);
+      //console.log(contentDisabled);
     }
   }, [contentDisabled]);
-  (contentDisabled);
+  //console.log(contentDisabled);
 
-  (validpassword);
-  (matchpassword);
-  (toggleLoginRegister);
+  //console.log(validpassword);
+  //console.log(matchpassword);
+  //console.log(toggleLoginRegister);
   return (
     <div className="flex flex-col gap-[2em] md:px-[10em]">
       <div className="font-medium text-[1.8em] text-[#5B5B5B] mt-3">

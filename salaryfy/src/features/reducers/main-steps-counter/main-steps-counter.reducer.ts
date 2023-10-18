@@ -50,8 +50,8 @@ const stepOneCounterSlice = createSlice({
     },
     resSteptwoSelector: (state, actions: PayloadAction<boolean>) => {
       state.resStepTwo = actions.payload;
-      (actions.payload);
-      (state.resStepTwo);
+      //console.log(actions.payload);
+      //console.log(state.resStepTwo);
     },
     verifyEmailFlagSelector:(state,actions:PayloadAction<boolean>) =>{
       state.verifyemailFlag = actions.payload
