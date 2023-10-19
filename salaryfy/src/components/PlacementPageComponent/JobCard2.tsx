@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { JobType } from "../../features/reducers/jobs/jobs.interface";
 import { useNavigate } from "react-router-dom";
-import { CommonUtilities } from "../../utils/common.utilities";
+//import { CommonUtilities } from "../../utils/common.utilities";
 const JobCard2 = ({ details }: { details: JobType }) => {
   //console.log(details)
   const navigate = useNavigate();

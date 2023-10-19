@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { Link} from "react-router-dom";
@@ -42,7 +43,8 @@ const Navbar = () => {
   const userId = useSelector((state: RootState) => state.authSlice.userId);
   //console.log(userId);
   const [getUploadedDocs] = useLazyGetUploadedFilesQuery();
-  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  
+  //const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [nav, setNav] = useState(false);
   const [profile, setProfile] = useState<string>();
   const navigate = useNavigate();
@@ -53,7 +55,7 @@ const Navbar = () => {
   );
   //console.log(data?.response);
 
-  const profilePicture = data?.response.map((item: string,index:number) => {
+  const profilePicture = data?.response.map((item: any,index:number) => {
     let content: string | JSX.Element;
 
     if (isLoading) {
@@ -128,7 +130,7 @@ const Navbar = () => {
             ).documentLink
         )
       )
-      .subscribe((link: string) => setProfilePhoto(() => link));
+      // .subscribe((link: string) => setProfilePhoto(() => link));
   }
 
   //console.log(profilePhoto);

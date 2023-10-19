@@ -32,7 +32,7 @@ import AboutUs from "./pages/AboutUs";
 import Contactus from "./pages/Contactus";
 import NavbarSignUp from "./components/SignUpComponents/NavbarSignUp";
 import AdminPage from "./pages/AdminPage";
-import RequireAuth from "./pages/RequireAuth";
+
 
 function App() {
   return (
