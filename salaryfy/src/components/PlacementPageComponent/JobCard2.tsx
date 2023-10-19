@@ -48,7 +48,7 @@ const JobCard2 = ({ details }: { details: JobType }) => {
             </div>
           </div>
         </div>
-        <div className="flex">
+        {/* <div className="flex">
           <div
             className={`w-[max-content] h-[max-content] flex gap-[1em] items-center px-[1em] py-[0.25em] border border-solid border-[${
               CommonUtilities.date.isWithin48Hours(details?.interviewStartDate)
@@ -58,7 +58,9 @@ const JobCard2 = ({ details }: { details: JobType }) => {
           >
             {CommonUtilities.date.isWithin48Hours(
               details?.interviewStartDate
-            ) && (
+            ) 
+            
+            && (
               <>
                 <svg
                   width="16"
@@ -82,7 +84,8 @@ const JobCard2 = ({ details }: { details: JobType }) => {
                     : "N/A"}
                 </span>
               </>
-            )}
+            )
+            }
 
             {!CommonUtilities.date.isWithin48Hours(
               details?.interviewStartDate
@@ -114,7 +117,7 @@ const JobCard2 = ({ details }: { details: JobType }) => {
               </>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="flex justify-between flex-col md:flex-row gap-[1em]">
         <div className="text-[1.6em]">
