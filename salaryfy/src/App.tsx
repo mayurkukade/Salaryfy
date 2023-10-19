@@ -32,36 +32,37 @@ import AboutUs from "./pages/AboutUs";
 import Contactus from "./pages/Contactus";
 import NavbarSignUp from "./components/SignUpComponents/NavbarSignUp";
 import AdminPage from "./pages/AdminPage";
+import RequireAuth from "./pages/RequireAuth";
 
 function App() {
   return (
     <>
       <Routes>
-        {/* <Route element={<AppLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
-        </Route> */}
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
-          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-
           <Route path="/placementdrive" element={<PlacementDrivePage />} />
-          <Route
-            path="/placementdetails/:jobId"
-            element={<PlacementDriveDetails />}
-          />
-          <Route path="/termofuse" element={<TermOfUse />} />
-          <Route path="/faq" element={<Faq />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/contactus" element={<Contactus />} />
-          <Route path="/navbarsignup" element={<NavbarSignUp/>} />
-          <Route path="/admin/*" element={<AdminPage/>} />
+            <Route
+              path="/placementdetails/:jobId"
+              element={<PlacementDriveDetails />}
+            />
+          {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
         </Route>
+        <Route element={<AppLayout />}>
+         
+            {/* <Route path="/" element={<Home />} /> */}
+            <Route path="/questionnaire/*" element={<QuestionnaireModule />} />
+            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
 
-   
-    
+          
+            <Route path="/termofuse" element={<TermOfUse />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/contactus" element={<Contactus />} />
+            <Route path="/navbarsignup" element={<NavbarSignUp />} />
+            <Route path="/admin/*" element={<AdminPage />} />
+           
+        </Route>
 
         {/* <Route path="/questionnaire/*" element={<QuestionnaireModule />} /> */}
         <Route path="/placementdrive" element={<PlacementDrivePage />} />
@@ -77,7 +78,7 @@ function App() {
         <Route path="/paymentcompleted" element={<Paymentcompleted />} />
         <Route path="/forgotpasswordotp" element={<ForgotPasswordOtp />} />
         <Route path="/forgotpasswordemail" element={<ForgorPasswordEmail />} />
-        
+
         <Route path="/login/:id" element={<Login />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route

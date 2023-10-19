@@ -48,7 +48,9 @@ const jobId = localStorage.getItem('jobId')
 
         if (token && currentRoute == `questionnaire/${jobId}`) {
           navigate(`/questionnaire/screening-questions/${jobId}`);
-        } else {
+        }
+        
+        else {
           navigate(-1);
         }
       } else {
