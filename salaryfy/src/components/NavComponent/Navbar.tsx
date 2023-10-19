@@ -130,7 +130,7 @@ const Navbar = () => {
             ).documentLink
         )
       )
-      // .subscribe((link: string) => setProfilePhoto(() => link));
+     
   }
 
   //console.log(profilePhoto);
