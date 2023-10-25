@@ -80,13 +80,11 @@ const HeroSection2 = () => {
                 className="border-2 border-darkGreen-600  h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base "
               >
                 <option></option>
-                <option>Jabalpur</option>
-                <option>Gwalior</option>
-                <option>Shahdol</option>
-                <option>Raipur</option>
-                <option>Nashik</option>
+              
+                <option>Mumbai</option>
                 <option>Bhopal</option>
                 <option>Banglore</option>
+                <option>Pune</option>
               </select>
               <div className="flex bg-yellow text-darkGreen ml-3 w-[123px] h-[43px] rounded-md  justify-center items-center relative ">
                 <button

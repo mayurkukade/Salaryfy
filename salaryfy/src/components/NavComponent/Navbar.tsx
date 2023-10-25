@@ -77,9 +77,9 @@ const Navbar = () => {
   //console.log(jobId);
   const open = Boolean(anchorEl);
   //console.log(window.location.href);
-   const currentLocation = window.location.href.slice(24);
+   //const currentLocation = window.location.href.slice(24);
    //console.log(currentLocation)
-  //const currentLocation = window.location.href.slice(22);
+  const currentLocation = window.location.href.slice(22);
   //console.log(currentLocation);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

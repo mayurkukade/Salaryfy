@@ -28,6 +28,7 @@ export default function QuestionnaireTopBarStep() {
     (state: RootState) => state.currentRoute.currentRoute
   );
   const {id} = useParams()
+  console.log(currentRoute)
   //console.log(id)
   //console.log(currentRoute);
   let stepTwoTotal: number;

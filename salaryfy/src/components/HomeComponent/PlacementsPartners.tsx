@@ -26,7 +26,7 @@ const PlacementsPartners = () => {
                 <img
                   src={lenskartlogo}
                   alt="lenskart Logo"
-                  className="max-h-full laptop:ml-1  w-14 xs:mt-4 xs:ml-4"
+                  className="max-h-full  laptop:ml-1  w-14 xs:mt-4 xs:ml-4  xxs:ml-5 xxs:mt-3 "
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
@@ -40,7 +40,7 @@ const PlacementsPartners = () => {
                 <img
                   src={justdial}
                   alt="justdial Logo"
-                  className="max-h-full w-10 laptop:ml-2 laptop:mt-2 xs:mt-4 xs:ml-6  "
+                  className="max-h-full w-10 laptop:ml-2 laptop:mt-2 xs:mt-4 xs:ml-6 xxs:ml-5 xxs:mt-3 "
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4 shadow-md ">
@@ -54,28 +54,28 @@ const PlacementsPartners = () => {
                 <img
                   src={trentlogo}
                   alt="trent Logo"
-                  className="max-h-full laptop:mt-5 laptop:ml-0  w-16 xs:mt-7 xs:ml-5"
+                  className="max-h-full laptop:mt-5 laptop:ml-0  w-16 xs:mt-7 xs:ml-5 xxs:ml-5 xxs:mt-5"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4 shadow-md ">
                 <img
                   src={hamleyslogo}
                   alt="hamleys Logo"
-                  className="max-h-full laptop:mt-2 laptop:ml-0 w-16 xs:mt-4 xs:ml-4"
+                  className="max-h-full laptop:mt-2 laptop:ml-0 w-16 xs:mt-4 xs:ml-4 xxs:ml-5 xxs:mt-2"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
                 <img
                   src={wipro}
                   alt="justdial Logo"
-                  className="w-19 laptop:mt-5 xs:mt-3"
+                  className="w-19 laptop:mt-5 xs:mt-3  xxs:mt-3"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
                 <img
                   src={jimmychoo}
                   alt="jimmychoo Logo"
-                  className="max-h-full laptop:mt-4 xs:mt-3"
+                  className="max-h-full laptop:mt-4 xs:mt-3 xxs:mt-3"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4 shadow-md ">
@@ -89,21 +89,21 @@ const PlacementsPartners = () => {
                 <img
                   src={lenskartlogo}
                   alt="lenskart Logo"
-                  className="max-h-full laptop:ml-1  w-14 xs:mt-4 xs:ml-3  "
+                  className="max-h-full laptop:ml-1  w-14 xs:mt-4 xs:ml-3  xxs:ml-5 xxs:mt-3"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
                 <img
                   src={techmahindra}
                   alt="techmahindra Logo"
-                  className="max-h-full mt-3 w-15"
+                  className="max-h-full mt-3 w-15 md:mt-3 xxs:mt-2"
                 />
               </div>
               <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-4  shadow-md mr-8  ">
                 <img
                   src={justdial}
                   alt="justdial Logo"
-                  className="max-h-full w-10 laptop:ml-2 laptop:mt-2 xs:mt-4 xs:ml-6 "
+                  className="max-h-full w-10 laptop:ml-2 laptop:mt-2 xs:mt-4 xs:ml-6 xxs:ml-5 xxs:mt-3 "
                 />
               </div>
               {/* <div className="w-[6rem] bg-gradient-to-br rounded-lg md:p-2 shadow-md ">
