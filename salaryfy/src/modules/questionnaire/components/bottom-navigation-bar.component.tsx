@@ -60,7 +60,7 @@ const {id} = useParams()
   // console.log(resSteptwoSelector && verifyEmailFlagSelector);
   // console.log(resSteptwoSelector);
   // console.log(verifyEmailFlagSelector);
-  const currentRoute = window.location.href.slice(24);
+  const currentRoute = window.location.href.slice(22);
   //console.log(currentRoute);
 
   let nextButtonDisabled: boolean;
