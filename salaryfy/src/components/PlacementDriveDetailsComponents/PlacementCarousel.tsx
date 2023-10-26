@@ -28,7 +28,7 @@ export default function PlacementCarousel() {
     <div className="relative ">
       <img alt="frame" src={Frame} className="absolute mt-[-1rem] ml-4" />
       <div
-        className="container mx-auto p-8 text-justify  h-[18rem]"
+        className="container mx-auto p-8 text-justify  h-[21rem]"
         style={{
           borderRadius: "0.8125rem",
           marginTop: "1rem",

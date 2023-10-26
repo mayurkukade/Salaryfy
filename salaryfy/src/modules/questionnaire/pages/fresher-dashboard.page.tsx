@@ -412,7 +412,7 @@ export function FresherDashboard() {
               boxShadow: "0 0 10px rgb(0, 0, 0, 0.2)",
               fontWeight: "500",
             }}
-            className="mb-[2em] text-[1.8em] rounded-xl overflow-hidden grid grid-cols-[max-content,auto] grid-cols-auto [&>*]:whitespace-nowrap [&>*]:px-[1.5em] [&>*]:py-[0.5em] [&>*]:border-b [&>*]:border-solid [&>*]:border-b-[#0E5F591A] [&>*:nth-child(odd)]:bg-[#0E5F5919] [&>*:nth-child(odd)]:text-[#5b5b5b] [&>*:nth-child(odd)]:w-[10em] [&>*:nth-child(even)]:w-[100%] [&>*:nth-child(even)]:break-all"
+            className="mb-[2em] xxs:text-[0.8rem] md:text-[1.8em] rounded-xl overflow-hidden grid grid-cols-[max-content,auto] grid-cols-auto [&>*]:whitespace-nowrap [&>*]:px-[1.5em] [&>*]:py-[0.5em] [&>*]:border-b [&>*]:border-solid [&>*]:border-b-[#0E5F591A] [&>*:nth-child(odd)]:bg-[#0E5F5919] [&>*:nth-child(odd)]:text-[#5b5b5b] [&>*:nth-child(odd)]:w-[10em] [&>*:nth-child(even)]:w-[100%] [&>*:nth-child(even)]:break-all"
           >
             <div>Full Name</div>
             <div>{userProfile.fullName}</div>
