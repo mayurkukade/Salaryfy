@@ -118,8 +118,8 @@ const PlacementDriveDetails = () => {
               <div className="text-[1.6em]">
                 <GreenHeading label="Job Details" />
                 <p className="mb-[1em]">{jobDetails.jobDetails}</p>
-                <div onClick={onGetHiredClick} className="flex bg-yellow text-[#0E5F59] w-fit p-5 h-[43px] rounded-lg  justify-center items-center relative mb-[2em]">
-                  <button className="text-[20.247px] font-medium">Get Hired</button>
+                <div onClick={onGetHiredClick} className="flex bg-yellow text-[#0E5F59] w-fit p-5 h-[47px] rounded-lg  justify-center items-center relative mb-[2em]">
+                  <button className="text-[20.247px] xxs:text-[18px] font-medium">Get Hired</button>
                   <svg width="33" height="19" viewBox="0 0 33 19" fill="none" className="align-middle ml-3 mt-1" ><path d="M31.8711 10.375C32.3522 9.89391 32.3522 9.1139 31.8711 8.63281L24.0312 0.792963C23.5502 0.311871 22.7701 0.311871 22.2891 0.792963C21.808 1.27405 21.808 2.05406 22.2891 2.53515L29.2578 9.50391L22.2891 16.4727C21.808 16.9538 21.808 17.7338 22.2891 18.2148C22.7701 18.6959 23.5502 18.6959 24.0312 18.2148L31.8711 10.375ZM0 10.7358H31V8.27199H0V10.7358Z" fill="#005F59" /></svg>
                 </div>
               </div>

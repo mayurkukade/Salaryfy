@@ -21,9 +21,9 @@ const Universities = () => {
   return (
     <div className="w-full font-Lexend">
       <div className="container mx-auto">
-        <p className="text-center xs:leading-10  mt-8 md:mt-16 mb-6 md:mb-15 text-2xl md:text-4xl font-semibold">
-          <span className="text-darkGreen lg:text-[3.9375rem] xs:text-[3rem]">Students from </span>
-          <span className="text-yellow lg:text-[3.9375rem] xs:text-[3rem]">University</span>
+        <p className="text-center xs:leading-10 lg:text-[3.9375rem]  mt-8 md:mt-16 mb-6 md:mb-15  md:text-4xl xs:text-[2.1rem] xxs:text-[2.1rem] font-semibold">
+          <span className="text-darkGreen ">Students from </span>
+          <span className="text-yellow">University</span>
         </p>
         <div className="max-h-[400px] overflow-y-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-10 ">

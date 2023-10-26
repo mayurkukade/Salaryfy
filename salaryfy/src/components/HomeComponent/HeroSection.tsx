@@ -16,7 +16,7 @@ const HeroSection2 = () => {
   //   (state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]
   // );
   //console.log(jobs);
-  const goHandler = () => {
+  const goHandler = () => { 
     dispatch(setSelectedCity(selectedCityState));
     //console.log({ selectedCityState });
     navigate("/placementdrive");

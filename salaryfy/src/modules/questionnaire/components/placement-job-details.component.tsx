@@ -148,7 +148,7 @@ export default function PlacementJobDetails({
               onClick={onGetHiredClick}
               className="cursor-pointer select-none flex bg-yellow text-[#0E5F59] px-[1em] py-[0.5em] rounded-lg  justify-center items-center w-[max-content] h-[max-content]"
             >
-              <span className="text-[2em] font-[600]">Get Hired</span>
+              <span className="text-[20.247px] xxs:text-[18px] font-medium">Get Hired</span>
               <SideArrow />
             </div>
 

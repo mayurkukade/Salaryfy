@@ -12,7 +12,7 @@ const PlacementsPartners = () => {
   return (
     <div className="w-full  font-Lexend ">
       <div className="container mx-auto">
-        <p className="text-center mt-8 md:mt-[4rem]  mb-6 md:mb-[3.81rem] text-2xl md:text-[3.9375rem] font-semibold xs:text-[3rem] xs:leading-[3rem] ">
+        <p className="text-center mt-8 md:mt-[4rem]  mb-6 md:mb-[3.81rem] text-2xl md:text-[3.9375rem] font-semibold xs:text-[2.1rem] xs:leading-[3rem] xxs:text-[2.1rem] ">
           <span className="text-darkGreen">Our Placement</span>
           <span className="text-yellow"> Partners</span>
         </p>
