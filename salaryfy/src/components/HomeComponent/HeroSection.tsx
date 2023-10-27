@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { setSelectedCity } from "../../features/reducers/selected-city/selected-city.slice";
+import { useGetJobLocationQuery } from "../../features/api-integration/adminSlice/adminSlice";
 //import { AppStoreStateType } from "../../store/app.store";
 //import { SLICE_NAMES } from "../../features/slice-names.enum";
 
@@ -12,6 +13,23 @@ const HeroSection2 = () => {
   const [selectedCityState, setSelectedCityState] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {data,isLoading,error} = useGetJobLocationQuery('')
+  console.log(data)
+
+
+
+  
+
+  if (isLoading) {
+    
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+  
+    return <div>Error</div>;
+  }
+
   // const jobs = useSelector(
   //   (state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]
   // );
@@ -80,11 +98,14 @@ const HeroSection2 = () => {
                 className="border-2 border-darkGreen-600  h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base "
               >
                 <option></option>
+                {
+                  data.map((item:undefined,i:undefined)=>(
+                    <option key={i}>{item}</option>
+                  ))
+                }
+                
               
-                <option>Mumbai</option>
-                <option>Bhopal</option>
-                <option>Banglore</option>
-                <option>Pune</option>
+                
               </select>
               <div className="flex bg-yellow text-darkGreen ml-3 w-[123px] h-[43px] rounded-md  justify-center items-center relative ">
                 <button

@@ -9,10 +9,15 @@ const adminApiSlice = apiSlice.injectEndpoints({
                 body:inputStateJobPost
             }),
             invalidatesTags:['job-post']
-        })
+        }),
+        
+    getJobLocation: builder.query({
+      query: () => `/job/GetLocation`,
+      providesTags: ["jobs-lnjtcn"]
+    }),
     })
 })
 
-export const {usePostJobsMutation} = adminApiSlice
+export const {usePostJobsMutation,useGetJobLocationQuery} = adminApiSlice
 
 export default adminApiSlice.reducerPath
