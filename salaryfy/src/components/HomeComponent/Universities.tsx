@@ -85,11 +85,11 @@ const UniversitiesCard = ({
   university3?: string;
 }) => {
   return (
-    <div className="rounded-lg bg-gradient-to-br p-4 shadow-md w-full md:w-full md:max-w-[100%] h-[5.95969rem] flex items-center">
+    <div className="rounded-lg bg-gradient-to-br p-4 shadow-md w-full md:w-full md:max-w-[100%] h-[5.95969rem] flex items-center ">
       <img
         src={img}
         alt={`${university1} University`}
-        className="max-h-full float-left"
+        className="max-h-full float-left xxs:w-[2rem]"
       />
       <div className="ml-3">
         <p className="text-xs md:text-base text-[#005F59]">

@@ -83,9 +83,11 @@ const Navbar = () => {
   //console.log(currentLocation);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    
   };
   const handleClose = () => {
     setAnchorEl(null);
+    handleNav()
   };
 
   const dispatch = useDispatch();
@@ -98,6 +100,7 @@ const Navbar = () => {
     dispatch(clearToken());
     Cookies.remove("jwtToken");
     navigate("/login");
+    handleNav()
   };
 
   const logInHandler = () => {
@@ -260,17 +263,17 @@ const Navbar = () => {
       <ul
         className={
           nav
-            ? "fixed left-0 top-0 w-[60%] h-full border-r  border-r-gray-900 bg-[#005F59] ease-in-out duration-500 leading-[3.8rem] text-[1.5rem] text-[#FDCC07] p-6 "
+            ? "fixed left-0 top-0 w-[60%] h-full border-r  border-r-gray-900 md:hidden lg:hidden bg-[#005F59] ease-in-out duration-500 leading-[3.8rem] text-[1.5rem] text-[#FDCC07] p-6 "
             : "ease-in-out duration-500 hidden"
         }
       >
         {/* <h1 className="w-full text-3xl font-bold text-[#00df9a] m-4">REACT.</h1> */}
         <li>
-          <Link to="/" className="p-4  border-b border-gray-600  ">
+          <Link to="/" className="p-4  border-b border-gray-600  " onClick={handleNav}>
             Home
           </Link>
         </li>
-        <li>
+        <li onClick={handleNav}>
           <Link
             to={token ? "/questionnaire/fresher-dashboard" : "/login"}
             className="p-4 border-b border-gray-600 "
@@ -278,12 +281,12 @@ const Navbar = () => {
             Dashboard
           </Link>
         </li>
-        <li>
+        <li onClick={handleNav}>
           <Link to="/contactus" className="p-4 border-b border-gray-600 ">
             Contact
           </Link>
         </li>
-        <li>
+        <li onClick={handleNav}>
           <Link to="/aboutus" className="p-4 border-b border-gray-600 ">
             About Us
           </Link>
@@ -302,7 +305,7 @@ const Navbar = () => {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                <span className="text-[2rem] decoration-solid text-yellow   min-w-[6rem]">
+                <span className="text-[1.6rem] decoration-solid text-yellow   min-w-[6rem]" >
                   {profile}
                 </span>
                 <span>

@@ -6,7 +6,7 @@ const AboutUs = () => {
       <div className="container md:ml-5">
         <p className="text-5xl text-darkGreen">About</p>
         <br />
-        <p className="text-xl text-[#5b5b5b]">
+        <p className="lg:text-xl md:text-xl xxs:text-sm text-[#5b5b5b]">
           Salaryfy.com.com is a subsidiary of Data Folkz <br /> Pvt. Ltd. which was
           incorporated under the <br /> Companies Act, 2013 (18 of 2013), and the <br />
           company is limited by shares.
@@ -30,7 +30,7 @@ const AboutUs = () => {
   
         <p className="text-xl">Purpose</p>
   
-        <p className="text-center text-[#5b5b5b] leading-relaxed">
+        <p className="text-center text-[#5b5b5b] leading-relaxed lg:text-lg xs:text-sm md:text-base">
           We exist to re-define the <br />market value of a job seeker <br />for his betterment
         </p>
       </div>
@@ -44,7 +44,7 @@ const AboutUs = () => {
   
         <p className="text-xl">Mission</p>
   
-        <p className="text-center text-[#5b5b5b] leading-relaxed">
+        <p className="text-center text-[#5b5b5b] leading-relaxed lg:text-lg xs:text-sm md:text-base">
           To build an effortless end-to <br /> end solution for job seekers & <br />talent hunters
         </p>
       </div>
@@ -58,7 +58,7 @@ const AboutUs = () => {
   
         <p className="text-xl">Vision</p>
   
-        <p className="text-center text-[#5b5b5b] leading-relaxed">
+        <p className="text-center text-[#5b5b5b] leading-relaxed lg:text-lg xs:text-sm md:text-base">
           Unleash the world of endless <br />opportunities when thinking <br />about getting a job!
         </p>
       </div>
@@ -66,11 +66,11 @@ const AboutUs = () => {
   
     <div className="grid grid-cols-1 md:grid-cols-[3.9375rem,auto] gap-4 items-center mt-8">
       <div className="text-darkGreen font-bold">
-        <h2 className="text-xl md:text-2xl">Introduction</h2>
+        <h2 className="text-3xl md:text-2xl xxs:text-xl">Introduction</h2>
       </div>
   
       <div className="text-[#5b5b5b] font-normal col-span-1 md:col-span-2">
-        <p className="text-sm md:text-base">
+        <p className="lg:text-xl md:text-xl xxs:text-sm">
           Salaryfy.com is a subsidiary of DATA FOLKZ, a global leader in the
           field of data science and analytics. Salaryfy.com is a company
           that specializes in placements and salary hikes, providing
@@ -83,7 +83,7 @@ const AboutUs = () => {
         </p>
   
         <div className="mt-4">
-          <p className="text-sm md:text-base">
+          <p className="text-sm lg:text-xl  md:text-xl">
             Salaryfy.com is a subsidiary of Data Folkz Pvt. Ltd. which
             was incorporated under the Companies Act, 2013 (18 of 2013), and
             the company is limited by shares.
@@ -97,12 +97,12 @@ const AboutUs = () => {
 {/* Services */}
 <div className="mt-8">
   <div className="text-darkGreen font-bold">
-    <h2 className="text-xl md:text-2xl">Services</h2>
+    <h2 className="xt-3xl md:text-2xl xxs:text-xl">Services</h2>
   </div>
 
   <div className="mt-2 md:mt-0 text-[#5b5b5b]">
     <ul className="list-disc pl-4">
-      <li className="text-sm md:text-base mb-2">
+      <li className=" text-sm lg:text-xl  md:text-xl mb-2">
         Salaryfy.com provides a range of services related to salary
         analytics such as salary benchmarking, salary optimization,
         salary comparison, and salary trends. All of these services
@@ -110,7 +110,7 @@ const AboutUs = () => {
         to salary management.
       </li>
 
-      <li className="text-sm md:text-base mb-2">
+      <li className="text-sm lg:text-xl  md:text-xl  mb-2">
         For salary benchmarking, Salaryfy.com leverages its
         proprietary algorithms to compare a company's salary data to
         the market average. Through this, companies can identify
@@ -118,21 +118,21 @@ const AboutUs = () => {
         performance.
       </li>
 
-      <li className="text-sm md:text-base mb-2">
+      <li className="text-sm lg:text-xl  md:text-xl mb-2">
         Through salary optimization, Salaryfy.com helps companies find
         the optimal salary mix that aligns with their budget and
         employees' expectations. This helps companies create effective
         salary structures that are attractive to top talent.
       </li>
 
-      <li className="text-sm md:text-base mb-2">
+      <li className="text-sm lg:text-xl  md:text-xl mb-2">
         Salary comparison is a service that allows individuals/users
         to compare their salary data to that of other companies in the
         same industry or geographic region. This helps them make
         better decisions related to salary management.
       </li>
 
-      <li className="text-sm md:text-base mb-2">
+      <li className="text-sm lg:text-xl  md:text-xl mb-2">
         Lastly, Salaryfy.com provides insights into current job trends
         in order to help organizations/individuals/users stay ahead of
         the competition and make informed decisions related to market
@@ -149,7 +149,7 @@ const AboutUs = () => {
   </div>
 
   <div className="mt-2 md:mt-0 text-[#5b5b5b]">
-    <p className="text-sm md:text-base">
+    <p className="text-sm lg:text-xl  md:text-xl">
       Salaryfy.com's services provide organizations/individuals with a
       range of benefits related to placements, job changes, salary
       hikes, etc. These include improved decision-making related to
@@ -160,14 +160,14 @@ const AboutUs = () => {
       their placement services are attractive to the best talent.
     </p>
 
-    <p className="text-sm md:text-base mt-4">
+    <p className="text-sm lg:text-xl  md:text-xl  mt-4">
       Furthermore, Salaryfy.com provides comprehensive and up-to-date
       data for its clients. This helps organizations/individuals gain
       access to reliable and accurate information, which is essential
       for making informed decisions.
     </p>
 
-    <p className="text-sm md:text-base mt-4">
+    <p className="text-sm lg:text-xl  md:text-xl mt-4">
       Overall, Salaryfy.com is an innovative company that provides
       organizations/individuals with a range of services related to
       providing employment. They leverage the latest data analytics

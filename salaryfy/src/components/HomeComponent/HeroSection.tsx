@@ -1,11 +1,13 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, ReactNode, useState } from "react";
 import herowave from "../../../assets/Homepage/Vector 30.jpg";
-import herosection from "../../../assets/Homepage/herosection.png";
+//import herosection from "../../../assets/Homepage/herosection.png";
+import herosectionTwo from '../../../assets/workingProfessional-removebg-preview.png'
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { setSelectedCity } from "../../features/reducers/selected-city/selected-city.slice";
 import { useGetJobLocationQuery } from "../../features/api-integration/adminSlice/adminSlice";
+import { JSX } from "react/jsx-runtime";
 //import { AppStoreStateType } from "../../store/app.store";
 //import { SLICE_NAMES } from "../../features/slice-names.enum";
 
@@ -13,28 +15,25 @@ const HeroSection2 = () => {
   const [selectedCityState, setSelectedCityState] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {data,isLoading,error} = useGetJobLocationQuery('')
-  console.log(data)
+  const { data, isLoading, error } = useGetJobLocationQuery("");
 
-
-
-  
+  let getJobLocation: string | number | boolean | JSX.Element | Iterable<ReactNode>;
 
   if (isLoading) {
-    
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-  
-    return <div>Error</div>;
+    getJobLocation = <p>Loading..</p>;
+  } else if (data) {
+    getJobLocation = data.map((item: undefined, i: undefined) => (
+      <option key={i}>{item}</option>
+    ));
+  } else if (error) {
+    getJobLocation = <p>error</p>;
   }
 
   // const jobs = useSelector(
   //   (state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]
   // );
   //console.log(jobs);
-  const goHandler = () => { 
+  const goHandler = () => {
     dispatch(setSelectedCity(selectedCityState));
     //console.log({ selectedCityState });
     navigate("/placementdrive");
@@ -50,15 +49,21 @@ const HeroSection2 = () => {
       </div>
       <div className="container p-2 mx-auto md:flex md:flex-row md:justify-center md:gap-[20px] ">
         <div className="text-center leading-none lg:text-[4rem] text-[2.5rem] mt-[2.5rem] font-semibold md:p-5  md:w-[60%] md:text-left md:text-[4.25rem] md:mt-[5rem]">
-          <p className="text-darkGreen font-Lexend xs:text-[2.25rem] lg:text-[4rem] ">End to end</p>
+          <p className="text-darkGreen font-Lexend xs:text-[2.25rem] lg:text-[4rem] ">
+            End to end
+          </p>
           <div className=" font-Lexend text-darkGreen  ">
-            <span className="text-yellow xs:text-[2.25rem] lg:text-[4rem]">Job Change</span> <br />
-            <span className="text-darkGreen xs:text-[2.25rem] lg:text-[4rem]">solution for You</span>
+            <span className="text-yellow xs:text-[2.25rem] lg:text-[4rem]">
+              Job Change
+            </span>{" "}
+            <br />
+            <span className="text-darkGreen xs:text-[2.25rem] lg:text-[4rem]">
+              solution for You
+            </span>
             <p className="font-Lexend text-[0.8127rem] mt-[2rem] text-[#5B5B5B] leading-5  lg:m-0 lg:mt-[1.25rem] lg:text-[1.25rem] m-5">
-              6874+ people have got their dream job through Salaryfy.
-              When are you getting yours?
+              6874+ people have got their dream job through Salaryfy. When are
+              you getting yours?
             </p>
-        
             <div className=" lg:mt-[3.2rem] mt-[2.44rem]  flex relative text-start ml-5 lg:ml-0">
               <p className="font-Lexend lg:text-start text-[20px] text-darkGreen font-semibold flex relative align-text-top ">
                 Select your City
@@ -98,14 +103,7 @@ const HeroSection2 = () => {
                 className="border-2 border-darkGreen-600  h-[43px] p-[10px] w-[20rem] rounded-[5px] font-semibold text-base "
               >
                 <option></option>
-                {
-                  data.map((item:undefined,i:undefined)=>(
-                    <option key={i}>{item}</option>
-                  ))
-                }
-                
-              
-                
+                {getJobLocation}
               </select>
               <div className="flex bg-yellow text-darkGreen ml-3 w-[123px] h-[43px] rounded-md  justify-center items-center relative ">
                 <button
@@ -131,8 +129,8 @@ const HeroSection2 = () => {
             </div>
           </div>
         </div>
-        <div className="mt-[1.5rem] md:mt-[5rem] ">
-          <img alt="hero" className=" w-full" src={herosection} />
+        <div className="mt-[1.5rem]  ">
+          <img alt="hero" className=" w-full" src={herosectionTwo} style={{width:'120rem',height:'35rem'}} />
         </div>
       </div>
     </div>

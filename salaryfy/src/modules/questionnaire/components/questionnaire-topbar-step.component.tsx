@@ -141,7 +141,7 @@ function StepMobile({
         (className || "")
       }
     >
-      <div className="text-[1.5em] text-[#005F59] mb-[0.5em]">STEP</div>
+      <div className="text-[1.5em] text-[#005F59] mb-[0.5em] font-semibold">STEP</div>
       <div className="">
         <CircularProgressBarSVG
           color="#0E5F59"
