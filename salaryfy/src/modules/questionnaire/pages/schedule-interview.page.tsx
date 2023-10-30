@@ -156,7 +156,7 @@ export function ScheduleInterview() {
         return;
       } else if (data) {
         content = (
-          <div className="mr-[0.5em] text-[0.7rem] md:text-[1rem] " key={i}>
+          <div className="mr-[0.5em] text-[0.7rem] md:text-[1rem] xxs:text-lg " key={i}>
             {schedule.location}, {schedule.interviewDate}, {schedule.time}
           </div>
         );
@@ -566,24 +566,24 @@ const Modal = ({ getDetails, getJobDetails }) => {
                   />
                 </svg>
 
-                <h2 className=" text-center text-[1rem] md:text-[1.375rem] font-[600]  font-Inter ">
+                <h2 className=" text-center text-[1rem] md:text-[1.375rem] font-[600] xxs:text-lg font-Inter ">
                   Your interview for
                 </h2>
                 <div className=" flex justify-center items-center py-3">
                   <img
                     src={getJobDetails.object.logo}
-                    className=" w-[9.625rem] h[4.625rem]"
+                    className=" w-[9.625rem] h[4.625rem] xxs:w-[8rem] xxs:h-[5rem]"
                   />
                 </div>
                 <div className="text-[1rem] md:text-[1.375rem] font-[600] text-center font-Inter">
-                  <h2 className="">
+                  <h2 className="xxs:text-lg">
                     has been successfully scheduled on following{" "}
                   </h2>
                 </div>
 
                 <div className="flex justify-center ">
                   <div
-                    className="flex flex-col justify-center items-center w-[max-content] text-[0.8rem] md:text-[1em]  mt-3 "
+                    className="flex flex-col justify-center items-center w-[max-content] lg:text-xl md:text-[1em]  mt-3 "
                     style={{ minHeight: "30vh" }}
                   >
                     {getDetails}
@@ -596,7 +596,7 @@ const Modal = ({ getDetails, getJobDetails }) => {
                   <Link
                     to="/questionnaire/fresher-dashboard"
                     type="submit"
-                    className="mt-2 w-[16.4375rem] h-[3.375rem] font-medium  bg-yellow text-darkGreen rounded-[0.81694rem] flex text-[1.26544rem] justify-center items-center "
+                    className="mt-2 w-[16.4375rem] h-[3.375rem] font-bold bg-yellow text-darkGreen rounded-[0.81694rem] flex text-[1.26544rem] justify-center items-center "
                   >
                     Go to dashboard
                     <svg
