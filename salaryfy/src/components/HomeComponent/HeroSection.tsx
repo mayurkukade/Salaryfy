@@ -1,7 +1,7 @@
 import { ChangeEvent, ReactNode, useState } from "react";
 import herowave from "../../../assets/Homepage/Vector 30.jpg";
 //import herosection from "../../../assets/Homepage/herosection.png";
-import herosectionTwo from '../../../assets/workingProfessional-removebg-preview.png'
+import herosectionTwo from '../../../assets/Homepage/workingProfessionalNew-removebg-preview.png'
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
@@ -129,8 +129,8 @@ const HeroSection2 = () => {
             </div>
           </div>
         </div>
-        <div className="mt-[1.5rem]  ">
-          <img alt="hero" className=" w-full" src={herosectionTwo} style={{width:'120rem',height:'35rem'}} />
+        <div className="mt-[1.5rem] md:mt-[7rem] xxs:justify-center xxs:flex ">
+          <img alt="hero" className=" w-full md:h-[24rem] md:w-[20rem] xxs:w-[16rem]  " src={herosectionTwo}  />
         </div>
       </div>
     </div>

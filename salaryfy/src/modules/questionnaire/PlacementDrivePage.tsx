@@ -1,10 +1,13 @@
 import JobCard from "../../components/PlacementPageComponent/JobCard";
 import DropdownMenu from "../../components/DropdownMenu";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Box, Button, TextField } from "@mui/material";
 import QuestionnaireTopBarStep from "./components/questionnaire-topbar-step.component";
 import { useEffect, useRef, useState } from "react";
-import { useLazyGetJobsFilterQuery, useLazyGetJobsSearchQuery } from "../../features/api-integration/jobs-search-slice/jobs-search.slice";
+import {
+  useLazyGetJobsFilterQuery,
+  useLazyGetJobsSearchQuery,
+} from "../../features/api-integration/jobs-search-slice/jobs-search.slice";
 import { CommonUtilities } from "../../utils/common.utilities";
 import FilterComponent from "./components/job-filter.component";
 import { AppStoreStateType } from "../../store/app.store";
@@ -12,16 +15,29 @@ import { SLICE_NAMES } from "../../features/slice-names.enum";
 import { useDispatch, useSelector } from "react-redux";
 import { setJobs } from "../../features/reducers/jobs/jobs.slice";
 import { JobType } from "../../features/reducers/jobs/jobs.interface";
-import { JobsFilterType, OptionSelected } from "../../features/reducers/job-filter/jobs-filter.interface";
+import {
+  JobsFilterType,
+  OptionSelected,
+} from "../../features/reducers/job-filter/jobs-filter.interface";
 import { SortOptions } from "../../contants/job-sort-options.enum";
 import { setJobFilter } from "../../features/reducers/job-filter/jobs-filter.slice";
 import { setSelectedCity } from "../../features/reducers/selected-city/selected-city.slice";
 function FilterSVGIcon() {
-
   return (
-    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="17"
+      height="17"
+      viewBox="0 0 17 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <g clipPath="url(#clip0_46_6884)">
-        <path d="M1.46875 3.64474H8.60562C8.82071 4.62381 9.69505 5.35884 10.7378 5.35884C11.7805 5.35884 12.6549 4.62384 12.87 3.64474H15.5312C15.7901 3.64474 16 3.43485 16 3.17599C16 2.91712 15.7901 2.70724 15.5312 2.70724H12.8697C12.6542 1.72866 11.7787 0.993164 10.7378 0.993164C9.69634 0.993164 8.82121 1.72854 8.60579 2.70724H1.46875C1.20988 2.70724 1 2.91712 1 3.17599C1 3.43485 1.20988 3.64474 1.46875 3.64474ZM9.49249 3.17722L9.49252 3.17218C9.49457 2.4876 10.0532 1.93069 10.7378 1.93069C11.4214 1.93069 11.9801 2.48684 11.983 3.17109L11.9831 3.17798C11.982 3.86373 11.4238 4.42137 10.7378 4.42137C10.0521 4.42137 9.49401 3.86429 9.49246 3.17895L9.49249 3.17722ZM15.5312 13.3561H12.8697C12.6542 12.3775 11.7787 11.642 10.7378 11.642C9.69634 11.642 8.82121 12.3774 8.60579 13.3561H1.46875C1.20988 13.3561 1 13.5659 1 13.8248C1 14.0837 1.20988 14.2936 1.46875 14.2936H8.60562C8.82071 15.2727 9.69505 16.0077 10.7378 16.0077C11.7805 16.0077 12.6549 15.2727 12.87 14.2936H15.5312C15.7901 14.2936 16 14.0837 16 13.8248C16 13.5659 15.7901 13.3561 15.5312 13.3561ZM10.7378 15.0702C10.0521 15.0702 9.49401 14.5131 9.49246 13.8278L9.49249 13.8261L9.49252 13.821C9.49457 13.1365 10.0532 12.5795 10.7378 12.5795C11.4214 12.5795 11.9801 13.1357 11.983 13.8199L11.9831 13.8268C11.9821 14.5126 11.4239 15.0702 10.7378 15.0702ZM15.5312 8.03168H8.39438C8.17929 7.05261 7.30495 6.31761 6.26222 6.31761C5.21948 6.31761 4.34515 7.05261 4.13005 8.03168H1.46875C1.20988 8.03168 1 8.24156 1 8.50043C1 8.75933 1.20988 8.96918 1.46875 8.96918H4.13028C4.34582 9.94772 5.22133 10.6833 6.26222 10.6833C7.30366 10.6833 8.17879 9.94784 8.39421 8.96918H15.5312C15.7901 8.96918 16 8.75933 16 8.50043C16 8.24156 15.7901 8.03168 15.5312 8.03168ZM7.50751 8.4992L7.50748 8.50424C7.50543 9.18882 6.94683 9.74572 6.26222 9.74572C5.57857 9.74572 5.01994 9.18958 5.01698 8.50535L5.01689 8.4985C5.01792 7.81266 5.57617 7.25511 6.26222 7.25511C6.94794 7.25511 7.50599 7.81216 7.50754 8.49753L7.50751 8.4992Z" fill="white" stroke="white" strokeWidth="0.5" />
+        <path
+          d="M1.46875 3.64474H8.60562C8.82071 4.62381 9.69505 5.35884 10.7378 5.35884C11.7805 5.35884 12.6549 4.62384 12.87 3.64474H15.5312C15.7901 3.64474 16 3.43485 16 3.17599C16 2.91712 15.7901 2.70724 15.5312 2.70724H12.8697C12.6542 1.72866 11.7787 0.993164 10.7378 0.993164C9.69634 0.993164 8.82121 1.72854 8.60579 2.70724H1.46875C1.20988 2.70724 1 2.91712 1 3.17599C1 3.43485 1.20988 3.64474 1.46875 3.64474ZM9.49249 3.17722L9.49252 3.17218C9.49457 2.4876 10.0532 1.93069 10.7378 1.93069C11.4214 1.93069 11.9801 2.48684 11.983 3.17109L11.9831 3.17798C11.982 3.86373 11.4238 4.42137 10.7378 4.42137C10.0521 4.42137 9.49401 3.86429 9.49246 3.17895L9.49249 3.17722ZM15.5312 13.3561H12.8697C12.6542 12.3775 11.7787 11.642 10.7378 11.642C9.69634 11.642 8.82121 12.3774 8.60579 13.3561H1.46875C1.20988 13.3561 1 13.5659 1 13.8248C1 14.0837 1.20988 14.2936 1.46875 14.2936H8.60562C8.82071 15.2727 9.69505 16.0077 10.7378 16.0077C11.7805 16.0077 12.6549 15.2727 12.87 14.2936H15.5312C15.7901 14.2936 16 14.0837 16 13.8248C16 13.5659 15.7901 13.3561 15.5312 13.3561ZM10.7378 15.0702C10.0521 15.0702 9.49401 14.5131 9.49246 13.8278L9.49249 13.8261L9.49252 13.821C9.49457 13.1365 10.0532 12.5795 10.7378 12.5795C11.4214 12.5795 11.9801 13.1357 11.983 13.8199L11.9831 13.8268C11.9821 14.5126 11.4239 15.0702 10.7378 15.0702ZM15.5312 8.03168H8.39438C8.17929 7.05261 7.30495 6.31761 6.26222 6.31761C5.21948 6.31761 4.34515 7.05261 4.13005 8.03168H1.46875C1.20988 8.03168 1 8.24156 1 8.50043C1 8.75933 1.20988 8.96918 1.46875 8.96918H4.13028C4.34582 9.94772 5.22133 10.6833 6.26222 10.6833C7.30366 10.6833 8.17879 9.94784 8.39421 8.96918H15.5312C15.7901 8.96918 16 8.75933 16 8.50043C16 8.24156 15.7901 8.03168 15.5312 8.03168ZM7.50751 8.4992L7.50748 8.50424C7.50543 9.18882 6.94683 9.74572 6.26222 9.74572C5.57857 9.74572 5.01994 9.18958 5.01698 8.50535L5.01689 8.4985C5.01792 7.81266 5.57617 7.25511 6.26222 7.25511C6.94794 7.25511 7.50599 7.81216 7.50754 8.49753L7.50751 8.4992Z"
+          fill="white"
+          stroke="white"
+          strokeWidth="0.5"
+        />
       </g>
       <defs>
         <clipPath id="clip0_46_6884">
@@ -29,7 +45,6 @@ function FilterSVGIcon() {
         </clipPath>
       </defs>
     </svg>
-
   );
 }
 
@@ -47,34 +62,68 @@ export default function PlacementDrivePage() {
 
   const [lazyGetSearchJobs] = useLazyGetJobsSearchQuery();
   const [lazyGetFilterJobs] = useLazyGetJobsFilterQuery();
-  const jobFilterValues = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS_FILTER]);
-  const jobs = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]);
-  const [filterKey] = useState<string>(CommonUtilities.generateRandomString(10));
+  const jobFilterValues = useSelector(
+    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS_FILTER]
+  );
+  const jobs = useSelector(
+    (state: AppStoreStateType) => state.root[SLICE_NAMES.JOBS]
+  );
+  const [filterKey] = useState<string>(
+    CommonUtilities.generateRandomString(10)
+  );
   const dispatch = useDispatch();
   const searchFieldRef = useRef<HTMLInputElement | null>(null);
 
   const [jobSortOptions, setJobSortOptions] = useState(SortOptions);
 
-  const selectedOption = Object.values(jobSortOptions).filter(({ selected }) => selected).map(e => e.label)[0];
+  const selectedOption = Object.values(jobSortOptions)
+    .filter(({ selected }) => selected)
+    .map((e) => e.label)[0];
 
-  const selectedCity = useSelector((state: AppStoreStateType) => state.root[SLICE_NAMES.SELECTED_CITY]);
+  const selectedCity = useSelector(
+    (state: AppStoreStateType) => state.root[SLICE_NAMES.SELECTED_CITY]
+  );
 
   let once = false;
 
   async function searchByFilterComponent() {
     const filterProperties = {
-      companyName: jobFilterValues.companyNames.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(','),
-      jobType: jobFilterValues.jobTypes.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(','),
-      location: jobFilterValues.locations.filter((value: OptionSelected) => value.selected).map((value: OptionSelected) => value.option).join(',')
-    }
-    await searchByFilterComponent2(filterProperties)
-
+      companyName: jobFilterValues.companyNames
+        .filter((value: OptionSelected) => value.selected)
+        .map((value: OptionSelected) => value.option)
+        .join(","),
+      jobType: jobFilterValues.jobTypes
+        .filter((value: OptionSelected) => value.selected)
+        .map((value: OptionSelected) => value.option)
+        .join(","),
+      location: jobFilterValues.locations
+        .filter((value: OptionSelected) => value.selected)
+        .map((value: OptionSelected) => value.option)
+        .join(","),
+    };
+    await searchByFilterComponent2(filterProperties);
   }
 
-  async function searchByFilterComponent2(filterProperties: { companyName: string, jobType: string, location: string }) {
-    if (Object.values(filterProperties).map((value) => value).reduce((prev, curr) => prev + curr).length === 0) { return; }
-    const filterPropertiesUriEncoded = Object.entries(filterProperties).map(([key, value]: [string, string]) => [key, encodeURIComponent(value)].join('=')).join('&');
-    const { data: { list: jobsData } } = await lazyGetFilterJobs(filterPropertiesUriEncoded);
+  async function searchByFilterComponent2(filterProperties: {
+    companyName: string;
+    jobType: string;
+    location: string;
+  }) {
+    if (
+      Object.values(filterProperties)
+        .map((value) => value)
+        .reduce((prev, curr) => prev + curr).length === 0
+    ) {
+      return;
+    }
+    const filterPropertiesUriEncoded = Object.entries(filterProperties)
+      .map(([key, value]: [string, string]) =>
+        [key, encodeURIComponent(value)].join("=")
+      )
+      .join("&");
+    const {
+      data: { list: jobsData },
+    } = await lazyGetFilterJobs(filterPropertiesUriEncoded);
 
     //console.log('jobs: ', filterPropertiesUriEncoded);
 
@@ -83,16 +132,21 @@ export default function PlacementDrivePage() {
     // setFilterKey(() => CommonUtilities.generateRandomString(10));
   }
 
-
   async function searchByKeyword() {
     const searchElement = searchFieldRef.current;
-    if (searchElement) { setAllJobs(searchElement.value) }
+    if (searchElement) {
+      setAllJobs(searchElement.value);
+    }
     clearFilterHandler();
   }
 
   async function setAllJobs(searchInput: string) {
-    const sortField = Object.values(jobSortOptions).find(e => e.selected)?.value;
-    const { data: { list: fetchedJobs } } = await lazyGetSearchJobs({ searchInput, sortField });
+    const sortField = Object.values(jobSortOptions).find(
+      (e) => e.selected
+    )?.value;
+    const {
+      data: { list: fetchedJobs },
+    } = await lazyGetSearchJobs({ searchInput, sortField });
 
     dispatch(setJobs(fetchedJobs));
 
@@ -100,89 +154,182 @@ export default function PlacementDrivePage() {
   }
 
   useEffect(() => {
-    if (once) { return; }
+    if (once) {
+      return;
+    }
     once = true;
     //console.log('jobs: ', { selectedCity });
-    if (selectedCity === '') { setAllJobs('') } else { searchByFilterComponent2({ companyName: '', jobType: '', location: selectedCity }) }
+    if (selectedCity === "") {
+      setAllJobs("");
+    } else {
+      searchByFilterComponent2({
+        companyName: "",
+        jobType: "",
+        location: selectedCity,
+      });
+    }
   }, []);
 
   function toggleFilter() {
     const element = expandableRef.current;
-    if (element && element?.style.height === '0px') {
+    if (element && element?.style.height === "0px") {
       // element.style.height = element.scrollHeight + 'px';
-      element.style.height = 'max-content';
+      element.style.height = "max-content";
       return;
     }
 
-    if (element && element?.style.height !== '0px') {
-      element.style.height = '0px';
+    if (element && element?.style.height !== "0px") {
+      element.style.height = "0px";
       return;
     }
-
   }
 
   function clearFilterHandler() {
-    if (selectedCity !== '') { dispatch(setSelectedCity('')); }
-    const clearedFilterValues = Object.fromEntries(Object.entries(jobFilterValues).map(([key, value]) => [key, value.map(e => ({ ...e, selected: false }))])) as unknown as JobsFilterType;
+    if (selectedCity !== "") {
+      dispatch(setSelectedCity(""));
+    }
+    const clearedFilterValues = Object.fromEntries(
+      Object.entries(jobFilterValues).map(([key, value]) => [
+        key,
+        value.map((e) => ({ ...e, selected: false })),
+      ])
+    ) as unknown as JobsFilterType;
     dispatch(setJobFilter(clearedFilterValues));
   }
 
   function onSortOptionChange(option: string) {
     //console.log('placement: ', option);
     setJobSortOptions((jobSortOptions) => {
-      const updated = Object.entries(jobSortOptions)
-        .map(([key, value]) => ([key, { ...value, selected: value.label === option }]));
+      const updated = Object.entries(jobSortOptions).map(([key, value]) => [
+        key,
+        { ...value, selected: value.label === option },
+      ]);
       return Object.fromEntries(updated);
-    })
+    });
   }
 
   return (
-    <div className="flex flex-col p-[2em]  " >
-      <div className="flex justify-center" >
+    <div className="flex flex-col p-[2em]  ">
+      <div className="flex justify-center">
         <QuestionnaireTopBarStep />
       </div>
 
       <div className="flex gap-[2em]">
-        <Box className="text-[#0E5F59]" sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
-          <FilterComponent onClearButtonClick={clearFilterHandler} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[30em]" />
+        <Box
+          className="text-[#0E5F59]"
+          sx={{ display: { xs: "none", sm: "none", md: "none", lg: "block" } }}
+        >
+          <FilterComponent
+            onClearButtonClick={clearFilterHandler}
+            onSearchButtonClick={searchByFilterComponent}
+            key={filterKey}
+            className="w-[30em]"
+          />
         </Box>
         <div className="flex-grow p-3">
           <div className="flex-grow flex justify-between gap-[1rem] flex-col md:flex-row">
             <div className="flex items-center gap-[1rem] flex-grow">
-              <div className="text-[1.2rem] font-semibold text-darkGreen mb-2">Search</div>
+              <div className="text-[1.2rem] font-semibold text-darkGreen mb-2">
+                Search
+              </div>
               <div className="flex-grow flex">
-                <TextField inputRef={searchFieldRef} className="flex-grow" placeholder="Enter Keyword" size="small" />
+                <TextField
+                  inputRef={searchFieldRef}
+                  className="flex-grow"
+                  placeholder="Enter Keyword"
+                  size="small"
+                />
               </div>
             </div>
             <div className="flex gap-[2.5em] h-[4em] flex-row flex-grow md:flex-grow-0">
               <div className="flex gap-[2.5em] h-[4em] flex-grow justify-between">
-                <Button variant="contained" onClick={searchByKeyword} >Search</Button>
+                <Button variant="contained" onClick={searchByKeyword}>
+                  Search
+                </Button>
 
                 {/* Desktop View */}
-                <Box sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}>
-                  <DropdownMenu onOptionClick={onSortOptionChange} options={Object.values(jobSortOptions).map(e => (e.label))} label={selectedOption || 'Select'} endIcon={<KeyboardArrowDownIcon />} />
+                <Box
+                  sx={{
+                    display: {
+                      xs: "none",
+                      sm: "none",
+                      md: "none",
+                      lg: "block",
+                    },
+                  }}
+                >
+                  <DropdownMenu
+                    onOptionClick={onSortOptionChange}
+                    options={Object.values(jobSortOptions).map((e) => e.label)}
+                    label={selectedOption || "Select"}
+                    endIcon={<KeyboardArrowDownIcon />}
+                  />
                 </Box>
 
                 {/* Mobile View */}
-                <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}><Button className="h-[100%]" variant='contained' onClick={toggleFilter} ><FilterSVGIcon /></Button></Box>
+                <Box
+                  className="h-[100%]"
+                  sx={{
+                    display: {
+                      xs: "block",
+                      sm: "block",
+                      md: "block",
+                      lg: "none",
+                    },
+                  }}
+                >
+                  <Button
+                    className="h-[100%]"
+                    variant="contained"
+                    onClick={toggleFilter}
+                  >
+                    <FilterSVGIcon />
+                  </Button>
+                </Box>
               </div>
             </div>
-            <Box className='h-[100%]' sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
-              <DropdownMenu onOptionClick={onSortOptionChange} options={Object.values(jobSortOptions).map(e => (e.label))} label={selectedOption || 'Select'} endIcon={<KeyboardArrowDownIcon />} />
+            <Box
+              className="h-[100%]"
+              sx={{
+                display: { xs: "block", sm: "block", md: "block", lg: "none" },
+              }}
+            >
+              <DropdownMenu
+                onOptionClick={onSortOptionChange}
+                options={Object.values(jobSortOptions).map((e) => e.label)}
+                label={selectedOption || "Select"}
+                endIcon={<KeyboardArrowDownIcon />}
+              />
             </Box>
           </div>
 
-          <Box ref={expandableRef} id='expandable-element' className='w-[100%] my-[4em] relative' style={{ height: '0px', transition: '1000ms ease' }} sx={{ overflow: 'hidden', display: { xs: 'block', sm: 'block', md: 'block', lg: 'none' } }}>
+          <Box
+            ref={expandableRef}
+            id="expandable-element"
+            className="w-[100%] my-[4em] relative"
+            style={{ height: "0px", transition: "1000ms ease" }}
+            sx={{
+              overflow: "hidden",
+              display: { xs: "block", sm: "block", md: "block", lg: "none" },
+            }}
+          >
             <div className="aboslute">
-              <FilterComponent onClearButtonClick={clearFilterHandler} onSearchButtonClick={searchByFilterComponent} key={filterKey} className="w-[100%]" />
+              <FilterComponent
+                onClearButtonClick={clearFilterHandler}
+                onSearchButtonClick={searchByFilterComponent}
+                key={filterKey}
+                className="w-[100%]"
+              />
             </div>
           </Box>
-          {
-            jobs.map((details: JobType) => <JobCard details={details} key={CommonUtilities.generateRandomString(10)} />)
-          }
+          {jobs.map((details: JobType) => (
+            <JobCard
+              details={details}
+              key={CommonUtilities.generateRandomString(10)}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
 }
-

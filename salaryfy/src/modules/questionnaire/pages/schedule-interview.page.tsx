@@ -165,7 +165,7 @@ export function ScheduleInterview() {
       return (
         <>
           <div className="flex font-semibold p-[0.5em] bg-[#E2F3F4] text-[#0E5F59] rounded-md text-[1.5em] w-[fit-content] mb-[1.5em] items-center" key={i}>
-          <div style={{ whiteSpace: "nowrap" } as React.CSSProperties}>Slot-{i + 1}</div>
+          <div style={{ whiteSpace: "nowrap" }  as React.CSSProperties}>Slot-{i + 1}</div>
 
 
             <div className="mx-[1em] flex-grow w-[1px] bg-[#0E5F594E]"></div>
@@ -572,7 +572,7 @@ const Modal = ({ getDetails, getJobDetails }) => {
                 <div className=" flex justify-center items-center py-3">
                   <img
                     src={getJobDetails.object.logo}
-                    className=" w-[9.625rem] h[4.625rem] xxs:w-[8rem] xxs:h-[5rem]"
+                    className=" w-[9.625rem] h[4.625rem] xxs:w-[9.6rem] xxs:h-[5rem]"
                   />
                 </div>
                 <div className="text-[1rem] md:text-[1.375rem] font-[600] text-center font-Inter">
